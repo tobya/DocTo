@@ -32,12 +32,14 @@ type
     FInputFile: String;
     FOutputLogFile: String;
     ConsoleLog : TConsoleLog;
+    FVersionString: String;
     procedure SetInputFile(const Value: String);
     procedure SetOutputFile(const Value: String);
     procedure SetOutputFileFormat(const Value: Integer);
     procedure SetOutputFileFormatString(const Value: String);
     procedure SetOutputLog(const Value: Boolean);
     procedure SetOutputLogFile(const Value: String);
+    function IsValidFormat(FormatID : Integer): Boolean;
   public
 
     Constructor Create();
@@ -52,6 +54,7 @@ type
     Property OutputFile : String read FOutputFile write SetOutputFile;
     Property OutputFileFormat : Integer read FOutputFileFormat write SetOutputFileFormat;
     Property OutputFileFormatString : String read FOutputFileFormatString write SetOutputFileFormatString;
+    Property Version : String read FVersionString;
   end;
 
   function IsNumber(Str: String) : Boolean;
@@ -73,6 +76,7 @@ end;
 constructor TDocumentConverter.Create;
 begin
   ConsoleLog := TConsoleLog.Create();
+  FVersionString := '0.1';
 end;
 
 destructor TDocumentConverter.Destroy;
@@ -89,7 +93,7 @@ begin
     try
     Wordapp :=  CreateOleObject('Word.Application');
     Wordapp.Visible := false;
-    Wordapp.documents.Open(InputFile);
+    Wordapp.documents.Open(InputFile, false, true);
     Wordapp.activedocument.Saveas(OutputFile ,OutputFileFormat);
     Wordapp.activedocument.Close;
     wordapp.quit();
@@ -111,6 +115,21 @@ end;
 
 
 
+
+function TDocumentConverter.IsValidFormat(FormatID: Integer): Boolean;
+var
+  i : integer;
+begin
+  Result := false;
+  for i := 0 to Formats.Count -1 do
+  begin
+    if Formats.ValueFromIndex[i] = inttostr(FormatID) then
+    begin
+      Result := true;
+      break;
+    end;
+  end;
+end;
 
 procedure TDocumentConverter.LoadConfig(Params: TStrings);
 var i, f , iParam, idx: integer;
@@ -164,12 +183,17 @@ begin
       FInputFile := value;
       log('Input File is : ' + FInputFile);
     end
-    else if id = '-T' then
+    else if (id = '-T') or (id = '-TF') then
     begin
 
       if IsNumber(value) then
       begin
         FOutputFileFormat :=  strtoint(value);
+        if (id = '-TF') and ( not IsValidFormat(FOutputFileFormat)) then
+        begin
+          Log('File Format ' + OutputFileFormatString + ' is invalid, please see help. -h');
+          halt(200);
+        end;
       end
       else
       begin
@@ -194,6 +218,7 @@ begin
     else if (id = '-H') then
     begin
       Log('Help');
+      Log('Version:' + Version);
       Log('Command Line Params');
       log('Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\MyDir\MyFile" ');
       log('  -H This message');
@@ -202,6 +227,8 @@ begin
       log('  -T Format to convert file to, either integer or wdSaveFormat constant. ');
       log('     Available from http://msdn.microsoft.com/en-us/library/microsoft.office.interop.word.wdsaveformat.aspx ');
       log('     See current List Below. ');
+      log('  -TF Force Format.  -T values are checked against current list compiled in and not passed if unavailable.  To future proof, -TF will pass through value without checking.  Word will return an "EOleException  Value out of range" error if invalid.');
+      log('     Use instead of -T not as well as.');
       log('  -L Log to file in directory');
       log(' ');
       log('FILE FORMATS');
