@@ -141,7 +141,8 @@ pstr : string;
 id, value : string;
 
 begin
-
+  //Initislise
+  iParam := 0;
   Formats := AvailableWordFormats();
 
  (* TConsoleLog.Log(self,Formats.Text);
