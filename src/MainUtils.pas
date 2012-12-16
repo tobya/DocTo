@@ -169,14 +169,7 @@ begin
   iParam := 0;
   Formats := AvailableWordFormats();
 
- (* TConsoleLog.Log(self,Formats.Text);
 
-  for f := 0 to Formats.Count -1 do
-  begin
-   TConsoleLog.Log(self,Formats.Names[f] + '::');
-  end;      *)
-
-  //Defaults
   OutputLog := true;
   OutputLogFile := '';
 
@@ -274,11 +267,13 @@ begin
       log('ERROR CODES:');
       log('200 : Invalid File Format specified');
       log('201 : Insufficient Inputs.  Minimum of Input File, Output File & Type');
+
+      log('203 : Unknown switch in command');
       halt(2);
     end
     else
     begin
-      Log('Unknown:' + pstr);
+      HaltWithError('203','Unknown Switch:' + pstr);
     end;
 
 
