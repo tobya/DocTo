@@ -78,6 +78,12 @@ constructor TDocumentConverter.Create;
 begin
   ConsoleLog := TConsoleLog.Create();
   FVersionString := '0.1ALPHA';
+
+  //Initial values
+  FOutputFileFormatString := '';
+  FOutputFileFormat := -1;
+  FOutputFile := '';
+  FInputFile := '';
 end;
 
 destructor TDocumentConverter.Destroy;
@@ -88,7 +94,17 @@ end;
 function TDocumentConverter.Execute: string;
 var
   WordApp : OleVariant;
+  Continue : Boolean;
 begin
+    Continue := false;
+    if (InputFile > '') and (OutputFile > '') and (OutputFileFormat > -1) then
+    begin
+      Continue := true;
+    end;
+
+    if not Continue  then halt(201);
+
+
     log('Ready to Execute');
     try
       try
@@ -249,6 +265,7 @@ begin
 
       log('ERROR CODES:');
       log('200 : Invalid File Format specified');
+      log('201 : Insufficient Inputs.  Minimum of Input File, Output File & Type');
       halt(2);
     end
     else
