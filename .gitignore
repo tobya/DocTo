@@ -169,7 +169,6 @@ pip-log.txt
 __history/
 *.~*
 *.dcu
-*.exe
 *.identcache
 
 
