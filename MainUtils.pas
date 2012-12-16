@@ -19,7 +19,7 @@ type
   TConsoleLog = class
   public
     procedure Log(Sender: TObject; Log : String);
-
+    procedure LogError(Log: String);
   end;
 
   TDocumentConverter = class
@@ -47,6 +47,7 @@ type
     procedure LoadConfig(Params: TStrings);
 
     procedure Log(Msg: String);
+    procedure LogError(Msg: String);
     function Execute() : string;
     property OutputLog : Boolean read FOutputLog write SetOutputLog;
     property OutputLogFile : String read FOutputLogFile write SetOutputLogFile;
@@ -76,7 +77,7 @@ end;
 constructor TDocumentConverter.Create;
 begin
   ConsoleLog := TConsoleLog.Create();
-  FVersionString := '0.1';
+  FVersionString := '0.1ALPHA';
 end;
 
 destructor TDocumentConverter.Destroy;
@@ -90,18 +91,21 @@ var
 begin
     log('Ready to Execute');
     try
-    try
-    Wordapp :=  CreateOleObject('Word.Application');
-    Wordapp.Visible := false;
-    Wordapp.documents.Open(InputFile, false, true);
-    Wordapp.activedocument.Saveas(OutputFile ,OutputFileFormat);
-    Wordapp.activedocument.Close;
-    wordapp.quit();
-    result := OutputFile;
-    except on E: Exception do
-      log(E.ClassName + '  ' + e.Message);
+      try
+        Wordapp :=  CreateOleObject('Word.Application');
+        Wordapp.Visible := false;
 
-    end;
+        //Open doc and save in requested format.
+        Wordapp.documents.Open(InputFile, false, true);
+        Wordapp.activedocument.Saveas(OutputFile ,OutputFileFormat);
+        Wordapp.activedocument.Close;
+
+        wordapp.quit();
+        result := OutputFile;
+      except on E: Exception do
+        log(E.ClassName + '  ' + e.Message);
+
+      end;
     finally
 
     end;
@@ -183,15 +187,20 @@ begin
       FInputFile := value;
       log('Input File is : ' + FInputFile);
     end
+    else if id  = '-Q' then
+    begin
+      OutputLog := false;
+      dec(iParam);
+    end
     else if (id = '-T') or (id = '-TF') then
     begin
 
       if IsNumber(value) then
       begin
         FOutputFileFormat :=  strtoint(value);
-        if (id = '-TF') and ( not IsValidFormat(FOutputFileFormat)) then
+        if (not (id = '-TF')) and ( not IsValidFormat(FOutputFileFormat)) then
         begin
-          Log('File Format ' + OutputFileFormatString + ' is invalid, please see help. -h');
+          LogError('File Format ' + value + ' is invalid, please see help. -h.  To force use, use -TF');
           halt(200);
         end;
       end
@@ -224,7 +233,7 @@ begin
       log('  -H This message');
       log('  -F Input File or Directory');
       log('  -O Output File or Directory to place converted Docs');
-      log('  -T Format to convert file to, either integer or wdSaveFormat constant. ');
+      log('  -T Format(Type) to convert file to, either integer or wdSaveFormat constant. ');
       log('     Available from http://msdn.microsoft.com/en-us/library/microsoft.office.interop.word.wdsaveformat.aspx ');
       log('     See current List Below. ');
       log('  -TF Force Format.  -T values are checked against current list compiled in and not passed if unavailable.  To future proof, -TF will pass through value without checking.  Word will return an "EOleException  Value out of range" error if invalid.');
@@ -262,6 +271,12 @@ begin
   begin
     ConsoleLog.Log(self, Msg);
   end;
+end;
+
+procedure TDocumentConverter.LogError(Msg: String);
+begin
+  Log('*******************************************');
+  Log('Error: ' + Msg);
 end;
 
 procedure TDocumentConverter.SetInputFile(const Value: String);
@@ -305,6 +320,11 @@ begin
   except
     Result := false;
   end;
+end;
+
+procedure TConsoleLog.LogError(Log: String);
+begin
+
 end;
 
 end.
