@@ -40,6 +40,7 @@ type
     procedure SetOutputLog(const Value: Boolean);
     procedure SetOutputLogFile(const Value: String);
     function IsValidFormat(FormatID : Integer): Boolean;
+    procedure HaltWithError(ErrorNo:Integer; Msg : String);
   public
 
     Constructor Create();
@@ -102,7 +103,7 @@ begin
       Continue := true;
     end;
 
-    if not Continue  then halt(201);
+    if not Continue  then HaltWithError(201, 'All values must be specified.');
 
 
     log('Ready to Execute');
@@ -135,6 +136,13 @@ end;
 
 
 
+
+procedure TDocumentConverter.HaltWithError(ErrorNo: Integer; Msg: String);
+begin
+  LogError(Msg);
+  LogError('Exiting with Error Code : ' + inttostr(ErrorNo));
+  Halt(ErrorNo);
+end;
 
 function TDocumentConverter.IsValidFormat(FormatID: Integer): Boolean;
 var
