@@ -8,11 +8,11 @@ Must have Microsoft Word installed on host machine.
 
 Convert Document to text
 
-    docto -f C:\Directory\MyFile.doc -O "C:\Output Directory\MyTextFile.txt" -F wdFormatText
+    docto -f C:\Directory\MyFile.doc -O "C:\Output Directory\MyTextFile.txt" -T wdFormatText
 
 Convert Document to PDF (requires version of Microsoft Word that supports this).
 
-     docto -f C:\Directory\MyFile.doc -O "C:\Output Directory\MyTextFile.pdf" -F wdFormatPDF
+     docto -f C:\Directory\MyFile.doc -O "C:\Output Directory\MyTextFile.pdf" -T wdFormatPDF
 
 Command Line Help
 
@@ -29,10 +29,13 @@ Command Line Help
           -T Format(Type) to convert file to, either integer or wdSaveFormat constant.
              Available from http://msdn.microsoft.com/en-us/library/microsoft.office.interop.word.wdsaveformat.aspx
              See current List Below.
-          -TF Force Format.  -T values are checked against current list compiled in and not passed if unavailable.  To future proof, -TF will pass through val
-        ue without checking.  Word will return an "EOleException  Value out of range" error if invalid.
+          -TF Force Format.  -T values are checked against current list compiled in and not passed if unavailable.
+              To future proof, -TF will pass through value without checking.  Word will return
+              an "EOleException  Value out of range" error if invalid.
              Use instead of -T not as well as.
-          -L Log to file in directory
+          -L Log Level 0 Silent, 1 Standard, 10 VERBOSE
+             Default: 1 Standard
+          -G Write Log to file in directory
 
         FILE FORMATS
         wdFormatDOSTextLineBreaks=5
@@ -64,6 +67,6 @@ Command Line Help
         ERROR CODES:
         200 : Invalid File Format specified
         201 : Insufficient Inputs.  Minimum of Input File, Output File & Type
-
+        203 : Unknown switch in command
 
 
