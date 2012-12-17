@@ -12,7 +12,7 @@ Convert Document to text
 
 Convert Document to PDF (requires version of Microsoft Word that supports this).
 
-     docto -f C:\Directory\MyFile.doc -O "C:\Output Directory\MyTextFile.txt" -F wdFormatPDF
+     docto -f C:\Directory\MyFile.doc -O "C:\Output Directory\MyTextFile.pdf" -F wdFormatPDF
 
 Command Line Help
 
