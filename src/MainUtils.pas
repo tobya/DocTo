@@ -33,6 +33,7 @@ type
     FOutputLogFile: String;
     ConsoleLog : TConsoleLog;
     FVersionString: String;
+    FLogLevel : Integer;
     procedure SetInputFile(const Value: String);
     procedure SetOutputFile(const Value: String);
     procedure SetOutputFileFormat(const Value: Integer);
@@ -47,7 +48,7 @@ type
     Destructor Destroy();
     procedure LoadConfig(Params: TStrings);
 
-    procedure Log(Msg: String);
+    procedure Log(Msg: String; Level  : Integer = 0);
     procedure LogError(Msg: String);
     function Execute() : string;
     property OutputLog : Boolean read FOutputLog write SetOutputLog;
@@ -61,7 +62,11 @@ type
 
   function IsNumber(Str: String) : Boolean;
 
-
+  Const
+  VERBOSE = 10;
+  CHATTY = 5;
+  STANDARD = 1;
+  SILENT = 0;
 implementation
 
 
@@ -85,6 +90,7 @@ begin
   FOutputFileFormat := -1;
   FOutputFile := '';
   FInputFile := '';
+  FLogLevel := 1;
 end;
 
 destructor TDocumentConverter.Destroy;
@@ -106,7 +112,7 @@ begin
     if not Continue  then HaltWithError(201, 'All values must be specified.');
 
 
-    log('Ready to Execute');
+    log('Ready to Execute' , VERBOSE);
     try
       try
         Wordapp :=  CreateOleObject('Word.Application');
@@ -173,8 +179,8 @@ begin
   OutputLog := true;
   OutputLogFile := '';
 
-  log('Loading Configuration...');
-  log('Parameter Count is ' + inttostr(params.Count));
+  log('Loading Configuration...',VERBOSE);
+  log('Parameter Count is ' + inttostr(params.Count), VERBOSE);
 
   if Params.Count = 0 then
   begin
@@ -190,7 +196,11 @@ begin
     id := UpperCase( pstr);
     if ParamCount -1 > iParam then
     begin
-    value := Trim(Params[iParam +1]);
+      try
+        value := Trim(Params[iParam +1]);
+      except on E: Exception do
+        HaltWithError(1,E.message);
+      end;
     end;
     inc(iParam,2);
 
@@ -198,17 +208,25 @@ begin
     if id = '-O' then
     begin
       FOutputFile := value;
-      log('Output file is : ' + FOutputFile);
+      log('Output file is : ' + FOutputFile,CHATTY);
     end
     else if id = '-F' then
     begin
       FInputFile := value;
-      log('Input File is : ' + FInputFile);
+      log('Input File is : ' + FInputFile,CHATTY);
     end
     else if id  = '-Q' then
     begin
       OutputLog := false;
       dec(iParam);
+    end
+    else if id  = '-L' then
+    begin
+      if isNumber(value) then
+      begin
+        FLogLevel := strtoint(value);
+        Log('Log Level Set To:' + IntToStr(FLogLevel),FLogLevel);
+      end
     end
     else if (id = '-T') or (id = '-TF') then
     begin
@@ -254,9 +272,13 @@ begin
       log('  -T Format(Type) to convert file to, either integer or wdSaveFormat constant. ');
       log('     Available from http://msdn.microsoft.com/en-us/library/microsoft.office.interop.word.wdsaveformat.aspx ');
       log('     See current List Below. ');
-      log('  -TF Force Format.  -T values are checked against current list compiled in and not passed if unavailable.  To future proof, -TF will pass through value without checking.  Word will return an "EOleException  Value out of range" error if invalid.');
+      log('  -TF Force Format.  -T values are checked against current list compiled in and not passed if unavailable.');
+      log('      To future proof, -TF will pass through value without checking.  Word will return');
+      log('      an "EOleException  Value out of range" error if invalid.');
       log('     Use instead of -T not as well as.');
-      log('  -L Log to file in directory');
+      log('  -L Log Level 0 Silent, 1 Standard, 10 VERBOSE ');
+      log('     Default: 1 Standard');
+      log('  -G Write Log to file in directory');
       log(' ');
       log('FILE FORMATS');
       for f := 0 to Formats.Count -1 do
@@ -273,7 +295,7 @@ begin
     end
     else
     begin
-      HaltWithError('203','Unknown Switch:' + pstr);
+      HaltWithError(203,'Unknown Switch:' + pstr);
     end;
 
 
@@ -286,9 +308,9 @@ begin
 end;
 
 
-procedure TDocumentConverter.Log(Msg: String);
+procedure TDocumentConverter.Log(Msg: String; Level : Integer = 0 );
 begin
-  if OutputLog then
+  if Level <= FLogLevel then
   begin
     ConsoleLog.Log(self, Msg);
   end;

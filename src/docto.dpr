@@ -17,7 +17,9 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 {$R 'wdFormats.res' 'wdFormats.rc'}
 {$R *.res}
 uses
-  SysUtils,Classes,   ActiveX,
+  SysUtils,
+  Classes,
+  ActiveX,
   WordUtils in 'WordUtils.pas',
   MainUtils in 'MainUtils.pas';
 

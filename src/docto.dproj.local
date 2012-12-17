@@ -2,8 +2,9 @@
 <BorlandProject>
 	<Transactions>
     <Transaction>2012/12/14 20:13:32.000.017,=C:\Users\Toby\Documents\GitHub\docto\New1.rc</Transaction>
-    <Transaction>2012/12/14 20:14:07.000.617,C:\Users\Toby\Documents\GitHub\docto\wdFormats.rc=C:\Users\Toby\Documents\GitHub\docto\New1.rc</Transaction>
+    <Transaction>2012/12/14 20:14:07.000.617,C:\Users\Toby\Documents\GitHub\docto\New1.rc=C:\Users\Toby\Documents\GitHub\docto\wdFormats.rc</Transaction>
     <Transaction>2012/12/14 20:19:49.000.070,=C:\Users\Toby\Documents\GitHub\docto\New1.txt</Transaction>
-    <Transaction>2012/12/14 20:20:09.000.697,C:\Users\Toby\Documents\GitHub\docto\res\wdFormats.txt=C:\Users\Toby\Documents\GitHub\docto\New1.txt</Transaction>
+    <Transaction>2012/12/14 20:20:09.000.697,C:\Users\Toby\Documents\GitHub\docto\New1.txt=C:\Users\Toby\Documents\GitHub\docto\res\wdFormats.txt</Transaction>
+    <Transaction>2012/12/17 21:29:42.297,=C:\Users\Toby\Documents\GitHub\DocTo\readme.md</Transaction>
   </Transactions>
 </BorlandProject>
