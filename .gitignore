@@ -83,6 +83,7 @@ _ReSharper*
 [Ee]xpress
 #General
 *.zip
+test/
 
 
 

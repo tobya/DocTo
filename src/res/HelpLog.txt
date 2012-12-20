@@ -15,9 +15,12 @@ Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\My
   -L  Log Level 0 Silent, 1 Standard, 10 VERBOSE
       Default: 1 Standard
   -G  Write Log to file in directory
+  -GL Log File Name to Use default 'DocTo.Log';
+  -Q  Quiet Mode: Equivalent to setting -L 0
 
 
 ERROR CODES:
 200 : Invalid File Format specified
 201 : Insufficient Inputs.  Minimum of Input File, Output File & Type
+202 : Word or COM Error
 203 : Unknown switch in command

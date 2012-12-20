@@ -21,7 +21,9 @@ uses
   Classes,
   ActiveX,
   WordUtils in 'WordUtils.pas',
-  MainUtils in 'MainUtils.pas';
+  MainUtils in 'MainUtils.pas',
+  ResourceUtils in 'ResourceUtils.pas',
+  PathUtils in 'PathUtils.pas';
 
 var
   i : integer;

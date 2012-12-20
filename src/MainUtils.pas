@@ -14,7 +14,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 ****************************************************************)
 interface
 uses classes, WordUtils, sysutils, ActiveX, ComObj,
-     ResourceUtils;
+     ResourceUtils,
+     PathUtils;
 
 type
   TConsoleLog = class
@@ -35,6 +36,9 @@ type
     ConsoleLog : TConsoleLog;
     FVersionString: String;
     FLogLevel : Integer;
+    FLogtoFile : Boolean;
+    FLogFile : TStringlist;
+    FLogFilename: String;
     procedure SetInputFile(const Value: String);
     procedure SetOutputFile(const Value: String);
     procedure SetOutputFileFormat(const Value: Integer);
@@ -43,6 +47,8 @@ type
     procedure SetOutputLogFile(const Value: String);
     function IsValidFormat(FormatID : Integer): Boolean;
     procedure HaltWithError(ErrorNo:Integer; Msg : String);
+    procedure SetLogToFile(const Value: Boolean);
+    procedure SetLogFilename(const Value: String);
   public
 
     Constructor Create();
@@ -58,8 +64,12 @@ type
     Property OutputFile : String read FOutputFile write SetOutputFile;
     Property OutputFileFormat : Integer read FOutputFileFormat write SetOutputFileFormat;
     Property OutputFileFormatString : String read FOutputFileFormatString write SetOutputFileFormatString;
+    Property LogToFile : Boolean read FLogToFile write SetLogToFile;
+    property LogFilename: String read FLogFilename write SetLogFilename;
     Property Version : String read FVersionString;
   end;
+
+
 
   function IsNumber(Str: String) : Boolean;
 
@@ -92,11 +102,19 @@ begin
   FOutputFile := '';
   FInputFile := '';
   FLogLevel := 1;
+  FLogtoFile := false;
+  FLogFilename := 'DocTo.Log';
 end;
 
 destructor TDocumentConverter.Destroy;
 begin
   ConsoleLog.Free;
+  if assigned(FLogFile) then
+  begin
+    FLogFile.SaveToFile(FLogFilename);
+    FLogFile.Free;
+    FLogFile := nil;
+  end;
 end;
 
 function TDocumentConverter.Execute: string;
@@ -110,7 +128,7 @@ begin
       Continue := true;
     end;
 
-    if not Continue  then HaltWithError(201, 'All values must be specified.');
+    if not Continue  then HaltWithError(201, 'Input File, Output File and FileFormat must all be specified');
 
 
     log('Ready to Execute' , VERBOSE);
@@ -127,8 +145,7 @@ begin
         wordapp.quit();
         result := OutputFile;
       except on E: Exception do
-        log(E.ClassName + '  ' + e.Message);
-
+        HaltWithError(202,E.ClassName + '  ' + e.Message);
       end;
     finally
 
@@ -196,13 +213,18 @@ begin
     pstr := Params[iParam];
 
     id := UpperCase( pstr);
-    if ParamCount -1 > iParam then
+    if ParamCount -1  > iParam then
     begin
       try
+
         value := Trim(Params[iParam +1]);
       except on E: Exception do
         HaltWithError(1,E.message);
       end;
+    end
+    else
+    begin
+      value := '';
     end;
     inc(iParam,2);
 
@@ -220,6 +242,7 @@ begin
     else if id  = '-Q' then
     begin
       OutputLog := false;
+      //Doesn't require a value
       dec(iParam);
     end
     else if id  = '-L' then
@@ -241,9 +264,8 @@ begin
           LogError('File Format ' + value + ' is invalid, please see help. -h.  To force use, use -TF');
           halt(200);
         end;
-      end
-      else
-      begin
+      end;
+
         FOutputFileFormatString := value;
 
         idx := formats.IndexOfName(FOutputFileFormatString);
@@ -258,9 +280,13 @@ begin
           halt(200);
         end;
 
-
-      end;
       log('Type is: ' + inttostr(FOutputFileFormat));
+
+    end
+    else if (id = '-G') then
+    begin
+       LogToFile := true;
+       dec(iParam);
     end
     else if (id = '-H') then
     begin
@@ -300,6 +326,11 @@ begin
   if Level <= FLogLevel then
   begin
     ConsoleLog.Log(self, Msg);
+    if FLogtoFile then
+    begin
+      FLogFile.Add(Msg);
+      FLogFile.SaveToFile(FLogFilename);
+    end;
   end;
 end;
 
@@ -312,6 +343,32 @@ end;
 procedure TDocumentConverter.SetInputFile(const Value: String);
 begin
   FInputFile := Value;
+end;
+
+procedure TDocumentConverter.SetLogFilename(const Value: String);
+begin
+  FLogFilename := Value;
+end;
+
+procedure TDocumentConverter.SetLogToFile(const Value: Boolean);
+begin
+  FLogToFile := Value;
+
+  //Set up logfile.
+  if FLogtoFile then
+  begin
+    if not assigned(fLogFile) then
+    begin
+      FLogFile :=TStringList.Create;
+    end;
+    flogfile.LoadFromFile(fLogFileName);
+  end
+  else
+  begin
+    FLogFile.SaveToFile(FLogFilename);
+    FLogFile.Free;
+    FLogFile := nil;
+  end;
 end;
 
 procedure TDocumentConverter.SetOutputFile(const Value: String);
@@ -356,5 +413,6 @@ procedure TConsoleLog.LogError(Log: String);
 begin
 
 end;
+
 
 end.
