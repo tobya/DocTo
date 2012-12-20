@@ -1,4 +1,4 @@
-unit WordUtils;
+unit ResourceUtils;
 (*************************************************************
 Copyright © 2012 Toby Allen (http://github.com/tobya)
 
@@ -13,25 +13,23 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMA
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ****************************************************************)
 interface
-uses Classes, ResourceUtils;
 
+uses Classes;
 
-function AvailableWordFormats() : TStringList;
+procedure LoadStringListFromResource(const ResName: string;SL : TStringList);
 
 implementation
 
-function AvailableWordFormats() : TStringList;
+
+procedure LoadStringListFromResource(const ResName: string;SL : TStringList);
 var
-  Formats : TStringList;
-
+  RS: TResourceStream;
 begin
-  Formats := Tstringlist.Create();
-  LoadStringListFromResource('FORMATS',Formats);
-
-  result := Formats;
+  RS := TResourceStream.Create(HInstance, ResName, 'Text');
+  try
+    SL.LoadFromStream(RS);
+  finally
+    RS.Free;
+  end;
 end;
-
-
-
-
 end.

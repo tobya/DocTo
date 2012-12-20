@@ -13,7 +13,8 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMA
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ****************************************************************)
 interface
-uses classes, WordUtils, sysutils, ActiveX, ComObj;
+uses classes, WordUtils, sysutils, ActiveX, ComObj,
+     ResourceUtils;
 
 type
   TConsoleLog = class
@@ -169,6 +170,7 @@ procedure TDocumentConverter.LoadConfig(Params: TStrings);
 var i, f , iParam, idx: integer;
 pstr : string;
 id, value : string;
+HelpStrings : TStringList;
 
 begin
   //Initislise
@@ -262,35 +264,20 @@ begin
     end
     else if (id = '-H') then
     begin
-      Log('Help');
-      Log('Version:' + Version);
-      Log('Command Line Params');
-      log('Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\MyDir\MyFile" ');
-      log('  -H This message');
-      log('  -F Input File or Directory');
-      log('  -O Output File or Directory to place converted Docs');
-      log('  -T Format(Type) to convert file to, either integer or wdSaveFormat constant. ');
-      log('     Available from http://msdn.microsoft.com/en-us/library/microsoft.office.interop.word.wdsaveformat.aspx ');
-      log('     See current List Below. ');
-      log('  -TF Force Format.  -T values are checked against current list compiled in and not passed if unavailable.');
-      log('      To future proof, -TF will pass through value without checking.  Word will return');
-      log('      an "EOleException  Value out of range" error if invalid.');
-      log('     Use instead of -T not as well as.');
-      log('  -L Log Level 0 Silent, 1 Standard, 10 VERBOSE ');
-      log('     Default: 1 Standard');
-      log('  -G Write Log to file in directory');
-      log(' ');
+      try
+        HelpStrings := TStringList.Create;
+        LoadStringListFromResource('HELP',HelpStrings);
+        log(HelpStrings.Text);
+      finally
+        HelpStrings.Free;
+      end;
+      log('');
       log('FILE FORMATS');
       for f := 0 to Formats.Count -1 do
       begin
         log(Formats.Names[f] + '=' + Formats.Values[Formats.Names[f]]);
       end;
 
-      log('ERROR CODES:');
-      log('200 : Invalid File Format specified');
-      log('201 : Insufficient Inputs.  Minimum of Input File, Output File & Type');
-
-      log('203 : Unknown switch in command');
       halt(2);
     end
     else
