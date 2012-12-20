@@ -81,6 +81,10 @@ _ReSharper*
 
 # Installshield output folder
 [Ee]xpress
+#General
+*.zip
+
+
 
 # DocProject is a documentation generator add-in
 DocProject/buildhelp/
