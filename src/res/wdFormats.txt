@@ -1,10 +1,6 @@
 wdFormatDOSTextLineBreaks=5
 wdFormatEncodedText=7
 wdFormatFilteredHTML=10
-wdFormatFlatXML=19
-wdFormatFlatXML=20
-wdFormatFlatXMLTemplate=21
-wdFormatFlatXMLTemplateMacroEnabled=22
 wdFormatOpenDocumentText=23
 wdFormatHTML=8
 wdFormatRTF=6

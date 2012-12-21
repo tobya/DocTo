@@ -78,6 +78,7 @@ type
   CHATTY = 5;
   STANDARD = 1;
   SILENT = 0;
+  ERRORS = 0;
 implementation
 
 
@@ -128,6 +129,10 @@ begin
       Continue := true;
     end;
 
+    //Ensure directory exists
+    ForceDirectories(ExtractFilePath( OutputFile));
+
+
     if not Continue  then HaltWithError(201, 'Input File, Output File and FileFormat must all be specified');
 
 
@@ -152,12 +157,6 @@ begin
     end;
 
 end;
-
-
-
-
-
-
 
 
 
@@ -336,8 +335,8 @@ end;
 
 procedure TDocumentConverter.LogError(Msg: String);
 begin
-  Log('*******************************************');
-  Log('Error: ' + Msg);
+  Log('*******************************************', ERRORS);
+  Log('Error: ' + Msg, ERRORS);
 end;
 
 procedure TDocumentConverter.SetInputFile(const Value: String);

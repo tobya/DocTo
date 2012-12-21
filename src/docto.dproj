@@ -113,7 +113,7 @@
 						<VersionInfoKeys Name="Comments"/>
 					</VersionInfoKeys>
 					<Parameters>
-						<Parameters Name="RunParams">-L 10 -h</Parameters>
+						<Parameters Name="RunParams">-f &quot;d:\test\word\pie3.doc&quot; -Q -o &quot;d:\test\word\out\pie3y5ts.pdf&quot; </Parameters>
 					</Parameters>
 					<Excluded_Packages>
 						<Excluded_Packages Name="$(BDSBIN)\dcloffice2k150.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
