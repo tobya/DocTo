@@ -63,6 +63,7 @@
 			<None Include="..\readme.md"/>
 			<None Include="res\wdFormats.txt"/>
 			<None Include="res\HelpLog.txt"/>
+			<None Include="res\HelpJSONLog.txt"/>
 			<BuildConfiguration Include="Debug">
 				<Key>Cfg_2</Key>
 				<CfgParent>Base</CfgParent>
@@ -89,11 +90,11 @@
 						<VersionInfo Name="IncludeVerInfo">True</VersionInfo>
 						<VersionInfo Name="AutoIncBuild">True</VersionInfo>
 						<VersionInfo Name="MajorVer">0</VersionInfo>
-						<VersionInfo Name="MinorVer">2</VersionInfo>
-						<VersionInfo Name="Release">0</VersionInfo>
-						<VersionInfo Name="Build">9</VersionInfo>
-						<VersionInfo Name="Debug">False</VersionInfo>
-						<VersionInfo Name="PreRelease">False</VersionInfo>
+						<VersionInfo Name="MinorVer">3</VersionInfo>
+						<VersionInfo Name="Release">1</VersionInfo>
+						<VersionInfo Name="Build">10</VersionInfo>
+						<VersionInfo Name="Debug">True</VersionInfo>
+						<VersionInfo Name="PreRelease">True</VersionInfo>
 						<VersionInfo Name="Special">False</VersionInfo>
 						<VersionInfo Name="Private">False</VersionInfo>
 						<VersionInfo Name="DLL">False</VersionInfo>
@@ -103,17 +104,17 @@
 					<VersionInfoKeys>
 						<VersionInfoKeys Name="CompanyName">Toflidium Software</VersionInfoKeys>
 						<VersionInfoKeys Name="FileDescription">DocTo - Convert doc files to any available format</VersionInfoKeys>
-						<VersionInfoKeys Name="FileVersion">0.2.0.9</VersionInfoKeys>
+						<VersionInfoKeys Name="FileVersion">0.3.1.10</VersionInfoKeys>
 						<VersionInfoKeys Name="InternalName"/>
 						<VersionInfoKeys Name="LegalCopyright">Toby Allen</VersionInfoKeys>
 						<VersionInfoKeys Name="LegalTrademarks"/>
 						<VersionInfoKeys Name="OriginalFilename">docto.exe</VersionInfoKeys>
 						<VersionInfoKeys Name="ProductName">DocTo</VersionInfoKeys>
-						<VersionInfoKeys Name="ProductVersion">0.2.0.0</VersionInfoKeys>
+						<VersionInfoKeys Name="ProductVersion">0.3.0.0</VersionInfoKeys>
 						<VersionInfoKeys Name="Comments"/>
 					</VersionInfoKeys>
 					<Parameters>
-						<Parameters Name="RunParams">-f &quot;d:\test\word\pie3.doc&quot; -Q -o &quot;d:\test\word\out\pie3y5ts.pdf&quot; </Parameters>
+						<Parameters Name="RunParams">&quot;../exe/docto.exe&quot;   -f &quot;C:\Users\Toby\Documents\GitHub\DocTo\test\pie3.doc&quot;  -o &quot;C:\Users\Toby\Documents\GitHub\DocTo\test\GeneratedFiles\pie3out_wdFormatpdf.pdf&quot;  -TF  18 -L</Parameters>
 					</Parameters>
 					<Excluded_Packages>
 						<Excluded_Packages Name="$(BDSBIN)\dcloffice2k150.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>

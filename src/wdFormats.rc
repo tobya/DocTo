@@ -1,2 +1,3 @@
 FORMATS TEXT    res\wdFormats.txt
 HELP    TEXT    res\HelpLog.txt
+HELPJSON TEXT   res\HelpJSONLog.txt

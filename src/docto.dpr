@@ -32,7 +32,7 @@ var
   DocConv : TDocumentConverter;
 begin
 
-  paramlist := tstringlist.create;
+  paramlist := TStringlist.create;
   DocConv := TDocumentConverter.Create;
   try
 

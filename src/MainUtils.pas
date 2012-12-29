@@ -52,7 +52,7 @@ type
   public
 
     Constructor Create();
-    Destructor Destroy();
+    Destructor Destroy(); override;
     procedure LoadConfig(Params: TStrings);
 
     procedure Log(Msg: String; Level  : Integer = 0);
@@ -141,16 +141,32 @@ begin
       try
         Wordapp :=  CreateOleObject('Word.Application');
         Wordapp.Visible := false;
-
-        //Open doc and save in requested format.
-        Wordapp.documents.Open(InputFile, false, true);
-        Wordapp.activedocument.Saveas(OutputFile ,OutputFileFormat);
-        Wordapp.activedocument.Close;
-
-        wordapp.quit();
+        try
+          //Open doc and save in requested format.
+          Wordapp.documents.Open(InputFile, false, true);
+          Wordapp.activedocument.Saveas(OutputFile ,OutputFileFormat);
+          Wordapp.activedocument.Close;
+        finally
+          wordapp.quit();
+        end;
         result := OutputFile;
-      except on E: Exception do
-        HaltWithError(202,E.ClassName + '  ' + e.Message);
+      except
+      on E: EOleSysError do
+      begin
+        if pos('Invalid class string',E.Message) > 0 then
+        begin
+          HaltWithError(221,'Word Does not appear to be installed:' +E.ClassName + '  ' + e.Message);
+        end
+        else
+        begin
+          HaltWithError(220,E.ClassName + '  ' + e.Message);
+        end;
+
+      end;
+      on E: Exception do
+      begin
+        HaltWithError(220,E.ClassName + '  ' + e.Message);
+      end;
       end;
     finally
 
@@ -215,10 +231,9 @@ begin
     if ParamCount -1  > iParam then
     begin
       try
-
         value := Trim(Params[iParam +1]);
       except on E: Exception do
-        HaltWithError(1,E.message);
+        HaltWithError(202,E.message);
       end;
     end
     else
@@ -264,8 +279,9 @@ begin
           LogError('File Format ' + value + ' is invalid, please see help. -h.  To force use, use -TF');
           halt(200);
         end;
-      end;
-
+      end
+      else
+      begin
         FOutputFileFormatString := value;
 
         idx := formats.IndexOfName(FOutputFileFormatString);
@@ -279,8 +295,8 @@ begin
           Log('File Format ' + OutputFileFormatString + ' is invalid, please see help. -h');
           halt(200);
         end;
-
-      log('Type is: ' + inttostr(FOutputFileFormat));
+      end;
+      log('Type Integer is: ' + inttostr(FOutputFileFormat), VERBOSE);
 
     end
     else if (id = '-G') then
@@ -297,8 +313,8 @@ begin
     end
     else if (id = '-H') then
     begin
+      HelpStrings := TStringList.Create;
       try
-        HelpStrings := TStringList.Create;
         LoadStringListFromResource('HELP',HelpStrings);
         log(HelpStrings.Text);
       finally
@@ -311,6 +327,17 @@ begin
         log(Formats.Names[f] + '=' + Formats.Values[Formats.Names[f]]);
       end;
 
+      halt(2);
+    end
+    else if (id = '-HJ') then
+    begin
+      HelpStrings := TStringList.Create;
+      try
+        LoadStringListFromResource('HELPJSON',HelpStrings);
+        log(HelpStrings.Text);
+      finally
+        HelpStrings.Free;
+      end;
       halt(2);
     end
     else
