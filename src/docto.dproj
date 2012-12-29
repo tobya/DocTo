@@ -92,7 +92,7 @@
 						<VersionInfo Name="MajorVer">0</VersionInfo>
 						<VersionInfo Name="MinorVer">3</VersionInfo>
 						<VersionInfo Name="Release">1</VersionInfo>
-						<VersionInfo Name="Build">10</VersionInfo>
+						<VersionInfo Name="Build">11</VersionInfo>
 						<VersionInfo Name="Debug">True</VersionInfo>
 						<VersionInfo Name="PreRelease">True</VersionInfo>
 						<VersionInfo Name="Special">False</VersionInfo>
@@ -104,7 +104,7 @@
 					<VersionInfoKeys>
 						<VersionInfoKeys Name="CompanyName">Toflidium Software</VersionInfoKeys>
 						<VersionInfoKeys Name="FileDescription">DocTo - Convert doc files to any available format</VersionInfoKeys>
-						<VersionInfoKeys Name="FileVersion">0.3.1.10</VersionInfoKeys>
+						<VersionInfoKeys Name="FileVersion">0.3.1.11</VersionInfoKeys>
 						<VersionInfoKeys Name="InternalName"/>
 						<VersionInfoKeys Name="LegalCopyright">Toby Allen</VersionInfoKeys>
 						<VersionInfoKeys Name="LegalTrademarks"/>
