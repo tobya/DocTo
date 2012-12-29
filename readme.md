@@ -38,9 +38,6 @@ Command Line Help
           -G  Write Log to file in directory
           -GL Log File Name to Use default 'DocTo.Log';
           -Q  Quiet Mode: Equivalent to setting -L 0
-          -J  Accept inputs in JSON format.  see -HJ for details.
-          -HJ Output Help for JSON Format.
-
 
         ERROR CODES:
         200 : Invalid File Format specified
