@@ -1,6 +1,6 @@
 # DocTo
 
-Simple utility for converting a .doc file to any other supported format.
+Simple utility for converting a .doc file to any other supported format.  http://tobya.github.com/DocTo
 
 Must have Microsoft Word installed on host machine.
 
