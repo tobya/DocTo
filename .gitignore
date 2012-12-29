@@ -84,6 +84,8 @@ _ReSharper*
 #General
 *.zip
 temp/
+*.log
+test/out/
 
 
 

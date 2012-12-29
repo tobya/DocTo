@@ -240,6 +240,7 @@ begin
     end
     else if id  = '-Q' then
     begin
+
       OutputLog := false;
       //Doesn't require a value
       dec(iParam);
@@ -286,6 +287,13 @@ begin
     begin
        LogToFile := true;
        dec(iParam);
+    end
+    else if (id = '-GL') then
+    begin
+       FLogFilename := value;
+       LogToFile := true;
+
+
     end
     else if (id = '-H') then
     begin
@@ -360,7 +368,10 @@ begin
     begin
       FLogFile :=TStringList.Create;
     end;
-    flogfile.LoadFromFile(fLogFileName);
+    if fileexists(FLogFilename) then
+    begin
+      flogfile.LoadFromFile(fLogFileName);
+    end;
   end
   else
   begin
