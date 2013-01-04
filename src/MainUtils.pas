@@ -38,7 +38,12 @@ type
     FLogLevel : Integer;
     FLogtoFile : Boolean;
     FLogFile : TStringlist;
+    FInputFiles : TStringList;
     FLogFilename: String;
+    FDoSubDirs: Boolean;
+    FIsFileInput: Boolean;
+    FIsDirInput: Boolean;
+    FOutputExt: string;
     procedure SetInputFile(const Value: String);
     procedure SetOutputFile(const Value: String);
     procedure SetOutputFileFormat(const Value: Integer);
@@ -49,6 +54,17 @@ type
     procedure HaltWithError(ErrorNo:Integer; Msg : String);
     procedure SetLogToFile(const Value: Boolean);
     procedure SetLogFilename(const Value: String);
+    procedure ListFiles(const PathName, FileName: string; const InDir: boolean; outFiles: TStrings);
+    procedure SetDoSubDirs(const Value: Boolean);
+    procedure SetIsDirInput(const Value: Boolean);
+    procedure SetIsFileInput(const Value: Boolean);
+    function NewFileNameFromBase(OldBase, NewBase, FileName, NewExt: String): String;
+    procedure SetOutputExt(const Value: string);
+
+    property IsFileInput : Boolean read FIsFileInput write SetIsFileInput;
+    property IsDirInput : Boolean read FIsDirInput write SetIsDirInput;
+    property DoSubDirs : Boolean read FDoSubDirs write SetDoSubDirs;
+    property OutputExt : string read FOutputExt write SetOutputExt;
   public
 
     Constructor Create();
@@ -86,10 +102,7 @@ implementation
 
 procedure  TConsoleLog.Log(Sender: TObject; Log: String);
 begin
-
-
   Writeln(Log);
-
 end;
 
 constructor TDocumentConverter.Create;
@@ -105,6 +118,8 @@ begin
   FLogLevel := 1;
   FLogtoFile := false;
   FLogFilename := 'DocTo.Log';
+
+  FInputFiles := TStringList.Create;
 end;
 
 destructor TDocumentConverter.Destroy;
@@ -116,12 +131,16 @@ begin
     FLogFile.Free;
     FLogFile := nil;
   end;
+
+  FInputFiles.Free;
 end;
 
 function TDocumentConverter.Execute: string;
 var
   WordApp : OleVariant;
   Continue : Boolean;
+  i : integer;
+  FileToConvert, OutputFilename : String;
 begin
     Continue := false;
     if (InputFile > '') and (OutputFile > '') and (OutputFileFormat > -1) then
@@ -129,12 +148,23 @@ begin
       Continue := true;
     end;
 
-    //Ensure directory exists
-    ForceDirectories(ExtractFilePath( OutputFile));
+
 
 
     if not Continue  then HaltWithError(201, 'Input File, Output File and FileFormat must all be specified');
 
+    if FInputFiles.Count = 0 then
+    begin
+      FInputFiles.Add(FInputFile);
+    end;
+
+    for i := 0 to FInputFiles.Count -1 do
+    begin
+    FileToConvert := FInputFiles[i];
+    OutputFilename := NewFileNameFromBase(FInputFile ,FOutputFile,FileToConvert, FOutputExt);
+
+    //Ensure directory exists
+    ForceDirectories(ExtractFilePath( OutputFilename));
 
     log('Ready to Execute' , VERBOSE);
     try
@@ -143,8 +173,8 @@ begin
         Wordapp.Visible := false;
         try
           //Open doc and save in requested format.
-          Wordapp.documents.Open(InputFile, false, true);
-          Wordapp.activedocument.Saveas(OutputFile ,OutputFileFormat);
+          Wordapp.documents.Open(FileToConvert, false, true);
+          Wordapp.activedocument.Saveas(OutputFilename ,OutputFileFormat);
           Wordapp.activedocument.Close;
         finally
           wordapp.quit();
@@ -170,6 +200,7 @@ begin
       end;
     finally
 
+    end;
     end;
 
 end;
@@ -248,9 +279,27 @@ begin
       FOutputFile := value;
       log('Output file is : ' + FOutputFile,CHATTY);
     end
+    else if id = '-OX' then
+    begin
+       FOutputExt := value;
+    end
     else if id = '-F' then
     begin
       FInputFile := value;
+
+      if DirectoryExists(FInputFile) then
+      begin
+         IsDirInput := true;
+         DoSubDirs := true;
+         ListFiles(finputfile, '*.doc',true,FInputFiles);
+      end
+      else
+      begin
+
+        IsFileInput := true;
+      end;
+
+
       log('Input File is : ' + FInputFile,CHATTY);
     end
     else if id  = '-Q' then
@@ -374,9 +423,37 @@ begin
   Log('Error: ' + Msg, ERRORS);
 end;
 
+function TDocumentConverter.NewFileNameFromBase(OldBase, NewBase,
+  FileName, NewExt : String): String;
+var
+  BaseLessFN : String;
+  NewFileName : String;
+begin
+  BaseLessFN :=  StringReplace(filename,oldbase,'',[rfReplaceAll]);
+ // BaseLessFN := BaseLessFN + '\';
+  NewFileName := NewBase + '\' + BaseLessFN;
+  NewFileName := ChangeFileExt(NewFileName , NewExt);
+  Result := NewFileName;
+end;
+
+procedure TDocumentConverter.SetDoSubDirs(const Value: Boolean);
+begin
+  FDoSubDirs := Value;
+end;
+
 procedure TDocumentConverter.SetInputFile(const Value: String);
 begin
   FInputFile := Value;
+end;
+
+procedure TDocumentConverter.SetIsDirInput(const Value: Boolean);
+begin
+  FIsDirInput := Value;
+end;
+
+procedure TDocumentConverter.SetIsFileInput(const Value: Boolean);
+begin
+  FIsFileInput := Value;
 end;
 
 procedure TDocumentConverter.SetLogFilename(const Value: String);
@@ -406,6 +483,11 @@ begin
     FLogFile.Free;
     FLogFile := nil;
   end;
+end;
+
+procedure TDocumentConverter.SetOutputExt(const Value: string);
+begin
+  FOutputExt := Value;
 end;
 
 procedure TDocumentConverter.SetOutputFile(const Value: String);
@@ -445,6 +527,33 @@ begin
     Result := false;
   end;
 end;
+
+procedure TDocumentConverter.ListFiles(const PathName, FileName : string; const InDir : boolean; outFiles: TStrings);
+var Rec  : TSearchRec;
+    Path : string;
+begin
+Path := IncludeTrailingBackslash(PathName);
+if FindFirst(Path + FileName, faAnyFile - faDirectory, Rec) = 0 then
+ try
+   repeat
+     outFiles.Add(Path + Rec.Name);
+   until FindNext(Rec) <> 0;
+ finally
+   FindClose(Rec);
+ end;
+
+If not InDir then Exit;
+
+if FindFirst(Path + '*.*', faDirectory, Rec) = 0 then
+ try
+   repeat
+    if ((Rec.Attr and faDirectory) <> 0)  and (Rec.Name<>'.') and (Rec.Name<>'..') then
+     ListFiles(Path + Rec.Name, FileName, True, outFiles);
+   until FindNext(Rec) <> 0;
+ finally
+   FindClose(Rec);
+ end;
+end; //procedure FileSearch
 
 procedure TConsoleLog.LogError(Log: String);
 begin

@@ -114,7 +114,7 @@
 						<VersionInfoKeys Name="Comments"/>
 					</VersionInfoKeys>
 					<Parameters>
-						<Parameters Name="RunParams">&quot;../exe/docto.exe&quot;   -f &quot;C:\Users\Toby\Documents\GitHub\DocTo\test\pie3.doc&quot;  -o &quot;C:\Users\Toby\Documents\GitHub\DocTo\test\GeneratedFiles\pie3out_wdFormatpdf.pdf&quot;  -TF  18 -L</Parameters>
+						<Parameters Name="RunParams">-f &quot;C:\Temp\recipeAll3\&quot; -O &quot;c:\temp\&quot; -T wdFormatText -OX .txt</Parameters>
 					</Parameters>
 					<Excluded_Packages>
 						<Excluded_Packages Name="$(BDSBIN)\dcloffice2k150.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
