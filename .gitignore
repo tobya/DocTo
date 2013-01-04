@@ -1,3 +1,14 @@
+#General
+*.zip
+temp/
+*.log
+test/out/
+test/generatedfiles/
+exe/help.txt
+
+*.group*
+
+
 #################
 ## Eclipse
 #################
@@ -81,12 +92,7 @@ _ReSharper*
 
 # Installshield output folder
 [Ee]xpress
-#General
-*.zip
-temp/
-*.log
-test/out/
-test/generatedfiles/
+
 
 
 
