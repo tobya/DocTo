@@ -1,6 +1,8 @@
 # DocTo
 
-Simple utility for converting a .doc file to any other supported format.  http://tobya.github.com/DocTo
+Simple utility for converting a .doc file to any other supported format such as .txt .rtf .pdf.  
+
+Further Information available at http://tobya.github.com/DocTo
 
 Must have Microsoft Word installed on host machine.
 
@@ -14,6 +16,11 @@ Convert Document to PDF (requires version of Microsoft Word that supports this).
 
      docto -f C:\Directory\MyFile.doc -O "C:\Output Directory\MyTextFile.pdf" -T wdFormatPDF
 
+Convert All Documents in Directory and its Sub Directories to PDF
+
+    docto -f "C:\Dir with Spaces\FilesToConvert\" -O "C:\DirToOutput" -T wdFormatPDF  -OX .pdf
+
+
 Command Line Help
 
      docto -h
@@ -23,21 +30,24 @@ Command Line Help
         Version:0.1ALPHA
         Command Line Parameters
         Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\MyDir\MyFile"
-          -H  This message
-          -F  Input File or Directory
-          -O  Output File or Directory to place converted Docs
-          -T  Format(Type) to convert file to, either integer or wdSaveFormat constant.
-              Available from http://msdn.microsoft.com/en-us/library/microsoft.office.interop.word.wdsaveformat.aspx
-              See current List Below.
-          -TF Force Format.  -T values are checked against current list compiled in and not passed if unavailable.
-              To future proof, -TF will pass through value without checking.
-              Word will return an "EOleException  Value out of range" error if invalid.
-              Use instead of -T not as well as.
-          -L  Log Level 0 Silent, 1 Standard, 10 VERBOSE
-              Default: 1 Standard
-          -G  Write Log to file in directory
-          -GL Log File Name to Use default 'DocTo.Log';
-          -Q  Quiet Mode: Equivalent to setting -L 0
+	  -H  This message
+	  -F  Input File or Directory
+	  -O  Output File or Directory to place converted Docs
+	  -OX Output Extension if -F is Directory.
+	  -T  Format(Type) to convert file to, either integer or wdSaveFormat constant.
+	      Available from http://msdn.microsoft.com/en-us/library/microsoft.office.interop.word.wdsaveformat.aspx
+	      See current List Below.
+	  -TF Force Format.  -T value if integer is checked against current list compiled in and not passed if unavailable.
+	      To future proof, -TF will pass through value without checking.
+	      Word will return an "EOleException  Value out of range" error if invalid.
+	      Use instead of -T.
+	  -L  Log Level 0 Silent, 1 Standard, 10 VERBOSE
+	      Default: 1 Standard
+	  -G  Write Log to file in directory
+	  -GL Log File Name to Use default 'DocTo.Log';
+	  -Q  Quiet Mode: Equivalent to setting -L 0
+
+     
 
         ERROR CODES:
         200 : Invalid File Format specified
