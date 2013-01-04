@@ -135,6 +135,10 @@ begin
   FInputFiles.Free;
 end;
 
+
+(*
+  Execute conversion on 1 or more files.
+*)
 function TDocumentConverter.Execute: string;
 var
   WordApp : OleVariant;
@@ -142,65 +146,63 @@ var
   i : integer;
   FileToConvert, OutputFilename : String;
 begin
+
     Continue := false;
     if (InputFile > '') and (OutputFile > '') and (OutputFileFormat > -1) then
     begin
       Continue := true;
     end;
 
-
-
-
     if not Continue  then HaltWithError(201, 'Input File, Output File and FileFormat must all be specified');
 
+    //Add file to InputFiles List if only one.
     if FInputFiles.Count = 0 then
     begin
       FInputFiles.Add(FInputFile);
     end;
 
+
     for i := 0 to FInputFiles.Count -1 do
     begin
-    FileToConvert := FInputFiles[i];
-    OutputFilename := NewFileNameFromBase(FInputFile ,FOutputFile,FileToConvert, FOutputExt);
+      FileToConvert := FInputFiles[i];
+      OutputFilename := NewFileNameFromBase(FInputFile ,FOutputFile,FileToConvert, FOutputExt);
 
-    //Ensure directory exists
-    ForceDirectories(ExtractFilePath( OutputFilename));
+      //Ensure directory exists
+      ForceDirectories(ExtractFilePath( OutputFilename));
 
-    log('Ready to Execute' , VERBOSE);
-    try
-      try
-        Wordapp :=  CreateOleObject('Word.Application');
-        Wordapp.Visible := false;
+      log('Ready to Execute' , VERBOSE);
         try
-          //Open doc and save in requested format.
-          Wordapp.documents.Open(FileToConvert, false, true);
-          Wordapp.activedocument.Saveas(OutputFilename ,OutputFileFormat);
-          Wordapp.activedocument.Close;
-        finally
-          wordapp.quit();
-        end;
-        result := OutputFile;
-      except
-      on E: EOleSysError do
-      begin
-        if pos('Invalid class string',E.Message) > 0 then
-        begin
-          HaltWithError(221,'Word Does not appear to be installed:' +E.ClassName + '  ' + e.Message);
-        end
-        else
-        begin
-          HaltWithError(220,E.ClassName + '  ' + e.Message);
+          Wordapp :=  CreateOleObject('Word.Application');
+          Wordapp.Visible := false;
+          try
+            //Open doc and save in requested format.
+            Wordapp.documents.Open(FileToConvert, false, true);
+            Wordapp.activedocument.Saveas(OutputFilename ,OutputFileFormat);
+            Wordapp.activedocument.Close;
+          finally
+            wordapp.quit();
+          end;
+          log(OutputFilename,STANDARD);
+          result := OutputFilename;
+        except
+          on E: EOleSysError do
+          begin
+            if pos('Invalid class string',E.Message) > 0 then
+            begin
+              HaltWithError(221,'Word Does not appear to be installed:' +E.ClassName + '  ' + e.Message);
+            end
+            else
+            begin
+              HaltWithError(220,E.ClassName + '  ' + e.Message);
+            end;
+
+          end;
+          on E: Exception do
+          begin
+            HaltWithError(220,E.ClassName + '  ' + e.Message);
+          end;
         end;
 
-      end;
-      on E: Exception do
-      begin
-        HaltWithError(220,E.ClassName + '  ' + e.Message);
-      end;
-      end;
-    finally
-
-    end;
     end;
 
 end;

@@ -6,7 +6,7 @@ Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\My
   -H  This message
   -F  Input File or Directory
   -O  Output File or Directory to place converted Docs
-  -OX Output Extensions if -O is Directory.
+  -OX Output Extension if -F is Directory.
   -T  Format(Type) to convert file to, either integer or wdSaveFormat constant.
       Available from http://msdn.microsoft.com/en-us/library/microsoft.office.interop.word.wdsaveformat.aspx
       See current List Below.
