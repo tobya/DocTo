@@ -8,6 +8,8 @@ Must have Microsoft Word installed on host machine.
 
 ## Examples
 
+### Single
+
 Convert Document to text
 
     docto -f C:\Directory\MyFile.doc -O "C:\Output Directory\MyTextFile.txt" -T wdFormatText
@@ -15,6 +17,8 @@ Convert Document to text
 Convert Document to PDF (requires version of Microsoft Word that supports this).
 
      docto -f C:\Directory\MyFile.doc -O "C:\Output Directory\MyTextFile.pdf" -T wdFormatPDF
+
+### Multiple Files and Folders
 
 Convert All Documents in Directory and its Sub Directories to PDF
 
@@ -27,7 +31,7 @@ Command Line Help
 
 
         Help
-        Version:0.1ALPHA
+        Version:0.3ALPHA
         Command Line Parameters
         Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\MyDir\MyFile"
 	  -H  This message
