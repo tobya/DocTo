@@ -19,6 +19,8 @@ Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\My
   -G  Write Log to file in directory
   -GL Log File Name to Use default 'DocTo.Log';
   -Q  Quiet Mode: Equivalent to setting -L 0
+  -W  Webhook: Url to call on events (plain url no params). See -HW for more details.
+  -HW Webhook Help.
 
 
 ERROR CODES:
