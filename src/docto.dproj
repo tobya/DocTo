@@ -64,6 +64,7 @@
 			<None Include="res\wdFormats.txt"/>
 			<None Include="res\HelpLog.txt"/>
 			<None Include="res\HelpJSONLog.txt"/>
+			<None Include="res\HelpWebHook.txt"/>
 			<BuildConfiguration Include="Debug">
 				<Key>Cfg_2</Key>
 				<CfgParent>Base</CfgParent>
@@ -92,7 +93,7 @@
 						<VersionInfo Name="MajorVer">0</VersionInfo>
 						<VersionInfo Name="MinorVer">3</VersionInfo>
 						<VersionInfo Name="Release">2</VersionInfo>
-						<VersionInfo Name="Build">13</VersionInfo>
+						<VersionInfo Name="Build">14</VersionInfo>
 						<VersionInfo Name="Debug">True</VersionInfo>
 						<VersionInfo Name="PreRelease">True</VersionInfo>
 						<VersionInfo Name="Special">False</VersionInfo>
@@ -104,7 +105,7 @@
 					<VersionInfoKeys>
 						<VersionInfoKeys Name="CompanyName">Toflidium Software</VersionInfoKeys>
 						<VersionInfoKeys Name="FileDescription">DocTo - Convert doc files to any available format</VersionInfoKeys>
-						<VersionInfoKeys Name="FileVersion">0.3.2.13</VersionInfoKeys>
+						<VersionInfoKeys Name="FileVersion">0.3.2.14</VersionInfoKeys>
 						<VersionInfoKeys Name="InternalName"/>
 						<VersionInfoKeys Name="LegalCopyright">Toby Allen</VersionInfoKeys>
 						<VersionInfoKeys Name="LegalTrademarks"/>

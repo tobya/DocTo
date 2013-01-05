@@ -45,6 +45,7 @@ type
     FIsDirInput: Boolean;
     FOutputExt: string;
     FWebHook : String;
+    FHaltOnWordError: Boolean;
     procedure SetInputFile(const Value: String);
     procedure SetOutputFile(const Value: String);
     procedure SetOutputFileFormat(const Value: Integer);
@@ -63,6 +64,7 @@ type
     procedure SetOutputExt(const Value: string);
     function GetUrl(Url: string): String;
     function URLEncode(Param : String): String;
+    procedure SetHaltOnWordError(const Value: Boolean);
     property IsFileInput : Boolean read FIsFileInput write SetIsFileInput;
     property IsDirInput : Boolean read FIsDirInput write SetIsDirInput;
     property DoSubDirs : Boolean read FDoSubDirs write SetDoSubDirs;
@@ -86,6 +88,7 @@ type
     Property LogToFile : Boolean read FLogToFile write SetLogToFile;
     property LogFilename: String read FLogFilename write SetLogFilename;
     Property Version : String read FVersionString;
+    property HaltOnWordError : Boolean read FHaltOnWordError write SetHaltOnWordError;
 
   end;
 
@@ -157,6 +160,7 @@ var
   Continue : Boolean;
   i : integer;
   FileToConvert, OutputFilename : String;
+  OV : olevariant;
 begin
 
     Continue := false;
@@ -193,7 +197,23 @@ begin
 
             //Open doc and save in requested format.
             Wordapp.documents.Open(FileToConvert, false, true);
-            Wordapp.activedocument.Saveas(OutputFilename ,OutputFileFormat);
+                                          (*,
+                                          false,   //Dim AddToRecentFiles As Object
+                                          ov,  //Dim PasswordDocument As Object
+                                          ov,  //Dim PasswordTemplate As Object
+                                          ov,  //Dim Revert As Object
+                                          ov,  //Dim WritePasswordDocument As Object
+                                          ov,  //Dim WritePasswordTemplate As Object
+                                            //Dim Format As Object
+                                            //Dim Encoding As Object
+                                            //Dim Visible As Object
+                                            //Dim OpenAndRepair As Object
+                                            //Dim DocumentDirection As Object
+                                            //Dim NoEncodingDialog As Object*)
+            Wordapp.activedocument.Saveas(OutputFilename ,OutputFileFormat
+
+            );
+
             Wordapp.activedocument.Close;
 
             //Make a call to webhook if it exists
@@ -210,13 +230,28 @@ begin
             end
             else
             begin
+              if (HaltOnWordError) then
+              begin
               HaltWithError(220,E.ClassName + '  ' + e.Message);
+              end
+              else
+              begin
+                logerror(E.ClassName + '  ' + e.Message);
+              end;
             end;
 
           end;
           on E: Exception do
           begin
-            HaltWithError(220,E.ClassName + '  ' + e.Message + ' ' + FileToConvert + ':' + OutputFilename);
+              if (HaltOnWordError) then
+              begin
+                HaltWithError(220,E.ClassName + '  ' + e.Message + ' ' + FileToConvert + ':' + OutputFilename);
+              end
+              else
+              begin
+                LogError(E.ClassName + '  ' + e.Message + ' ' + FileToConvert + ':' + OutputFilename);
+
+              end;
           end;
         end;
 
@@ -267,6 +302,8 @@ begin
 
   OutputLog := true;
   OutputLogFile := '';
+
+  HaltOnWordError := true;
 
   log('Loading Configuration...',VERBOSE);
   log('Parameter Count is ' + inttostr(params.Count), VERBOSE);
@@ -381,12 +418,14 @@ begin
     begin
        FLogFilename := value;
        LogToFile := true;
-
-
     end
     else if (id = '-W') then
     begin
       FWebHook := value;
+    end
+    else if (id = '-X') then
+    begin
+      HaltOnWordError := not(lowercase(value) = 'false');
     end
     else if (id = '-H') then
     begin
@@ -478,6 +517,11 @@ end;
 procedure TDocumentConverter.SetDoSubDirs(const Value: Boolean);
 begin
   FDoSubDirs := Value;
+end;
+
+procedure TDocumentConverter.SetHaltOnWordError(const Value: Boolean);
+begin
+  FHaltOnWordError := Value;
 end;
 
 procedure TDocumentConverter.SetInputFile(const Value: String);

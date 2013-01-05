@@ -1,5 +1,5 @@
 Help
-Version:0.3ALPHA
+Version:0.4ALPHA
 Source: http://github.com/tobya/DocTo/
 Command Line Parameters
 Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\MyDir\MyFile"
@@ -21,6 +21,7 @@ Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\My
   -Q  Quiet Mode: Equivalent to setting -L 0
   -W  Webhook: Url to call on events (plain url no params). See -HW for more details.
   -HW Webhook Help.
+  -X  Halt on Word Error: Default True;  If you have trouble with somefiles not converting, set this to false.
 
 
 ERROR CODES:
