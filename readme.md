@@ -6,6 +6,8 @@ Further Information available at http://tobya.github.com/DocTo
 
 Must have Microsoft Word installed on host machine.
 
+Download From Here - http://toflidium.com/downloads/docto.zip
+
 ## Examples
 
 ### Single

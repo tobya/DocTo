@@ -161,7 +161,9 @@ begin
       FInputFiles.Add(FInputFile);
     end;
 
-
+    try
+      Wordapp :=  CreateOleObject('Word.Application');
+      Wordapp.Visible := false;
     for i := 0 to FInputFiles.Count -1 do
     begin
       FileToConvert := FInputFiles[i];
@@ -171,17 +173,13 @@ begin
       ForceDirectories(ExtractFilePath( OutputFilename));
 
       log('Ready to Execute' , VERBOSE);
-        try
-          Wordapp :=  CreateOleObject('Word.Application');
-          Wordapp.Visible := false;
+
           try
             //Open doc and save in requested format.
             Wordapp.documents.Open(FileToConvert, false, true);
             Wordapp.activedocument.Saveas(OutputFilename ,OutputFileFormat);
             Wordapp.activedocument.Close;
-          finally
-            wordapp.quit();
-          end;
+
           log(OutputFilename,STANDARD);
           result := OutputFilename;
         except
@@ -203,6 +201,9 @@ begin
           end;
         end;
 
+    end;
+    finally
+      wordapp.quit();
     end;
 
 end;
