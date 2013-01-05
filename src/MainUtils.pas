@@ -13,7 +13,7 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMA
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ****************************************************************)
 interface
-uses classes, WordUtils, sysutils, ActiveX, ComObj,
+uses classes, WordUtils, sysutils, ActiveX, ComObj, WinINet, Types,
      ResourceUtils,
      PathUtils;
 
@@ -44,6 +44,7 @@ type
     FIsFileInput: Boolean;
     FIsDirInput: Boolean;
     FOutputExt: string;
+    FWebHook : String;
     procedure SetInputFile(const Value: String);
     procedure SetOutputFile(const Value: String);
     procedure SetOutputFileFormat(const Value: Integer);
@@ -60,7 +61,8 @@ type
     procedure SetIsFileInput(const Value: Boolean);
     function NewFileNameFromBase(OldBase, NewBase, FileName, NewExt: String): String;
     procedure SetOutputExt(const Value: string);
-
+    function GetUrl(Url: string): String;
+    function URLEncode(Param : String): String;
     property IsFileInput : Boolean read FIsFileInput write SetIsFileInput;
     property IsDirInput : Boolean read FIsDirInput write SetIsDirInput;
     property DoSubDirs : Boolean read FDoSubDirs write SetDoSubDirs;
@@ -73,6 +75,7 @@ type
 
     procedure Log(Msg: String; Level  : Integer = 0);
     procedure LogError(Msg: String);
+    procedure CallWebHook(Params: String);
     function Execute() : string;
     property OutputLog : Boolean read FOutputLog write SetOutputLog;
     property OutputLogFile : String read FOutputLogFile write SetOutputLogFile;
@@ -83,6 +86,7 @@ type
     Property LogToFile : Boolean read FLogToFile write SetLogToFile;
     property LogFilename: String read FLogFilename write SetLogFilename;
     Property Version : String read FVersionString;
+
   end;
 
 
@@ -103,6 +107,14 @@ implementation
 procedure  TConsoleLog.Log(Sender: TObject; Log: String);
 begin
   Writeln(Log);
+end;
+
+procedure TDocumentConverter.CallWebHook(Params: String);
+begin
+  if FWebHook > '' then
+  begin
+    GetURL(FWebHook + '?' + Params);
+  end;
 end;
 
 constructor TDocumentConverter.Create;
@@ -161,7 +173,9 @@ begin
       FInputFiles.Add(FInputFile);
     end;
 
-
+   try
+    Wordapp :=  CreateOleObject('Word.Application');
+    Wordapp.Visible := false;
     for i := 0 to FInputFiles.Count -1 do
     begin
       FileToConvert := FInputFiles[i];
@@ -172,16 +186,14 @@ begin
 
       log('Ready to Execute' , VERBOSE);
         try
-          Wordapp :=  CreateOleObject('Word.Application');
-          Wordapp.Visible := false;
-          try
+
+
+
             //Open doc and save in requested format.
             Wordapp.documents.Open(FileToConvert, false, true);
             Wordapp.activedocument.Saveas(OutputFilename ,OutputFileFormat);
             Wordapp.activedocument.Close;
-          finally
-            wordapp.quit();
-          end;
+            CallWebHook('action=convert&type='+ FOutputFileFormatString + '&OutputFileName=' + URLEncode(OutputFilename));
           log(OutputFilename,STANDARD);
           result := OutputFilename;
         except
@@ -199,11 +211,16 @@ begin
           end;
           on E: Exception do
           begin
-            HaltWithError(220,E.ClassName + '  ' + e.Message);
+            HaltWithError(220,E.ClassName + '  ' + e.Message + ' ' + FileToConvert + ':' + OutputFilename);
           end;
         end;
 
     end;
+
+    finally
+    wordapp.quit();
+    end;
+
 
 end;
 
@@ -362,6 +379,10 @@ begin
 
 
     end
+    else if (id = '-W') then
+    begin
+      FWebHook := value;
+    end
     else if (id = '-H') then
     begin
       HelpStrings := TStringList.Create;
@@ -517,6 +538,11 @@ begin
   FOutputLogFile := Value;
 end;
 
+function TDocumentConverter.URLEncode(Param: String): String;
+begin
+ result :=  param;
+end;
+
 function IsNumber(Str: String) : Boolean;
 var
   i : integer;
@@ -561,6 +587,41 @@ procedure TConsoleLog.LogError(Log: String);
 begin
 
 end;
+
+
+
+function TDocumentConverter.GetUrl(Url: string): String;
+var
+  NetHandle: HINTERNET;
+  UrlHandle: HINTERNET;
+  Buffer: array[0..1023] of byte;
+  BytesRead: DWord;
+  StrBuffer: UTF8String;
+begin
+  Result := '';
+  NetHandle := InternetOpen('Delphi XE', INTERNET_OPEN_TYPE_PRECONFIG, nil, nil, 0);
+  if Assigned(NetHandle) then
+    try
+      UrlHandle := InternetOpenUrl(NetHandle, PChar(Url), nil, 0, INTERNET_FLAG_RELOAD, 0);
+      if Assigned(UrlHandle) then
+        try
+          repeat
+            InternetReadFile(UrlHandle, @Buffer, SizeOf(Buffer), BytesRead);
+            SetString(StrBuffer, PAnsiChar(@Buffer[0]), BytesRead);
+            Result := Result + StrBuffer;
+          until BytesRead = 0;
+        finally
+          InternetCloseHandle(UrlHandle);
+        end
+      else
+        raise Exception.CreateFmt('Cannot open URL %s', [Url]);
+    finally
+      InternetCloseHandle(NetHandle);
+    end
+  else
+    raise Exception.Create('Unable to initialize Wininet');
+end;
+
 
 
 end.
