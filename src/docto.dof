@@ -90,7 +90,7 @@ MaxStackSize=1048576
 ImageBase=4194304
 ExeDescription=
 [Directories]
-OutputDir=..\bin
+OutputDir=..\exe
 UnitOutputDir=..\dcu
 PackageDLLOutputDir=
 PackageDCPOutputDir=
@@ -113,26 +113,26 @@ RootDir=
 IncludeVerInfo=1
 AutoIncBuild=0
 MajorVer=0
-MinorVer=2
-Release=0
-Build=1
-Debug=0
-PreRelease=0
+MinorVer=3
+Release=2
+Build=14
+Debug=1
+PreRelease=1
 Special=0
 Private=0
 DLL=0
 Locale=6153
 CodePage=1252
 [Version Info Keys]
-CompanyName=Toflidium Software 
+CompanyName=Toflidium Software
 FileDescription=DocTo - Convert doc files to any available format
-FileVersion=0.2.0.1
+FileVersion=0.3.2.14
 InternalName=
 LegalCopyright=Toby Allen
 LegalTrademarks=
 OriginalFilename=docto.exe
 ProductName=DocTo
-ProductVersion=0.2.0.0
+ProductVersion=0.3.0.0
 Comments=
 [Excluded Packages]
 c:\program files (x86)\borland\delphi7\Projects\Bpl\tfmStandAlone_D7.bpl=TFM Standalone Components D7
@@ -143,5 +143,6 @@ Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
 Count=1
 Item0=..\dcu
 [HistoryLists\hlOutputDirectorry]
-Count=1
-Item0=..\bin
+Count=2
+Item0=..\exe
+Item1=..\bin

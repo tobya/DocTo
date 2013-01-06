@@ -1,4 +1,6 @@
-#General
+############
+# Project
+############
 *.zip
 temp/
 *.log
@@ -8,6 +10,14 @@ exe/help.txt
 
 *.group*
 
+############
+# Delphi
+############
+
+__history/
+*.~*
+*.dcu
+*.identcache
 
 #################
 ## Eclipse
@@ -175,14 +185,7 @@ pip-log.txt
 # Mac crap
 .DS_Store
 
-############
-# Delphi
-############
 
-__history/
-*.~*
-*.dcu
-*.identcache
 
 
 
