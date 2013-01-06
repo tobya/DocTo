@@ -19,6 +19,7 @@ Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\My
   -G  Write Log to file in directory
   -GL Log File Name to Use default 'DocTo.Log';
   -Q  Quiet Mode: Equivalent to setting -L 0
+  -R  Remove Files after successful conversion: Default false;
   -W  Webhook: Url to call on events (plain url no params). See -HW for more details.
   -HW Webhook Help.
   -X  Halt on Word Error: Default True;  If you have trouble with somefiles not converting, set this to false.

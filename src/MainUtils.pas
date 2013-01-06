@@ -46,6 +46,7 @@ type
     FOutputExt: string;
     FWebHook : String;
     FHaltOnWordError: Boolean;
+    FRemoveFileOnConvert: boolean;
     procedure SetInputFile(const Value: String);
     procedure SetOutputFile(const Value: String);
     procedure SetOutputFileFormat(const Value: Integer);
@@ -65,20 +66,25 @@ type
     function GetUrl(Url: string): String;
     function URLEncode(Param : String): String;
     procedure SetHaltOnWordError(const Value: Boolean);
+    procedure SetRemoveFileOnConvert(const Value: boolean);
     property IsFileInput : Boolean read FIsFileInput write SetIsFileInput;
     property IsDirInput : Boolean read FIsDirInput write SetIsDirInput;
     property DoSubDirs : Boolean read FDoSubDirs write SetDoSubDirs;
     property OutputExt : string read FOutputExt write SetOutputExt;
+    property RemoveFileOnConvert: boolean read FRemoveFileOnConvert write SetRemoveFileOnConvert;
   public
 
     Constructor Create();
     Destructor Destroy(); override;
     procedure LoadConfig(Params: TStrings);
 
+
+    function Execute() : string;
+
     procedure Log(Msg: String; Level  : Integer = 0);
     procedure LogError(Msg: String);
     procedure CallWebHook(Params: String);
-    function Execute() : string;
+
     property OutputLog : Boolean read FOutputLog write SetOutputLog;
     property OutputLogFile : String read FOutputLogFile write SetOutputLogFile;
     Property InputFile : String read FInputFile write SetInputFile;
@@ -123,7 +129,7 @@ end;
 constructor TDocumentConverter.Create;
 begin
   ConsoleLog := TConsoleLog.Create();
-  FVersionString := '0.1ALPHA';
+  FVersionString := '0.3ALPHA';
 
   //Initial values
   FOutputFileFormatString := '';
@@ -133,6 +139,9 @@ begin
   FLogLevel := 1;
   FLogtoFile := false;
   FLogFilename := 'DocTo.Log';
+  FRemoveFileOnConvert := false;
+  FWebHook := '';
+  FOutputExt := '';
 
   FInputFiles := TStringList.Create;
 end;
@@ -160,7 +169,7 @@ var
   Continue : Boolean;
   i : integer;
   FileToConvert, OutputFilename : String;
-  OV : olevariant;
+
 begin
 
     Continue := false;
@@ -192,29 +201,21 @@ begin
       log('Ready to Execute' , VERBOSE);
        try
 
-
-
-
             //Open doc and save in requested format.
             Wordapp.documents.Open(FileToConvert, false, true);
-                                          (*,
-                                          false,   //Dim AddToRecentFiles As Object
-                                          ov,  //Dim PasswordDocument As Object
-                                          ov,  //Dim PasswordTemplate As Object
-                                          ov,  //Dim Revert As Object
-                                          ov,  //Dim WritePasswordDocument As Object
-                                          ov,  //Dim WritePasswordTemplate As Object
-                                            //Dim Format As Object
-                                            //Dim Encoding As Object
-                                            //Dim Visible As Object
-                                            //Dim OpenAndRepair As Object
-                                            //Dim DocumentDirection As Object
-                                            //Dim NoEncodingDialog As Object*)
-            Wordapp.activedocument.Saveas(OutputFilename ,OutputFileFormat
-
-            );
+            Wordapp.activedocument.Saveas(OutputFilename ,OutputFileFormat );
 
             Wordapp.activedocument.Close;
+
+            if RemoveFileOnConvert then
+            begin
+              //Check file exists and Delete if requested
+              if FileExists(OutputFilename) then
+              begin
+                DeleteFile(FileToConvert);
+                Log('Deleted:' + FileToConvert,STANDARD);
+              end;
+            end;
 
             //Make a call to webhook if it exists
             CallWebHook('action=convert&type='+ FOutputFileFormatString + '&ouputfilename=' + URLEncode(OutputFilename));
@@ -419,6 +420,10 @@ begin
        FLogFilename := value;
        LogToFile := true;
     end
+    else if (id = '-R') then
+    begin
+      RemoveFileOnConvert  := lowercase(value) = 'true';
+    end
     else if (id = '-W') then
     begin
       FWebHook := value;
@@ -427,7 +432,9 @@ begin
     begin
       HaltOnWordError := not(lowercase(value) = 'false');
     end
-    else if (id = '-H') then
+    else if (id = '-H') or
+            (id = '-?') or
+            (id = '?') then
     begin
       HelpStrings := TStringList.Create;
       try
@@ -596,6 +603,11 @@ end;
 procedure TDocumentConverter.SetOutputLogFile(const Value: String);
 begin
   FOutputLogFile := Value;
+end;
+
+procedure TDocumentConverter.SetRemoveFileOnConvert(const Value: boolean);
+begin
+  FRemoveFileOnConvert := Value;
 end;
 
 function TDocumentConverter.URLEncode(Param: String): String;
