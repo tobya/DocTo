@@ -6,6 +6,14 @@ The Webhook URL will be called on the following events with the following parame
     - action=convert
     - type=wdFormatType (or int if no matching format type)
     - ouputfilename=File being written to.
+    - inputfilename=File being converted.
+
+  - Error
+    - action=error
+    - type=wdFormatType (or int if no matching format type)
+    - ouputfilename=File being written to.
+    - inputfilename=File being converted.
+    - error=Error Message
 
 Return value is ignored, no errors are logged.  This is a fire and forget Webhook.
 

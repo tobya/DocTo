@@ -218,7 +218,7 @@ begin
             end;
 
             //Make a call to webhook if it exists
-            CallWebHook('action=convert&type='+ FOutputFileFormatString + '&ouputfilename=' + URLEncode(OutputFilename));
+            CallWebHook('action=convert&type='+ FOutputFileFormatString + '&ouputfilename=' + URLEncode(OutputFilename)+ '&inputfilename=' + URLEncode(InputFile));
 
           log(OutputFilename,STANDARD);
           result := OutputFilename;
@@ -231,6 +231,10 @@ begin
             end
             else
             begin
+
+              CallWebHook('action=error&type='+ FOutputFileFormatString + '&ouputfilename=' + URLEncode(OutputFilename)+ '&inputfilename=' + URLEncode(InputFile)
+                          + '&error=' + URLEncode(E.ClassName + '  ' + e.Message));
+
               if (HaltOnWordError) then
               begin
               HaltWithError(220,E.ClassName + '  ' + e.Message);
