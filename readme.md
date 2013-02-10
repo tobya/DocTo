@@ -1,6 +1,7 @@
 # DocTo
 
-Simple utility for converting a .doc file to any other supported format such as .txt .rtf .pdf.  
+Simple utility for converting a Microsoft Word Document '.doc' file to any other supported format 
+such as .txt .rtf .pdf.  
 
 Further Information available at http://tobya.github.com/DocTo
 
@@ -12,17 +13,17 @@ Download From Here - http://toflidium.com/downloads/docto.zip
 
 ### Single
 
-Convert Document to text
+Convert Microsoft Word Document to text
 
     docto -f C:\Directory\MyFile.doc -O "C:\Output Directory\MyTextFile.txt" -T wdFormatText
 
-Convert Document to PDF (requires version of Microsoft Word that supports this).
+Convert Microsoft Word Document to PDF (requires version of Microsoft Word that supports this).
 
      docto -f C:\Directory\MyFile.doc -O "C:\Output Directory\MyTextFile.pdf" -T wdFormatPDF
 
 ### Multiple Files and Folders
 
-Convert All Documents in Directory and its Sub Directories to PDF
+Convert All Microsoft Word Documents in Directory and its Sub Directories to PDF
 
     docto -f "C:\Dir with Spaces\FilesToConvert\" -O "C:\DirToOutput" -T wdFormatPDF  -OX .pdf
 
