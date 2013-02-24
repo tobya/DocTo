@@ -7,6 +7,8 @@ Further Information available at http://tobya.github.com/DocTo
 
 Must have Microsoft Word installed on host machine.
 
+Licensced in source and binary form under MIT Open Source License, see License.txt for details
+
 Download From Here - http://toflidium.com/downloads/docto.zip
 
 ## Examples
