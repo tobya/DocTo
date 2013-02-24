@@ -32,6 +32,7 @@ var
   paramlist : TStringlist;
   Logger : TConsoleLog;
   DocConv : TDocumentConverter;
+  LogResult : String;
 begin
 
   paramlist := TStringlist.create;
@@ -44,9 +45,10 @@ begin
   end;
 
    DocConv.LoadConfig(paramlist);
-   CoInitialize(nil);
-   DocConv.log(   DocConv.Execute);
 
+   CoInitialize(nil);
+   LogResult :=  DocConv.Execute
+   DocConv.log( LogResult );
 
    CoUninitialize;
 
