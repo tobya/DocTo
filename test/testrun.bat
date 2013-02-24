@@ -6,4 +6,10 @@ REM Variables will be %%i (%%j is created automatically)
 REM execute docto inserting variables 
 REM %~d0 and %~p0 together give the full directory this batch file is executing in.
 
-FOR /F "eol=; tokens=1,2* delims=, " %%i in (testdata.txt) do "../exe/docto.exe"  -f "%~d0%~p0pie3.doc"  -o "%~d0%~p0GeneratedFiles\pie3out_%%i.%%j"  -T  %%i
+
+
+REM Individually try each format on Test Document
+FOR /F "eol=; tokens=1,2* delims=, " %%i in (testdata.txt) do "../exe/docto.exe"  -f "%~d0%~p0\Inputfiles\pie3.doc"  -o "%~d0%~p0GeneratedFiles\pie3out_%%i.%%j"  -T  %%i
+
+REM Try on Directory
+"../exe/docto.exe"  -f "%~d0%~p0Inputfiles\"  -o "%~d0%~p0GeneratedFiles"    -T  wdFormatPDF -OX pdf

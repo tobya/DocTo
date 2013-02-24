@@ -1,4 +1,6 @@
 program docto;
+{$IFOPT D-}{$WEAKLINKRTTI ON}{$ENDIF}
+{$RTTI EXPLICIT METHODS([]) PROPERTIES([]) FIELDS([])}
 (*************************************************************
 Copyright © 2012 Toby Allen (http://github.com/tobya)
 
@@ -47,7 +49,7 @@ begin
    DocConv.LoadConfig(paramlist);
 
    CoInitialize(nil);
-   LogResult :=  DocConv.Execute
+   LogResult :=  DocConv.Execute;
    DocConv.log( LogResult );
 
    CoUninitialize;

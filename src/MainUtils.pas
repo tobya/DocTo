@@ -13,8 +13,7 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMA
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ****************************************************************)
 interface
-uses classes, WordUtils, sysutils, ActiveX, ComObj, WinINet, Types,
-     ResourceUtils,
+uses classes, WordUtils, sysutils, ActiveX, ComObj, WinINet,   Types,  ResourceUtils,
      PathUtils;
 
 type
@@ -45,8 +44,11 @@ type
     FIsDirInput: Boolean;
     FOutputExt: string;
     FWebHook : String;
+
     FHaltOnWordError: Boolean;
     FRemoveFileOnConvert: boolean;
+
+    WordApp : OleVariant;
     procedure SetInputFile(const Value: String);
     procedure SetOutputFile(const Value: String);
     procedure SetOutputFileFormat(const Value: Integer);
@@ -165,7 +167,7 @@ end;
 *)
 function TDocumentConverter.Execute: string;
 var
-  WordApp : OleVariant;
+
   Continue : Boolean;
   i : integer;
   FileToConvert, OutputFilename : String;
@@ -193,10 +195,19 @@ begin
     for i := 0 to FInputFiles.Count -1 do
     begin
       FileToConvert := FInputFiles[i];
-      OutputFilename := NewFileNameFromBase(FInputFile ,FOutputFile,FileToConvert, FOutputExt);
+      if IsDirInput then
+      begin
+        OutputFilename := NewFileNameFromBase(FInputFile ,FOutputFile,FileToConvert, FOutputExt);
+      end
+      else
+      begin
+        OutputFilename :=  OutputFile;
+      end;
 
-      //Ensure directory exists
-      ForceDirectories(ExtractFilePath( OutputFilename));
+        //Ensure directory exists
+        ForceDirectories(ExtractFilePath( OutputFilename));
+
+
 
       log('Ready to Execute' , VERBOSE);
        try
@@ -237,11 +248,18 @@ begin
 
               if (HaltOnWordError) then
               begin
+                log('FileToConvert:' + FileToConvert);
+                log('OutputFile:' + OutputFilename);
+                log('Ext' + inttostr(OutputFileFormat));
               HaltWithError(220,E.ClassName + '  ' + e.Message);
               end
               else
               begin
+                log('FileToConvert:' + FileToConvert);
+                log('OutputFile:' + OutputFilename);
+                log('Ext' + inttostr(OutputFileFormat));
                 logerror(E.ClassName + '  ' + e.Message);
+
               end;
             end;
 
@@ -263,6 +281,7 @@ begin
     end;
 
     finally
+
     wordapp.quit();
     end;
 
@@ -275,6 +294,11 @@ procedure TDocumentConverter.HaltWithError(ErrorNo: Integer; Msg: String);
 begin
   LogError(Msg);
   LogError('Exiting with Error Code : ' + inttostr(ErrorNo));
+
+  if not VarIsEmpty(WordApp) then
+  begin
+    WordApp.Quit();
+  end;
   Halt(ErrorNo);
 end;
 
@@ -352,7 +376,7 @@ begin
     else if id = '-F' then
     begin
       FInputFile := value;
-
+      IsFileInput := true;
       if DirectoryExists(FInputFile) then
       begin
          IsDirInput := true;
