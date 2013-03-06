@@ -11,6 +11,15 @@ Licensced in source and binary form under MIT Open Source License, see License.t
 
 Download From Here - https://sourceforge.net/projects/docto/files/
 
+## Features
+
+  1. Convert Doc/RTF/Text file to any Word SaveAs Type Doc/Text/RTF/PDF
+  1. Single File Conversion
+  1. Multiple / Directory File Conversion
+  1. Delete after conversion
+  1. Fire Webhook one each conversion.
+  
+
 ## Examples
 
 ### Single
@@ -29,16 +38,25 @@ Convert All Microsoft Word Documents in Directory and its Sub Directories to PDF
 
     docto -f "C:\Dir with Spaces\FilesToConvert\" -O "C:\DirToOutput" -T wdFormatPDF  -OX .pdf
 
+Delete Origional Files after conversion.
 
-Command Line Help
+    docto -f "C:\Dir with Spaces\FilesToConvert\" -O "C:\DirToOutput" -T wdFormatPDF  -OX .pdf -R
+
+Add a Webhook to fire on each conversion
+
+    docto -f "C:\Dir with Spaces\FilesToConvert\" -O "C:\DirToOutput" -T wdFormatPDF  -OX .pdf  -R -W http://toflidium.com/webhooks/docto/webhook_test.php
+
+
+## Command Line Help
 
      docto -h
 
 
-        Help
-        Version:0.3ALPHA
-        Command Line Parameters
-        Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\MyDir\MyFile"
+	Help
+	Version:0.4ALPHA
+	Source: http://github.com/tobya/DocTo/
+	Command Line Parameters
+	Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\MyDir\MyFile"
 	  -H  This message
 	  -F  Input File or Directory
 	  -O  Output File or Directory to place converted Docs
@@ -55,15 +73,19 @@ Command Line Help
 	  -G  Write Log to file in directory
 	  -GL Log File Name to Use default 'DocTo.Log';
 	  -Q  Quiet Mode: Equivalent to setting -L 0
-
-     
-
-        ERROR CODES:
-        200 : Invalid File Format specified
-        201 : Insufficient Inputs.  Minimum of Input File, Output File & Type
-        203 : Unknown switch in command
-        220 : Word or COM Error
-        221 : Word not Installed
+	  -R  Remove Files after successful conversion: Default false;
+	  -W  Webhook: Url to call on events (plain url no params). See -HW for more details.
+	  -HW Webhook Help.
+	  -X  Halt on Word Error: Default True;  If you have trouble with somefiles not converting, set this to false.
+	
+	
+	ERROR CODES:
+	200 : Invalid File Format specified
+	201 : Insufficient Inputs.  Minimum of Input File, Output File & Type
+	202 : Incorrect switches.  Switch requires value
+	203 : Unknown switch in command
+	220 : Word or COM Error
+	221 : Word not Installed
 
 
         FILE FORMATS
