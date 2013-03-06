@@ -32,7 +32,6 @@ uses
 var
   i : integer;
   paramlist : TStringlist;
-  Logger : TConsoleLog;
   DocConv : TDocumentConverter;
   LogResult : String;
 begin

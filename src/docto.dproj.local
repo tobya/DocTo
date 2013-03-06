@@ -2,25 +2,38 @@
 <BorlandProject>
 	<Transactions>
     <Transaction>2012/12/14 20:13:32.000.017,=C:\Users\Toby\Documents\GitHub\docto\New1.rc</Transaction>
-    <Transaction>2012/12/14 20:14:07.000.617,C:\Users\Toby\Documents\GitHub\docto\wdFormats.rc=C:\Users\Toby\Documents\GitHub\docto\New1.rc</Transaction>
+    <Transaction>2012/12/14 20:14:07.000.617,C:\Users\Toby\Documents\GitHub\docto\New1.rc=C:\Users\Toby\Documents\GitHub\docto\wdFormats.rc</Transaction>
     <Transaction>2012/12/14 20:19:49.000.070,=C:\Users\Toby\Documents\GitHub\docto\New1.txt</Transaction>
-    <Transaction>2012/12/14 20:20:09.000.697,C:\Users\Toby\Documents\GitHub\docto\res\wdFormats.txt=C:\Users\Toby\Documents\GitHub\docto\New1.txt</Transaction>
+    <Transaction>2012/12/14 20:20:09.000.697,C:\Users\Toby\Documents\GitHub\docto\New1.txt=C:\Users\Toby\Documents\GitHub\docto\res\wdFormats.txt</Transaction>
     <Transaction>2012/12/17 21:29:42.000.297,=C:\Users\Toby\Documents\GitHub\DocTo\readme.md</Transaction>
     <Transaction>2012/12/20 19:08:10.000.906,=C:\Users\Toby\Documents\GitHub\DocTo\src\res\wdFormats.txt</Transaction>
     <Transaction>2012/12/20 19:08:24.000.807,=C:\Users\Toby\Documents\GitHub\DocTo\src\New1.txt</Transaction>
-    <Transaction>2012/12/20 19:10:43.000.407,C:\Users\Toby\Documents\GitHub\DocTo\src\res\HelpLog.txt=C:\Users\Toby\Documents\GitHub\DocTo\src\New1.txt</Transaction>
+    <Transaction>2012/12/20 19:10:43.000.407,C:\Users\Toby\Documents\GitHub\DocTo\src\New1.txt=C:\Users\Toby\Documents\GitHub\DocTo\src\res\HelpLog.txt</Transaction>
     <Transaction>2012/12/20 19:11:29.000.496,=C:\Users\Toby\Documents\GitHub\DocTo\src\Unit1.pas</Transaction>
-    <Transaction>2012/12/20 19:11:39.000.877,C:\Users\Toby\Documents\GitHub\DocTo\src\ResourceUtils.pas=C:\Users\Toby\Documents\GitHub\DocTo\src\Unit1.pas</Transaction>
+    <Transaction>2012/12/20 19:11:39.000.877,C:\Users\Toby\Documents\GitHub\DocTo\src\Unit1.pas=C:\Users\Toby\Documents\GitHub\DocTo\src\ResourceUtils.pas</Transaction>
     <Transaction>2012/12/20 19:29:17.000.356,=C:\Users\Toby\Documents\GitHub\DocTo\src\Unit1.pas</Transaction>
-    <Transaction>2012/12/20 19:30:09.000.078,C:\Users\Toby\Documents\GitHub\DocTo\src\PathUtils.pas=C:\Users\Toby\Documents\GitHub\DocTo\src\Unit1.pas</Transaction>
+    <Transaction>2012/12/20 19:30:09.000.078,C:\Users\Toby\Documents\GitHub\DocTo\src\Unit1.pas=C:\Users\Toby\Documents\GitHub\DocTo\src\PathUtils.pas</Transaction>
     <Transaction>2012/12/29 15:46:02.000.089,=C:\Users\Toby\Documents\GitHub\DocTo\src\New1.txt</Transaction>
-    <Transaction>2012/12/29 15:46:27.000.368,C:\Users\Toby\Documents\GitHub\DocTo\src\res\HelpJSONLog.txt=C:\Users\Toby\Documents\GitHub\DocTo\src\New1.txt</Transaction>
+    <Transaction>2012/12/29 15:46:27.000.368,C:\Users\Toby\Documents\GitHub\DocTo\src\New1.txt=C:\Users\Toby\Documents\GitHub\DocTo\src\res\HelpJSONLog.txt</Transaction>
     <Transaction>2013/01/04 22:59:43.000.114,=C:\Users\Toby\Documents\GitHub\DocTo\src\Unit1.pas</Transaction>
     <Transaction>2013/01/04 22:59:54.000.160,=C:\Users\Toby\Documents\GitHub\DocTo\src\Unit2.pas</Transaction>
-    <Transaction>2013/01/04 23:01:35.000.511,C:\Users\Toby\Documents\GitHub\DocTo\src\Unit2.pas=C:\Users\Toby\Documents\GitHub\DocTo\src\dmmain.pas</Transaction>
-    <Transaction>2013/01/04 23:01:35.000.511,C:\Users\Toby\Documents\GitHub\DocTo\src\Unit2.dfm=C:\Users\Toby\Documents\GitHub\DocTo\src\dmmain.dfm</Transaction>
+    <Transaction>2013/01/04 23:01:35.000.511,C:\Users\Toby\Documents\GitHub\DocTo\src\dmmain.pas=C:\Users\Toby\Documents\GitHub\DocTo\src\Unit2.pas</Transaction>
+    <Transaction>2013/01/04 23:01:35.000.511,C:\Users\Toby\Documents\GitHub\DocTo\src\dmmain.dfm=C:\Users\Toby\Documents\GitHub\DocTo\src\Unit2.dfm</Transaction>
     <Transaction>2013/01/05 00:02:58.000.285,C:\Users\Toby\Documents\GitHub\DocTo\src\dmmain.pas=</Transaction>
     <Transaction>2013/01/05 10:08:48.000.600,=C:\Users\Toby\Documents\GitHub\DocTo\src\New1.txt</Transaction>
-    <Transaction>2013/01/05 10:08:58.000.358,C:\Users\Toby\Documents\GitHub\DocTo\src\res\HelpWebHook.txt=C:\Users\Toby\Documents\GitHub\DocTo\src\New1.txt</Transaction>
-  </Transactions>
+    <Transaction>2013/01/05 10:08:58.000.358,C:\Users\Toby\Documents\GitHub\DocTo\src\New1.txt=C:\Users\Toby\Documents\GitHub\DocTo\src\res\HelpWebHook.txt</Transaction>
+  </Transactions>  <ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="..\..\DocTo"/>
+    <File Path="..\readme.md"/>
+    <File Path="res"/>
+    <File Path="res\HelpJSONLog.txt"/>
+    <File Path="res\HelpLog.txt"/>
+    <File Path="res\HelpWebHook.txt"/>
+    <File Path="res\wdFormats.txt"/>
+    <File Path="MainUtils.pas"/>
+    <File Path="PathUtils.pas"/>
+    <File Path="ResourceUtils.pas"/>
+    <File Path="wdFormats.rc"/>
+    <File Path="WordUtils.pas"/>
+  </ProjectSortOrder>
 </BorlandProject>

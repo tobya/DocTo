@@ -13,7 +13,7 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMA
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ****************************************************************)
 interface
-uses classes, WordUtils, sysutils, ActiveX, ComObj, WinINet,   Types,  ResourceUtils,
+uses classes, Windows, WordUtils, sysutils, ActiveX, ComObj, WinINet, Variants,  Types,  ResourceUtils,
      PathUtils;
 
 type
@@ -294,7 +294,7 @@ procedure TDocumentConverter.HaltWithError(ErrorNo: Integer; Msg: String);
 begin
   LogError(Msg);
   LogError('Exiting with Error Code : ' + inttostr(ErrorNo));
-
+  //Ensure word is quit before halting.
   if not VarIsEmpty(WordApp) then
   begin
     WordApp.Quit();
@@ -377,6 +377,7 @@ begin
     begin
       FInputFile := value;
       IsFileInput := true;
+      //If input is Dir rather than file, enumerate files.
       if DirectoryExists(FInputFile) then
       begin
          IsDirInput := true;

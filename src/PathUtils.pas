@@ -27,7 +27,7 @@ uses sysutils, Classes;
 
   public
     Constructor Create(Path : String);
-    Destructor Destroy;
+    Destructor Destroy;  override;
 
     Property Parts : TStringList  read GetParts;
     Property Extension : String read GetExt;
@@ -50,6 +50,8 @@ end;
 destructor TPath.Destroy;
 begin
   if Assigned(FParts) then FParts.Free;
+
+  inherited destroy;
   
 end;
 
