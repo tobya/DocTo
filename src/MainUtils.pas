@@ -13,7 +13,7 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMA
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ****************************************************************)
 interface
-uses classes, Windows, WordUtils, sysutils, ActiveX, ComObj, WinINet, Variants,  Types,  ResourceUtils,
+uses classes, Windows, sysutils, ActiveX, ComObj, WinINet, Variants,  Types,  ResourceUtils,
      PathUtils;
 
 type
@@ -48,7 +48,7 @@ type
     FHaltOnWordError: Boolean;
     FRemoveFileOnConvert: boolean;
 
-    WordApp : OleVariant;
+
     procedure SetInputFile(const Value: String);
     procedure SetOutputFile(const Value: String);
     procedure SetOutputFileFormat(const Value: Integer);
@@ -81,7 +81,12 @@ type
     procedure LoadConfig(Params: TStrings);
 
 
-    function Execute() : string;
+    function Execute() : string; virtual;
+    function ExecuteConversion() : string; virtual; abstract;
+
+     function DestroyOfficeApp() : boolean; virtual; abstract;
+    function CreateOfficeApp() : boolean; virtual; abstract;
+   function AvailableFormats() : TStringList;  virtual; abstract;
 
     procedure Log(Msg: String; Level  : Integer = 0);
     procedure LogError(Msg: String);
@@ -189,8 +194,7 @@ begin
     end;
 
    try
-    Wordapp :=  CreateOleObject('Word.Application');
-    Wordapp.Visible := false;
+    CreateOfficeApp();
 
     for i := 0 to FInputFiles.Count -1 do
     begin
@@ -212,11 +216,7 @@ begin
       log('Ready to Execute' , VERBOSE);
        try
 
-            //Open doc and save in requested format.
-            Wordapp.documents.Open(FileToConvert, false, true);
-            Wordapp.activedocument.Saveas(OutputFilename ,OutputFileFormat );
-
-            Wordapp.activedocument.Close;
+            ExecuteConversion();
 
             if RemoveFileOnConvert then
             begin
@@ -282,11 +282,12 @@ begin
 
     finally
 
-    wordapp.quit();
+      DestroyOfficeApp();
     end;
 
 
 end;
+
 
 
 
@@ -295,10 +296,7 @@ begin
   LogError(Msg);
   LogError('Exiting with Error Code : ' + inttostr(ErrorNo));
   //Ensure word is quit before halting.
-  if not VarIsEmpty(WordApp) then
-  begin
-    WordApp.Quit();
-  end;
+  DestroyOfficeApp();
   Halt(ErrorNo);
 end;
 
@@ -382,6 +380,7 @@ begin
       begin
          IsDirInput := true;
          DoSubDirs := true;
+         {TODO: allow user to specify *.doc extension }
          ListFiles(finputfile, '*.doc',true,FInputFiles);
       end
       else

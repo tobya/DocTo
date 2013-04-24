@@ -27,17 +27,18 @@ uses
   WordUtils in 'WordUtils.pas',
   MainUtils in 'MainUtils.pas',
   ResourceUtils in 'ResourceUtils.pas',
-  PathUtils in 'PathUtils.pas';
+  PathUtils in 'PathUtils.pas',
+  ExcelUtils in 'ExcelUtils.pas';
 
 var
   i : integer;
   paramlist : TStringlist;
-  DocConv : TDocumentConverter;
+  DocConv : TWordDocConverter;
   LogResult : String;
 begin
 
   paramlist := TStringlist.create;
-  DocConv := TDocumentConverter.Create;
+  DocConv := TWordDocConverter.Create;
   try
 
   for i := 1 to ParamCount do

@@ -13,25 +13,64 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMA
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ****************************************************************)
 interface
-uses Classes, ResourceUtils;
+uses Classes, MainUtils, ResourceUtils,  ActiveX, ComObj, WinINet, Variants,  Types;
+
+type
+
+TWordDocConverter = Class(TDocumentConverter)
+Private
+    WordApp : OleVariant;
+
+public
+    function CreateOfficeApp() : boolean;  override;
+    function DestroyOfficeApp() : boolean; override;
+    function ExecuteConversion() : string; override;
+    function AvailableFormats() : TStringList; override;
+End;
 
 
 function AvailableWordFormats() : TStringList;
 
 implementation
 
-function AvailableWordFormats() : TStringList;
+function TWordDocConverter.AvailableFormats() : TStringList;
 var
   Formats : TStringList;
 
 begin
   Formats := Tstringlist.Create();
-  LoadStringListFromResource('FORMATS',Formats);
+  LoadStringListFromResource('WORDFORMATS',Formats);
 
   result := Formats;
 end;
 
 
 
+
+{ TWordDocConverter }
+
+function TWordDocConverter.CreateOfficeApp: boolean;
+begin
+    Wordapp :=  CreateOleObject('Word.Application');
+    Wordapp.Visible := false;
+end;
+
+function TWordDocConverter.DestroyOfficeApp: boolean;
+begin
+  if not VarIsEmpty(WordApp) then
+  begin
+    WordApp.Quit();
+  end;
+
+end;
+
+function TWordDocConverter.ExecuteConversion: string;
+begin
+            //Open doc and save in requested format.
+            Wordapp.documents.Open(FileToConvert, false, true);
+            Wordapp.activedocument.Saveas(OutputFilename ,OutputFileFormat );
+
+            Wordapp.activedocument.Close;
+end;
 
 end.

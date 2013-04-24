@@ -22,6 +22,9 @@
     <Transaction>2013/01/05 00:02:58.000.285,C:\Users\Toby\Documents\GitHub\DocTo\src\dmmain.pas=</Transaction>
     <Transaction>2013/01/05 10:08:48.000.600,=C:\Users\Toby\Documents\GitHub\DocTo\src\New1.txt</Transaction>
     <Transaction>2013/01/05 10:08:58.000.358,C:\Users\Toby\Documents\GitHub\DocTo\src\res\HelpWebHook.txt=C:\Users\Toby\Documents\GitHub\DocTo\src\New1.txt</Transaction>
+    <Transaction>2013/04/24 09:35:15.709,=C:\Users\Toby\Documents\GitHub\DocTo\src\docto.todo</Transaction>
+    <Transaction>2013/04/24 09:37:43.874,=C:\Users\Toby\Documents\GitHub\DocTo\src\Unit1.pas</Transaction>
+    <Transaction>2013/04/24 09:41:59.335,C:\Users\Toby\Documents\GitHub\DocTo\src\ExcelUtils.pas=C:\Users\Toby\Documents\GitHub\DocTo\src\Unit1.pas</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="..\..\DocTo"/>
@@ -36,5 +39,6 @@
     <File Path="ResourceUtils.pas"/>
     <File Path="wdFormats.rc"/>
     <File Path="WordUtils.pas"/>
+    <File Path="ExcelUtils.pas"/>
   </ProjectSortOrder>
 </BorlandProject>
