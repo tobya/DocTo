@@ -63,10 +63,10 @@
 			<DelphiCompile Include="docto.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<RcCompile Include="wdFormats.rc">
+			<RcCompile Include="xlsFormats.rc">
 				<ContainerId>RC</ContainerId>
 				<ContainerId>RC</ContainerId>
-				<Form>wdFormats.res</Form>
+				<Form>xlsFormats.res</Form>
 			</RcCompile>
 			<DCCReference Include="WordUtils.pas"/>
 			<DCCReference Include="MainUtils.pas"/>
@@ -107,7 +107,7 @@
 						<VersionInfo Name="MajorVer">0</VersionInfo>
 						<VersionInfo Name="MinorVer">4</VersionInfo>
 						<VersionInfo Name="Release">2</VersionInfo>
-						<VersionInfo Name="Build">23</VersionInfo>
+						<VersionInfo Name="Build">25</VersionInfo>
 						<VersionInfo Name="Debug">True</VersionInfo>
 						<VersionInfo Name="PreRelease">True</VersionInfo>
 						<VersionInfo Name="Special">False</VersionInfo>
@@ -119,7 +119,7 @@
 					<VersionInfoKeys>
 						<VersionInfoKeys Name="CompanyName">Toflidium Software</VersionInfoKeys>
 						<VersionInfoKeys Name="FileDescription"/>
-						<VersionInfoKeys Name="FileVersion">0.4.2.23</VersionInfoKeys>
+						<VersionInfoKeys Name="FileVersion">0.4.2.25</VersionInfoKeys>
 						<VersionInfoKeys Name="InternalName"/>
 						<VersionInfoKeys Name="LegalCopyright">Toflidium Software</VersionInfoKeys>
 						<VersionInfoKeys Name="LegalTrademarks"/>

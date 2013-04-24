@@ -24,7 +24,7 @@ type
   end;
 
   TDocumentConverter = class
-  private
+  protected
     Formats : TStringlist;
     FOutputFileFormatString: String;
     FOutputFileFormat: Integer;
@@ -44,6 +44,7 @@ type
     FIsDirInput: Boolean;
     FOutputExt: string;
     FWebHook : String;
+    FExtension : String;
 
     FHaltOnWordError: Boolean;
     FRemoveFileOnConvert: boolean;
@@ -74,6 +75,8 @@ type
     property DoSubDirs : Boolean read FDoSubDirs write SetDoSubDirs;
     property OutputExt : string read FOutputExt write SetOutputExt;
     property RemoveFileOnConvert: boolean read FRemoveFileOnConvert write SetRemoveFileOnConvert;
+    procedure SetExtension(const Value: String); virtual;
+    function GetExtension: String;  virtual;
   public
 
     Constructor Create();
@@ -82,7 +85,7 @@ type
 
 
     function Execute() : string; virtual;
-    function ExecuteConversion() : string; virtual; abstract;
+    function ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): string; virtual; abstract;
 
      function DestroyOfficeApp() : boolean; virtual; abstract;
     function CreateOfficeApp() : boolean; virtual; abstract;
@@ -102,6 +105,7 @@ type
     property LogFilename: String read FLogFilename write SetLogFilename;
     Property Version : String read FVersionString;
     property HaltOnWordError : Boolean read FHaltOnWordError write SetHaltOnWordError;
+    property Extension: String read GetExtension write SetExtension;
 
   end;
 
@@ -216,7 +220,7 @@ begin
       log('Ready to Execute' , VERBOSE);
        try
 
-            ExecuteConversion();
+            ExecuteConversion(FileToConvert, OutputFilename, OutputFileFormat);
 
             if RemoveFileOnConvert then
             begin
@@ -324,7 +328,7 @@ HelpStrings : TStringList;
 begin
   //Initislise
   iParam := 0;
-  Formats := AvailableWordFormats();
+  Formats := AvailableFormats();
 
 
   OutputLog := true;
@@ -381,7 +385,7 @@ begin
          IsDirInput := true;
          DoSubDirs := true;
          {TODO: allow user to specify *.doc extension }
-         ListFiles(finputfile, '*.doc',true,FInputFiles);
+         ListFiles(finputfile, '*' + Extension,true,FInputFiles);
       end
       else
       begin
@@ -554,6 +558,16 @@ begin
   FDoSubDirs := Value;
 end;
 
+function TDocumentConverter.GetExtension: String;
+begin
+  Result := fExtension;
+end;
+
+procedure TDocumentConverter.SetExtension(const Value: String);
+begin
+  FExtension := Value;
+end;
+
 procedure TDocumentConverter.SetHaltOnWordError(const Value: Boolean);
 begin
   FHaltOnWordError := Value;
@@ -687,6 +701,8 @@ procedure TConsoleLog.LogError(Log: String);
 begin
 
 end;
+
+
 
 
 

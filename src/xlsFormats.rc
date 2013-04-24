@@ -1,4 +1,4 @@
-WORDFORMATS TEXT    res\wdFormats.txt
+EXCELFORMATS TEXT    res\xlsFormats.txt
 HELP    TEXT    res\HelpLog.txt
 HELPJSON TEXT   res\HelpJSONLog.txt
 HELPWEBHOOK TEXT res\HelpWebHook.txt

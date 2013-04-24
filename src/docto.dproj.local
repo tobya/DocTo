@@ -17,14 +17,15 @@
     <Transaction>2012/12/29 15:46:27.000.368,C:\Users\Toby\Documents\GitHub\DocTo\src\res\HelpJSONLog.txt=C:\Users\Toby\Documents\GitHub\DocTo\src\New1.txt</Transaction>
     <Transaction>2013/01/04 22:59:43.000.114,=C:\Users\Toby\Documents\GitHub\DocTo\src\Unit1.pas</Transaction>
     <Transaction>2013/01/04 22:59:54.000.160,=C:\Users\Toby\Documents\GitHub\DocTo\src\Unit2.pas</Transaction>
-    <Transaction>2013/01/04 23:01:35.000.511,C:\Users\Toby\Documents\GitHub\DocTo\src\Unit2.pas=C:\Users\Toby\Documents\GitHub\DocTo\src\dmmain.pas</Transaction>
     <Transaction>2013/01/04 23:01:35.000.511,C:\Users\Toby\Documents\GitHub\DocTo\src\Unit2.dfm=C:\Users\Toby\Documents\GitHub\DocTo\src\dmmain.dfm</Transaction>
+    <Transaction>2013/01/04 23:01:35.000.511,C:\Users\Toby\Documents\GitHub\DocTo\src\Unit2.pas=C:\Users\Toby\Documents\GitHub\DocTo\src\dmmain.pas</Transaction>
     <Transaction>2013/01/05 00:02:58.000.285,C:\Users\Toby\Documents\GitHub\DocTo\src\dmmain.pas=</Transaction>
     <Transaction>2013/01/05 10:08:48.000.600,=C:\Users\Toby\Documents\GitHub\DocTo\src\New1.txt</Transaction>
     <Transaction>2013/01/05 10:08:58.000.358,C:\Users\Toby\Documents\GitHub\DocTo\src\res\HelpWebHook.txt=C:\Users\Toby\Documents\GitHub\DocTo\src\New1.txt</Transaction>
-    <Transaction>2013/04/24 09:35:15.709,=C:\Users\Toby\Documents\GitHub\DocTo\src\docto.todo</Transaction>
-    <Transaction>2013/04/24 09:37:43.874,=C:\Users\Toby\Documents\GitHub\DocTo\src\Unit1.pas</Transaction>
-    <Transaction>2013/04/24 09:41:59.335,C:\Users\Toby\Documents\GitHub\DocTo\src\ExcelUtils.pas=C:\Users\Toby\Documents\GitHub\DocTo\src\Unit1.pas</Transaction>
+    <Transaction>2013/04/24 09:35:15.000.709,=C:\Users\Toby\Documents\GitHub\DocTo\src\docto.todo</Transaction>
+    <Transaction>2013/04/24 09:37:43.000.874,=C:\Users\Toby\Documents\GitHub\DocTo\src\Unit1.pas</Transaction>
+    <Transaction>2013/04/24 09:41:59.000.335,C:\Users\Toby\Documents\GitHub\DocTo\src\ExcelUtils.pas=C:\Users\Toby\Documents\GitHub\DocTo\src\Unit1.pas</Transaction>
+    <Transaction>2013/04/24 20:27:56.100,C:\Users\Toby\Documents\GitHub\DocTo\src\xlsFormats.rc=C:\Users\Toby\Documents\GitHub\DocTo\src\wdFormats.rc</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="..\..\DocTo"/>
@@ -37,8 +38,8 @@
     <File Path="MainUtils.pas"/>
     <File Path="PathUtils.pas"/>
     <File Path="ResourceUtils.pas"/>
-    <File Path="wdFormats.rc"/>
     <File Path="WordUtils.pas"/>
     <File Path="ExcelUtils.pas"/>
+    <File Path="xlsFormats.rc"/>
   </ProjectSortOrder>
 </BorlandProject>

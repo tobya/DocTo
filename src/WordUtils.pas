@@ -20,16 +20,21 @@ type
 TWordDocConverter = Class(TDocumentConverter)
 Private
     WordApp : OleVariant;
+protected
+
+
 
 public
+    Constructor Create();
     function CreateOfficeApp() : boolean;  override;
     function DestroyOfficeApp() : boolean; override;
-    function ExecuteConversion() : string; override;
+    function ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): string; override;
     function AvailableFormats() : TStringList; override;
+
 End;
 
 
-function AvailableWordFormats() : TStringList;
+
 
 implementation
 
@@ -49,6 +54,13 @@ end;
 
 { TWordDocConverter }
 
+constructor TWordDocConverter.Create;
+begin
+  inherited;
+  Extension := '.doc';
+  LogFilename := 'DocTo.Log';
+end;
+
 function TWordDocConverter.CreateOfficeApp: boolean;
 begin
     Wordapp :=  CreateOleObject('Word.Application');
@@ -64,13 +76,15 @@ begin
 
 end;
 
-function TWordDocConverter.ExecuteConversion: string;
+function TWordDocConverter.ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): string;
 begin
             //Open doc and save in requested format.
-            Wordapp.documents.Open(FileToConvert, false, true);
+            Wordapp.documents.Open( FileToConvert, false, true);
             Wordapp.activedocument.Saveas(OutputFilename ,OutputFileFormat );
 
             Wordapp.activedocument.Close;
 end;
+
+
 
 end.

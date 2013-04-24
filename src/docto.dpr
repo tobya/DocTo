@@ -18,7 +18,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ****************************************************************)
 {$APPTYPE CONSOLE}
 
-{$R 'wdFormats.res' 'wdFormats.rc'}
+{$R 'xlsFormats.res' 'xlsFormats.rc'}
 {$R *.res}
 uses
   SysUtils,

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2013/04/24 18:01:01.000.075,C:\Users\Toby\Documents\RAD Studio\Projects\Project2.dproj=C:\Users\Toby\Documents\GitHub\DocTo\XlsTo.dproj</Transaction>
+    <Transaction>2013/04/24 20:20:07.291,=C:\Users\Toby\Documents\GitHub\DocTo\src\New1.txt</Transaction>
+    <Transaction>2013/04/24 20:25:45.964,C:\Users\Toby\Documents\GitHub\DocTo\src\res\xlsFormats.txt=C:\Users\Toby\Documents\GitHub\DocTo\src\New1.txt</Transaction>
+    <Transaction>2013/04/24 20:27:56.086,C:\Users\Toby\Documents\GitHub\DocTo\src\xlsFormats.rc=C:\Users\Toby\Documents\GitHub\DocTo\src\wdFormats.rc</Transaction>
+  </Transactions>
+</BorlandProject>
