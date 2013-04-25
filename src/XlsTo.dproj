@@ -60,6 +60,7 @@
 			<DCCReference Include="ResourceUtils.pas"/>
 			<DCCReference Include="PathUtils.pas"/>
 			<None Include="res\xlsFormats.txt"/>
+			<None Include="..\test\testxlsrun.bat"/>
 			<BuildConfiguration Include="Release">
 				<Key>Cfg_2</Key>
 				<CfgParent>Base</CfgParent>
@@ -110,7 +111,7 @@
 						<Source Name="MainSource">XlsTo.dpr</Source>
 					</Source>
 					<Parameters>
-						<Parameters Name="RunParams">-f &quot;C:\Users\Toby\Documents\GitHub\DocTo\exe\test\InputFiles\TestXL.xls&quot; -o &quot;..\test\textxl.pdf&quot; -t xlPDF</Parameters>
+						<Parameters Name="RunParams">-f &quot;C:\Users\Toby\Documents\GitHub\DocTo\test\InputFiles\test2.xls&quot; -o &quot;c:\textxl.pdf&quot; -t xlPDF</Parameters>
 						<Parameters Name="HostApplication">cmd</Parameters>
 						<Parameters Name="DebugCWD">C:\Users\Toby\Documents\GitHub\DocTo\exe</Parameters>
 					</Parameters>

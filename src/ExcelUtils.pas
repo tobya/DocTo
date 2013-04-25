@@ -69,7 +69,7 @@ function TExcelXLSConverter.DestroyOfficeApp: boolean;
 begin
   if not VarIsEmpty(ExcelApp) then
   begin
-    ExcelApp.Quit();
+    ExcelApp.Quit;
   end;
 
 end;
@@ -80,18 +80,16 @@ begin
             ExcelApp.Workbooks.Open( FileToConvert);
             if OutputFileFormat = 50000 then //pdf
             begin
-
-              ExcelApp.activesheet.ExportAsFixedFormat(0, OutputFilename  );
+              //Unlike Word, in Excel you must call a different function to save a pdf. Enusre we export entire workbook.
+              ExcelApp.activeWorkbook.ExportAsFixedFormat(0, OutputFilename  );
 
             end
             else
             begin
-              ExcelApp.activesheet.SaveAs( OutputFilename, OutputFileFormat);
+              ExcelApp.activeWorkbook.SaveAs( OutputFilename, OutputFileFormat);
             end;
 
-
-
-            ExcelApp.activedocument.Close;
+            ExcelApp.ActiveWorkbook.Close();
 end;
 
 
