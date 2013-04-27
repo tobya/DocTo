@@ -21,7 +21,6 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 {$R 'wdFormats.res' 'wdFormats.rc'}
 {$R *.res}
 uses
-  ExceptionLog,
   SysUtils,
   Classes,
   ActiveX,
