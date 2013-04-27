@@ -18,7 +18,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ****************************************************************)
 {$APPTYPE CONSOLE}
 
-{$R 'xlsFormats.res' 'xlsFormats.rc'}
+
 {$R *.res}
 uses
   SysUtils,
@@ -27,8 +27,7 @@ uses
   WordUtils in 'WordUtils.pas',
   MainUtils in 'MainUtils.pas',
   ResourceUtils in 'ResourceUtils.pas',
-  PathUtils in 'PathUtils.pas',
-  ExcelUtils in 'ExcelUtils.pas';
+  PathUtils in 'PathUtils.pas';
 
 var
   i : integer;

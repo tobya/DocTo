@@ -63,16 +63,10 @@
 			<DelphiCompile Include="docto.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<RcCompile Include="xlsFormats.rc">
-				<ContainerId>RC</ContainerId>
-				<ContainerId>RC</ContainerId>
-				<Form>xlsFormats.res</Form>
-			</RcCompile>
 			<DCCReference Include="WordUtils.pas"/>
 			<DCCReference Include="MainUtils.pas"/>
 			<DCCReference Include="ResourceUtils.pas"/>
 			<DCCReference Include="PathUtils.pas"/>
-			<DCCReference Include="ExcelUtils.pas"/>
 			<None Include="..\readme.md"/>
 			<None Include="res\wdFormats.txt"/>
 			<None Include="res\HelpLog.txt"/>

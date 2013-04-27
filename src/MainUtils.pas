@@ -140,7 +140,7 @@ end;
 constructor TDocumentConverter.Create;
 begin
   ConsoleLog := TConsoleLog.Create();
-  FVersionString := '0.3ALPHA';
+  FVersionString := '0.5ALPHA';
 
   //Initial values
   FOutputFileFormatString := '';

@@ -1,5 +1,5 @@
 Help
-Version:0.4ALPHA
+Version:0.5ALPHA
 Source: http://github.com/tobya/DocTo/
 Command Line Parameters
 Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\MyDir\MyFile"
@@ -8,7 +8,8 @@ Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\My
   -O  Output File or Directory to place converted Docs
   -OX Output Extension if -F is Directory.
   -T  Format(Type) to convert file to, either integer or wdSaveFormat constant.
-      Available from http://msdn.microsoft.com/en-us/library/microsoft.office.interop.word.wdsaveformat.aspx
+      Available from http://msdn.microsoft.com/en-us/library/microsoft.office.interop.word.wdsaveformat.aspx  or
+      http://msdn.microsoft.com/en-us/library/office/bb241279(v=office.12).aspx
       See current List Below.
   -TF Force Format.  -T value if integer is checked against current list compiled in and not passed if unavailable.
       To future proof, -TF will pass through value without checking.
@@ -22,7 +23,8 @@ Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\My
   -R  Remove Files after successful conversion: Default false;
   -W  Webhook: Url to call on events (plain url no params). See -HW for more details.
   -HW Webhook Help.
-  -X  Halt on Word Error: Default True;  If you have trouble with somefiles not converting, set this to false.
+  -X  Halt on COM Error: Default True;  If you have trouble with some files not converting, set this to false to ignore
+      errors and continue with batch job.
 
 
 ERROR CODES:
