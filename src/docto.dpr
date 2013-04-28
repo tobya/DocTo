@@ -37,27 +37,26 @@ var
 begin
 
   paramlist := TStringlist.create;
-  DocConv := TDocumentConverter.Create;
   try
+    DocConv := TDocumentConverter.Create;
+    try
+      for i := 1 to ParamCount do
+      begin
+       paramlist.Add(ParamStr(i));
+      end;
 
-  for i := 1 to ParamCount do
-  begin
-     paramlist.Add(ParamStr(i));
-  end;
+      DocConv.LoadConfig(paramlist);
 
-   DocConv.LoadConfig(paramlist);
+      CoInitialize(nil);
+      LogResult :=  DocConv.Execute;
+      DocConv.log( LogResult );
 
-   CoInitialize(nil);
-   LogResult :=  DocConv.Execute;
-   DocConv.log( LogResult );
-
-   CoUninitialize;
-
-
+      CoUninitialize;
+    finally
+      DocConv.free;
+    end;
   finally
     paramlist.Free;
   end;
-
-
 
 end.
