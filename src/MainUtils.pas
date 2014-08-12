@@ -26,6 +26,7 @@ type
   TDocumentConverter = class
   private
     Formats : TStringlist;
+    FormatsExtensions : TStringlist;
     FOutputFileFormatString: String;
     FOutputFileFormat: Integer;
     FOutputLog: Boolean;
@@ -49,6 +50,8 @@ type
     FRemoveFileOnConvert: boolean;
 
     WordApp : OleVariant;
+    FIsFileOutput: Boolean;
+    FIsDirOutput: Boolean;
     procedure SetInputFile(const Value: String);
     procedure SetOutputFile(const Value: String);
     procedure SetOutputFileFormat(const Value: Integer);
@@ -69,8 +72,12 @@ type
     function URLEncode(Param : String): String;
     procedure SetHaltOnWordError(const Value: Boolean);
     procedure SetRemoveFileOnConvert(const Value: boolean);
+    procedure SetIsDirOutput(const Value: Boolean);
+    procedure SetIsFileOutput(const Value: Boolean);
     property IsFileInput : Boolean read FIsFileInput write SetIsFileInput;
     property IsDirInput : Boolean read FIsDirInput write SetIsDirInput;
+    property IsFileOutput : Boolean read FIsFileOutput write SetIsFileOutput;
+    property IsDirOutput : Boolean read FIsDirOutput write SetIsDirOutput;
     property DoSubDirs : Boolean read FDoSubDirs write SetDoSubDirs;
     property OutputExt : string read FOutputExt write SetOutputExt;
     property RemoveFileOnConvert: boolean read FRemoveFileOnConvert write SetRemoveFileOnConvert;
@@ -144,6 +151,9 @@ begin
   FRemoveFileOnConvert := false;
   FWebHook := '';
   FOutputExt := '';
+  FIsFileInput := false;
+  FIsDirInput := false;
+
 
   FInputFiles := TStringList.Create;
 end;
@@ -170,7 +180,7 @@ var
 
   Continue : Boolean;
   i : integer;
-  FileToConvert, OutputFilename : String;
+  FileToConvert, FileToCreate : String;
 
 begin
 
@@ -181,6 +191,18 @@ begin
     end;
 
     if not Continue  then HaltWithError(201, 'Input File, Output File and FileFormat must all be specified');
+
+    //Set Output Filename if Dir Provided.
+    if (IsFileInput and IsDirOutput) then
+    begin
+      if OutputExt = '' then
+      begin
+        OutputExt := FormatsExtensions.Values[OutputFileFormatString];
+        log(outputExt, CHATTY);
+      end;
+
+      OutputFile :=  OutputFile + '\' + ChangeFileExt( ExtractFileName(InputFile), '.' + OutputExt);
+    end;
 
     //Add file to InputFiles List if only one.
     if FInputFiles.Count = 0 then
@@ -197,15 +219,15 @@ begin
       FileToConvert := FInputFiles[i];
       if IsDirInput then
       begin
-        OutputFilename := NewFileNameFromBase(FInputFile ,FOutputFile,FileToConvert, FOutputExt);
+        FileToCreate := NewFileNameFromBase(FInputFile ,FOutputFile,FileToConvert, FOutputExt);
       end
       else
       begin
-        OutputFilename :=  OutputFile;
+        FileToCreate :=  OutputFile;
       end;
 
         //Ensure directory exists
-        ForceDirectories(ExtractFilePath( OutputFilename));
+        ForceDirectories(ExtractFilePath( FileToCreate));
 
 
 
@@ -214,14 +236,14 @@ begin
 
             //Open doc and save in requested format.
             Wordapp.documents.Open(FileToConvert, false, true);
-            Wordapp.activedocument.Saveas(OutputFilename ,OutputFileFormat );
+            Wordapp.activedocument.Saveas(FileToCreate ,OutputFileFormat );
 
             Wordapp.activedocument.Close;
 
             if RemoveFileOnConvert then
             begin
               //Check file exists and Delete if requested
-              if FileExists(OutputFilename) then
+              if FileExists(FileToCreate) then
               begin
                 DeleteFile(FileToConvert);
                 Log('Deleted:' + FileToConvert,STANDARD);
@@ -229,10 +251,10 @@ begin
             end;
 
             //Make a call to webhook if it exists
-            CallWebHook('action=convert&type='+ FOutputFileFormatString + '&ouputfilename=' + URLEncode(OutputFilename)+ '&inputfilename=' + URLEncode(InputFile));
+            CallWebHook('action=convert&type='+ FOutputFileFormatString + '&ouputfilename=' + URLEncode(FileToCreate)+ '&inputfilename=' + URLEncode(InputFile));
 
-          log(OutputFilename,STANDARD);
-          result := OutputFilename;
+          log(FileToCreate,STANDARD);
+          result := FileToCreate;
         except
           on E: EOleSysError do
           begin
@@ -243,20 +265,20 @@ begin
             else
             begin
 
-              CallWebHook('action=error&type='+ FOutputFileFormatString + '&ouputfilename=' + URLEncode(OutputFilename)+ '&inputfilename=' + URLEncode(InputFile)
+              CallWebHook('action=error&type='+ FOutputFileFormatString + '&ouputfilename=' + URLEncode(FileToCreate)+ '&inputfilename=' + URLEncode(InputFile)
                           + '&error=' + URLEncode(E.ClassName + '  ' + e.Message));
 
               if (HaltOnWordError) then
               begin
                 log('FileToConvert:' + FileToConvert);
-                log('OutputFile:' + OutputFilename);
+                log('OutputFile:' + FileToCreate);
                 log('Ext' + inttostr(OutputFileFormat));
               HaltWithError(220,E.ClassName + '  ' + e.Message);
               end
               else
               begin
                 log('FileToConvert:' + FileToConvert);
-                log('OutputFile:' + OutputFilename);
+                log('OutputFile:' + FileToCreate);
                 log('Ext' + inttostr(OutputFileFormat));
                 logerror(E.ClassName + '  ' + e.Message);
 
@@ -268,11 +290,11 @@ begin
           begin
               if (HaltOnWordError) then
               begin
-                HaltWithError(220,E.ClassName + '  ' + e.Message + ' ' + FileToConvert + ':' + OutputFilename);
+                HaltWithError(220,E.ClassName + '  ' + e.Message + ' ' + FileToConvert + ':' + FileToCreate);
               end
               else
               begin
-                LogError(E.ClassName + '  ' + e.Message + ' ' + FileToConvert + ':' + OutputFilename);
+                LogError(E.ClassName + '  ' + e.Message + ' ' + FileToConvert + ':' + FileToCreate);
 
               end;
           end;
@@ -324,9 +346,10 @@ id, value : string;
 HelpStrings : TStringList;
 
 begin
-  //Initislise
+  //Initialise
   iParam := 0;
   Formats := AvailableWordFormats();
+  FormatsExtensions := WordFormatsExtensions();
 
 
   OutputLog := true;
@@ -368,6 +391,20 @@ begin
     begin
       FOutputFile := value;
       log('Output file is : ' + FOutputFile,CHATTY);
+
+      // Create directory and then check if it exists.
+      //If not it must be a file as DirectoryExists returns fals on a file
+      //ForceDirectories(FOutputFile);
+
+      if (DirectoryExists(FOutputFile)) then
+      begin
+        FIsDirOutput := true;
+      end
+      else
+      begin
+        FIsFileOutput := true;
+      end;
+
     end
     else if id = '-OX' then
     begin
@@ -570,9 +607,19 @@ begin
   FIsDirInput := Value;
 end;
 
+procedure TDocumentConverter.SetIsDirOutput(const Value: Boolean);
+begin
+  FIsDirOutput := Value;
+end;
+
 procedure TDocumentConverter.SetIsFileInput(const Value: Boolean);
 begin
   FIsFileInput := Value;
+end;
+
+procedure TDocumentConverter.SetIsFileOutput(const Value: Boolean);
+begin
+  FIsFileOutput := Value;
 end;
 
 procedure TDocumentConverter.SetLogFilename(const Value: String);
