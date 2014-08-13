@@ -153,6 +153,8 @@ begin
   FOutputExt := '';
   FIsFileInput := false;
   FIsDirInput := false;
+  FIsFileOutput := false;
+  FIsDirOutput := false;
 
 
   FInputFiles := TStringList.Create;
@@ -198,7 +200,7 @@ begin
       if OutputExt = '' then
       begin
         OutputExt := FormatsExtensions.Values[OutputFileFormatString];
-        log(outputExt, CHATTY);
+        log('OutputExt is' + outputExt, CHATTY);
       end;
 
       OutputFile :=  OutputFile + '\' + ChangeFileExt( ExtractFileName(InputFile), '.' + OutputExt);
@@ -344,6 +346,7 @@ var i, f , iParam, idx: integer;
 pstr : string;
 id, value : string;
 HelpStrings : TStringList;
+tmpext : String;
 
 begin
   //Initialise
@@ -389,22 +392,23 @@ begin
 
     if id = '-O' then
     begin
-      FOutputFile := value;
-      log('Output file is : ' + FOutputFile,CHATTY);
+      FOutputFile :=  value;
 
-      // Create directory and then check if it exists.
-      //If not it must be a file as DirectoryExists returns fals on a file
-      //ForceDirectories(FOutputFile);
 
-      if (DirectoryExists(FOutputFile)) then
+      tmpext := ExtractFileExt(FOutputFile);
+
+
+      if (tmpext = '') then
       begin
-        FIsDirOutput := true;
+        FOutputFile := IncludeTrailingBackslash(value);
+        IsDirOutput := true;
+        ForceDirectories(FOutputFile);
       end
       else
       begin
-        FIsFileOutput := true;
+        IsFileOutput := true;
       end;
-
+      log('Output file is: ' + FOutputFile,CHATTY);
     end
     else if id = '-OX' then
     begin
@@ -413,7 +417,7 @@ begin
     else if id = '-F' then
     begin
       FInputFile := value;
-      IsFileInput := true;
+     // IsFileInput := true;
       //If input is Dir rather than file, enumerate files.
       if DirectoryExists(FInputFile) then
       begin
@@ -428,7 +432,7 @@ begin
       end;
 
 
-      log('Input File is : ' + FInputFile,CHATTY);
+      log('Input File is: ' + FInputFile,CHATTY);
     end
     else if id  = '-Q' then
     begin
