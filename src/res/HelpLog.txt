@@ -1,5 +1,5 @@
 Help
-Version:0.4.3ALPHA
+Version:0.5.5
 Source: http://github.com/tobya/DocTo/
 Command Line Parameters
 Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\MyDir\MyFile"
@@ -14,11 +14,12 @@ Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\My
       To future proof, -TF will pass through value without checking.
       Word will return an "EOleException  Value out of range" error if invalid.
       Use instead of -T.
-  -L  Log Level 0 Silent, 1 Standard, 10 VERBOSE
-      Default: 1 Standard
+  -L  Log Level 1 Errors Only, 2 Standard, 5 CHATTY, 10 VERBOSE
+      Default: 2 Standard
   -G  Write Log to file in directory
   -GL Log File Name to Use default 'DocTo.Log';
-  -Q  Quiet Mode: Equivalent to setting -L 0
+  -Q  Quiet Mode: Nothing will be output to console.  To see any errors you must set -G or -GL
+      Equivalent to setting -L 0
   -R  Remove Files after successful conversion: Default false;
   -W  Webhook: Url to call on events (plain url no params). See -HW for more details.
   -HW Webhook Help.

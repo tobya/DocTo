@@ -16,6 +16,13 @@ interface
 uses classes, Windows, WordUtils, sysutils, ActiveX, ComObj, WinINet, Variants,  Types,  ResourceUtils,
      PathUtils;
 
+Const
+  VERBOSE = 10;
+  CHATTY = 5;
+  STANDARD = 2;
+  SILENT = 0;
+  ERRORS = 1;
+
 type
   TConsoleLog = class
   public
@@ -74,23 +81,25 @@ type
     procedure SetRemoveFileOnConvert(const Value: boolean);
     procedure SetIsDirOutput(const Value: Boolean);
     procedure SetIsFileOutput(const Value: Boolean);
+    procedure SetLogLevel(const Value: integer);
     property IsFileInput : Boolean read FIsFileInput write SetIsFileInput;
     property IsDirInput : Boolean read FIsDirInput write SetIsDirInput;
     property IsFileOutput : Boolean read FIsFileOutput write SetIsFileOutput;
     property IsDirOutput : Boolean read FIsDirOutput write SetIsDirOutput;
     property DoSubDirs : Boolean read FDoSubDirs write SetDoSubDirs;
     property OutputExt : string read FOutputExt write SetOutputExt;
+    property LogLevel : integer read FLogLevel write SetLogLevel;
     property RemoveFileOnConvert: boolean read FRemoveFileOnConvert write SetRemoveFileOnConvert;
   public
 
     Constructor Create();
     Destructor Destroy(); override;
     procedure LoadConfig(Params: TStrings);
-
+    procedure ConfigLoggingLevel(Params: TStrings);
 
     function Execute() : string;
 
-    procedure Log(Msg: String; Level  : Integer = 0);
+    procedure Log(Msg: String; Level  : Integer = ERRORS);
     procedure LogError(Msg: String);
     procedure CallWebHook(Params: String);
 
@@ -111,12 +120,7 @@ type
 
   function IsNumber(Str: String) : Boolean;
 
-  Const
-  VERBOSE = 10;
-  CHATTY = 5;
-  STANDARD = 1;
-  SILENT = 0;
-  ERRORS = 0;
+
 implementation
 
 
@@ -135,6 +139,52 @@ begin
   end;
 end;
 
+procedure TDocumentConverter.ConfigLoggingLevel(Params: TStrings);
+var
+  iParam : Integer;
+  id, pstr, value : String;
+begin
+//ogLevel := STANDARD;
+iParam := 0;
+lOG(ID,VERBOSE);
+While iParam <= Params.Count -1 do
+  begin
+    pstr := Params[iParam];
+    log(inttostr(iparam), VERBOSE);
+    id := UpperCase( pstr);
+    if ParamCount -1  > iParam then
+    begin
+      try
+        value := Trim(Params[iParam +1]);
+      except on E: Exception do
+        HaltWithError(202,E.message);
+      end;
+    end
+    else
+    begin
+      value := '';
+    end;
+    inc(iParam,2);
+    lOG(ID,VERBOSE);
+    if id  = '-L' then
+    begin
+      if isNumber(value) then
+      begin
+        LogLevel := strtoint(value);
+
+      end
+    end
+    else if id  = '-Q' then
+    begin
+
+      OutputLog := false;
+      //Doesn't require a value
+      dec(iParam);
+    end
+  end;
+  Log('Log Level Set To:' + IntToStr(FLogLevel),CHATTY);
+end;
+
 constructor TDocumentConverter.Create;
 begin
   ConsoleLog := TConsoleLog.Create();
@@ -145,7 +195,7 @@ begin
   FOutputFileFormat := -1;
   FOutputFile := '';
   FInputFile := '';
-  FLogLevel := 1;
+  FLogLevel := STANDARD;
   FLogtoFile := false;
   FLogFilename := 'DocTo.Log';
   FRemoveFileOnConvert := false;
@@ -200,10 +250,10 @@ begin
       if OutputExt = '' then
       begin
         OutputExt := FormatsExtensions.Values[OutputFileFormatString];
-        log('OutputExt is' + outputExt, CHATTY);
+        log('Output Extension is ' + outputExt, CHATTY);
       end;
 
-      OutputFile :=  OutputFile + '\' + ChangeFileExt( ExtractFileName(InputFile), '.' + OutputExt);
+      OutputFile :=  OutputFile  + ChangeFileExt( ExtractFileName(InputFile), '.' + OutputExt);
     end;
 
     //Add file to InputFiles List if only one.
@@ -255,7 +305,7 @@ begin
             //Make a call to webhook if it exists
             CallWebHook('action=convert&type='+ FOutputFileFormatString + '&ouputfilename=' + URLEncode(FileToCreate)+ '&inputfilename=' + URLEncode(InputFile));
 
-          log(FileToCreate,STANDARD);
+          log('Creating File: ' + FileToCreate,CHATTY);
           result := FileToCreate;
         except
           on E: EOleSysError do
@@ -353,7 +403,7 @@ begin
   iParam := 0;
   Formats := AvailableWordFormats();
   FormatsExtensions := WordFormatsExtensions();
-
+  ConfigLoggingLevel(Params);
 
   OutputLog := true;
   OutputLogFile := '';
@@ -403,12 +453,15 @@ begin
         FOutputFile := IncludeTrailingBackslash(value);
         IsDirOutput := true;
         ForceDirectories(FOutputFile);
+        log('Output directory is: ' + FOutputFile,CHATTY);
       end
       else
       begin
         IsFileOutput := true;
+        log('Output file is: ' + FOutputFile,CHATTY);
       end;
-      log('Output file is: ' + FOutputFile,CHATTY);
+
+
     end
     else if id = '-OX' then
     begin
@@ -434,20 +487,20 @@ begin
 
       log('Input File is: ' + FInputFile,CHATTY);
     end
+    else if id  = '-L' then
+    begin
+      if isNumber(value) then
+      begin
+        LogLevel := strtoint(value);
+        Log('Log Level Set To:' + IntToStr(LogLevel),LogLevel);
+      end
+    end
     else if id  = '-Q' then
     begin
 
       OutputLog := false;
       //Doesn't require a value
       dec(iParam);
-    end
-    else if id  = '-L' then
-    begin
-      if isNumber(value) then
-      begin
-        FLogLevel := strtoint(value);
-        Log('Log Level Set To:' + IntToStr(FLogLevel),FLogLevel);
-      end
     end
     else if (id = '-T') or (id = '-TF') then
     begin
@@ -559,11 +612,16 @@ begin
 end;
 
 
-procedure TDocumentConverter.Log(Msg: String; Level : Integer = 0 );
+procedure TDocumentConverter.Log(Msg: String; Level : Integer = ERRORS );
 begin
+
+
   if Level <= FLogLevel then
   begin
-    ConsoleLog.Log(self, Msg);
+    if OutputLog = true then
+    begin
+      ConsoleLog.Log(self, Msg);
+    end;
     if FLogtoFile then
     begin
       FLogFile.Add(Msg);
@@ -629,6 +687,17 @@ end;
 procedure TDocumentConverter.SetLogFilename(const Value: String);
 begin
   FLogFilename := Value;
+end;
+
+procedure TDocumentConverter.SetLogLevel(const Value: integer);
+begin
+  FLogLevel := Value;
+  OutputLog := true;
+  if FLogLevel = 0 then
+  begin
+    OutputLog := false;
+    FLogLevel := ERRORS;
+  end;
 end;
 
 procedure TDocumentConverter.SetLogToFile(const Value: Boolean);

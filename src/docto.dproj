@@ -3,7 +3,7 @@
 			<ProjectGuid>{2F967344-8067-49DA-9E3E-F6B7D7BC6CE5}</ProjectGuid>
 			<MainSource>docto.dpr</MainSource>
 			<Base>True</Base>
-			<Config Condition="'$(Config)'==''">Release</Config>
+			<Config Condition="'$(Config)'==''">Debug</Config>
 			<AppType>Console</AppType>
 			<FrameworkType>None</FrameworkType>
 			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
@@ -105,8 +105,8 @@
 						<VersionInfo Name="AutoIncBuild">True</VersionInfo>
 						<VersionInfo Name="MajorVer">0</VersionInfo>
 						<VersionInfo Name="MinorVer">4</VersionInfo>
-						<VersionInfo Name="Release">3</VersionInfo>
-						<VersionInfo Name="Build">27</VersionInfo>
+						<VersionInfo Name="Release">4</VersionInfo>
+						<VersionInfo Name="Build">28</VersionInfo>
 						<VersionInfo Name="Debug">True</VersionInfo>
 						<VersionInfo Name="PreRelease">True</VersionInfo>
 						<VersionInfo Name="Special">False</VersionInfo>
@@ -118,7 +118,7 @@
 					<VersionInfoKeys>
 						<VersionInfoKeys Name="CompanyName">Toflidium Software</VersionInfoKeys>
 						<VersionInfoKeys Name="FileDescription"/>
-						<VersionInfoKeys Name="FileVersion">0.4.3.27</VersionInfoKeys>
+						<VersionInfoKeys Name="FileVersion">0.4.4.28</VersionInfoKeys>
 						<VersionInfoKeys Name="InternalName"/>
 						<VersionInfoKeys Name="LegalCopyright">Toflidium Software</VersionInfoKeys>
 						<VersionInfoKeys Name="LegalTrademarks"/>
