@@ -136,13 +136,3 @@ ProductVersion=0.3.0.0
 Comments=
 [Excluded Packages]
 c:\program files (x86)\borland\delphi7\Projects\Bpl\tfmStandAlone_D7.bpl=TFM Standalone Components D7
-[HistoryLists\hlUnitAliases]
-Count=1
-Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
-[HistoryLists\hlUnitOutputDirectory]
-Count=1
-Item0=..\dcu
-[HistoryLists\hlOutputDirectorry]
-Count=2
-Item0=..\exe
-Item1=..\bin

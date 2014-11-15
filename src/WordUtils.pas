@@ -35,6 +35,7 @@ End;
 
 
 
+function WordFormatsExtensions() : TStringList;
 
 implementation
 
@@ -48,6 +49,18 @@ begin
 
   result := Formats;
 end;
+
+function WordFormatsExtensions() : TStringList;
+var
+  Extensions : TStringList;
+
+begin
+  Extensions := Tstringlist.Create();
+  LoadStringListFromResource('EXTENSIONS',Extensions);
+
+  result := Extensions;
+end;
+
 
 
 

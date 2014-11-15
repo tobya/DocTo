@@ -9,7 +9,7 @@ Must have Microsoft Word installed on host machine.
 
 Licensced in source and binary form under MIT Open Source License, see License.txt for details
 
-Download From Here - https://sourceforge.net/projects/docto/files/
+Download Release From Github Releases - https://github.com/tobya/DocTo/releases/
 
 ## Features
 
@@ -19,6 +19,12 @@ Download From Here - https://sourceforge.net/projects/docto/files/
   1. Delete after conversion
   1. Fire Webhook one each conversion.
   
+
+## Updates
+
+0.5.5 Changes made to logging.  -Q and -L 0 now work correctly ensuring nothing is output to console.  Must specify -G or -GL to get access to logs and errors.
+                                Also -L 10 now outputs extra as logging param is loaded first.
+
 
 ## Examples
 
@@ -41,6 +47,9 @@ Convert All Microsoft Word Documents in Directory and its Sub Directories to PDF
 Delete Origional Files after conversion.
 
     docto -f "C:\Dir with Spaces\FilesToConvert\" -O "C:\DirToOutput" -T wdFormatPDF  -OX .pdf -R
+
+Webhooks
+========
 
 Add a Webhook to fire on each conversion
 

@@ -72,6 +72,8 @@
 			<None Include="res\HelpLog.txt"/>
 			<None Include="res\HelpJSONLog.txt"/>
 			<None Include="res\HelpWebHook.txt"/>
+			<None Include="docto.todo"/>
+			<None Include="res\wdFormatsExt.txt"/>
 			<BuildConfiguration Include="Debug">
 				<Key>Cfg_2</Key>
 				<CfgParent>Base</CfgParent>
@@ -99,8 +101,11 @@
 						<VersionInfo Name="AutoIncBuild">True</VersionInfo>
 						<VersionInfo Name="MajorVer">0</VersionInfo>
 						<VersionInfo Name="MinorVer">4</VersionInfo>
+
+
 						<VersionInfo Name="Release">4</VersionInfo>
-						<VersionInfo Name="Build">23</VersionInfo>
+						<VersionInfo Name="Build">28</VersionInfo>
+
 						<VersionInfo Name="Debug">True</VersionInfo>
 						<VersionInfo Name="PreRelease">True</VersionInfo>
 						<VersionInfo Name="Special">False</VersionInfo>
@@ -112,7 +117,9 @@
 					<VersionInfoKeys>
 						<VersionInfoKeys Name="CompanyName">Toflidium Software</VersionInfoKeys>
 						<VersionInfoKeys Name="FileDescription"/>
-						<VersionInfoKeys Name="FileVersion">0.4.2.23</VersionInfoKeys>
+
+						<VersionInfoKeys Name="FileVersion">0.4.4.28</VersionInfoKeys>
+
 						<VersionInfoKeys Name="InternalName"/>
 						<VersionInfoKeys Name="LegalCopyright">Toflidium Software</VersionInfoKeys>
 						<VersionInfoKeys Name="LegalTrademarks"/>

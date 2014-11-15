@@ -1,5 +1,6 @@
 Help
 Version:0.5.5
+
 Source: http://github.com/tobya/DocTo/
 Command Line Parameters
 Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\MyDir\MyFile"

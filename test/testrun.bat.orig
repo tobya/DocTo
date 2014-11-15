@@ -10,8 +10,9 @@ REM %~d0 and %~p0 together give the full directory this batch file is executing 
 "../exe/docto.exe" -h
 
 REM Individually try each format on Test Document
-REM Remove rem below to run.
-FOR /F "eol=; tokens=1,2* delims=, " %%i in (testdata.txt) do "../exe/docto.exe" -L 10 -f "%~d0%~p0\Inputfiles\pie3.doc"  -o "%~d0%~p0GeneratedFiles\pie3out_%%i.%%j"  -T  %%i
+
+FOR /F "eol=; tokens=1,2* delims=, " %%i in (testdata.txt) do "../exe/docto.exe"  -f "%~d0%~p0\Inputfiles\pie3.doc"  -o "%~d0%~p0GeneratedFiles\pie3out_%%i.%%j"  -T  %%i
+
 
 REM Try on Directory
 "../exe/docto.exe"  -f "%~d0%~p0Inputfiles\"  -o "%~d0%~p0GeneratedFiles"    -T  wdFormatPDF -OX pdf

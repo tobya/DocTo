@@ -1,4 +1,4 @@
-unit ExcelUtils;
+unit WordUtils;
 (*************************************************************
 Copyright © 2012 Toby Allen (http://github.com/tobya)
 
@@ -13,17 +13,19 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMA
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ****************************************************************)
 interface
-
 uses Classes, MainUtils, ResourceUtils,  ActiveX, ComObj, WinINet, Variants,  Types;
 
 type
 
-TExcelXLSConverter = Class(TDocumentConverter)
+TWordDocConverter = Class(TDocumentConverter)
 Private
-    ExcelApp : OleVariant;
+    WordApp : OleVariant;
+protected
+
+
 
 public
-    constructor Create() ;
+    Constructor Create();
     function CreateOfficeApp() : boolean;  override;
     function DestroyOfficeApp() : boolean; override;
     function ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): string; override;
@@ -35,77 +37,71 @@ End;
 
 
 
+//function AvailableWordFormats() : TStringList;
+//function WordFormatsExtensions() : TStringList;
+
+
 implementation
 
-
-
-function TExcelXLSConverter.AvailableFormats() : TStringList;
+function TWordDocConverter.AvailableFormats() : TStringList;
 var
   Formats : TStringList;
 
 begin
   Formats := Tstringlist.Create();
-  LoadStringListFromResource('EXCELFORMATS',Formats);
+  LoadStringListFromResource('WORDFORMATS',Formats);
 
   result := Formats;
 end;
 
+function FormatsExtensions() : TStringList;
+var
+  Extensions : TStringList;
+
+begin
+  Extensions := Tstringlist.Create();
+  LoadStringListFromResource('EXTENSIONS',Extensions);
+
+  result := Extensions;
+end;
+
+
+
+
 
 { TWordDocConverter }
 
-constructor TExcelXLSConverter.Create;
+constructor TWordDocConverter.Create;
 begin
   inherited;
-  extension := '.xls';
-  FLogFilename := 'XlsTo.Log';
+  Extension := '.doc';
+  LogFilename := 'DocTo.Log';
 end;
 
-function TExcelXLSConverter.CreateOfficeApp: boolean;
+function TWordDocConverter.CreateOfficeApp: boolean;
 begin
-    ExcelApp :=  CreateOleObject('Excel.Application');
-   // ExcelApp.Visible := false;
+    Wordapp :=  CreateOleObject('Word.Application');
+    Wordapp.Visible := false;
 end;
 
-function TExcelXLSConverter.DestroyOfficeApp: boolean;
+function TWordDocConverter.DestroyOfficeApp: boolean;
 begin
-  if not VarIsEmpty(ExcelApp) then
+  if not VarIsEmpty(WordApp) then
   begin
-    ExcelApp.Quit;
+    WordApp.Quit();
   end;
 
 end;
 
-function TExcelXLSConverter.ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): string;
+function TWordDocConverter.ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): string;
 begin
             //Open doc and save in requested format.
-            ExcelApp.Workbooks.Open( FileToConvert);
-            if OutputFileFormat = 50000 then //pdf
-            begin
-              //Unlike Word, in Excel you must call a different function to save a pdf. Enusre we export entire workbook.
-              ExcelApp.activeWorkbook.ExportAsFixedFormat(0, OutputFilename  );
+            Wordapp.documents.Open( FileToConvert, false, true);
+            Wordapp.activedocument.Saveas(OutputFilename ,OutputFileFormat );
 
-            end
-            else if OutputFileFormat = 6 then //CSV
-             begin
-              //CSV pops up alert. must be hidden for automation
-                ExcelApp.Application.DisplayAlerts := False ;
-                ExcelApp.activeWorkbook.SaveAs( OutputFilename, OutputFileFormat);
-                ExcelApp.ActiveWorkBook.save;
-             end
-            else
-            begin
-
-              ExcelApp.activeWorkbook.SaveAs( OutputFilename, OutputFileFormat);
-
-            end;
-
-            ExcelApp.ActiveWorkbook.Close();
+            Wordapp.activedocument.Close;
 end;
 
 
-function TExcelXLSConverter.FormatsExtensions: TStringList;
-begin
-  result := nil;
-end;
 
 end.

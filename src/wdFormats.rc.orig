@@ -1,4 +1,4 @@
-WORDFORMATS TEXT    res\wdFormats.txt
+FORMATS TEXT    res\wdFormats.txt
 EXTENSIONS      TEXT    res\wdFormatsExt.txt
 HELP    TEXT    res\HelpLog.txt
 HELPJSON TEXT   res\HelpJSONLog.txt

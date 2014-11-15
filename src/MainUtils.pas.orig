@@ -33,7 +33,7 @@ type
   TDocumentConverter = class
   protected
     Formats : TStringlist;
-    FormatsExtensions : TStringlist;
+    FFormatsExtensions : TStringlist;
     FOutputFileFormatString: String;
     FOutputFileFormat: Integer;
     FOutputLog: Boolean;
@@ -56,10 +56,10 @@ type
 
     FHaltOnWordError: Boolean;
     FRemoveFileOnConvert: boolean;
-
-
+    WordApp : OleVariant;
     FIsFileOutput: Boolean;
     FIsDirOutput: Boolean;
+
     procedure SetInputFile(const Value: String);
     procedure SetOutputFile(const Value: String);
     procedure SetOutputFileFormat(const Value: Integer);
@@ -106,6 +106,7 @@ type
      function DestroyOfficeApp() : boolean; virtual; abstract;
     function CreateOfficeApp() : boolean; virtual; abstract;
    function AvailableFormats() : TStringList;  virtual; abstract;
+    function FormatsExtensions(): TStringList;virtual; abstract;
 
     procedure Log(Msg: String; Level  : Integer = ERRORS);
     procedure LogError(Msg: String);
@@ -198,6 +199,7 @@ constructor TDocumentConverter.Create;
 begin
   ConsoleLog := TConsoleLog.Create();
 
+  FVersionString := '0.5ALPHA';
 
   //Initial values
   FOutputFileFormatString := '';
@@ -258,7 +260,7 @@ begin
     begin
       if OutputExt = '' then
       begin
-        OutputExt := FormatsExtensions.Values[OutputFileFormatString];
+        OutputExt := FFormatsExtensions.Values[OutputFileFormatString];
         log('Output Extension is ' + outputExt, CHATTY);
       end;
 
@@ -294,7 +296,9 @@ begin
       log('Ready to Execute' , VERBOSE);
        try
 
-            ExecuteConversion(FileToConvert, OutputFilename, OutputFileFormat);
+
+            ExecuteConversion(FileToConvert, FileToCreate, OutputFileFormat);
+
 
             if RemoveFileOnConvert then
             begin
@@ -403,9 +407,12 @@ tmpext : String;
 begin
   //Initialise
   iParam := 0;
+
   Formats := AvailableFormats();
-  FormatsExtensions := WordFormatsExtensions();
+
+  FFormatsExtensions := FormatsExtensions();
   ConfigLoggingLevel(Params);
+
 
   OutputLog := true;
   OutputLogFile := '';
