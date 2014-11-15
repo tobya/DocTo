@@ -144,7 +144,7 @@ var
   iParam : Integer;
   id, pstr, value : String;
 begin
-//ogLevel := STANDARD;
+LogLevel := STANDARD;
 iParam := 0;
 lOG(ID,VERBOSE);
 While iParam <= Params.Count -1 do

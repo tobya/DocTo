@@ -20,6 +20,12 @@ Download Release From Github Releases - https://github.com/tobya/DocTo/releases/
   1. Fire Webhook one each conversion.
   
 
+## Updates
+
+0.5.5 Changes made to logging.  -Q and -L 0 now work correctly ensuring nothing is output to console.  Must specify -G or -GL to get access to logs and errors.
+                                Also -L 10 now outputs extra as logging param is loaded first.
+
+
 ## Examples
 
 ### Single
