@@ -14,7 +14,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 ****************************************************************)
 interface
 
-uses Classes, MainUtils, ResourceUtils,  ActiveX, ComObj, WinINet, Variants,  Types;
+uses Classes,Sysutils, MainUtils, ResourceUtils,  ActiveX, ComObj, WinINet, Variants,  Types;
 
 type
 
@@ -78,12 +78,16 @@ end;
 function TExcelXLSConverter.ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): string;
 begin
             //Open doc and save in requested format.
+
+            OutputFilename := stringreplace(OutputFilename, '\\', '\', [rfReplaceAll]);
+
             ExcelApp.Workbooks.Open( FileToConvert);
             if OutputFileFormat = 50000 then //pdf
             begin
+                ExcelApp.Application.DisplayAlerts := False ;
               //Unlike Word, in Excel you must call a different function to save a pdf. Enusre we export entire workbook.
               ExcelApp.activeWorkbook.ExportAsFixedFormat(0, OutputFilename  );
-
+                 ExcelApp.ActiveWorkBook.save;
             end
             else if OutputFileFormat = 6 then //CSV
              begin

@@ -33,7 +33,7 @@ type
   TDocumentConverter = class
   protected
     Formats : TStringlist;
-    FormatsExtensions : TStringlist;
+    fFormatsExtensions : TStringlist;
     FOutputFileFormatString: String;
     FOutputFileFormat: Integer;
     FOutputLog: Boolean;
@@ -106,6 +106,7 @@ type
      function DestroyOfficeApp() : boolean; virtual; abstract;
     function CreateOfficeApp() : boolean; virtual; abstract;
    function AvailableFormats() : TStringList;  virtual; abstract;
+       function FormatsExtensions(): TStringList; virtual; abstract;
 
     procedure Log(Msg: String; Level  : Integer = ERRORS);
     procedure LogError(Msg: String);
@@ -258,7 +259,7 @@ begin
     begin
       if OutputExt = '' then
       begin
-        OutputExt := FormatsExtensions.Values[OutputFileFormatString];
+        OutputExt := fFormatsExtensions.Values[OutputFileFormatString];
         log('Output Extension is ' + outputExt, CHATTY);
       end;
 
@@ -294,7 +295,7 @@ begin
       log('Ready to Execute' , VERBOSE);
        try
 
-            ExecuteConversion(FileToConvert, OutputFilename, OutputFileFormat);
+            ExecuteConversion(FileToConvert, FileToCreate, OutputFileFormat);
 
             if RemoveFileOnConvert then
             begin
@@ -404,7 +405,7 @@ begin
   //Initialise
   iParam := 0;
   Formats := AvailableFormats();
-  FormatsExtensions := WordFormatsExtensions();
+  fFormatsExtensions := FormatsExtensions();
   ConfigLoggingLevel(Params);
 
   OutputLog := true;

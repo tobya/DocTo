@@ -30,7 +30,7 @@ public
     function DestroyOfficeApp() : boolean; override;
     function ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): string; override;
     function AvailableFormats() : TStringList; override;
-
+     function FormatsExtensions(): TStringList; override;
 End;
 
 
@@ -50,7 +50,7 @@ begin
   result := Formats;
 end;
 
-function WordFormatsExtensions() : TStringList;
+function FormatsExtensions() : TStringList;
 var
   Extensions : TStringList;
 
