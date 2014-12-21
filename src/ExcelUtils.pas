@@ -79,9 +79,13 @@ function TExcelXLSConverter.ExecuteConversion(fileToConvert: String; OutputFilen
 begin
             //Open doc and save in requested format.
 
+            //Excel is particuarily sensitive to having \\ at end of filename, eg it won't create file.
+            //so we remove any double \\
             OutputFilename := stringreplace(OutputFilename, '\\', '\', [rfReplaceAll]);
 
             ExcelApp.Workbooks.Open( FileToConvert);
+
+            //pdf is not an actual standard xls output format so we created our own.
             if OutputFileFormat = 50000 then //pdf
             begin
                 ExcelApp.Application.DisplayAlerts := False ;

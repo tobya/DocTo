@@ -20,4 +20,3 @@ wdFormatXMLDocumentMacroEnabled=13
 wdFormatXMLTemplate=14
 wdFormatXMLTemplateMacroEnabled=15
 wdFormatXPS=18
-
