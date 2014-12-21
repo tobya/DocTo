@@ -30,12 +30,12 @@ public
     function DestroyOfficeApp() : boolean; override;
     function ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): string; override;
     function AvailableFormats() : TStringList; override;
-     function FormatsExtensions(): TStringList; override;
+    function FormatsExtensions(): TStringList; override;
 End;
 
 
 
-function WordFormatsExtensions() : TStringList;
+
 
 implementation
 
@@ -50,7 +50,7 @@ begin
   result := Formats;
 end;
 
-function FormatsExtensions() : TStringList;
+function TWordDocConverter.FormatsExtensions() : TStringList;
 var
   Extensions : TStringList;
 

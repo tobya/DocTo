@@ -37,7 +37,8 @@ var
 begin
 
   paramlist := TStringlist.create;
-  DocConv := TDocumentConverter.Create;
+  DocConv := TWordDocConverter.Create;
+  try
     try
       for i := 1 to ParamCount do
       begin
