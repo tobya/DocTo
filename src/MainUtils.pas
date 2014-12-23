@@ -395,7 +395,7 @@ begin
 end;
 
 procedure TDocumentConverter.LoadConfig(Params: TStrings);
-var i, f , iParam, idx: integer;
+var  f , iParam, idx: integer;
 pstr : string;
 id, value : string;
 HelpStrings : TStringList;

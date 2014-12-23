@@ -64,6 +64,7 @@ function TExcelXLSConverter.CreateOfficeApp: boolean;
 begin
     ExcelApp :=  CreateOleObject('Excel.Application');
    // ExcelApp.Visible := false;
+   result := true;
 end;
 
 function TExcelXLSConverter.DestroyOfficeApp: boolean;
@@ -72,7 +73,7 @@ begin
   begin
     ExcelApp.Quit;
   end;
-
+  Result := true;
 end;
 
 function TExcelXLSConverter.ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): string;
