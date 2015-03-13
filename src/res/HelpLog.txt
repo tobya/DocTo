@@ -17,6 +17,8 @@ Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\My
       Use instead of -T.
   -L  Log Level 1 Errors Only, 2 Standard, 5 CHATTY, 10 VERBOSE
       Default: 2 Standard
+  -C  Compatibility Mode. Set to an INTEGER value from https://msdn.microsoft.com/en-us/library/office/ff192388.aspx.
+      If has a value SaveAs2 will be called.  Otherwise SaveAs is called.
   -G  Write Log to file in directory
   -GL Log File Name to Use default 'DocTo.Log';
   -Q  Quiet Mode: Nothing will be output to console.  To see any errors you must set -G or -GL
@@ -35,3 +37,11 @@ ERROR CODES:
 203 : Unknown switch in command
 220 : Word or COM Error
 221 : Word not Installed
+
+COMPATIBILITY MODES:
+FROM https://msdn.microsoft.com/en-us/library/office/ff836084.aspx
+wdCurrent   : 65535 (Compatibility mode equivalent to the latest version of Microsoft Word.)
+wdWord2003  : 11  (Word 2010 is put into a mode that is most compatible with Word 2003. Features new to Word 2010 are disabled in this mode.)
+wdWord2007  : 12  (Word 2010 is put into a mode that is most compatible with Office Word 2007. Features new to Word 2010are disabled in this mode.)
+wdWord2010  : 14  (Word 2013 is put into a mode that is most compatible with . Features new to Word 2013are disabled in this mode.)
+wdWord2013  : 15  (Default. All Word 2013 features are enabled.)
