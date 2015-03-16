@@ -7,6 +7,10 @@ REM execute docto inserting variables
 REM %~d0 and %~p0 together give the full directory this batch file is executing in.
 
 
+REM Remove all generated files that may exist.
+del GeneratedFiles\*.* /q
+pause
+
 "../exe/docto.exe" -h
 
 REM Individually try each format on Test Document
