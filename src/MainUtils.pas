@@ -24,6 +24,8 @@ Const
   ERRORS = 1;
 
 type
+
+
   TConsoleLog = class
   public
     procedure Log(Sender: TObject; Log : String);
@@ -115,7 +117,7 @@ type
 
     procedure Log(Msg: String; Level  : Integer = ERRORS);
     procedure LogError(Msg: String);
-    procedure CallWebHook(Params: String);
+    function CallWebHook(Params: String) : string;
 
     property OutputLog : Boolean read FOutputLog write SetOutputLog;
     property OutputLogFile : String read FOutputLogFile write SetOutputLogFile;
@@ -147,7 +149,8 @@ begin
   Writeln(Log);
 end;
 
-procedure TDocumentConverter.CallWebHook(Params: String);
+function TDocumentConverter.CallWebHook(Params: String):string;
+
 begin
   if FWebHook > '' then
   begin
@@ -249,7 +252,7 @@ var
 
   Continue : Boolean;
   i : integer;
-  FileToConvert, FileToCreate : String;
+  FileToConvert, FileToCreate, UrlToCall : String;
 
 begin
 
@@ -300,11 +303,16 @@ begin
 
 
       log('Ready to Execute' , VERBOSE);
+      if FileExists(FileToCreate) then //Not working currently as file doesnt include .ext
+      begin
+        raise Exception.Create('FileExists Cannot Create: ' + FileToCreate);
+
+      end;
        try
 
 
             ExecuteConversion(FileToConvert, FileToCreate, OutputFileFormat);
-
+            log('FileCreated: ' + FileToCreate, STANDARD);
             if RemoveFileOnConvert then
             begin
               //Check file exists and Delete if requested
@@ -315,11 +323,13 @@ begin
               end;
             end;
 
+            UrlToCall := 'action=convert&type='+ FOutputFileFormatString + '&ouputfilename=' + URLEncode(FileToCreate)+ '&inputfilename=' + URLEncode(InputFile);
+            log('Calling Webhook:' +  UrlToCall, CHATTY);
             //Make a call to webhook if it exists
-            CallWebHook('action=convert&type='+ FOutputFileFormatString + '&ouputfilename=' + URLEncode(FileToCreate)+ '&inputfilename=' + URLEncode(InputFile));
+            CallWebHook(UrlToCall);
 
           log('Creating File: ' + FileToCreate,CHATTY);
-          result := FileToCreate;
+
         except
           on E: EOleSysError do
           begin

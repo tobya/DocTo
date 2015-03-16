@@ -46,8 +46,7 @@ begin
      DocConv.LoadConfig(paramlist);
 
      CoInitialize(nil);
-     LogResult :=  DocConv.Execute;
-     DocConv.log( LogResult );
+     DocConv.Execute;
 
      CoUninitialize;
 

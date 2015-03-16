@@ -103,18 +103,21 @@ end;
 
 function TWordDocConverter.ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): string;
 begin
-            //Open doc and save in requested format.
-            Wordapp.documents.Open( FileToConvert, false, true);
+        //Open doc and save in requested format.
+        Wordapp.documents.Open( FileToConvert, false, true);
 
-        try
-        if (strtofloat(OfficeAppVersion) < 13) then
+    try
+        //SaveAs2 was introducted in 2010 V 14 by this list
+        //http://stackoverflow.com/a/29077879/6244
+        if (strtofloat(OfficeAppVersion) < 14) then
         begin
+
               Wordapp.activedocument.Saveas(OutputFilename ,OutputFileFormat);
         end
         else
         begin
 
-        Wordapp.activedocument.Saveas2(OutputFilename ,OutputFileFormat,
+          Wordapp.activedocument.Saveas2(OutputFilename ,OutputFileFormat,
                                         EmptyParam,  //LockComments
                                         EmptyParam,  //Password
                                         EmptyParam,  //AddToRecentFiles
@@ -132,10 +135,10 @@ begin
                                         CompatibilityMode  //CompatibilityMode
                                         );
         end;
-        finally
+    finally
 
-                Wordapp.activedocument.Close;
-        end;
+            Wordapp.activedocument.Close;
+    end;
 
 
 end;
