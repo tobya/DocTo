@@ -41,10 +41,10 @@ begin
       begin
        paramlist.Add(ParamStr(i));
       end;
-
+      CoInitialize(nil);
       DocConv.LoadConfig(paramlist);
 
-      CoInitialize(nil);
+
       LogResult :=  DocConv.Execute;
       DocConv.log( LogResult );
 

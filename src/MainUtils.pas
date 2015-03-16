@@ -31,6 +31,9 @@ type
   end;
 
   TDocumentConverter = class
+  private
+
+    procedure SetCompatibilityMode(const Value: Integer);
   protected
     Formats : TStringlist;
     fFormatsExtensions : TStringlist;
@@ -53,6 +56,7 @@ type
     FOutputExt: string;
     FWebHook : String;
     FExtension : String;
+    FCompatibilityMode: Integer;
 
     FHaltOnWordError: Boolean;
     FRemoveFileOnConvert: boolean;
@@ -93,6 +97,7 @@ type
     property RemoveFileOnConvert: boolean read FRemoveFileOnConvert write SetRemoveFileOnConvert;
     procedure SetExtension(const Value: String); virtual;
     function GetExtension: String;  virtual;
+    function OfficeAppVersion() : String; virtual; abstract;
   public
 
     Constructor Create();
@@ -103,10 +108,10 @@ type
     function Execute() : string; virtual;
     function ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): string; virtual; abstract;
 
-     function DestroyOfficeApp() : boolean; virtual; abstract;
+    function DestroyOfficeApp() : boolean; virtual; abstract;
     function CreateOfficeApp() : boolean; virtual; abstract;
-   function AvailableFormats() : TStringList;  virtual; abstract;
-       function FormatsExtensions(): TStringList; virtual; abstract;
+    function AvailableFormats() : TStringList;  virtual; abstract;
+    function FormatsExtensions(): TStringList; virtual; abstract;
 
     procedure Log(Msg: String; Level  : Integer = ERRORS);
     procedure LogError(Msg: String);
@@ -123,6 +128,7 @@ type
     Property Version : String read FVersionString;
     property HaltOnWordError : Boolean read FHaltOnWordError write SetHaltOnWordError;
     property Extension: String read GetExtension write SetExtension;
+    property CompatibilityMode : Integer read FCompatibilityMode write SetCompatibilityMode;
 
   end;
 
@@ -215,6 +221,7 @@ begin
   FIsDirInput := false;
   FIsFileOutput := false;
   FIsDirOutput := false;
+  FCompatibilityMode := 0;
 
 
   FInputFiles := TStringList.Create;
@@ -294,6 +301,7 @@ begin
 
       log('Ready to Execute' , VERBOSE);
        try
+
 
             ExecuteConversion(FileToConvert, FileToCreate, OutputFileFormat);
 
@@ -537,6 +545,10 @@ begin
       log('Type Integer is: ' + inttostr(FOutputFileFormat), VERBOSE);
 
     end
+    else if (id = '-C') then
+    begin
+      CompatibilityMode := strtoint(value);
+    end
     else if (id = '-G') then
     begin
        LogToFile := true;
@@ -554,6 +566,13 @@ begin
     else if (id = '-W') then
     begin
       FWebHook := value;
+    end
+    else if (id = '-V') then
+    begin
+      log('Version:0.7');  //Move to ancestor class
+      log('OfficeApp Version:' +  OfficeAppVersion,0);
+      halt(2);
+
     end
     else if (id = '-X') then
     begin
@@ -651,6 +670,11 @@ begin
   NewFileName := NewBase + '\' + BaseLessFN;
   NewFileName := ChangeFileExt(NewFileName , NewExt);
   Result := NewFileName;
+end;
+
+procedure TDocumentConverter.SetCompatibilityMode(const Value: Integer);
+begin
+  FCompatibilityMode := Value;
 end;
 
 procedure TDocumentConverter.SetDoSubDirs(const Value: Boolean);

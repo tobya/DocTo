@@ -28,6 +28,7 @@ Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\My
   -HW Webhook Help.
   -X  Halt on COM Error: Default True;  If you have trouble with some files not converting, set this to false to ignore
       errors and continue with batch job.
+  -V  Show Versions.  DocTo and Word/Excel
 
 
 ERROR CODES:

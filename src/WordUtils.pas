@@ -13,7 +13,7 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMA
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ****************************************************************)
 interface
-uses Classes, MainUtils, ResourceUtils,  ActiveX, ComObj, WinINet, Variants,  Types;
+uses Classes, MainUtils, ResourceUtils,  ActiveX, ComObj, WinINet, Variants, sysutils, Types;
 
 type
 
@@ -28,9 +28,10 @@ public
     Constructor Create();
     function CreateOfficeApp() : boolean;  override;
     function DestroyOfficeApp() : boolean; override;
-    function ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer;  CompatibilityMode : Integer): string; override;
+    function ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): string; override;
     function AvailableFormats() : TStringList; override;
     function FormatsExtensions(): TStringList; override;
+    function OfficeAppVersion() : String; override;
 End;
 
 
@@ -65,6 +66,12 @@ end;
 
 
 
+function TWordDocConverter.OfficeAppVersion: String;
+begin
+  CreateOfficeApp();
+  result := Wordapp.Version;
+end;
+
 { TWordDocConverter }
 
 constructor TWordDocConverter.Create;
@@ -76,8 +83,13 @@ end;
 
 function TWordDocConverter.CreateOfficeApp: boolean;
 begin
+
+  if  VarIsEmpty(WordApp) then
+  begin
     Wordapp :=  CreateOleObject('Word.Application');
     Wordapp.Visible := false;
+  end;
+  Result := true;
 end;
 
 function TWordDocConverter.DestroyOfficeApp: boolean;
@@ -86,32 +98,46 @@ begin
   begin
     WordApp.Quit();
   end;
-
+  Result := true;
 end;
 
-function TWordDocConverter.ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer; CompatibilityMode : Integer): string;
+function TWordDocConverter.ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): string;
 begin
             //Open doc and save in requested format.
             Wordapp.documents.Open( FileToConvert, false, true);
-            Wordapp.activedocument.Saveas2(OutputFilename ,OutputFileFormat,
-                                            EmptyParam,  //LockComments
-                                            EmptyParam,  //Password
-                                            EmptyParam,  //AddToRecentFiles
-                                            EmptyParam,  //WritePassword
-                                            EmptyParam,  //ReadOnlyRecommended
-                                            EmptyParam,  //EmbedTrueTypeFonts
-                                            EmptyParam,  //SaveNativePictureFo
-                                            EmptyParam,  //SaveFormsData
-                                            EmptyParam,  //SaveAsAOCELetter
-                                            EmptyParam,  //Encoding
-                                            EmptyParam,  //InsertLineBreaks
-                                            EmptyParam,  //AllowSubstitutions
-                                            EmptyParam,  //LineEnding
-                                            EmptyParam,  //AddBiDiMarks
-                                            CompatibilityMode  //CompatibilityMode
-                                            );
 
-            Wordapp.activedocument.Close;
+        try
+        if (strtofloat(OfficeAppVersion) < 13) then
+        begin
+              Wordapp.activedocument.Saveas(OutputFilename ,OutputFileFormat);
+        end
+        else
+        begin
+
+        Wordapp.activedocument.Saveas2(OutputFilename ,OutputFileFormat,
+                                        EmptyParam,  //LockComments
+                                        EmptyParam,  //Password
+                                        EmptyParam,  //AddToRecentFiles
+                                        EmptyParam,  //WritePassword
+                                        EmptyParam,  //ReadOnlyRecommended
+                                        EmptyParam,  //EmbedTrueTypeFonts
+                                        EmptyParam,  //SaveNativePictureFo
+                                        EmptyParam,  //SaveFormsData
+                                        EmptyParam,  //SaveAsAOCELetter
+                                        EmptyParam,  //Encoding
+                                        EmptyParam,  //InsertLineBreaks
+                                        EmptyParam,  //AllowSubstitutions
+                                        EmptyParam,  //LineEnding
+                                        EmptyParam,  //AddBiDiMarks
+                                        CompatibilityMode  //CompatibilityMode
+                                        );
+        end;
+        finally
+
+                Wordapp.activedocument.Close;
+        end;
+
+
 end;
 
 
