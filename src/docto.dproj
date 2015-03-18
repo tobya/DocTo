@@ -71,6 +71,7 @@
         <DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_3_Win32)'!=''">
+        <Icon_MainIcon>d2icon_QhU_icon.ico</Icon_MainIcon>
         <Debugger_RunParams>-L 10 -V</Debugger_RunParams>
         <VerInfo_MinorVer>7</VerInfo_MinorVer>
         <VerInfo_Keys>CompanyName=Toflidium Software;FileDescription=DocTo - Convert doc files to any available format;FileVersion=0.7.2.15;InternalName=;LegalCopyright=Toby Allen;LegalTrademarks=;OriginalFilename=docto.exe;ProductName=DocTo;ProductVersion=0.3.0.0;Comments=</VerInfo_Keys>

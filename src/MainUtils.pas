@@ -579,7 +579,7 @@ begin
     end
     else if (id = '-V') then
     begin
-      log('Version:0.7');  //Move to ancestor class
+      log('Version:0.7.2');  //Move to ancestor class
       log('OfficeApp Version:' +  OfficeAppVersion,0);
       halt(2);
 
