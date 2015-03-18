@@ -34,8 +34,10 @@ type
 
   TDocumentConverter = class
   private
+    FIgnore_MACOSX: boolean;
 
     procedure SetCompatibilityMode(const Value: Integer);
+    procedure SetIgnore_MACOSX(const Value: boolean);
   protected
     Formats : TStringlist;
     fFormatsExtensions : TStringlist;
@@ -97,9 +99,19 @@ type
     property OutputExt : string read FOutputExt write SetOutputExt;
     property LogLevel : integer read FLogLevel write SetLogLevel;
     property RemoveFileOnConvert: boolean read FRemoveFileOnConvert write SetRemoveFileOnConvert;
+    property Ignore_MACOSX : boolean   read FIgnore_MACOSX write SetIgnore_MACOSX;
+
+
     procedure SetExtension(const Value: String); virtual;
     function GetExtension: String;  virtual;
     function OfficeAppVersion() : String; virtual; abstract;
+
+    //Check files and folders
+    function AllowDirectory(DirName : String; FullPath : String) : Boolean;
+    function AllowFile(FileName : String; Fullpath : String): Boolean;
+
+
+
   public
 
     Constructor Create();
@@ -149,6 +161,21 @@ implementation
 procedure  TConsoleLog.Log(Sender: TObject; Log: String);
 begin
   Writeln(Log);
+end;
+
+function TDocumentConverter.AllowDirectory(DirName, FullPath: String): Boolean;
+begin
+    Result := true;
+    if (Ignore_MACOSX) then
+      if (DirName <> '__MACOSX') then
+      BEGIN
+        Result := false;
+      END;
+end;
+
+function TDocumentConverter.AllowFile(FileName, Fullpath: String): Boolean;
+begin
+
 end;
 
 function TDocumentConverter.CallWebHook(Params: String):string;
@@ -238,7 +265,7 @@ begin
   FIsFileOutput := false;
   FIsDirOutput := false;
   FCompatibilityMode := 0;
-
+  FIgnore_MACOSX := true;
 
   FInputFiles := TStringList.Create;
 end;
@@ -573,6 +600,10 @@ begin
        FLogFilename := value;
        LogToFile := true;
     end
+    else if (id = '-M') then
+    begin
+      Ignore_MACOSX := StrToBool( value);
+    end
     else if (id = '-R') then
     begin
       RemoveFileOnConvert  := lowercase(value) = 'true';
@@ -743,6 +774,11 @@ begin
   FHaltOnWordError := Value;
 end;
 
+procedure TDocumentConverter.SetIgnore_MACOSX(const Value: boolean);
+begin
+  FIgnore_MACOSX := Value;
+end;
+
 procedure TDocumentConverter.SetInputFile(const Value: String);
 begin
   FInputFile := Value;
@@ -880,8 +916,14 @@ If not InDir then Exit;
 if FindFirst(Path + '*.*', faDirectory, Rec) = 0 then
  try
    repeat
-    if ((Rec.Attr and faDirectory) <> 0)  and (Rec.Name<>'.') and (Rec.Name<>'..') then
-     ListFiles(Path + Rec.Name, FileName, True, outFiles);
+     if AllowDirectory(Rec.Name, Path + Rec.Name) then
+     begin
+      if ((Rec.Attr and faDirectory) <> 0)  and (Rec.Name<>'.') and (Rec.Name<>'..') then
+      BEGIN
+       ListFiles(Path + Rec.Name, FileName, True, outFiles);
+      END;
+     end;
+
    until FindNext(Rec) <> 0;
  finally
    FindClose(Rec);
