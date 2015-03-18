@@ -57,7 +57,7 @@ type
     FIsDirInput: Boolean;
     FOutputExt: string;
     FWebHook : String;
-    FExtension : String;
+    FInputExtension : String;
     FCompatibilityMode: Integer;
 
     FHaltOnWordError: Boolean;
@@ -115,9 +115,11 @@ type
     function AvailableFormats() : TStringList;  virtual; abstract;
     function FormatsExtensions(): TStringList; virtual; abstract;
 
-    procedure Log(Msg: String; Level  : Integer = ERRORS);
+    procedure Log(Msg: String; Level  : Integer = ERRORS); overload;
+    procedure Log(Msg: String; List:  TStrings; Level: Integer); overload;
     procedure LogError(Msg: String);
     function CallWebHook(Params: String) : string;
+    procedure LogHelp(HelpResName : String);
 
     property OutputLog : Boolean read FOutputLog write SetOutputLog;
     property OutputLogFile : String read FOutputLogFile write SetOutputLogFile;
@@ -129,7 +131,7 @@ type
     property LogFilename: String read FLogFilename write SetLogFilename;
     Property Version : String read FVersionString;
     property HaltOnWordError : Boolean read FHaltOnWordError write SetHaltOnWordError;
-    property Extension: String read GetExtension write SetExtension;
+    property InputExtension: String read GetExtension write SetExtension;
     property CompatibilityMode : Integer read FCompatibilityMode write SetCompatibilityMode;
 
   end;
@@ -150,11 +152,22 @@ begin
 end;
 
 function TDocumentConverter.CallWebHook(Params: String):string;
-
+var url : string;
 begin
+
+  try
   if FWebHook > '' then
   begin
-    GetURL(FWebHook + '?' + Params);
+    url := FWebHook + '?' + Params;
+    GetURL(url);
+
+    log(url, verbose);
+  end;
+  except on E: Exception do
+  begin
+    logerror(E.ClassName + ' ' + E.Message);
+  end;
+
   end;
 end;
 
@@ -303,11 +316,11 @@ begin
 
 
       log('Ready to Execute' , VERBOSE);
-      if FileExists(FileToCreate) then //Not working currently as file doesnt include .ext
+      (*if FileExists(FileToCreate) then //Not working currently as file doesnt include .ext
       begin
         raise Exception.Create('FileExists Cannot Create: ' + FileToCreate);
 
-      end;
+      end;*)
        try
 
 
@@ -491,23 +504,14 @@ begin
     else if id = '-F' then
     begin
       FInputFile := value;
-     // IsFileInput := true;
-      //If input is Dir rather than file, enumerate files.
-      if DirectoryExists(FInputFile) then
-      begin
-         IsDirInput := true;
-         DoSubDirs := true;
-         {TODO: allow user to specify *.doc extension }
-         ListFiles(finputfile, '*' + Extension,true,FInputFiles);
-      end
-      else
-      begin
 
-        IsFileInput := true;
-      end;
 
 
       log('Input File is: ' + FInputFile,CHATTY);
+    end
+    else if id = '-FX' then
+    begin
+      InputExtension := value;
     end
     else if id  = '-L' then
     begin
@@ -610,24 +614,17 @@ begin
     end
     else if (id = '-HJ') then
     begin
-      HelpStrings := TStringList.Create;
-      try
-        LoadStringListFromResource('HELPJSON',HelpStrings);
-        log(HelpStrings.Text);
-      finally
-        HelpStrings.Free;
-      end;
+    LogHelp('HELPJSON');
       halt(2);
     end
     else if (id = '-HW') then
     begin
-      HelpStrings := TStringList.Create;
-      try
-        LoadStringListFromResource('HELPWEBHOOK',HelpStrings);
-        log(HelpStrings.Text);
-      finally
-        HelpStrings.Free;
-      end;
+    LogHelp('HELPWEBHOOK');
+  halt(2);
+    end
+    else if (id = '-HX') then
+    begin
+   LogHelp('HELPERRORS');
       halt(2);
     end
     else
@@ -639,6 +636,25 @@ begin
 
 
   end;
+
+  //Code to run when all parameters have been loaded.
+  //Get Files
+
+   // IsFileInput := true;
+    //If input is Dir rather than file, enumerate files.
+    if DirectoryExists(InputFile) then
+    begin
+       IsDirInput := true;
+       DoSubDirs := true;
+
+       ListFiles(finputfile, '*' + InputExtension,true,FInputFiles);
+
+       log('File List', FInputFiles,verbose);
+    end
+    else
+    begin
+      IsFileInput := true;
+    end;
 
 
 
@@ -663,10 +679,30 @@ begin
   end;
 end;
 
+procedure TDocumentConverter.Log(Msg: String; List:  TStrings; Level: Integer);
+begin
+
+  log(Msg, Level);
+  log(  List.Text, Level);
+
+end;
+
 procedure TDocumentConverter.LogError(Msg: String);
 begin
   Log('*******************************************', ERRORS);
   Log('Error: ' + Msg, ERRORS);
+end;
+
+procedure TDocumentConverter.LogHelp(HelpResName: String);
+var HelpStrings : TStringList;
+begin
+      HelpStrings := TStringList.Create;
+      try
+        LoadStringListFromResource(HelpResName,HelpStrings);
+        log(HelpStrings.Text);
+      finally
+        HelpStrings.Free;
+      end;
 end;
 
 function TDocumentConverter.NewFileNameFromBase(OldBase, NewBase,
@@ -694,12 +730,12 @@ end;
 
 function TDocumentConverter.GetExtension: String;
 begin
-  Result := fExtension;
+  Result := fInputExtension;
 end;
 
 procedure TDocumentConverter.SetExtension(const Value: String);
 begin
-  FExtension := Value;
+  FInputExtension := Value;
 end;
 
 procedure TDocumentConverter.SetHaltOnWordError(const Value: Boolean);

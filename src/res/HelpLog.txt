@@ -5,6 +5,7 @@ Command Line Parameters
 Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\MyDir\MyFile"
   -H  This message
   -F  Input File or Directory
+  -FX Input Extension to search for if directory.  Default ".doc" (will find ".docx" also)
   -O  Output File or Directory to place converted Docs
   -OX Output Extension if -F is Directory.
   -T  Format(Type) to convert file to, either integer or wdSaveFormat constant.
@@ -18,7 +19,7 @@ Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\My
   -L  Log Level 1 Errors Only, 2 Standard, 5 CHATTY, 10 VERBOSE
       Default: 2 Standard
   -C  Compatibility Mode. Set to an INTEGER value from https://msdn.microsoft.com/en-us/library/office/ff192388.aspx.
-      If has a value SaveAs2 will be called.  Otherwise SaveAs is called.
+  -M  Ignore all files in __MACOSX\ subdirectory if it exists.  Default True.
   -G  Write Log to file in directory
   -GL Log File Name to Use default 'DocTo.Log';
   -Q  Quiet Mode: Nothing will be output to console.  To see any errors you must set -G or -GL
@@ -41,8 +42,12 @@ ERROR CODES:
 
 COMPATIBILITY MODES:
 FROM https://msdn.microsoft.com/en-us/library/office/ff836084.aspx
+
 wdCurrent   : 65535 (Compatibility mode equivalent to the latest version of Microsoft Word.)
-wdWord2003  : 11  (Word 2010 is put into a mode that is most compatible with Word 2003. Features new to Word 2010 are disabled in this mode.)
-wdWord2007  : 12  (Word 2010 is put into a mode that is most compatible with Office Word 2007. Features new to Word 2010are disabled in this mode.)
-wdWord2010  : 14  (Word 2013 is put into a mode that is most compatible with . Features new to Word 2013are disabled in this mode.)
-wdWord2013  : 15  (Default. All Word 2013 features are enabled.)
+wdWord2003  : 11  Word 2010 is put into a mode that is most compatible with Word 2003. Features new to Word 2010 are
+                  disabled in this mode.
+wdWord2007  : 12  Word 2010 is put into a mode that is most compatible with Office Word 2007. Features new to Word 2010
+                  are disabled in this mode.
+wdWord2010  : 14  Word 2013 is put into a mode that is most compatible with . Features new to Word 2013
+                  are disabled in this mode.
+wdWord2013  : 15  Default. All Word 2013 features are enabled.
