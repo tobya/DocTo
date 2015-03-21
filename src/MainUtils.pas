@@ -163,20 +163,7 @@ begin
   Writeln(Log);
 end;
 
-function TDocumentConverter.AllowDirectory(DirName, FullPath: String): Boolean;
-begin
-    Result := true;
-    if (Ignore_MACOSX) then
-      if (DirName <> '__MACOSX') then
-      BEGIN
-        Result := false;
-      END;
-end;
 
-function TDocumentConverter.AllowFile(FileName, Fullpath: String): Boolean;
-begin
-
-end;
 
 function TDocumentConverter.CallWebHook(Params: String):string;
 var url : string;
@@ -188,7 +175,7 @@ begin
     url := FWebHook + '?' + Params;
     GetURL(url);
 
-    log(url, verbose);
+    log(url, chatty);
   end;
   except on E: Exception do
   begin
@@ -363,8 +350,10 @@ begin
               end;
             end;
 
+
+
             UrlToCall := 'action=convert&type='+ FOutputFileFormatString + '&ouputfilename=' + URLEncode(FileToCreate)+ '&inputfilename=' + URLEncode(InputFile);
-            log('Calling Webhook:' +  UrlToCall, CHATTY);
+
             //Make a call to webhook if it exists
             CallWebHook(UrlToCall);
 
@@ -916,12 +905,13 @@ If not InDir then Exit;
 if FindFirst(Path + '*.*', faDirectory, Rec) = 0 then
  try
    repeat
-     if AllowDirectory(Rec.Name, Path + Rec.Name) then
-     begin
-      if ((Rec.Attr and faDirectory) <> 0)  and (Rec.Name<>'.') and (Rec.Name<>'..') then
-      BEGIN
+
+     if ((Rec.Attr and faDirectory) <> 0)  and (Rec.Name<>'.') and (Rec.Name<>'..') then
+     BEGIN
+      if AllowDirectory(Rec.Name, Path + Rec.Name) then
+      begin
        ListFiles(Path + Rec.Name, FileName, True, outFiles);
-      END;
+      end;
      end;
 
    until FindNext(Rec) <> 0;
@@ -972,5 +962,19 @@ begin
 end;
 
 
+function TDocumentConverter.AllowDirectory(DirName, FullPath: String): Boolean;
+begin
+    Result := true;
+    if (Ignore_MACOSX) then
+      if (DirName = '__MACOSX') then
+      BEGIN
+        Result := false;
+      END;
+end;
+
+function TDocumentConverter.AllowFile(FileName, Fullpath: String): Boolean;
+begin
+
+end;
 
 end.
