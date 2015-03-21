@@ -19,12 +19,6 @@ Further Information available at http://tobya.github.com/DocTo
   1. Fire Webhook one each conversion.
   
 
-## Updates
-
-0.7     Added support for saveas2 function added by microsoft in Word 2010.  Additional Switches.
-
-0.5.5   Changes made to logging.  -Q and -L 0 now work correctly ensuring nothing is output to console.  Must specify -G or -GL to get access to logs and errors.
-                                Also -L 10 now outputs extra as logging param is loaded first.
 
 
 ## Examples
@@ -82,7 +76,7 @@ Add a Webhook to fire on each conversion (-W)
       -L  Log Level Integer: 1 ERRORS Only, 2 STANDARD, 5 CHATTY, 10 VERBOSE
           Default: 2=STANDARD
       -C  Compatibility Mode Integer. Set to an INTEGER value from https://msdn.microsoft.com/en-us/library/office/ff192388.aspx.  
-          See Below.
+          
       -M  Ignore all files in __MACOSX\ subdirectory if it exists.  Default True.
       -G  Write Log to file in directory
       -GL Log File Name to Use. Default 'DocTo.Log';
@@ -116,6 +110,12 @@ Add a Webhook to fire on each conversion (-W)
                         are disabled in this mode.
     wdWord2013  : 15    Default. All Word 2013 features are enabled.
 
-Options
-=======
+
+
+## Updates
+
+0.7     Added support for saveas2 function added by microsoft in Word 2010.  Additional Switches.
+
+0.5.5   Changes made to logging.  -Q and -L 0 now work correctly ensuring nothing is output to console.  Must specify -G or -GL to get access to logs and errors.
+                                Also -L 10 now outputs extra as logging param is loaded first.
 
