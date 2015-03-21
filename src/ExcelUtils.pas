@@ -56,7 +56,8 @@ end;
 constructor TExcelXLSConverter.Create;
 begin
   inherited;
-  extension := '.xls';
+  //setup defaults
+  InputExtension := '.xls';
   FLogFilename := 'XlsTo.Log';
 end;
 
@@ -82,17 +83,25 @@ begin
 
             //Excel is particuarily sensitive to having \\ at end of filename, eg it won't create file.
             //so we remove any double \\
+            log(OutputFilename, VERBOSE);
             OutputFilename := stringreplace(OutputFilename, '\\', '\', [rfReplaceAll]);
-
+            log(OutputFilename, verbose);
             ExcelApp.Workbooks.Open( FileToConvert);
 
             //pdf is not an actual standard xls output format so we created our own.
             if OutputFileFormat = 50000 then //pdf
             begin
                 ExcelApp.Application.DisplayAlerts := False ;
-              //Unlike Word, in Excel you must call a different function to save a pdf. Enusre we export entire workbook.
-              ExcelApp.activeWorkbook.ExportAsFixedFormat(0, OutputFilename  );
-                 ExcelApp.ActiveWorkBook.save;
+                //Unlike Word, in Excel you must call a different function to save a pdf. Ensure we export entire workbook.
+                ExcelApp.activeWorkbook.ExportAsFixedFormat(0, OutputFilename  );
+                ExcelApp.ActiveWorkBook.save;
+            end
+            else if OutputFileFormat = 50001 then //xps
+            begin
+                ExcelApp.Application.DisplayAlerts := False ;
+                //Unlike Word, in Excel you must call a different function to save a pdf. Ensure we export entire workbook.
+                ExcelApp.activeWorkbook.ExportAsFixedFormat(1, OutputFilename  );
+                ExcelApp.ActiveWorkBook.save;
             end
             else if OutputFileFormat = 6 then //CSV
              begin
@@ -103,7 +112,8 @@ begin
              end
             else
             begin
-
+              //Excel has a tendency to popup alerts so we don't want that.
+              ExcelApp.Application.DisplayAlerts := False ;
               ExcelApp.activeWorkbook.SaveAs( OutputFilename, OutputFileFormat);
 
             end;
@@ -113,8 +123,14 @@ end;
 
 
 function TExcelXLSConverter.FormatsExtensions: TStringList;
+var
+  Extensions : TStringList;
+
 begin
-  result := nil;
+  Extensions := Tstringlist.Create();
+  LoadStringListFromResource('EXTENSIONS',Extensions);
+
+  result := Extensions;
 end;
 
 end.

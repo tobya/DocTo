@@ -1,11 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>2013/04/24 18:01:01.000.075,C:\Users\Toby\Documents\RAD Studio\Projects\Project2.dproj=C:\Users\Toby\Documents\GitHub\DocTo\XlsTo.dproj</Transaction>
+    <Transaction>2013/04/24 18:01:01.000.075,C:\Users\Toby\Documents\GitHub\DocTo\XlsTo.dproj=C:\Users\Toby\Documents\RAD Studio\Projects\Project2.dproj</Transaction>
     <Transaction>2013/04/24 20:20:07.000.291,=C:\Users\Toby\Documents\GitHub\DocTo\src\New1.txt</Transaction>
-    <Transaction>2013/04/24 20:25:45.000.964,C:\Users\Toby\Documents\GitHub\DocTo\src\res\xlsFormats.txt=C:\Users\Toby\Documents\GitHub\DocTo\src\New1.txt</Transaction>
-    <Transaction>2013/04/24 20:27:56.000.086,C:\Users\Toby\Documents\GitHub\DocTo\src\xlsFormats.rc=C:\Users\Toby\Documents\GitHub\DocTo\src\wdFormats.rc</Transaction>
+    <Transaction>2013/04/24 20:25:45.000.964,C:\Users\Toby\Documents\GitHub\DocTo\src\New1.txt=C:\Users\Toby\Documents\GitHub\DocTo\src\res\xlsFormats.txt</Transaction>
+    <Transaction>2013/04/24 20:27:56.000.086,C:\Users\Toby\Documents\GitHub\DocTo\src\wdFormats.rc=C:\Users\Toby\Documents\GitHub\DocTo\src\xlsFormats.rc</Transaction>
     <Transaction>2013/04/25 22:19:38.000.863,=C:\Users\Toby\Documents\GitHub\DocTo\src\New1.bat</Transaction>
-    <Transaction>2013/04/25 22:19:55.000.558,C:\Users\Toby\Documents\GitHub\DocTo\src\New1.bat=C:\Users\Toby\Documents\GitHub\DocTo\test\testxlsrun.bat</Transaction>
-  </Transactions>
+    <Transaction>2013/04/25 22:19:55.000.558,C:\Users\Toby\Documents\GitHub\DocTo\test\testxlsrun.bat=C:\Users\Toby\Documents\GitHub\DocTo\src\New1.bat</Transaction>
+    <Transaction>2015/03/21 20:44:07.240,=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
+    <Transaction>2015/03/21 20:44:38.208,D:\Development\GitHub\DocTo\src\xlsFormatsExt.txt=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
+    <Transaction>2015/03/21 20:51:27.451,=D:\Development\GitHub\DocTo\src\res\xlsFormatsExt.txt</Transaction>
+  </Transactions>  <ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="..\..\DocTo"/>
+    <File Path="..\test"/>
+    <File Path="..\test\testxlsrun.bat"/>
+    <File Path="res"/>
+    <File Path="res\xlsFormats.txt"/>
+    <File Path="res\xlsFormatsExt.txt"/>
+    <File Path="ExcelUtils.pas"/>
+    <File Path="MainUtils.pas"/>
+    <File Path="PathUtils.pas"/>
+    <File Path="ResourceUtils.pas"/>
+    <File Path="xlsFormats.rc"/>
+    <File Path="xlsFormatsExt.txt"/>
+  </ProjectSortOrder>
 </BorlandProject>

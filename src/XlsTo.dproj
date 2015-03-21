@@ -79,7 +79,7 @@
         <Manifest_File>None</Manifest_File>
         <VerInfo_Keys>CompanyName=Toflidium Software;FileDescription=XLSTo XL to csv,pdf,etc;FileVersion=0.6.6.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=http://github.com/tobya/docto</VerInfo_Keys>
         <VerInfo_MinorVer>6</VerInfo_MinorVer>
-        <Debugger_RunParams> -f &quot;C:\Users\Toby\Documents\GitHub\DocTo\test\Inputfiles\&quot;  -o &quot;C:\Users\Toby\Documents\GitHub\DocTo\test\GeneratedFiles&quot;    -T  xlcsv -OX .csv</Debugger_RunParams>
+        <Debugger_RunParams> -L 10  -f &quot;D:\Development\GitHub\DocTo\test\Inputfiles&quot;  -o &quot;D:\Development\GitHub\DocTo\test\GeneratedFiles&quot;    -T  xlExcel9795 -OX .xls -FX .csv -M false</Debugger_RunParams>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
@@ -101,6 +101,8 @@
         <DCCReference Include="PathUtils.pas"/>
         <None Include="res\xlsFormats.txt"/>
         <None Include="..\test\testxlsrun.bat"/>
+        <None Include="xlsFormatsExt.txt"/>
+        <None Include="res\xlsFormatsExt.txt"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

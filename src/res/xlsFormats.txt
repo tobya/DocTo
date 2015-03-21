@@ -50,4 +50,5 @@ xlWorkbookNormal=-4143
 xlWorks2FarEast=28
 xlWQ1=34
 xlXMLSpreadsheet=46
-xlPDF=50000
+xlTypePDF=50000
+xlTypeXPS=50001

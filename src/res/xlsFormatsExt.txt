@@ -50,4 +50,5 @@ xlWorkbookNormal=xlsx
 xlWorks2FarEast=xls
 xlWQ1=wq
 xlXMLSpreadsheet=xmlx
-xlPDF=pdf
+xlTypePDF=pdf
+xlTypeXPS=xps
