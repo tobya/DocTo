@@ -88,7 +88,7 @@ begin
             log(OutputFilename, verbose);
             ExcelApp.Workbooks.Open( FileToConvert);
 
-            //pdf is not an actual standard xls output format so we created our own.
+            //PDF and XPS are not an actual standard xls output format so we created our own.
             if OutputFileFormat = 50000 then //pdf
             begin
                 ExcelApp.Application.DisplayAlerts := False ;
