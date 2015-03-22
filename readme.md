@@ -18,7 +18,9 @@ Further Information available at http://tobya.github.com/DocTo
   1. Delete after conversion
   1. Fire Webhook one each conversion.
   
+## Bugs
 
+Please log an [issue](https://github.com/tobya/DocTo/issues) for any bugs, features or suggestions.
 
 
 ## Examples
