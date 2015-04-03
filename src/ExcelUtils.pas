@@ -115,6 +115,7 @@ begin
               //Excel has a tendency to popup alerts so we don't want that.
               ExcelApp.Application.DisplayAlerts := False ;
               ExcelApp.activeWorkbook.SaveAs( OutputFilename, OutputFileFormat);
+              ExcelApp.ActiveWorkBook.Save;
 
             end;
 

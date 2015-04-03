@@ -7,10 +7,11 @@
     <Transaction>2013/04/24 20:27:56.000.086,C:\Users\Toby\Documents\GitHub\DocTo\src\wdFormats.rc=C:\Users\Toby\Documents\GitHub\DocTo\src\xlsFormats.rc</Transaction>
     <Transaction>2013/04/25 22:19:38.000.863,=C:\Users\Toby\Documents\GitHub\DocTo\src\New1.bat</Transaction>
     <Transaction>2013/04/25 22:19:55.000.558,C:\Users\Toby\Documents\GitHub\DocTo\test\testxlsrun.bat=C:\Users\Toby\Documents\GitHub\DocTo\src\New1.bat</Transaction>
-    <Transaction>2015/03/21 20:44:07.240,=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
-    <Transaction>2015/03/21 20:44:38.208,D:\Development\GitHub\DocTo\src\xlsFormatsExt.txt=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
-    <Transaction>2015/03/21 20:51:27.451,=D:\Development\GitHub\DocTo\src\res\xlsFormatsExt.txt</Transaction>
-  </Transactions>  <ProjectSortOrder AutoSort="0" SortType="0">
+    <Transaction>2015/03/21 20:44:07.000.240,=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
+    <Transaction>2015/03/21 20:44:38.000.208,D:\Development\GitHub\DocTo\src\xlsFormatsExt.txt=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
+    <Transaction>2015/03/21 20:51:27.000.451,=D:\Development\GitHub\DocTo\src\res\xlsFormatsExt.txt</Transaction>
+  </Transactions>
+	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="..\..\DocTo"/>
     <File Path="..\test"/>
     <File Path="..\test\testxlsrun.bat"/>
