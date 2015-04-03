@@ -8,8 +8,8 @@ REM %~d0 and %~p0 together give the full directory this batch file is executing 
 
 
 REM Remove all generated files that may exist.
-del GeneratedFiles\*.* /q
-pause
+REM del GeneratedFiles\*.* /q
+REM pause
 
 "../exe/docto.exe" -h
 
