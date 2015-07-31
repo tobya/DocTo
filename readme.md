@@ -52,6 +52,12 @@ Add a Webhook to fire on each conversion (-W)
 
     docto -f "C:\Dir with Spaces\FilesToConvert\" -O "C:\DirToOutput" -T wdFormatPDF  -OX .pdf  -W http://toflidium.com/webhooks/docto/webhook_test.php
 
+OneDrive Conversion
+=======================
+If you need to upgrade a bunch of files to work without conversion on OneDrive /Office365 / Word 20XX then you can use DocTo.
+See this StackExchange question 
+
+http://webapps.stackexchange.com/questions/74859/what-format-does-word-onedrive-use
 
 ## Command Line Help
 
