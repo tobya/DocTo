@@ -7,7 +7,7 @@ temp/
 test/out/
 test/generatedfiles/
 exe/help.txt
-
+test/privatetest/
 *.group*
 
 ############
