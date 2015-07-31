@@ -172,6 +172,7 @@ begin
   try
   if FWebHook > '' then
   begin
+
     url := FWebHook + '?' + Params;
     GetURL(url);
 
@@ -491,7 +492,7 @@ begin
 
 
     if (id = '-O') or
-       (id = '--OUTPUTFILE-FOLDER') then
+       (id = '--OUTPUTFILE') then
     begin
       FOutputFile :=  value;
 
@@ -515,11 +516,12 @@ begin
 
     end
     else if (id = '-OX') or
-            (id = '--OUTPUT-EXTENSION') then
+            (id = '--OUTPUTEXTENSION') then
     begin
        FOutputExt := value;
     end
-    else if id = '-F' then
+    else if (id = '-F') or
+            (id = '--INPUTFILE') then
     begin
       FInputFile := value;
 
@@ -528,11 +530,12 @@ begin
       log('Input File is: ' + FInputFile,CHATTY);
     end
     else if (id = '-FX') or
-            (id = '--INPUTFILE-EXTENSION') then
+            (id = '--INPUTFILEEXTENSION') then
     begin
       InputExtension := value;
     end
-    else if id  = '-L' then
+    else if ( id  = '-L')
+         OR (id = '--LOGLEVEL') then
     begin
       if isNumber(value) then
       begin
@@ -540,14 +543,16 @@ begin
         Log('Log Level Set To:' + IntToStr(LogLevel),LogLevel);
       end
     end
-    else if id  = '-Q' then
+    else if (id  = '-Q') or
+            (id = '--QUIET') then
     begin
 
       OutputLog := false;
       //Doesn't require a value
       dec(iParam);
     end
-    else if (id = '-T') or (id = '-TF') then
+    else if (id = '-T') or (id = '-TF') or
+            (id = '--FORMAT') or (id = '--FORCEFORMAT') then
     begin
 
       if IsNumber(value) then
@@ -579,29 +584,35 @@ begin
       log('Type Integer is: ' + inttostr(FOutputFileFormat), VERBOSE);
 
     end
-    else if (id = '-C') then
+    else if (id = '-C') or
+            (id = '--COMPATIBILITY') then
     begin
       CompatibilityMode := strtoint(value);
     end
-    else if (id = '-G') then
+    else if (id = '-G') or
+             (id = '--WRITELOGFILE') then
     begin
        LogToFile := true;
        dec(iParam);
     end
-    else if (id = '-GL') then
+    else if (id = '-GL') or
+            (id = '--LOGFILENAME') then
     begin
        FLogFilename := value;
        LogToFile := true;
     end
-    else if (id = '-M') then
+    else if (id = '-M')  or
+              (id = '--IGNOREMACOS') then
     begin
       Ignore_MACOSX := StrToBool( value);
     end
-    else if (id = '-R') then
+    else if (id = '-R')
+          or (id = '--DELETEFILES') then
     begin
       RemoveFileOnConvert  := lowercase(value) = 'true';
     end
-    else if (id = '-W') then
+    else if (id = '-W') or
+            (id = '--WEBHOOK') then
     begin
       FWebHook := value;
     end
@@ -612,7 +623,8 @@ begin
       halt(2);
 
     end
-    else if (id = '-X') then
+    else if (id = '-X') or
+            (id = '--halterror') then
     begin
       HaltOnWordError := not(lowercase(value) = 'false');
     end

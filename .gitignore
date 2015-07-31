@@ -7,7 +7,7 @@ temp/
 test/out/
 test/generatedfiles/
 test/Rachel Recipes/
-test/inputfiles/testother/
+test/privatetest/
 exe/help.txt
 
 *.group*

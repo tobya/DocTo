@@ -2,6 +2,6 @@
 <BorlandProject>
 	<Transactions>
     <Transaction>2015/03/18 20:38:02.000.606,=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
-    <Transaction>2015/03/18 20:40:32.000.547,D:\Development\GitHub\DocTo\src\res\HelpErrors.txt=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
+    <Transaction>2015/03/18 20:40:32.000.547,D:\Development\GitHub\DocTo\src\New1.txt=D:\Development\GitHub\DocTo\src\res\HelpErrors.txt</Transaction>
   </Transactions>
 </BorlandProject>
