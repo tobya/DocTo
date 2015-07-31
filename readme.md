@@ -120,9 +120,9 @@ http://webapps.stackexchange.com/questions/74859/what-format-does-word-onedrive-
 
 
 
-## Updates
+## Updates     
 
-0.7     Added support for saveas2 function added by microsoft in Word 2010.  Additional Switches.
+0.7     Added support for saveas2 function (with compatibility mode) added by microsoft in Word 2010.  Additional Switches. Added support for long parameters.
 
 0.5.5   Changes made to logging.  -Q and -L 0 now work correctly ensuring nothing is output to console.  Must specify -G or -GL to get access to logs and errors.
                                 Also -L 10 now outputs extra as logging param is loaded first.
