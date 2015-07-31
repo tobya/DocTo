@@ -490,7 +490,8 @@ begin
     inc(iParam,2);
 
 
-    if id = '-O' then
+    if (id = '-O') or
+       (id = '--OUTPUTFILE-FOLDER') then
     begin
       FOutputFile :=  value;
 
@@ -513,7 +514,8 @@ begin
 
 
     end
-    else if id = '-OX' then
+    else if (id = '-OX') or
+            (id = '--OUTPUT-EXTENSION') then
     begin
        FOutputExt := value;
     end
@@ -525,7 +527,8 @@ begin
 
       log('Input File is: ' + FInputFile,CHATTY);
     end
-    else if id = '-FX' then
+    else if (id = '-FX') or
+            (id = '--INPUTFILE-EXTENSION') then
     begin
       InputExtension := value;
     end
@@ -550,6 +553,7 @@ begin
       if IsNumber(value) then
       begin
         FOutputFileFormat :=  strtoint(value);
+        //If not forcing, and the format is invalid by list, then raise error.
         if (not (id = '-TF')) and ( not IsValidFormat(FOutputFileFormat)) then
         begin
           LogError('File Format ' + value + ' is invalid, please see help. -h.  To force use, use -TF');

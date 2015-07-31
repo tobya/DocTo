@@ -7,8 +7,10 @@ Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\My
   -F  Input File or Directory
   -FX Input Extension to search for if directory.  Default ".doc" (will find ".docx" also)
   -O  Output File or Directory to place converted Docs
+      --OUTPUTFILE-FOLDER
   -OX Output Extension if -F is Directory. Please include '.' eg. '.pdf' .
       If not provided, pulled from standard list.
+      --OUTPUT-EXTENSION
   -T  Format(Type) to convert file to, either integer or wdSaveFormat constant.
       Available from http://msdn.microsoft.com/en-us/library/microsoft.office.interop.word.wdsaveformat.aspx  or
       http://msdn.microsoft.com/en-us/library/office/bb241279(v=office.12).aspx

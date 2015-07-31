@@ -6,6 +6,8 @@ temp/
 *.log
 test/out/
 test/generatedfiles/
+test/Rachel Recipes/
+test/inputfiles/testother/
 exe/help.txt
 
 *.group*
