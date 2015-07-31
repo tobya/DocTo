@@ -16,8 +16,8 @@ Parameters markers are case insensitive. Short and Long can be used mixed.
       If not provided, pulled from standard list.
       --outputextension
   -T  Format(Type) to convert file to, either integer or wdSaveFormat constant.
-      Available from http://msdn.microsoft.com/en-us/library/microsoft.office.interop.word.wdsaveformat.aspx  or
-      http://msdn.microsoft.com/en-us/library/office/bb241279(v=office.12).aspx
+      Available from http://msdn.microsoft.com/en-us/library/microsoft.office.interop.word.wdsaveformat.aspx
+      or http://msdn.microsoft.com/en-us/library/office/bb241279(v=office.12).aspx
       See current List Below.
       --format
   -TF Force Format.  -T value if integer is checked against current list compiled in and not passed if unavailable.
@@ -62,10 +62,10 @@ COMPATIBILITY MODES:
 FROM https://msdn.microsoft.com/en-us/library/office/ff836084.aspx
 
 wdCurrent   : 65535 Compatibility mode equivalent to the latest version of Microsoft Word.
-wdWord2003  : 11    Word 2010 is put into a mode that is most compatible with Word 2003. Features new to Word 2010 are
-                    disabled in this mode.
-wdWord2007  : 12    Word 2010 is put into a mode that is most compatible with Office Word 2007. Features new to Word 2010
-                    are disabled in this mode.
-wdWord2010  : 14    Word 2013 is put into a mode that is most compatible with . Features new to Word 2013
-                    are disabled in this mode.
+wdWord2003  : 11    Word 2010 is put into a mode that is most compatible with Word 2003.
+                    Features new to Word 2010 are disabled in this mode.
+wdWord2007  : 12    Word 2010 is put into a mode that is most compatible with Office Word 2007.
+                    Features new to Word 2010 are disabled in this mode.
+wdWord2010  : 14    Word 2013 is put into a mode that is most compatible with . Features new to
+                    Word 2013 are disabled in this mode.
 wdWord2013  : 15    Default. All Word 2013 features are enabled.

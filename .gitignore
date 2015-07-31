@@ -9,7 +9,7 @@ test/generatedfiles/
 test/Rachel Recipes/
 test/privatetest/
 exe/help.txt
-
+test/privatetest/
 *.group*
 
 ############
