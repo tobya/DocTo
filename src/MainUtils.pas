@@ -167,13 +167,27 @@ end;
 
 function TDocumentConverter.CallWebHook(Params: String):string;
 var url : string;
+QuestionMarkIndex : Integer;
 begin
 
   try
   if FWebHook > '' then
   begin
+    QuestionMarkIndex := pos('?',FWebHook);
+    if QuestionMarkIndex = 0  then
+    begin
+      url := FWebHook + '?'  + Params;
+    end
+    else if QuestionMarkIndex = length(FWebHook) then  //last character
+    begin
+      url := FWebHook + Params;
+    end
+    else
+    begin
+      url := FWebHook + '&' + Params;
+    end;
 
-    url := FWebHook + '?' + Params;
+
     GetURL(url);
 
     log(url, chatty);
