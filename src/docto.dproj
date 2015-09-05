@@ -71,7 +71,7 @@
         <DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_3_Win32)'!=''">
-        <VerInfo_Build>16</VerInfo_Build>
+        <VerInfo_Build>17</VerInfo_Build>
         <VerInfo_PreRelease>false</VerInfo_PreRelease>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <VerInfo_AutoGenVersion>false</VerInfo_AutoGenVersion>
@@ -79,7 +79,7 @@
         <Icon_MainIcon>d2icon_QhU_icon.ico</Icon_MainIcon>
         <Debugger_RunParams>-f &quot;%~d0%~p0Inputfiles\&quot;  -o &quot;%~d0%~p0GeneratedFiles&quot;    -T  wdFormatPDF -OX pdf -W http://toflidium.com/webhooks/docto/webhook_test.php</Debugger_RunParams>
         <VerInfo_MinorVer>7</VerInfo_MinorVer>
-        <VerInfo_Keys>CompanyName=Toflidium Software;FileDescription=DocTo - Convert doc files to any available format;FileVersion=0.7.3.16;InternalName=;LegalCopyright=Toby Allen;LegalTrademarks=;OriginalFilename=docto.exe;ProductName=DocTo;ProductVersion=0.7.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Toflidium Software;FileDescription=DocTo - Convert doc files to any available format;FileVersion=0.7.3.17;InternalName=;LegalCopyright=Toby Allen;LegalTrademarks=;OriginalFilename=docto.exe;ProductName=DocTo;ProductVersion=0.7.0.0;Comments=</VerInfo_Keys>
         <DCC_ExeOutput>..\exe</DCC_ExeOutput>
         <Manifest_File>None</Manifest_File>
     </PropertyGroup>
@@ -134,7 +134,7 @@
                     <VersionInfo Name="MajorVer">0</VersionInfo>
                     <VersionInfo Name="MinorVer">4</VersionInfo>
                     <VersionInfo Name="Release">4</VersionInfo>
-                    <VersionInfo Name="Build">32</VersionInfo>
+                    <VersionInfo Name="Build">33</VersionInfo>
                     <VersionInfo Name="Debug">True</VersionInfo>
                     <VersionInfo Name="PreRelease">True</VersionInfo>
                     <VersionInfo Name="Special">False</VersionInfo>
@@ -146,7 +146,7 @@
                 <VersionInfoKeys>
                     <VersionInfoKeys Name="CompanyName">Toflidium Software</VersionInfoKeys>
                     <VersionInfoKeys Name="FileDescription"/>
-                    <VersionInfoKeys Name="FileVersion">0.4.4.32</VersionInfoKeys>
+                    <VersionInfoKeys Name="FileVersion">0.4.4.33</VersionInfoKeys>
                     <VersionInfoKeys Name="InternalName"/>
                     <VersionInfoKeys Name="LegalCopyright">Toflidium Software</VersionInfoKeys>
                     <VersionInfoKeys Name="LegalTrademarks"/>

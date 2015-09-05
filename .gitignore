@@ -20,6 +20,7 @@ __history/
 *.~*
 *.dcu
 *.identcache
+*.orig
 
 #################
 ## Eclipse
