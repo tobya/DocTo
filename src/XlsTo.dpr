@@ -29,12 +29,12 @@ uses
 var
   i : integer;
   paramlist : TStringlist;
-  DocConv : TExcelXLSConverter;
+  XLSConv : TExcelXLSConverter;
   LogResult : String;
 begin
 
   paramlist := TStringlist.create;
-  DocConv := TExcelXLSConverter.Create;
+  XLSConv := TExcelXLSConverter.Create;
   try
     try
 
@@ -43,16 +43,16 @@ begin
        paramlist.Add(ParamStr(i));
      end;
 
-     DocConv.LoadConfig(paramlist);
+     XLSConv.LoadConfig(paramlist);
 
      CoInitialize(nil);
-     DocConv.Execute;
+     XLSConv.Execute;
 
      CoUninitialize;
 
 
     finally
-      DocConv.Free;
+      XLSConv.Free;
       paramlist.Free;
     end;
   except on E: Exception do
