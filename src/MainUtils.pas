@@ -1,4 +1,4 @@
-unit MainUtils;
+﻿unit MainUtils;
 (*************************************************************
 Copyright © 2012 Toby Allen (http://github.com/tobya)
 
@@ -459,7 +459,7 @@ end;
 procedure TDocumentConverter.LoadConfig(Params: TStrings);
 var  f , iParam, idx: integer;
 pstr : string;
-id, value : string;
+id, value, tmppath : string;
 HelpStrings : TStringList;
 tmpext : String;
 
@@ -485,8 +485,10 @@ begin
   end ;
 
 
+
   While iParam <= Params.Count -1 do
   begin
+
     pstr := Params[iParam];
 
     id := UpperCase( pstr);
@@ -502,6 +504,8 @@ begin
     begin
       value := '';
     end;
+
+    //jump to next id + value
     inc(iParam,2);
 
 
@@ -538,10 +542,17 @@ begin
             (id = '--INPUTFILE') then
     begin
       FInputFile := value;
-
-
-
       log('Input File is: ' + FInputFile,CHATTY);
+
+      //Setup output file directory if not set up.  This ensure if no -o
+      //is specified, then it will output to same dir.
+      if FOutputFile = '' then
+      begin
+        tmppath := ExtractFilePath(FInputFile);
+        FOutputFile := IncludeTrailingBackslash(tmppath);
+        IsDirOutput := true;
+      end;
+
     end
     else if (id = '-FX') or
             (id = '--INPUTFILEEXTENSION') then
