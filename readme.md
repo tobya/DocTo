@@ -45,6 +45,8 @@ Convert All Microsoft Word Documents in Directory and its Sub Directories to PDF
 
     docto -f "C:\Dir with Spaces\FilesToConvert\" -O "C:\DirToOutput" -T wdFormatPDF  -OX .pdf
 
+#### Delete Origional File after Conversion ####
+
 Delete Origional Files after conversion (-R) . 
 
     docto -f "C:\Dir with Spaces\FilesToConvert\" -O "C:\DirToOutput" -T wdFormatPDF  -OX .pdf -R
