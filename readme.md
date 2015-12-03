@@ -22,7 +22,7 @@ Excel version available - Details here
   1. Delete after conversion
   1. Fire Webhook one each conversion.
   
-## Bugs
+## Bugs and Features
 
 Please log an [issue](https://github.com/tobya/DocTo/issues) for any bugs, features or suggestions.
 
