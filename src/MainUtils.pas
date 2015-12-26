@@ -18,6 +18,7 @@ uses classes, Windows, sysutils, ActiveX, ComObj, WinINet, Variants,  Types,  Re
 
 Const
   VERBOSE = 10;
+  DEBUG = 9;
   CHATTY = 5;
   STANDARD = 2;
   SILENT = 0;
@@ -311,7 +312,7 @@ begin
     begin
       if OutputExt = '' then
       begin
-        OutputExt := fFormatsExtensions.Values[OutputFileFormatString];
+        OutputExt := '.' + fFormatsExtensions.Values[OutputFileFormatString];
         log('Output Extension is ' + outputExt, CHATTY);
       end;
 

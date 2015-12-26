@@ -5,7 +5,7 @@ Command Line Parameters
 Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\MyDir\MyFile"
 Parameters markers are case insensitive. Short and Long can be used mixed.
   -H  This message
-      --HELP
+      --HELP -?
   -F  Input File or Directory
       --inputfile
   -FX Input Extension to search for if directory.  Default ".doc" (will find ".docx" also)
@@ -24,7 +24,7 @@ Parameters markers are case insensitive. Short and Long can be used mixed.
       -TF will pass through value without checking. Word will return an "EOleException  Value out of range" error if invalid.
       Use instead of -T.
       --forceformat
-  -L  Log Level Integer: 1 ERRORS Only, 2 STANDARD, 5 CHATTY, 10 VERBOSE
+  -L  Log Level Integer: 1 ERRORS Only, 2 STANDARD, 5 CHATTY, 9 DEBUG, 10 VERBOSE
       Default: 2=STANDARD
       --loglevel
   -C  Compatibility Mode Integer. Set to an INTEGER value from https://msdn.microsoft.com/en-us/library/office/ff192388.aspx.
