@@ -21,14 +21,17 @@ Parameters markers are case insensitive. Short and Long can be used mixed.
       or http://msdn.microsoft.com/en-us/library/office/bb241279(v=office.12).aspx
       See current List Below.
       --format
-  -TF Force Format.  -T value if integer is checked against current list compiled in and not passed if unavailable.
-      -TF will pass through value without checking. Word will return an "EOleException  Value out of range" error if invalid.
+  -TF Force Format.  -T value if integer is checked against current list compiled in 
+      and not passed if unavailable. 
+      -TF will pass through value without checking. Word will return an 
+      "EOleException  Value out of range" error if invalid.
       Use instead of -T.
       --forceformat
   -L  Log Level Integer: 1 ERRORS Only, 2 STANDARD, 5 CHATTY, 9 DEBUG, 10 VERBOSE
       Default: 2=STANDARD
       --loglevel
-  -C  Compatibility Mode Integer. Set to an INTEGER value from https://msdn.microsoft.com/en-us/library/office/ff192388.aspx.
+  -C  Compatibility Mode Integer. Set to an INTEGER value from 
+      https://msdn.microsoft.com/en-us/library/office/ff192388.aspx.
       See List Below
       --compatability
   -M  Ignore all files in __MACOSX\ subdirectory if it exists.  Default True.
@@ -37,16 +40,16 @@ Parameters markers are case insensitive. Short and Long can be used mixed.
       --writelogfile
   -GL Log File Name to Use. Default 'DocTo.Log';
       --logfilename
-  -Q  Quiet Mode: Nothing will be output to console.  To see any errors you must set -G or -GL
-      Equivalent to setting -L 0
+  -Q  Quiet Mode: Nothing will be output to console.  To see any errors you must 
+      set -G or -GL. Equivalent to setting -L 0
       --quiet
   -R  Remove Files after successful conversion: Default false;
       --deletefiles
   -W  Webhook: Url to call on events (plain url no params). See -HW for more details.
       --webhook
   -HW Webhook Help.
-  -X  Halt on COM Error: Default True;  If you have trouble with some files not converting, set this to false to ignore
-      errors and continue with batch job.
+  -X  Halt on COM Error: Default True;  If you have trouble with some files 
+      not converting, set this to false to ignore errors and continue with batch job.
       --halterror
   -V  Show Versions.  DocTo and Word/Excel
 
