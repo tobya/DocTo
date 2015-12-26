@@ -8,7 +8,7 @@ REM %~d0 and %~p0 together give the full directory this batch file is executing 
 
 
 REM Remove all generated files that may exist.
-REM del GeneratedFiles\*.* /q
+ del GeneratedFiles\*.* /q
 REM pause
 
 "../exe/docto.exe" -h
@@ -48,3 +48,7 @@ REM XLSTO
 
 REM Try on Directory
 "../exe/xlsto.exe"  -f "%~d0%~p0Inputfiles\"  -o "%~d0%~p0GeneratedFiles"    -T  xlPDF -OX .pdf
+
+REM If output Dir left out default to input
+copy  "%~d0%~p0Inputfiles\pie3.doc"  "%~d0%~p0GeneratedFiles\PieNoOutputTest.doc"
+"../exe/docto.exe"  -f "%~d0%~p0GeneratedFiles\PieNoOutputTest.doc"    -T  wdFormatPDF

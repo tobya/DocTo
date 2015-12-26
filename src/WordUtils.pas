@@ -19,6 +19,7 @@ type
 
 TWordDocConverter = Class(TDocumentConverter)
 Private
+    FWordVersion : String;
     WordApp : OleVariant;
 protected
 
@@ -68,8 +69,12 @@ end;
 
 function TWordDocConverter.OfficeAppVersion: String;
 begin
+  if FWordVersion = '' then
+  begin
   CreateOfficeApp();
-  result := Wordapp.Version;
+  FWordVersion := Wordapp.Version;
+  end;
+  result := FWordVersion;
 end;
 
 { TWordDocConverter }

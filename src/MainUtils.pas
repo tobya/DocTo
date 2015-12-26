@@ -544,8 +544,9 @@ begin
       FInputFile := value;
       log('Input File is: ' + FInputFile,CHATTY);
 
-      //Setup output file directory if not set up.  This ensure if no -o
-      //is specified, then it will output to same dir.
+      //Set Output Directory to Input Directry at this stage. This ensure if no
+      //output directory  (-o) is specified, then it will default to same as
+      //input dir. If output has been supplied as param it will overwrite later.
       if FOutputFile = '' then
       begin
         tmppath := ExtractFilePath(FInputFile);
@@ -643,7 +644,7 @@ begin
     end
     else if (id = '-V') then
     begin
-      log('Version:0.7.2');  //Move to ancestor class
+      log('DocTo Version:0.7.6');
       log('OfficeApp Version:' +  OfficeAppVersion,0);
       halt(2);
 
@@ -660,7 +661,7 @@ begin
       HelpStrings := TStringList.Create;
       try
         LoadStringListFromResource('HELP',HelpStrings);
-        log(HelpStrings.Text);
+        log(format( HelpStrings.Text, ['0.7.6', OfficeAppVersion]));
       finally
         HelpStrings.Free;
       end;
