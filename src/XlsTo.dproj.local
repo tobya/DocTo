@@ -5,8 +5,9 @@
     <Transaction>1899-12-30 00:00:00.000.964,C:\Users\Toby\Documents\GitHub\DocTo\src\res\xlsFormats.txt=C:\Users\Toby\Documents\GitHub\DocTo\src\New1.txt</Transaction>
     <Transaction>1899-12-30 00:00:00.000.240,=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
 
-    <Transaction>1899-12-30 00:00:00.000.075,C:\Users\Toby\Documents\GitHub\DocTo\XlsTo.dproj=C:\Users\Toby\Documents\RAD Studio\Projects\Project2.dproj</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.086,C:\Users\Toby\Documents\GitHub\DocTo\src\wdFormats.rc=C:\Users\Toby\Documents\GitHub\DocTo\src\xlsFormats.rc</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.208,D:\Development\GitHub\DocTo\src\New1.txt=D:\Development\GitHub\DocTo\src\xlsFormatsExt.txt</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.086,C:\Users\Toby\Documents\GitHub\DocTo\src\xlsFormats.rc=C:\Users\Toby\Documents\GitHub\DocTo\src\wdFormats.rc</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.451,=D:\Development\GitHub\DocTo\src\res\xlsFormatsExt.txt</Transaction>
 
     <Transaction>1899-12-30 00:00:00.000.291,=C:\Users\Toby\Documents\GitHub\DocTo\src\New1.txt</Transaction>
     <Transaction>1899-12-30 00:00:00.000.964,C:\Users\Toby\Documents\GitHub\DocTo\src\New1.txt=C:\Users\Toby\Documents\GitHub\DocTo\src\res\xlsFormats.txt</Transaction>

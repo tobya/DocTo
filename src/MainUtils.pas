@@ -460,7 +460,7 @@ end;
 procedure TDocumentConverter.LoadConfig(Params: TStrings);
 var  f , iParam, idx: integer;
 pstr : string;
-id, value : string;
+id, value, tmppath : string;
 HelpStrings : TStringList;
 tmpext : String;
 
@@ -486,8 +486,10 @@ begin
   end ;
 
 
+
   While iParam <= Params.Count -1 do
   begin
+
     pstr := Params[iParam];
 
     id := UpperCase( pstr);
@@ -503,6 +505,8 @@ begin
     begin
       value := '';
     end;
+
+    //jump to next id + value
     inc(iParam,2);
 
 
@@ -550,10 +554,18 @@ begin
             (id = '--INPUTFILE') then
     begin
       FInputFile := value;
-
-
-
       log('Input File is: ' + FInputFile,CHATTY);
+
+      //Set Output Directory to Input Directry at this stage. This ensure if no
+      //output directory  (-o) is specified, then it will default to same as
+      //input dir. If output has been supplied as param it will overwrite later.
+      if FOutputFile = '' then
+      begin
+        tmppath := ExtractFilePath(FInputFile);
+        FOutputFile := IncludeTrailingBackslash(tmppath);
+        IsDirOutput := true;
+      end;
+
     end
     else if (id = '-FX') or
             (id = '--INPUTFILEEXTENSION') then
@@ -644,7 +656,7 @@ begin
     end
     else if (id = '-V') then
     begin
-      log('Version:0.7.2');  //Move to ancestor class
+      log('DocTo Version:0.7.6');
       log('OfficeApp Version:' +  OfficeAppVersion,0);
       halt(2);
 
@@ -661,7 +673,7 @@ begin
       HelpStrings := TStringList.Create;
       try
         LoadStringListFromResource('HELP',HelpStrings);
-        log(HelpStrings.Text);
+        log(format( HelpStrings.Text, ['0.7.6', OfficeAppVersion]));
       finally
         HelpStrings.Free;
       end;
