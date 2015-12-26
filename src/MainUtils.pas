@@ -1,4 +1,4 @@
-unit MainUtils;
+﻿unit MainUtils;
 (*************************************************************
 Copyright © 2012 Toby Allen (http://github.com/tobya)
 
@@ -315,7 +315,7 @@ begin
         log('Output Extension is ' + outputExt, CHATTY);
       end;
 
-      OutputFile :=  OutputFile  + ChangeFileExt( ExtractFileName(InputFile), '.' + OutputExt);
+      OutputFile :=  OutputFile  + ChangeFileExt( ExtractFileName(InputFile),OutputExt);
     end;
 
     //Add file to InputFiles List if only one.
@@ -520,6 +520,7 @@ begin
         IsDirOutput := true;
         ForceDirectories(FOutputFile);
         log('Output directory is: ' + FOutputFile,CHATTY);
+
       end
       else
       begin
@@ -532,7 +533,17 @@ begin
     else if (id = '-OX') or
             (id = '--OUTPUTEXTENSION') then
     begin
-       FOutputExt := value;
+
+     //If the first character isnt . add it.
+     if value[1] = '.' then
+     begin
+        FOutputExt := value;
+     end
+     else
+     begin
+       FOutputExt := '.' + value;
+     end;
+
     end
     else if (id = '-F') or
             (id = '--INPUTFILE') then
@@ -763,6 +774,7 @@ var
 begin
   BaseLessFN :=  StringReplace(filename,oldbase,'',[rfReplaceAll]);
  // BaseLessFN := BaseLessFN + '\';
+
   NewFileName := NewBase + '\' + BaseLessFN;
   NewFileName := ChangeFileExt(NewFileName , NewExt);
   Result := NewFileName;
