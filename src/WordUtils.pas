@@ -21,10 +21,6 @@ TWordDocConverter = Class(TDocumentConverter)
 Private
     FWordVersion : String;
     WordApp : OleVariant;
-protected
-
-
-
 public
     Constructor Create();
     function CreateOfficeApp() : boolean;  override;

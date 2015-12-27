@@ -1,5 +1,5 @@
 Help
-Version:%s
+Docto Version:%s
 Office Version : %s
 Source: http://github.com/tobya/DocTo/
 Command Line Parameters

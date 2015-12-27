@@ -42,10 +42,10 @@ begin
      begin
        paramlist.Add(ParamStr(i));
      end;
-
+     CoInitialize(nil);
      XLSConv.LoadConfig(paramlist);
 
-     CoInitialize(nil);
+
      XLSConv.Execute;
 
      CoUninitialize;

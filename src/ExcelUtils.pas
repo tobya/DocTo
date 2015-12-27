@@ -21,6 +21,7 @@ type
 TExcelXLSConverter = Class(TDocumentConverter)
 Private
     ExcelApp : OleVariant;
+    FExcelVersion : String;
 
 public
     constructor Create() ;
@@ -29,7 +30,7 @@ public
     function ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): string; override;
     function AvailableFormats() : TStringList; override;
     function FormatsExtensions(): TStringList; override;
-
+    function OfficeAppVersion() : String; override;
 End;
 
 
@@ -132,6 +133,16 @@ begin
   LoadStringListFromResource('EXTENSIONS',Extensions);
 
   result := Extensions;
+end;
+
+function TExcelXLSConverter.OfficeAppVersion: String;
+begin
+  if FExcelVersion = '' then
+  begin
+  CreateOfficeApp();
+  FExcelVersion := ExcelApp.Version;
+  end;
+  result := FExcelVersion;
 end;
 
 end.

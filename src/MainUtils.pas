@@ -21,8 +21,10 @@ Const
   DEBUG = 9;
   CHATTY = 5;
   STANDARD = 2;
-  SILENT = 0;
   ERRORS = 1;
+  SILENT = 0;
+
+  DOCTO_VERSION = '0.7.7';
 
 type
 
@@ -191,7 +193,7 @@ begin
 
     GetURL(url);
 
-    log(url, chatty);
+    log(url, CHATTY);
   end;
   except on E: Exception do
   begin
@@ -656,8 +658,9 @@ begin
     end
     else if (id = '-V') then
     begin
-      log('DocTo Version:0.7.6');
-      log('OfficeApp Version:' +  OfficeAppVersion,0);
+      log('DocTo Version:' + DOCTO_VERSION);
+      log('OfficeApp Version:' +  OfficeAppVersion(),0);
+      log('Source: http://github.com/tobya/DocTo/');
       halt(2);
 
     end
@@ -673,7 +676,7 @@ begin
       HelpStrings := TStringList.Create;
       try
         LoadStringListFromResource('HELP',HelpStrings);
-        log(format( HelpStrings.Text, ['0.7.6', OfficeAppVersion]));
+        log(format( HelpStrings.Text, [DOCTO_VERSION, OfficeAppVersion]));
       finally
         HelpStrings.Free;
       end;
@@ -786,9 +789,7 @@ var
   NewFileName : String;
 begin
   BaseLessFN :=  StringReplace(filename,oldbase,'',[rfReplaceAll]);
- // BaseLessFN := BaseLessFN + '\';
-
-  NewFileName := NewBase + '\' + BaseLessFN;
+  NewFileName := IncludeTrailingBackslash(NewBase) + BaseLessFN;
   NewFileName := ChangeFileExt(NewFileName , NewExt);
   Result := NewFileName;
 end;
@@ -993,7 +994,7 @@ var
   StrBuffer: UTF8String;
 begin
   Result := '';
-  NetHandle := InternetOpen('Delphi XE', INTERNET_OPEN_TYPE_PRECONFIG, nil, nil, 0);
+  NetHandle := InternetOpen('github/tobya/DocTo', INTERNET_OPEN_TYPE_PRECONFIG, nil, nil, 0);
   if Assigned(NetHandle) then
     try
       UrlHandle := InternetOpenUrl(NetHandle, PChar(Url), nil, 0, INTERNET_FLAG_RELOAD, 0);
