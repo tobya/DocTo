@@ -46,6 +46,8 @@ type
   private
     FIgnore_MACOSX: boolean;
     FFirstLogEntry: boolean;
+    FIgnore_ErrorDocs : boolean;
+    FIgnore_ErrorDocs_Seconds : Integer;
 
     procedure SetCompatibilityMode(const Value: Integer);
     procedure SetIgnore_MACOSX(const Value: boolean);
@@ -53,6 +55,8 @@ type
     procedure SetSkipDocsWithTOC(const Value: Boolean);
     procedure HaltWithConfigError(ErrorNo: Integer; Msg: String);
 
+    procedure SetIgnore_ErrorDocs(const Value: Boolean);
+    procedure SetIgnore_ErrorDocs_Seconds(const Value: Integer);
   protected
     Formats : TStringlist;
     fFormatsExtensions : TStringlist;
@@ -119,6 +123,8 @@ type
     property LogLevel : integer read FLogLevel write SetLogLevel;
     property RemoveFileOnConvert: boolean read FRemoveFileOnConvert write SetRemoveFileOnConvert;
     property Ignore_MACOSX : boolean   read FIgnore_MACOSX write SetIgnore_MACOSX;
+    property Ignore_ErrorDocs : Boolean read FIgnore_ErrorDocs write SetIgnore_ErrorDocs ;
+    property Ignore_ErrorDocs_Seconds : Integer read FIgnore_ErrorDocs_Seconds write SetIgnore_ErrorDocs_Seconds ;
 
 
     procedure SetExtension(const Value: String); virtual;
@@ -129,7 +135,8 @@ type
     function AllowDirectory(DirName : String; FullPath : String) : Boolean;
     function AllowFile(FileName : String; Fullpath : String): Boolean;
 
-
+    //Timing
+    procedure CheckDocumentTiming(StartTime, EndTime : cardinal; DocumentPath : String);
 
   public
 
@@ -224,6 +231,28 @@ begin
     logerror(ConvertErrorText( E.ClassName) + ' ' + ConvertErrorText( E.Message));
   end;
 
+  end;
+end;
+
+procedure TDocumentConverter.CheckDocumentTiming(StartTime, EndTime: cardinal; DocumentPath : String);
+var
+  sl : TStringList;
+begin
+  if (Ignore_ErrorDocs) then
+  begin
+    if ((EndTime - StartTime) /1000) > Ignore_ErrorDocs_Seconds then
+    begin
+
+      try
+        sl := TStringList.Create();
+        sl.LoadFromFile('docto.ignore.txt');
+        sl.Add(DocumentPath);
+        sl.SaveToFile('docto.ignore.txt');
+      finally
+        sl.free;
+      end;
+
+    end;
   end;
 end;
 
@@ -340,7 +369,10 @@ var
   OutputFilePath : String;
   ErrorMessage : String;
   ConversionInfo : TConversionInfo;
+  StartTime , EndTime : cardinal;
+
 begin
+
 
     Continue := false;
     if (InputFile > '') and (OutputFile > '') and (OutputFileFormat > -1) then
@@ -405,10 +437,19 @@ begin
       end;*)
        try
 
+            StartTime := GettickCount();
 
             ConversionInfo :=  ExecuteConversion(FileToConvert, FileToCreate, OutputFileFormat);
 
             if ConversionInfo.Successful then
+            ExecuteConversion(FileToConvert, FileToCreate, OutputFileFormat);
+
+            EndTime := getTickCount();
+
+            CheckDocumentTiming(StartTime, EndTime, FileToConvert);
+
+            log('FileCreated: ' + FileToCreate, STANDARD);
+            if RemoveFileOnConvert then
             begin
               if RemoveFileOnConvert then
               begin
@@ -750,6 +791,12 @@ begin
     begin
       Ignore_MACOSX := StrToBool( value);
     end
+    else if (id = '-N')  or
+              (id = '--IGNOREERRORDOC') then
+    begin
+      Ignore_ErrorDocs := True;
+      Ignore_ErrorDocs_Seconds := StrToInt(value);
+    end
     else if (id = '-R')
          or (id = '--DELETEFILES') then
     begin
@@ -989,6 +1036,16 @@ end;
 procedure TDocumentConverter.SetIgnore_MACOSX(const Value: boolean);
 begin
   FIgnore_MACOSX := Value;
+end;
+
+procedure TDocumentConverter.SetIgnore_ErrorDocs(const Value: Boolean);
+begin
+  FIgnore_ErrorDocs := Value;
+end;
+
+procedure TDocumentConverter.SetIgnore_ErrorDocs_Seconds(const Value: Integer);
+begin
+  FIgnore_ErrorDocs_Seconds := Value;
 end;
 
 procedure TDocumentConverter.SetInputFile(const Value: String);
