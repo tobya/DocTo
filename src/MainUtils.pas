@@ -136,6 +136,7 @@ type
     function CallWebHook(Params: String) : string;
     procedure LogHelp(HelpResName : String);
 
+
     property OutputLog : Boolean read FOutputLog write SetOutputLog;
     property OutputLogFile : String read FOutputLogFile write SetOutputLogFile;
     Property InputFile : String read FInputFile write SetInputFile;
@@ -923,6 +924,9 @@ procedure TDocumentConverter.SetRemoveFileOnConvert(const Value: boolean);
 begin
   FRemoveFileOnConvert := Value;
 end;
+
+
+
 
 function TDocumentConverter.URLEncode(Param: String): String;
 begin

@@ -13,7 +13,7 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMA
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ****************************************************************)
 interface
-uses Classes, MainUtils, ResourceUtils,  ActiveX, ComObj, WinINet, Variants, sysutils, Types;
+uses Classes, MainUtils, ResourceUtils,  ActiveX, ComObj, WinINet, Variants, sysutils, Types, StrUtils;
 
 type
 
@@ -64,11 +64,20 @@ end;
 
 
 function TWordDocConverter.OfficeAppVersion: String;
+var
+  WdVersion: String;
+  decimalPos : integer;
 begin
   if FWordVersion = '' then
   begin
-  CreateOfficeApp();
-  FWordVersion := Wordapp.Version;
+    CreateOfficeApp();
+    WdVersion := Wordapp.Version;
+    log('WordVersion:' + WdVersion,VERBOSE);
+
+    //Get Major version as that is all we are interested in and strtofloat causes errors Issue#31
+    decimalPos := pos('.',WdVersion);
+    FWordVersion  := LeftStr(WdVersion,decimalPos -1);
+    log('WordVersion Major:' + FWordVersion,VERBOSE);
   end;
   result := FWordVersion;
 end;
@@ -110,15 +119,15 @@ begin
     try
         //SaveAs2 was introducted in 2010 V 14 by this list
         //http://stackoverflow.com/a/29077879/6244
-        if (strtofloat(OfficeAppVersion) < 14) then
+        if (strtoint( OfficeAppVersion) < 14) then
         begin
-
+              log('Version < 14 Using Saveas Function', VERBOSE);
               Wordapp.activedocument.Saveas(OutputFilename ,OutputFileFormat);
         end
         else
         begin
-
-          Wordapp.activedocument.Saveas2(OutputFilename ,OutputFileFormat,
+              log('Version >= 14 Using Saveas2 Function', VERBOSE);
+              Wordapp.activedocument.Saveas2(OutputFilename ,OutputFileFormat,
                                         EmptyParam,  //LockComments
                                         EmptyParam,  //Password
                                         EmptyParam,  //AddToRecentFiles
