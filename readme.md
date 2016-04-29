@@ -5,6 +5,8 @@ such as .txt .rtf .pdf.
 
 Can also be used to convert .txt, .rtf to .doc or .pdf format.
 
+Can be used to convert older word documents to latest format.
+
 Must have Microsoft Word installed on host machine.
 
 Download Release From Github Releases - https://github.com/tobya/DocTo/releases/
