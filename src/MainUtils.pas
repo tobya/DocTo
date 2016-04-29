@@ -344,7 +344,7 @@ begin
         FileToCreate :=  OutputFile;
       end;
 
-        log(GetCurrentDir,10);
+        log('Current Directory: ' + GetCurrentDir,10);
 
         //Ensure directory exists
         OutputFilePath := ExtractFilePath( FileToCreate);
@@ -580,6 +580,11 @@ begin
           tmppath := IncludeTrailingBackslash(tmppath);
           FInputFile := tmppath + FInputFile;
         end;
+
+      if (FileExists(FInputFile) = false) then
+      begin
+        HaltWithError(204,'EInput file ' + FInputFile + ' does not exist.');
+      end;
 
       //Set Output Directory to Input Directry at this stage. This ensure if no
       //output directory  (-o) is specified, then it will default to same as
