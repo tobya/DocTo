@@ -76,7 +76,7 @@ http://webapps.stackexchange.com/questions/74859/what-format-does-word-onedrive-
 ## Command Line Help
 
     Help
-    Version:0.7.6
+    Version:0.7.9
     Source: http://github.com/tobya/DocTo/
     Command Line Parameters
     Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\MyDir\MyFile"
@@ -105,6 +105,7 @@ http://webapps.stackexchange.com/questions/74859/what-format-does-word-onedrive-
           Default: 2=STANDARD
           --loglevel
       -C  Compatibility Mode Integer. Set to an INTEGER value from https://msdn.microsoft.com/en-us/library/office/ff192388.aspx.
+          Set the compatibility mode when you want to convert documents to a later version of word.
           See List Below
           --compatability
       -M  Ignore all files in __MACOSX\ subdirectory if it exists.  Default True.
@@ -132,8 +133,10 @@ http://webapps.stackexchange.com/questions/74859/what-format-does-word-onedrive-
     201 : Insufficient Inputs.  Minimum of Input File, Output File & Type
     202 : Incorrect switches.  Switch requires value
     203 : Unknown switch in command
+    204 : Input File does not exist
     220 : Word or COM Error
     221 : Word not Installed
+    400 : Unknown Error
 
     COMPATIBILITY MODES:
     FROM https://msdn.microsoft.com/en-us/library/office/ff836084.aspx

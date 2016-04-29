@@ -32,6 +32,7 @@ Parameters markers are case insensitive. Short and Long can be used mixed.
       --loglevel
   -C  Compatibility Mode Integer. Set to an INTEGER value from 
       https://msdn.microsoft.com/en-us/library/office/ff192388.aspx.
+      Set the compatibility mode when you want to convert documents to a later version of word.
       See List Below
       --compatability
   -M  Ignore all files in __MACOSX\ subdirectory if it exists.  Default True.
