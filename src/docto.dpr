@@ -1,6 +1,6 @@
 program docto;
 (*************************************************************
-Copyright © 2012-2014 Toby Allen (http://github.com/tobya)
+Copyright © 2012-2016 Toby Allen (http://github.com/tobya)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction,
 including without limitation the rights to use, copy, modify, merge, publish, distribute, sub-license, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
@@ -34,14 +34,17 @@ var
 begin
 
   paramlist := TStringlist.create;
-  DocConv := TWordDocConverter.Create;
+
   try
-  try
+   try
+     DocConv := TWordDocConverter.Create;
     try
+
       for i := 1 to ParamCount do
       begin
        paramlist.Add(ParamStr(i));
       end;
+
       CoInitialize(nil);
       DocConv.LoadConfig(paramlist);
 
@@ -53,12 +56,13 @@ begin
     finally
       DocConv.free;
     end;
-  except on E: Exception do
-  begin
-         Writeln('Exiting with Error 204: ' + E.ClassName + ' ' + E.Message);
-  end;
+   except on E: Exception do
+    begin
+         Writeln('Exiting with Error 400: ' + E.ClassName + ' ' + E.Message);
+         halt(400);
+    end;
 
-  end;
+   end;
   finally
     paramlist.Free;
   end;
