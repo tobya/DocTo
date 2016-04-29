@@ -299,6 +299,7 @@ var
   Continue : Boolean;
   i : integer;
   FileToConvert, FileToCreate, UrlToCall : String;
+  OutputFilePath : String;
 
 begin
 
@@ -343,8 +344,17 @@ begin
         FileToCreate :=  OutputFile;
       end;
 
+        log(GetCurrentDir,10);
+
         //Ensure directory exists
-        ForceDirectories(ExtractFilePath( FileToCreate));
+        OutputFilePath := ExtractFilePath( FileToCreate);
+        if (OutputFilePath = '') then
+        begin
+          OutputFilePath := GetCurrentDir();
+          FileToCreate := OutputFilePath + '\' + FileToCreate;
+        end;
+
+        ForceDirectories(OutputFilePath);
 
 
 
@@ -526,6 +536,7 @@ begin
       begin
         FOutputFile := IncludeTrailingBackslash(value);
         IsDirOutput := true;
+        IsFileOutput := false;
         ForceDirectories(FOutputFile);
         log('Output directory is: ' + FOutputFile,CHATTY);
 
@@ -533,6 +544,7 @@ begin
       else
       begin
         IsFileOutput := true;
+        IsDirOutput := false;
         log('Output file is: ' + FOutputFile,CHATTY);
       end;
 
@@ -559,13 +571,23 @@ begin
       FInputFile := value;
       log('Input File is: ' + FInputFile,CHATTY);
 
+        tmppath := ExtractFilePath(FInputFile);
+
+        //If we are given a filename with no path, get currentdir and add to file.
+        if (tmppath = '') then
+        begin
+          tmppath := GetCurrentDir();
+          tmppath := IncludeTrailingBackslash(tmppath);
+          FInputFile := tmppath + FInputFile;
+        end;
+
       //Set Output Directory to Input Directry at this stage. This ensure if no
       //output directory  (-o) is specified, then it will default to same as
       //input dir. If output has been supplied as param it will overwrite later.
       if FOutputFile = '' then
       begin
-        tmppath := ExtractFilePath(FInputFile);
-        FOutputFile := IncludeTrailingBackslash(tmppath);
+
+        FOutputFile :=  IncludeTrailingBackslash(tmppath);
         IsDirOutput := true;
       end;
 

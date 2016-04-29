@@ -36,6 +36,7 @@ begin
   paramlist := TStringlist.create;
   DocConv := TWordDocConverter.Create;
   try
+  try
     try
       for i := 1 to ParamCount do
       begin
@@ -52,6 +53,12 @@ begin
     finally
       DocConv.free;
     end;
+  except on E: Exception do
+  begin
+         Writeln('Exiting with Error 204: ' + E.ClassName + ' ' + E.Message);
+  end;
+
+  end;
   finally
     paramlist.Free;
   end;

@@ -59,6 +59,7 @@ ERROR CODES:
 201 : Insufficient Inputs.  Minimum of Input File, Output File & Type
 202 : Incorrect switches.  Switch requires value
 203 : Unknown switch in command
+204 : Unknown Error
 220 : Word or COM Error
 221 : Word not Installed
 

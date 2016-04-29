@@ -78,7 +78,7 @@
         <VerInfo_AutoGenVersion>false</VerInfo_AutoGenVersion>
         <VerInfo_Release>9</VerInfo_Release>
         <Icon_MainIcon>d2icon_QhU_icon.ico</Icon_MainIcon>
-        <Debugger_RunParams>-f &quot;%~d0%~p0Inputfiles\&quot;  -o &quot;%~d0%~p0GeneratedFiles&quot;    -T  wdFormatPDF -OX pdf -W http://toflidium.com/webhooks/docto/webhook_test.php</Debugger_RunParams>
+        <Debugger_RunParams>-f pie3.doc -o myotherfile.pdf -T wdFormatPDF</Debugger_RunParams>
         <VerInfo_MinorVer>7</VerInfo_MinorVer>
         <VerInfo_Keys>CompanyName=Toflidium Software;FileDescription=DocTo - Convert doc files to any available format;FileVersion=0.7.9.21;InternalName=;LegalCopyright=Toby Allen;LegalTrademarks=;OriginalFilename=docto.exe;ProductName=DocTo;ProductVersion=0.7.0.0;Comments=</VerInfo_Keys>
         <DCC_ExeOutput>..\exe</DCC_ExeOutput>
