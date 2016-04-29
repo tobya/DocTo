@@ -194,7 +194,7 @@ begin
 
     GetURL(url);
 
-    log(url, CHATTY);
+    log('Webhook Called:' + url, CHATTY);
   end;
   except on E: Exception do
   begin

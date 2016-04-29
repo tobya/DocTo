@@ -45,7 +45,7 @@ Parameters markers are case insensitive. Short and Long can be used mixed.
       --quiet
   -R  Remove Files after successful conversion: Default false;
       --deletefiles
-  -W  Webhook: Url to call on events (plain url no params). See -HW for more details.
+  -W  Webhook: Url to call on events. See -HW for more details.
       --webhook
   -HW Webhook Help.
   -X  Halt on COM Error: Default True;  If you have trouble with some files 
