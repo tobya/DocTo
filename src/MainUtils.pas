@@ -41,6 +41,7 @@ type
 
     procedure SetCompatibilityMode(const Value: Integer);
     procedure SetIgnore_MACOSX(const Value: boolean);
+    procedure SetEncoding(const Value: Integer);
   protected
     Formats : TStringlist;
     fFormatsExtensions : TStringlist;
@@ -64,6 +65,7 @@ type
     FWebHook : String;
     FInputExtension : String;
     FCompatibilityMode: Integer;
+    FEncoding : Integer;
 
     FHaltOnWordError: Boolean;
     FRemoveFileOnConvert: boolean;
@@ -149,6 +151,7 @@ type
     property HaltOnWordError : Boolean read FHaltOnWordError write SetHaltOnWordError;
     property InputExtension: String read GetExtension write SetExtension;
     property CompatibilityMode : Integer read FCompatibilityMode write SetCompatibilityMode;
+    property Encoding : Integer read FEncoding write SetEncoding;
 
   end;
 
@@ -271,6 +274,7 @@ begin
   FIsFileOutput := false;
   FIsDirOutput := false;
   FCompatibilityMode := 0;
+  FEncoding := -1;
   FIgnore_MACOSX := true;
 
   FInputFiles := TStringList.Create;
@@ -657,6 +661,11 @@ begin
     begin
       CompatibilityMode := strtoint(value);
     end
+    else if (id = '-E') or
+            (id = '--ENCODING') then
+    begin
+      Encoding := strtoint(value);
+    end
     else if (id = '-G') or
              (id = '--WRITELOGFILE') then
     begin
@@ -835,6 +844,11 @@ end;
 function TDocumentConverter.GetExtension: String;
 begin
   Result := fInputExtension;
+end;
+
+procedure TDocumentConverter.SetEncoding(const Value: Integer);
+begin
+  FEncoding := Value;
 end;
 
 procedure TDocumentConverter.SetExtension(const Value: String);
