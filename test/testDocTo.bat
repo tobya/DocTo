@@ -59,3 +59,8 @@ copy  "%~d0%~p0Inputfiles\pie3.doc"  "%~d0%~p0GeneratedFiles\PieNoOutputTest.doc
 
 REM Check that works with -o before -f
 "../exe/docto.exe"    -o "%~d0%~p0GeneratedFiles\Pie3.pdf"    -T  wdFormatPDF -f "%~d0%~p0Inputfiles\pie3.doc" 
+
+REM Check Unicode to txt conversion. issue #32
+"../exe/docto.exe"  -f "%~d0%~p0Inputfiles\UnicodeTest.doc"  -o "%~d0%~p0GeneratedFiles\UnicodeTest.txt"    -T  wdFormatEncodedText -E 65001 
+
+

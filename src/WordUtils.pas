@@ -112,9 +112,20 @@ begin
 end;
 
 function TWordDocConverter.ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): string;
+var
+  wdEncoding : OleVariant;
 begin
         //Open doc and save in requested format.
         Wordapp.documents.Open( FileToConvert, false, true);
+
+        if Encoding = -1 then
+        begin
+           wdEncoding := EmptyParam;
+        end
+        else
+        begin
+           wdEncoding := Encoding;
+        end;
 
     try
         //SaveAs2 was introducted in 2010 V 14 by this list
@@ -122,7 +133,24 @@ begin
         if (strtoint( OfficeAppVersion) < 14) then
         begin
               log('Version < 14 Using Saveas Function', VERBOSE);
-              Wordapp.activedocument.Saveas(OutputFilename ,OutputFileFormat);
+              Wordapp.activedocument.Saveas(OutputFilename ,
+                                            OutputFileFormat,
+                                            EmptyParam, //LockComments,
+                                            EmptyParam, //Password,
+                                            EmptyParam, //AddToRecentFiles,
+                                            EmptyParam, //WritePassword,
+                                            EmptyParam, //ReadOnlyRecommended,
+                                            EmptyParam, //EmbedTrueTypeFonts,
+                                            EmptyParam, //SaveNativePictureFormat,
+                                            EmptyParam, //SaveFormsData,
+                                            EmptyParam, //SaveAsAOCELetter,
+                                            wdEncoding, //Encoding,
+                                            EmptyParam, //InsertLineBreaks,
+                                            EmptyParam, //AllowSubstitutions,
+                                            EmptyParam, //LineEnding,
+                                            EmptyParam //AddBiDiMarks
+                                            );
+
         end
         else
         begin
@@ -137,7 +165,7 @@ begin
                                         EmptyParam,  //SaveNativePictureFo
                                         EmptyParam,  //SaveFormsData
                                         EmptyParam,  //SaveAsAOCELetter
-                                        EmptyParam,  //Encoding
+                                        wdEncoding,  //Encoding
                                         EmptyParam,  //InsertLineBreaks
                                         EmptyParam,  //AllowSubstitutions
                                         EmptyParam,  //LineEnding
