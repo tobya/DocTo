@@ -585,10 +585,21 @@ begin
           FInputFile := tmppath + FInputFile;
         end;
 
-      if (FileExists(FInputFile) = false) then
+      if (FileExists(FInputFile) = false) and (DirectoryExists(FInputFile) = false) then
       begin
         HaltWithError(204,'EInput file ' + FInputFile + ' does not exist.');
+      end
+      else if (FileExists(FInputFile)) then
+      begin
+        IsFileInput := true;
+        IsDirInput := false;
+      end
+      else if (DirectoryExists(FInputFile)) then
+      begin
+        IsFileInput := false;
+        IsDirInput := true;
       end;
+
 
       //Set Output Directory to Input Directry at this stage. This ensure if no
       //output directory  (-o) is specified, then it will default to same as
