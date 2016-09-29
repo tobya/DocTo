@@ -1,25 +1,24 @@
-# DocTo
+# XLSTo
 
-Simple utility for converting a Microsoft Word Document '.doc' file to any other supported format 
-such as .txt .rtf .pdf.  
+Simple utility for converting an Excel Spreadsheet  '.xls' file to any other supported file format 
+such as .txt .csv .pdf etc.  
 
-Can also be used to convert .txt, .rtf to .doc or .pdf format.
+Can also be used to convert .csv, .txt to .xls .
 
-Can be used to convert older word documents to latest format.
+Can be used to convert older excel documents to latest format.
 
-Must have Microsoft Word installed on host machine.
+Must have Microsoft Excel installed on host machine.
 
 Download Release From Github Releases - https://github.com/tobya/DocTo/releases/
 Further Information available at http://tobya.github.com/DocTo
 
-XLSTo
+DocTo
 =====
-Excel version available - [Details here](xlsTo.md)
-
+Word version available - [Details here](readme.md)
 
 ## Features
 
-  1. Convert Doc/RTF/Text file to any Word SaveAs Type Doc/Text/RTF/PDF
+  1. Convert XLS file to any Excel SaveAs Type XLS,CSV,TXT
   1. Single File Conversion
   1. Multiple / Directory File Conversion
   1. Delete after conversion
@@ -34,47 +33,40 @@ Please log an [issue](https://github.com/tobya/DocTo/issues) for any bugs, featu
 
 ### Single
 
-Convert Microsoft Word Document to text
+Convert Microsoft Excel Document to csv text
 
-    docto -f C:\Directory\MyFile.doc -O "C:\Output Directory\MyTextFile.txt" -T wdFormatText
+    xlsto -f C:\Directory\MyFile.xls -O "C:\Output Directory\MyTextFile.csv" -T xlCSV
 
-Convert Microsoft Word Document to PDF (requires version of Microsoft Word that supports this).
+Convert Microsoft Excel Document to PDF (requires version of Microsoft Excel that supports this).
 
-     docto -f C:\Directory\MyFile.doc -O "C:\Output Directory\MyTextFile.pdf" -T wdFormatPDF
+     xlsto -f C:\Directory\MyFile.xls -O "C:\Output Directory\MyTextFile.pdf" -T xlTypePDF
 
 ### Multiple Files and Folders
 
-Convert All Microsoft Word Documents in Directory and its Sub Directories to PDF
+Convert All Microsoft Excel Documents in Directory and its Sub Directories to PDF
 
-    docto -f "C:\Dir with Spaces\FilesToConvert\" -O "C:\DirToOutput" -T wdFormatPDF  -OX .pdf
+    xlsto -f "C:\Dir with Spaces\FilesToConvert\" -O "C:\DirToOutput" -T xlTypePDF  -OX .pdf
 
 #### Delete Origional File after Conversion ####
 
 Delete Origional Files after conversion (-R) . 
 
-    docto -f "C:\Dir with Spaces\FilesToConvert\" -O "C:\DirToOutput" -T wdFormatPDF  -OX .pdf -R
+    xlsto -f "C:\Dir with Spaces\FilesToConvert\" -O "C:\DirToOutput" -T xlTypePDF  -OX .pdf -R
 
 Webhooks
 ========
 
 Add a Webhook to fire on each conversion (-W)
 
-    docto -f "C:\Dir with Spaces\FilesToConvert\" -O "C:\DirToOutput" -T wdFormatPDF  -OX .pdf  -W http://toflidium.com/webhooks/docto/webhook_test.php
+    xlsto -f "C:\Dir with Spaces\FilesToConvert\" -O "C:\DirToOutput" -T xlTypePDF  -OX .pdf  -W http://toflidium.com/webhooks/docto/webhook_test.php
     
 A Webhook is a url that can be called on each converstion to give you the ability to repond externally whenever a file is converted.
 
 Use in the Wild
 ---------------
 
-If you are using DocTo in the wild somewhere, please add details to this [wiki page](https://github.com/tobya/DocTo/wiki/Uses-of-DocTo-in-the-wild)
+If you are using XLSTo or DocTo in the wild somewhere, please add details to this [wiki page](https://github.com/tobya/DocTo/wiki/Uses-of-DocTo-in-the-wild)
 
-
-OneDrive Conversion
-=======================
-If you need to upgrade a bunch of files to work without conversion on OneDrive /Office365 / Word 20XX then you can use DocTo.
-See this StackExchange question 
-
-http://webapps.stackexchange.com/questions/74859/what-format-does-word-onedrive-use
 
 ## Command Line Help
 
@@ -144,24 +136,6 @@ http://webapps.stackexchange.com/questions/74859/what-format-does-word-onedrive-
     221 : Word not Installed
     400 : Unknown Error
 
-    COMPATIBILITY MODES:
-    FROM https://msdn.microsoft.com/en-us/library/office/ff836084.aspx
-
-    wdCurrent   : 65535 Compatibility mode equivalent to the latest version of Microsoft Word.
-    wdWord2003  : 11    Word 2010 is put into a mode that is most compatible with Word 2003.
-                        Features new to Word 2010 are disabled in this mode.
-    wdWord2007  : 12    Word 2010 is put into a mode that is most compatible with Office Word 2007.
-                        Features new to Word 2010 are disabled in this mode.
-    wdWord2010  : 14    Word 2013 is put into a mode that is most compatible with . Features new to
-                        Word 2013 are disabled in this mode.
-    wdWord2013  : 15    Default. All Word 2013 features are enabled.
 
 
-
-## Updates     
-
-0.7     Added support for saveas2 function (with compatibility mode) added by microsoft in Word 2010.  Additional Switches. Added support for long parameters.
-
-0.5.5   Changes made to logging.  -Q and -L 0 now work correctly ensuring nothing is output to console.  Must specify -G or -GL to get access to logs and errors.
-                                Also -L 10 now outputs extra as logging param is loaded first.
 
