@@ -304,7 +304,7 @@ var
   i : integer;
   FileToConvert, FileToCreate, UrlToCall : String;
   OutputFilePath : String;
-
+  ErrorMessage : String;
 begin
 
     Continue := false;
@@ -402,22 +402,27 @@ begin
             else
             begin
 
+              // In some instances the error coming from Word has a #13 or Carriage Return which is not
+              // interpreted correctly when output to console, replace here.  Github #37
+              ErrorMessage := StringReplace(E.Message,#13,'--',[rfReplaceAll]);
+
               CallWebHook('action=error&type='+ FOutputFileFormatString + '&outputfilename=' + URLEncode(FileToCreate)+ '&inputfilename=' + URLEncode(InputFile)
-                          + '&error=' + URLEncode(E.ClassName + '  ' + e.Message));
+                          + '&error=' + URLEncode(E.ClassName + '  ' + ErrorMessage));
 
               if (HaltOnWordError) then
               begin
+
                 log('FileToConvert:' + FileToConvert);
                 log('OutputFile:' + FileToCreate);
                 log('Ext' + inttostr(OutputFileFormat));
-              HaltWithError(220,E.ClassName + '  ' + e.Message);
+                HaltWithError(220,E.ClassName + '  ' + ErrorMessage);
               end
               else
               begin
                 log('FileToConvert:' + FileToConvert);
                 log('OutputFile:' + FileToCreate);
                 log('Ext' + inttostr(OutputFileFormat));
-                logerror(E.ClassName + '  ' + e.Message);
+                logerror(E.ClassName + '  ' + ErrorMessage);
 
               end;
             end;
@@ -425,13 +430,14 @@ begin
           end;
           on E: Exception do
           begin
+              ErrorMessage := StringReplace(E.Message,#13,'--',[rfReplaceAll]);
               if (HaltOnWordError) then
               begin
-                HaltWithError(220,E.ClassName + '  ' + e.Message + ' ' + FileToConvert + ':' + FileToCreate);
+                HaltWithError(220,E.ClassName + '  ' + ErrorMessage + ' ' + FileToConvert + ':' + FileToCreate);
               end
               else
               begin
-                LogError(E.ClassName + '  ' + e.Message + ' ' + FileToConvert + ':' + FileToCreate);
+                LogError(E.ClassName + '  ' + ErrorMessage + ' ' + FileToConvert + ':' + FileToCreate);
 
               end;
           end;
