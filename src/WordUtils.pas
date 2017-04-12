@@ -87,7 +87,7 @@ end;
 constructor TWordDocConverter.Create;
 begin
   inherited;
-  InputExtension := '.doc';
+  InputExtension := '.doc*';
   LogFilename := 'DocTo.Log';
 end;
 
