@@ -604,6 +604,9 @@ begin
       begin
         IsFileInput := false;
         IsDirInput := true;
+
+        // Create Absolute path from any relative path
+        FInputFile := ExpandFileName(FInputFile);
       end;
 
 
