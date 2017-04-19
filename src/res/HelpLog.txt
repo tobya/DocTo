@@ -9,7 +9,7 @@ Parameters markers are case insensitive. Short and Long can be used mixed.
       --HELP -?
   -F  Input File or Directory
       --inputfile
-  -FX Input Extension to search for if directory.  Default ".doc" (will find ".docx" also)
+  -FX Input Extension to search for if directory.  Default "*.doc*" (will find ".docx" also)
       --inputextension
   -O  Output File or Directory to place converted Docs
       --outputfile

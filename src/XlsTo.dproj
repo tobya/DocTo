@@ -71,7 +71,7 @@
         <DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <VerInfo_Build>3</VerInfo_Build>
+        <VerInfo_Build>4</VerInfo_Build>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <VerInfo_PreRelease>true</VerInfo_PreRelease>
         <VerInfo_MajorVer>0</VerInfo_MajorVer>
@@ -79,7 +79,7 @@
         <VerInfo_Release>7</VerInfo_Release>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <Manifest_File>None</Manifest_File>
-        <VerInfo_Keys>CompanyName=Toflidium Software;FileDescription=XLSTo XL to csv,pdf,etc;FileVersion=0.7.7.3;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=http://github.com/tobya/docto</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Toflidium Software;FileDescription=XLSTo XL to csv,pdf,etc;FileVersion=0.7.7.4;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=http://github.com/tobya/docto</VerInfo_Keys>
         <VerInfo_MinorVer>7</VerInfo_MinorVer>
         <Debugger_RunParams>-L 10 -f &quot;D:\Development\GitHub\DocTo\test\Inputfiles\Week 1 Test.xls&quot;  -o &quot;D:\Development\GitHub\DocTo\test\GeneratedFiles\&quot;    -T  xlcsv -OX .csv</Debugger_RunParams>
     </PropertyGroup>
