@@ -115,8 +115,30 @@ function TWordDocConverter.ExecuteConversion(fileToConvert: String; OutputFilena
 var
   wdEncoding : OleVariant;
 begin
-        //Open doc and save in requested format.
+
+        if IsURLInput then
+        begin
+
+           Wordapp.documents.Open( 'D:\Development\GitHub\DocTo\exe\BaseTemplate.dotx', false, true);
+
+              {make sure selection is not more than 0 characters.}
+    WordApp.selection.Start := WordApp.selection.end;
+//    WordApp.Selection.TypeParagraph;   {put in return }
+    {Insert the next document into our}
+    WordApp.Selection.InsertFile(  filetoConvert,
+                                    '',
+                                    False,
+                                    False,
+                                    False);
+        end
+        else
+        begin
+         //Open doc and save in requested format.
         Wordapp.documents.Open( FileToConvert, false, true);
+        end;
+
+
+
 
         if Encoding = -1 then
         begin

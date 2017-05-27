@@ -64,6 +64,7 @@ ERROR CODES:
 202 : Incorrect switches.  Switch requires value
 203 : Unknown switch in command
 204 : Input File does not exist
+205 : Input URL requires Output specified.
 220 : Word or COM Error
 221 : Word not Installed
 400 : Unknown Error

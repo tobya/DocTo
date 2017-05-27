@@ -42,6 +42,7 @@ type
     procedure SetCompatibilityMode(const Value: Integer);
     procedure SetIgnore_MACOSX(const Value: boolean);
     procedure SetEncoding(const Value: Integer);
+    procedure SetIsURLInput(const Value: Boolean);
   protected
     Formats : TStringlist;
     fFormatsExtensions : TStringlist;
@@ -61,6 +62,7 @@ type
     FDoSubDirs: Boolean;
     FIsFileInput: Boolean;
     FIsDirInput: Boolean;
+    FisURLInput: Boolean;
     FOutputExt: string;
     FWebHook : String;
     FInputExtension : String;
@@ -98,6 +100,7 @@ type
     procedure SetLogLevel(const Value: integer);
     property IsFileInput : Boolean read FIsFileInput write SetIsFileInput;
     property IsDirInput : Boolean read FIsDirInput write SetIsDirInput;
+    property IsURLInput : Boolean read FIsURLInput write setIsURLInput;
     property IsFileOutput : Boolean read FIsFileOutput write SetIsFileOutput;
     property IsDirOutput : Boolean read FIsDirOutput write SetIsDirOutput;
     property DoSubDirs : Boolean read FDoSubDirs write SetDoSubDirs;
@@ -581,6 +584,7 @@ begin
             (id = '--INPUTFILE') then
     begin
       FInputFile := value;
+      FisURLInput := false;
       log('Input File is: ' + FInputFile,CHATTY);
 
         tmppath := ExtractFilePath(FInputFile);
@@ -593,7 +597,14 @@ begin
           FInputFile := tmppath + FInputFile;
         end;
 
-      if (FileExists(FInputFile) = false) and (DirectoryExists(FInputFile) = false) then
+      if (tmppath = 'https:')
+      or (tmppath = 'http:') then // URL allow to try to load.
+      begin
+        IsFileInput := true;
+        IsDirInput := false;
+        IsURLInput := true;
+      end
+      else if (FileExists(FInputFile) = false) and (DirectoryExists(FInputFile) = false) then
       begin
         HaltWithError(204,'EInput file ' + FInputFile + ' does not exist.');
       end
@@ -617,11 +628,10 @@ begin
       //input dir. If output has been supplied as param it will overwrite later.
       if FOutputFile = '' then
       begin
-
         FOutputFile :=  IncludeTrailingBackslash(tmppath);
         IsDirOutput := true;
       end;
-
+      log('OutputFile Set to : ' + FOutputFileFormatString , Verbose);
     end
     else if (id = '-FX') or
             (id = '--INPUTFILEEXTENSION') then
@@ -911,6 +921,11 @@ end;
 procedure TDocumentConverter.SetIsFileOutput(const Value: Boolean);
 begin
   FIsFileOutput := Value;
+end;
+
+procedure TDocumentConverter.SetIsURLInput(const Value: Boolean);
+begin
+  FIsURLInput := Value;
 end;
 
 procedure TDocumentConverter.SetLogFilename(const Value: String);
