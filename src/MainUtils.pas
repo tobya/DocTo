@@ -24,7 +24,7 @@ Const
   ERRORS = 1;
   SILENT = 0;
 
-  DOCTO_VERSION = '0.8.11';
+  DOCTO_VERSION = '0.8.13';
 
 type
 
@@ -135,6 +135,7 @@ type
     procedure Log(Msg: String; Level  : Integer = ERRORS); overload;
     procedure Log(Msg: String; List:  TStrings; Level: Integer); overload;
     procedure LogError(Msg: String);
+    function ConvertErrorText(Msg: String) : String;
     function CallWebHook(Params: String) : string;
     procedure LogHelp(HelpResName : String);
 
@@ -201,7 +202,7 @@ begin
   end;
   except on E: Exception do
   begin
-    logerror(E.ClassName + ' ' + E.Message);
+    logerror(ConvertErrorText( E.ClassName) + ' ' + ConvertErrorText( E.Message));
   end;
 
   end;
@@ -251,6 +252,18 @@ While iParam <= Params.Count -1 do
     end
   end;
   Log('Log Level Set To:' + IntToStr(FLogLevel),CHATTY);
+end;
+
+
+// ConvertErrorText removed a lone CR which can overwrite 1 error
+// message with another if concatination see issue #37
+// https://github.com/tobya/DocTo/issues/37
+function TDocumentConverter.ConvertErrorText(Msg: String): String;
+var
+  ErrorMessage : String;
+begin
+  ErrorMessage := StringReplace(Msg,#13,'--',[rfReplaceAll]);
+  Result :=  ErrorMessage;
 end;
 
 constructor TDocumentConverter.Create;
@@ -372,7 +385,7 @@ begin
 
 
             ExecuteConversion(FileToConvert, FileToCreate, OutputFileFormat);
-            log('FileCreated: ' + FileToCreate, STANDARD);
+
             if RemoveFileOnConvert then
             begin
               //Check file exists and Delete if requested
@@ -395,16 +408,18 @@ begin
         except
           on E: EOleSysError do
           begin
+              // In some instances the error coming from Word has a #13 or Carriage Return which is not
+              // interpreted correctly when output to console, replace here.  Github #37
+            ErrorMessage := StringReplace(E.Message,#13,'--',[rfReplaceAll]);
+
             if pos('Invalid class string',E.Message) > 0 then
             begin
-              HaltWithError(221,'Word Does not appear to be installed:' +E.ClassName + '  ' + e.Message);
+
+
+              HaltWithError(221,'Word Does not appear to be installed:' +E.ClassName + '  ' + ErrorMessage);
             end
             else
             begin
-
-              // In some instances the error coming from Word has a #13 or Carriage Return which is not
-              // interpreted correctly when output to console, replace here.  Github #37
-              ErrorMessage := StringReplace(E.Message,#13,'--',[rfReplaceAll]);
 
               CallWebHook('action=error&type='+ FOutputFileFormatString + '&outputfilename=' + URLEncode(FileToCreate)+ '&inputfilename=' + URLEncode(InputFile)
                           + '&error=' + URLEncode(E.ClassName + '  ' + ErrorMessage));
@@ -604,6 +619,9 @@ begin
       begin
         IsFileInput := false;
         IsDirInput := true;
+
+        // Create Absolute path from any relative path
+        FInputFile := ExpandFileName(FInputFile);
       end;
 
 
@@ -714,7 +732,7 @@ begin
     begin
       log('DocTo Version:' + DOCTO_VERSION);
       log('OfficeApp Version:' +  OfficeAppVersion(),0);
-      log('Source: http://github.com/tobya/DocTo/');
+      log('Source: https://github.com/tobya/DocTo/');
       halt(2);
 
     end
@@ -820,6 +838,7 @@ end;
 
 procedure TDocumentConverter.LogError(Msg: String);
 begin
+
   Log('*******************************************', ERRORS);
   Log('Error: ' + Msg, ERRORS);
 end;

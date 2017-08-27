@@ -81,11 +81,7 @@ begin
   FParts.Add('Filename=' + Filename);
   FParts.Add('Ext=' + Extension);
 
-   result := FParts; 
-  
-
-
-
+  Result := FParts;
 end;
 
 function TPath.NewFileName(NewExtension: String): String;

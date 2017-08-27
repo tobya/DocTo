@@ -12,6 +12,8 @@ exe/help.txt
 test/privatetest/
 *.group*
 exe/
+test/InputFiles/ignore/
+test/InputFiles/generatedfiles/
 
 ############
 # Delphi

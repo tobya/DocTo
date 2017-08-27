@@ -112,10 +112,15 @@ begin
 end;
 
 function TWordDocConverter.ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): string;
+Type
+  TWordExitAction = (aSave,aClose, aExit);
 var
   wdEncoding : OleVariant;
   NonsensePassword : OleVariant;
+  WordExitAction : TWordExitAction;
+
 begin
+        WordExitAction := aSave;
         log('ExecuteConversion:' + fileToConvert, Verbose);
 
         // Check if document has password as per
@@ -124,8 +129,8 @@ begin
         NonsensePassword := 'tfm554!ghAGWRDD';
 
         try
-        //Open doc and save in requested format.
-        Wordapp.documents.Open( FileToConvert,  // FileName
+          //Open doc and save in requested format.
+          Wordapp.documents.Open( FileToConvert,  // FileName
                                 false,          // ConfirmConversions
                                 true,            // ReadOnly
                                 EmptyParam,    // AddToRecentFiles,
@@ -143,10 +148,31 @@ begin
                                     // XMLTransform
 
                                 );
- except on E: Exception do
-  begin
-    logerror(E.ClassName + ' ' + E.Message);
-  end;
+          // For some reason if the document contains a TableofContents, it hangs Word.  In older
+          // versions it popped up a dialog.  Until someone can find a work around, the docs will be skipped.
+          // Issue  #40
+        //  if Wordapp.ActiveDocument.TablesOfContents.count > 0 then
+       //   begin
+         //   log('SKIPPED - Document has TOC: ' + fileToConvert , STANDARD);
+       //     WordExitAction := aClose;
+        //  end;
+        except
+        on E: Exception do
+        begin
+          // if Errro contains EOleException The password is incorrect.
+          // then it is password protected and should be skipped.
+          if ContainsStr(E.Message, 'The password is incorrect' ) then
+          begin
+             log('SKIPPED - Password Protected:' + fileToConvert, STANDARD);
+             WordExitAction := aExit;
+          end
+          else
+          begin
+            // fallback error log
+            logerror(ConvertErrorText(E.ClassName) + ' ' + ConvertErrorText(E.Message));
+            Exit();
+          end;
+        end;
 
 
         end;
@@ -160,55 +186,70 @@ begin
            wdEncoding := Encoding;
         end;
 
-    try
-        //SaveAs2 was introducted in 2010 V 14 by this list
-        //http://stackoverflow.com/a/29077879/6244
-        if (strtoint( OfficeAppVersion) < 14) then
-        begin
-              log('Version < 14 Using Saveas Function', VERBOSE);
-              Wordapp.activedocument.Saveas(OutputFilename ,
-                                            OutputFileFormat,
-                                            EmptyParam, //LockComments,
-                                            EmptyParam, //Password,
-                                            EmptyParam, //AddToRecentFiles,
-                                            EmptyParam, //WritePassword,
-                                            EmptyParam, //ReadOnlyRecommended,
-                                            EmptyParam, //EmbedTrueTypeFonts,
-                                            EmptyParam, //SaveNativePictureFormat,
-                                            EmptyParam, //SaveFormsData,
-                                            EmptyParam, //SaveAsAOCELetter,
-                                            wdEncoding, //Encoding,
-                                            EmptyParam, //InsertLineBreaks,
-                                            EmptyParam, //AllowSubstitutions,
-                                            EmptyParam, //LineEnding,
-                                            EmptyParam //AddBiDiMarks
+      case WordExitAction of
+      aExit :
+      begin
+        // document wasnt opened, so jus exit function.
+        Exit();
+      end;
+      aClose:
+      begin
+        WordApp.activeDocument.Close();
+      end;
+      aSave:
+      begin
+        try
+            //SaveAs2 was introducted in 2010 V 14 by this list
+            //http://stackoverflow.com/a/29077879/6244
+            if (strtoint( OfficeAppVersion) < 14) then
+            begin
+                  log('Version < 14 Using Saveas Function', VERBOSE);
+                  Wordapp.activedocument.Saveas(OutputFilename ,
+                                                OutputFileFormat,
+                                                EmptyParam, //LockComments,
+                                                EmptyParam, //Password,
+                                                EmptyParam, //AddToRecentFiles,
+                                                EmptyParam, //WritePassword,
+                                                EmptyParam, //ReadOnlyRecommended,
+                                                EmptyParam, //EmbedTrueTypeFonts,
+                                                EmptyParam, //SaveNativePictureFormat,
+                                                EmptyParam, //SaveFormsData,
+                                                EmptyParam, //SaveAsAOCELetter,
+                                                wdEncoding, //Encoding,
+                                                EmptyParam, //InsertLineBreaks,
+                                                EmptyParam, //AllowSubstitutions,
+                                                EmptyParam, //LineEnding,
+                                                EmptyParam //AddBiDiMarks
+                                                );
+
+            end
+            else
+            begin
+                  log('Version >= 14 Using Saveas2 Function', VERBOSE);
+                  Wordapp.activedocument.Saveas2(OutputFilename ,OutputFileFormat,
+                                            EmptyParam,  //LockComments
+                                            EmptyParam,  //Password
+                                            EmptyParam,  //AddToRecentFiles
+                                            EmptyParam,  //WritePassword
+                                            EmptyParam,  //ReadOnlyRecommended
+                                            EmptyParam,  //EmbedTrueTypeFonts
+                                            EmptyParam,  //SaveNativePictureFo
+                                            EmptyParam,  //SaveFormsData
+                                            EmptyParam,  //SaveAsAOCELetter
+                                            wdEncoding,  //Encoding
+                                            EmptyParam,  //InsertLineBreaks
+                                            EmptyParam,  //AllowSubstitutions
+                                            EmptyParam,  //LineEnding
+                                            EmptyParam,  //AddBiDiMarks
+                                            CompatibilityMode  //CompatibilityMode
                                             );
+            end;
+            log('FileCreated: ' + OutputFilename, STANDARD);
+        finally
 
-        end
-        else
-        begin
-              log('Version >= 14 Using Saveas2 Function', VERBOSE);
-              Wordapp.activedocument.Saveas2(OutputFilename ,OutputFileFormat,
-                                        EmptyParam,  //LockComments
-                                        EmptyParam,  //Password
-                                        EmptyParam,  //AddToRecentFiles
-                                        EmptyParam,  //WritePassword
-                                        EmptyParam,  //ReadOnlyRecommended
-                                        EmptyParam,  //EmbedTrueTypeFonts
-                                        EmptyParam,  //SaveNativePictureFo
-                                        EmptyParam,  //SaveFormsData
-                                        EmptyParam,  //SaveAsAOCELetter
-                                        wdEncoding,  //Encoding
-                                        EmptyParam,  //InsertLineBreaks
-                                        EmptyParam,  //AllowSubstitutions
-                                        EmptyParam,  //LineEnding
-                                        EmptyParam,  //AddBiDiMarks
-                                        CompatibilityMode  //CompatibilityMode
-                                        );
+                Wordapp.activedocument.Close;
         end;
-    finally
-
-            Wordapp.activedocument.Close;
+    end;
     end;
 
 
