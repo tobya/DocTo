@@ -42,6 +42,7 @@ type
     procedure SetCompatibilityMode(const Value: Integer);
     procedure SetIgnore_MACOSX(const Value: boolean);
     procedure SetEncoding(const Value: Integer);
+    procedure SetSkipDocsWithTOC(const Value: Boolean);
   protected
     Formats : TStringlist;
     fFormatsExtensions : TStringlist;
@@ -64,6 +65,7 @@ type
     FOutputExt: string;
     FWebHook : String;
     FInputExtension : String;
+    FSkipDocsWithTOC : Boolean;
     FCompatibilityMode: Integer;
     FEncoding : Integer;
 
@@ -150,6 +152,7 @@ type
     property LogFilename: String read FLogFilename write SetLogFilename;
     Property Version : String read FVersionString;
     property HaltOnWordError : Boolean read FHaltOnWordError write SetHaltOnWordError;
+    property SkipDocsWithTOC : Boolean read FSkipDocsWithTOC write SetSkipDocsWithTOC;
     property InputExtension: String read GetExtension write SetExtension;
     property CompatibilityMode : Integer read FCompatibilityMode write SetCompatibilityMode;
     property Encoding : Integer read FEncoding write SetEncoding;
@@ -289,6 +292,7 @@ begin
   FCompatibilityMode := 0;
   FEncoding := -1;
   FIgnore_MACOSX := true;
+  fSkipDocsWithTOC := false;
 
   FInputFiles := TStringList.Create;
 end;
@@ -741,6 +745,12 @@ begin
     begin
       HaltOnWordError := not(lowercase(value) = 'false');
     end
+    //Long form only
+    else if (id = '--skipdocswithtoc') then
+    begin
+      fSkipDocsWithTOC := true;
+    end
+    //Help etc
     else if (id = '-H') or
             (id = '-?') or
             (id = '?') then
@@ -1004,6 +1014,11 @@ end;
 
 
 
+
+procedure TDocumentConverter.SetSkipDocsWithTOC(const Value: Boolean);
+begin
+  FSkipDocsWithTOC := Value;
+end;
 
 function TDocumentConverter.URLEncode(Param: String): String;
 begin

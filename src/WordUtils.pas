@@ -150,12 +150,15 @@ begin
                                 );
           // For some reason if the document contains a TableofContents, it hangs Word.  In older
           // versions it popped up a dialog.  Until someone can find a work around, the docs will be skipped.
-          // Issue  #40
-        //  if Wordapp.ActiveDocument.TablesOfContents.count > 0 then
-       //   begin
-         //   log('SKIPPED - Document has TOC: ' + fileToConvert , STANDARD);
-       //     WordExitAction := aClose;
-        //  end;
+          // Issue  #40  - experimental as it gets some false positives.
+          if SkipDocsWithTOC then
+          begin
+            if Wordapp.ActiveDocument.TablesOfContents.count > 0 then
+            begin
+             log('SKIPPED - Document has TOC: ' + fileToConvert , STANDARD);
+              WordExitAction := aClose;
+            end;
+          end;
         except
         on E: Exception do
         begin

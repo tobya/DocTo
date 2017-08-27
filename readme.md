@@ -132,7 +132,11 @@ http://webapps.stackexchange.com/questions/74859/what-format-does-word-onedrive-
           errors and continue with batch job.
           --halterror
       -V  Show Versions.  DocTo and Word/Excel
+    Extra Parameters
 
+      --skipdocswithtoc
+        EXPERIMENTAL.  Will skip any docs that contain a TOC to prevent hanging.
+        Currently matches some false positives.  Default False.
 
     ERROR CODES:
     200 : Invalid File Format specified

@@ -57,6 +57,11 @@ Parameters markers are case insensitive. Short and Long can be used mixed.
       --halterror
   -V  Show Versions.  DocTo and Word/Excel
 
+Extra Parameters
+
+  --skipdocswithtoc
+      EXPERIMENTAL.  Will skip any docs that contain a TOC to prevent hanging.
+      Currently matches some false positives.  Default False.
 
 ERROR CODES:
 200 : Invalid File Format specified
