@@ -115,7 +115,7 @@ function TWordDocConverter.ExecuteConversion(fileToConvert: String; OutputFilena
 var
   wdEncoding : OleVariant;
 begin
-
+        log('ExecuteConversion:' + fileToConvert,VERBOSE );
         if IsURLInput then
         begin
 

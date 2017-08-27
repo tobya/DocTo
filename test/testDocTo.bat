@@ -11,6 +11,8 @@ REM Remove all generated files from output directory that may exist.
 REM Output Help Text
 "../exe/docto.exe" -h
 
+REM Output Version
+"../exe/docto.exe" -v
 
 REM ---------------------------------
 REM Main Test : 

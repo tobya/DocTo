@@ -78,7 +78,7 @@
         <VerInfo_AutoGenVersion>false</VerInfo_AutoGenVersion>
         <VerInfo_Release>13</VerInfo_Release>
         <Icon_MainIcon>d2icon_QhU_icon.ico</Icon_MainIcon>
-        <Debugger_RunParams>-f https://backoffice.cookingisfun.ie -o d:\temp\googld.pdf -t wdFormatPDF --writelogfile</Debugger_RunParams>
+        <Debugger_RunParams> -f &quot;https://backoffice.cookingisfun.ie/reports/studentcoursestatus.php?CourseID=900348&amp;authtoken=a8db962c-136a-4a59-a6c9-cf8ec00f0cb3&quot; -o d:\temp\myfile7.pdf -l 10 -t wdFormatPDF</Debugger_RunParams>
         <VerInfo_MinorVer>8</VerInfo_MinorVer>
         <VerInfo_Keys>CompanyName=Toflidium Software;FileDescription=DocTo - Convert doc files to any available format;FileVersion=0.8.13.24;InternalName=;LegalCopyright=Toby Allen;LegalTrademarks=;OriginalFilename=docto.exe;ProductName=DocTo;ProductVersion=0.8.0.0;Comments=</VerInfo_Keys>
         <DCC_ExeOutput>..\exe</DCC_ExeOutput>
