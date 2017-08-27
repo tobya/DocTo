@@ -114,9 +114,42 @@ end;
 function TWordDocConverter.ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): string;
 var
   wdEncoding : OleVariant;
+  NonsensePassword : OleVariant;
 begin
+        log('ExecuteConversion:' + fileToConvert, Verbose);
+
+        // Check if document has password as per
+        // http://wordmvp.com/FAQs/MacrosVBA/CheckIfPWProtectB4Open.htm
+        // Always open with password, if non ignored, if one catch error.
+        NonsensePassword := 'tfm554!ghAGWRDD';
+
+        try
         //Open doc and save in requested format.
-        Wordapp.documents.Open( FileToConvert, false, true);
+        Wordapp.documents.Open( FileToConvert,  // FileName
+                                false,          // ConfirmConversions
+                                true,            // ReadOnly
+                                EmptyParam,    // AddToRecentFiles,
+                                NonsensePassword    // PasswordDocument,
+                                    // PasswordTemplate,
+                                    // Revert,
+                                    // WritePasswordDocument,
+                                    // WritePasswordTemplate,
+                                    // Format,
+                                    // Encoding,
+                                    // Visible,
+                                    // OpenAndRepair,
+                                    // DocumentDirection,
+                                    // NoEncodingDialog,
+                                    // XMLTransform
+
+                                );
+ except on E: Exception do
+  begin
+    logerror(E.ClassName + ' ' + E.Message);
+  end;
+
+
+        end;
 
         if Encoding = -1 then
         begin
