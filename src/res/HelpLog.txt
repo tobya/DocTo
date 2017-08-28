@@ -22,7 +22,7 @@ Parameters markers are case insensitive. Short and Long can be used mixed.
       See current List Below.
       --format
   -TF Force Format.  -T value if integer is checked against current list compiled in 
-      and not passed if unavailable. 
+      and not passed if unavailable.
       -TF will pass through value without checking. Word will return an 
       "EOleException  Value out of range" error if invalid.
       Use instead of -T.
