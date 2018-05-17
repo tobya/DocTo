@@ -86,7 +86,7 @@ http://webapps.stackexchange.com/questions/74859/what-format-does-word-onedrive-
     Parameters markers are case insensitive. Short and Long can be used mixed.
       -H  This message
           --help -?
-      -F  Input File or Directory
+      -F  Input File or Directory.  Please use full path filename.
           --inputfile
       -FX Input Extension to search for if directory.  Default ".doc" (will find ".docx" also)
           --inputextension
