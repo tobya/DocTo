@@ -35,6 +35,13 @@ type
     procedure LogError(Log: String);
   end;
 
+  TConversionInfo =  Record
+    InputFile , OutputFile : String;
+    Successful : Boolean;
+    Error : String;
+
+  End;
+
   TDocumentConverter = class
   private
     FIgnore_MACOSX: boolean;
@@ -127,7 +134,7 @@ type
     procedure ConfigLoggingLevel(Params: TStrings);
 
     function Execute() : string; virtual;
-    function ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): string; virtual; abstract;
+    function ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): TConversionInfo; virtual; abstract;
 
     function DestroyOfficeApp() : boolean; virtual; abstract;
     function CreateOfficeApp() : boolean; virtual; abstract;
@@ -139,6 +146,8 @@ type
     procedure LogError(Msg: String);
     function ConvertErrorText(Msg: String) : String;
     function CallWebHook(Params: String) : string;
+    FUNCTION AfterConversion(InputFile, OutputFile: String):string;
+    Function OnConversionError(InputFile, OutputFile, Error: String):string;
     procedure LogHelp(HelpResName : String);
 
 
@@ -322,6 +331,7 @@ var
   FileToConvert, FileToCreate, UrlToCall : String;
   OutputFilePath : String;
   ErrorMessage : String;
+  ConversionInfo : TConversionInfo;
 begin
 
     Continue := false;
@@ -388,27 +398,35 @@ begin
        try
 
 
-            ExecuteConversion(FileToConvert, FileToCreate, OutputFileFormat);
+            ConversionInfo :=  ExecuteConversion(FileToConvert, FileToCreate, OutputFileFormat);
 
-            if RemoveFileOnConvert then
+            if ConversionInfo.Successful then
             begin
-              //Check file exists and Delete if requested
-              if FileExists(FileToCreate) then
+              if RemoveFileOnConvert then
               begin
-                DeleteFile(FileToConvert);
-                Log('Deleted:' + FileToConvert,STANDARD);
+                //Check file exists and Delete if requested
+                if FileExists(FileToCreate) then
+                begin
+                  DeleteFile(FileToConvert);
+                  Log('Deleted:' + FileToConvert,STANDARD);
+                end;
               end;
-            end;
 
 
 
-            UrlToCall := 'action=convert&type='+ FOutputFileFormatString + '&outputfilename=' + URLEncode(FileToCreate)+ '&inputfilename=' + URLEncode(InputFile);
+          //  UrlToCall := 'action=convert&type='+ FOutputFileFormatString + '&outputfilename=' + URLEncode(FileToCreate)+ '&inputfilename=' + URLEncode(InputFile);
 
             //Make a call to webhook if it exists
-            CallWebHook(UrlToCall);
+          //  CallWebHook(UrlToCall);
 
-          log('Creating File: ' + FileToCreate,CHATTY);
+            AfterConversion(InputFile, FileToCreate);
 
+            log('Creating File: ' + FileToCreate,CHATTY);
+          end
+          else    //Conversion not successful
+          begin
+              OnConversionError(ConversionInfo.InputFile, ConversionInfo.OutputFile, ConversionInfo.Error);
+          end;
         except
           on E: EOleSysError do
           begin
@@ -420,7 +438,7 @@ begin
             begin
 
 
-              HaltWithError(221,'Word Does not appear to be installed:' +E.ClassName + '  ' + ErrorMessage);
+              HaltWithError(221,'Word Does not appear to be installed:' + E.ClassName + '  ' + ErrorMessage);
             end
             else
             begin
@@ -741,12 +759,12 @@ begin
 
     end
     else if (id = '-X') or
-            (id = '--halterror') then
+            (id = '--HALTERROR') then
     begin
       HaltOnWordError := not(lowercase(value) = 'false');
     end
     //Long form only
-    else if (id = '--skipdocswithtoc') then
+    else if (id = '--SKIPDOCSWITHTOC') then
     begin
       fSkipDocsWithTOC := true;
     end
@@ -875,6 +893,17 @@ begin
   NewFileName := IncludeTrailingBackslash(NewBase) + BaseLessFN;
   NewFileName := ChangeFileExt(NewFileName , NewExt);
   Result := NewFileName;
+end;
+
+function TDocumentConverter.OnConversionError(InputFile, OutputFile, Error: String):string;
+var url_end : string;
+begin
+
+  url_end :=  'action=error&type='+ FOutputFileFormatString + '&outputfilename=' + URLEncode(OutputFile)
+                                  + '&inputfilename=' + URLEncode(InputFile)
+                                    + '&error=' + Error;
+  CallWebHook(url_end);
+
 end;
 
 procedure TDocumentConverter.SetCompatibilityMode(const Value: Integer);
@@ -1113,6 +1142,17 @@ begin
     raise Exception.Create('Unable to initialize Wininet');
 end;
 
+
+function TDocumentConverter.AfterConversion(InputFile, OutputFile: String):string;
+var UrlToCall : String;
+begin
+  UrlToCall := 'action=convert&type='+ FOutputFileFormatString + '&outputfilename='
+                + URLEncode(OutputFile)+ '&inputfilename='
+                + URLEncode(InputFile);
+
+  //Make a call to webhook if it exists
+  Result := CallWebHook(UrlToCall);
+end;
 
 function TDocumentConverter.AllowDirectory(DirName, FullPath: String): Boolean;
 begin

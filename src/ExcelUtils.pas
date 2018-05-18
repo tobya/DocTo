@@ -27,7 +27,7 @@ public
     constructor Create() ;
     function CreateOfficeApp() : boolean;  override;
     function DestroyOfficeApp() : boolean; override;
-    function ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): string; override;
+    function ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): TConversionInfo; override;
     function AvailableFormats() : TStringList; override;
     function FormatsExtensions(): TStringList; override;
     function OfficeAppVersion() : String; override;
@@ -78,7 +78,7 @@ begin
   Result := true;
 end;
 
-function TExcelXLSConverter.ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): string;
+function TExcelXLSConverter.ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): TConversionInfo;
 begin
             //Open doc and save in requested format.
 
