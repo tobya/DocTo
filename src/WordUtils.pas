@@ -1,14 +1,14 @@
 unit WordUtils;
 (*************************************************************
-Copyright © 2012 Toby Allen (http://github.com/tobya)
+Copyright ¬© 2012 Toby Allen (http://github.com/tobya)
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the ìSoftwareî), to deal in the Software without restriction,
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the ‚ÄúSoftware‚Äù), to deal in the Software without restriction,
 including without limitation the rights to use, copy, modify, merge, publish, distribute, sub-license, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
 subject to the following conditions:
 
 The above copyright notice, and every other copyright notice found in this software, and all the attributions in every file, and this permission notice shall be included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED ìAS ISî, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
+THE SOFTWARE IS PROVIDED ‚ÄúAS IS‚Äù, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ****************************************************************)
@@ -32,6 +32,10 @@ public
 End;
 
 
+const
+wdDoNotSaveChanges =	0; //	Do not save pending changes.
+wdSaveChanges =	-1;//	Save pending changes automatically without prompting the user.
+wdPromptToSaveChanges	= -2;	//Prompt the user to save pending changes.
 
 
 
@@ -127,7 +131,8 @@ begin
 
         // Check if document has password as per
         // http://wordmvp.com/FAQs/MacrosVBA/CheckIfPWProtectB4Open.htm
-        // Always open with password, if non ignored, if one catch error.
+        // Always open with password, if none it will be ignored,
+        // if the file has a password set then we can catch error.
         NonsensePassword := 'tfm554!ghAGWRDD';
 
         try
@@ -139,17 +144,18 @@ begin
                                 NonsensePassword    // PasswordDocument,
                                     // PasswordTemplate,
                                     // Revert,
-                                    // WritePasswordDocument,
-                                    // WritePasswordTemplate,
+                                   // WritePasswordDocument,
+                                   // WritePasswordTemplate,
                                     // Format,
-                                    // Encoding,
-                                    // Visible,
+                                   // Encoding,
+                                   // Visible,
                                     // OpenAndRepair,
                                     // DocumentDirection,
                                     // NoEncodingDialog,
-                                    // XMLTransform
+                                    // XMLTransform     *)
 
                                 );
+
           // For some reason if the document contains a TableofContents, it hangs Word.  In older
           // versions it popped up a dialog.  Until someone can find a work around, the docs will be skipped.
           // Issue  #40  - experimental as it gets some false positives.
@@ -208,7 +214,7 @@ begin
       begin
         Result.Successful := false;
         Result.OutputFile := '';
-        WordApp.activeDocument.Close();
+        WordApp.activeDocument.Close(wdDoNotSaveChanges);
       end;
       aSave:
       begin
@@ -263,8 +269,8 @@ begin
             Result.Error := '';
             log('FileCreated: ' + OutputFilename, STANDARD);
         finally
-
-                Wordapp.activedocument.Close;
+                // Close the document - do not save changes if doc has changed in any way.
+                Wordapp.activedocument.Close(wdDoNotSaveChanges);
         end;
     end;
     end;
