@@ -24,7 +24,7 @@ Const
   ERRORS = 1;
   SILENT = 0;
 
-  DOCTO_VERSION = '0.8.13';
+  DOCTO_VERSION = '0.8.15';
 
 type
 

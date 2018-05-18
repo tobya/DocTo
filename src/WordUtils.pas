@@ -33,9 +33,11 @@ End;
 
 
 const
-wdDoNotSaveChanges =	0; //	Do not save pending changes.
-wdSaveChanges =	-1;//	Save pending changes automatically without prompting the user.
-wdPromptToSaveChanges	= -2;	//Prompt the user to save pending changes.
+
+wdDoNotSaveChanges    =	 0; //	Do not save pending changes.
+wdSaveChanges         =	-1; //	Save pending changes automatically without prompting the user.
+wdPromptToSaveChanges	= -2;	//  Prompt the user to save pending changes.
+
 
 
 
