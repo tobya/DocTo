@@ -32,6 +32,10 @@ public
 End;
 
 
+const
+wdDoNotSaveChanges =	0; //	Do not save pending changes.
+wdSaveChanges =	-1;//	Save pending changes automatically without prompting the user.
+wdPromptToSaveChanges	= -2;	//Prompt the user to save pending changes.
 
 
 
@@ -127,7 +131,8 @@ begin
 
         // Check if document has password as per
         // http://wordmvp.com/FAQs/MacrosVBA/CheckIfPWProtectB4Open.htm
-        // Always open with password, if non ignored, if one catch error.
+        // Always open with password, if none it will be ignored,
+        // if the file has a password set then we can catch error.
         NonsensePassword := 'tfm554!ghAGWRDD';
 
         try
@@ -139,17 +144,18 @@ begin
                                 NonsensePassword    // PasswordDocument,
                                     // PasswordTemplate,
                                     // Revert,
-                                    // WritePasswordDocument,
-                                    // WritePasswordTemplate,
+                                   // WritePasswordDocument,
+                                   // WritePasswordTemplate,
                                     // Format,
-                                    // Encoding,
-                                    // Visible,
+                                   // Encoding,
+                                   // Visible,
                                     // OpenAndRepair,
                                     // DocumentDirection,
                                     // NoEncodingDialog,
-                                    // XMLTransform
+                                    // XMLTransform     *)
 
                                 );
+
           // For some reason if the document contains a TableofContents, it hangs Word.  In older
           // versions it popped up a dialog.  Until someone can find a work around, the docs will be skipped.
           // Issue  #40  - experimental as it gets some false positives.
@@ -208,7 +214,7 @@ begin
       begin
         Result.Successful := false;
         Result.OutputFile := '';
-        WordApp.activeDocument.Close();
+        WordApp.activeDocument.Close(wdDoNotSaveChanges);
       end;
       aSave:
       begin
@@ -263,8 +269,8 @@ begin
             Result.Error := '';
             log('FileCreated: ' + OutputFilename, STANDARD);
         finally
-
-                Wordapp.activedocument.Close;
+                // Close the document - do not save changes if doc has changed in any way.
+                Wordapp.activedocument.Close(wdDoNotSaveChanges);
         end;
     end;
     end;
