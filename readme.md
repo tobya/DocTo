@@ -23,7 +23,8 @@ Excel version available - [Details here](xlsTo.md)
   1. Single File Conversion
   1. Multiple / Directory File Conversion
   1. Delete after conversion
-  1. Fire Webhook one each conversion.
+  1. Fire Webhook on each conversion.
+
   
 ## Bugs and Features
 
