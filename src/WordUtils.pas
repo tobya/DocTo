@@ -25,7 +25,7 @@ public
     Constructor Create();
     function CreateOfficeApp() : boolean;  override;
     function DestroyOfficeApp() : boolean; override;
-    function ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): string; override;
+    function ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): TConversionInfo; override;
     function AvailableFormats() : TStringList; override;
     function FormatsExtensions(): TStringList; override;
     function OfficeAppVersion() : String; override;
@@ -111,7 +111,7 @@ begin
   Result := true;
 end;
 
-function TWordDocConverter.ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): string;
+function TWordDocConverter.ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): TConversionInfo;
 Type
   TWordExitAction = (aSave,aClose, aExit);
 var
@@ -121,6 +121,8 @@ var
 
 begin
         WordExitAction := aSave;
+        Result.Successful := false;
+        Result.InputFile := fileToConvert;
         log('ExecuteConversion:' + fileToConvert, Verbose);
 
         // Check if document has password as per
@@ -156,6 +158,7 @@ begin
             if Wordapp.ActiveDocument.TablesOfContents.count > 0 then
             begin
              log('SKIPPED - Document has TOC: ' + fileToConvert , STANDARD);
+             Result.Error := 'SKIPPED - Document has TOC:';
               WordExitAction := aClose;
             end;
           end;
@@ -167,12 +170,16 @@ begin
           if ContainsStr(E.Message, 'The password is incorrect' ) then
           begin
              log('SKIPPED - Password Protected:' + fileToConvert, STANDARD);
+             Result.Error := 'SKIPPED - Password Protected:';
              WordExitAction := aExit;
           end
           else
           begin
             // fallback error log
             logerror(ConvertErrorText(E.ClassName) + ' ' + ConvertErrorText(E.Message));
+            Result.Successful := false;
+            Result.OutputFile := '';
+            Result.Error := E.Message;
             Exit();
           end;
         end;
@@ -193,10 +200,14 @@ begin
       aExit :
       begin
         // document wasnt opened, so jus exit function.
+        Result.Successful := false;
+        Result.OutputFile := '';
         Exit();
       end;
       aClose:
       begin
+        Result.Successful := false;
+        Result.OutputFile := '';
         WordApp.activeDocument.Close();
       end;
       aSave:
@@ -247,6 +258,9 @@ begin
                                             CompatibilityMode  //CompatibilityMode
                                             );
             end;
+            Result.Successful := true;
+            Result.OutputFile := OutputFilename;
+            Result.Error := '';
             log('FileCreated: ' + OutputFilename, STANDARD);
         finally
 

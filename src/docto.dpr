@@ -58,7 +58,8 @@ begin
     end;
    except on E: Exception do
     begin
-         Writeln('Exiting with Error 400: ' + E.ClassName + ' ' + E.Message);
+         Writeln('Exiting with Error 400: ' + E.ClassName );
+         Writeln(E.Message);
          halt(400);
     end;
 
