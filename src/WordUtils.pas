@@ -214,8 +214,6 @@ begin
       end;
       aClose:
       begin
-        Result.Successful := false;
-        Result.OutputFile := '';
         WordApp.activeDocument.Close(wdDoNotSaveChanges);
       end;
       aSave:

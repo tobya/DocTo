@@ -63,4 +63,7 @@ REM Check that works with -o before -f
 REM Check Unicode to txt conversion. issue #32
 "../exe/docto.exe"  -f "%~d0%~p0Inputfiles\UnicodeTest.doc"  -o "%~d0%~p0GeneratedFiles\UnicodeTest.txt"    -T  wdFormatEncodedText -E 65001 
 
+REM Check Logging
+"../exe/docto.exe"    -o "%~d0%~p0GeneratedFiles\Pie3.pdf"    -T  wdFormatPDF -f "%~d0%~p0Inputfiles\pie3.doc"  -G -L 10
+"../exe/docto.exe"    -o "%~d0%~p0GeneratedFiles\Pie3.pdf"    -T  wdFormatPDF -f "%~d0%~p0Inputfiles\pie3.doc"  -GL outputlog.log -L 10
 
