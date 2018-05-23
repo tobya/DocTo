@@ -14,7 +14,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 ****************************************************************)
 interface
 uses classes, Windows, sysutils, ActiveX, ComObj, WinINet, Variants,  Types,  ResourceUtils,
-     PathUtils;
+     PathUtils, ShellAPI;
 
 Const
   VERBOSE = 10;
@@ -24,7 +24,7 @@ Const
   ERRORS = 1;
   SILENT = 0;
 
-  DOCTO_VERSION = '0.8.15';
+  DOCTO_VERSION = '0.8.16';
 
 type
 
@@ -45,11 +45,13 @@ type
   TDocumentConverter = class
   private
     FIgnore_MACOSX: boolean;
+    FFirstLogEntry: boolean;
 
     procedure SetCompatibilityMode(const Value: Integer);
     procedure SetIgnore_MACOSX(const Value: boolean);
     procedure SetEncoding(const Value: Integer);
     procedure SetSkipDocsWithTOC(const Value: Boolean);
+
   protected
     Formats : TStringlist;
     fFormatsExtensions : TStringlist;
@@ -99,6 +101,7 @@ type
     function NewFileNameFromBase(OldBase, NewBase, FileName, NewExt: String): String;
     procedure SetOutputExt(const Value: string);
     function GetUrl(Url: string): String;
+
     function URLEncode(Param : String): String;
     procedure SetHaltOnWordError(const Value: Boolean);
     procedure SetRemoveFileOnConvert(const Value: boolean);
@@ -302,6 +305,7 @@ begin
   FEncoding := -1;
   FIgnore_MACOSX := true;
   fSkipDocsWithTOC := false;
+  FFirstLogEntry := true;
 
   FInputFiles := TStringList.Create;
 end;
@@ -752,6 +756,10 @@ begin
     end
     else if (id = '-V') then
     begin
+      // Prevent Date from Printing.
+      FFirstLogEntry := false;
+
+      // Log versions.
       log('DocTo Version:' + DOCTO_VERSION);
       log('OfficeApp Version:' +  OfficeAppVersion(),0);
       log('Source: https://github.com/tobya/DocTo/');
@@ -842,8 +850,17 @@ procedure TDocumentConverter.Log(Msg: String; Level : Integer = ERRORS );
 begin
 
 
+
   if Level <= FLogLevel then
   begin
+
+    if FFirstLogEntry then
+    begin
+      FFirstLogEntry := false;
+      Msg := '[' + FormatDateTime('YYYYMMDD HH:NN:SS -' , now) +  ']: '  +  Msg;
+    end;
+
+
     if OutputLog = true then
     begin
       ConsoleLog.Log(self, Msg);
@@ -858,7 +875,6 @@ end;
 
 procedure TDocumentConverter.Log(Msg: String; List:  TStrings; Level: Integer);
 begin
-
   log(Msg, Level);
   log(  List.Text, Level);
 
@@ -1141,6 +1157,8 @@ begin
   else
     raise Exception.Create('Unable to initialize Wininet');
 end;
+
+
 
 
 function TDocumentConverter.AfterConversion(InputFile, OutputFile: String):string;

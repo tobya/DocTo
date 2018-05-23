@@ -6,4 +6,22 @@
     <Transaction>2016/05/07 18:18:35.000.138,=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
     <Transaction>2016/05/07 18:18:48.000.672,D:\Development\GitHub\DocTo\src\res\wdEncoding.txt=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
   </Transactions>
+	<ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="..\..\DocTo"/>
+    <File Path="..\readme.md"/>
+    <File Path="res"/>
+    <File Path="res\HelpErrors.txt"/>
+    <File Path="res\HelpJSONLog.txt"/>
+    <File Path="res\HelpLog.txt"/>
+    <File Path="res\HelpWebHook.txt"/>
+    <File Path="res\WdCompatibilityMode.txt"/>
+    <File Path="res\wdEncoding.txt"/>
+    <File Path="res\wdFormats.txt"/>
+    <File Path="res\wdFormatsExt.txt"/>
+    <File Path="MainUtils.pas"/>
+    <File Path="PathUtils.pas"/>
+    <File Path="ResourceUtils.pas"/>
+    <File Path="wdFormats.rc"/>
+    <File Path="WordUtils.pas"/>
+  </ProjectSortOrder>
 </BorlandProject>
