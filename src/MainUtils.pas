@@ -14,7 +14,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 ****************************************************************)
 interface
 uses classes, Windows, sysutils, ActiveX, ComObj, WinINet, Variants,  Types,  ResourceUtils,
-     PathUtils, ShellAPI;
+     PathUtils, ShellAPI, datamodssl;
 
 Const
   VERBOSE = 10;
@@ -101,7 +101,7 @@ type
     function NewFileNameFromBase(OldBase, NewBase, FileName, NewExt: String): String;
     procedure SetOutputExt(const Value: string);
     function GetUrl(Url: string): String;
-
+    function GetSSLUrl(Url: string): String;
     function URLEncode(Param : String): String;
     procedure SetHaltOnWordError(const Value: Boolean);
     procedure SetRemoveFileOnConvert(const Value: boolean);
@@ -937,6 +937,8 @@ begin
   Result := fInputExtension;
 end;
 
+
+
 procedure TDocumentConverter.SetEncoding(const Value: Integer);
 begin
   FEncoding := Value;
@@ -1159,6 +1161,10 @@ begin
 end;
 
 
+function TDocumentConverter.GetSSLUrl(Url: string): String;
+begin
+  Result :=  dmssl.IdHTTP1.Get(Url);
+end;
 
 
 function TDocumentConverter.AfterConversion(InputFile, OutputFile: String):string;
