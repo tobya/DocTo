@@ -1,4 +1,4 @@
-# DocTo
+# DocTo & XLSTo
 
 Simple utility for converting a Microsoft Word Document '.doc' file to any other supported format 
 such as .txt .rtf .pdf.  
@@ -14,7 +14,16 @@ Further Information available at http://tobya.github.com/DocTo
 
 XLSTo
 =====
-Excel version available - [Details here](xlsTo.md)
+
+Simple utility for converting an Excel Spreadsheet '.xls' file to any other supported file format such as .txt .csv .pdf etc.
+
+Can also be used to convert .csv, .txt to .xls .
+
+Can be used to convert older excel documents to latest format.
+
+Must have Microsoft Excel installed on host machine.
+
+Further information available [here](xlsTo.md)
 
 
 ## Features
