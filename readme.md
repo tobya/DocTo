@@ -1,5 +1,8 @@
 # DocTo & XLSTo
 
+DocTo
+====
+
 Simple utility for converting a Microsoft Word Document '.doc' file to any other supported format 
 such as .txt .rtf .pdf.  
 
