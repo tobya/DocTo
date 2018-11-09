@@ -24,7 +24,7 @@ Const
   ERRORS = 1;
   SILENT = 0;
 
-  DOCTO_VERSION = '0.8.16';
+  DOCTO_VERSION = '0.8.17';
 
 type
 
@@ -188,10 +188,11 @@ begin
   Writeln(Log);
 end;
 
-
+{TDocumentConverter}
 
 function TDocumentConverter.CallWebHook(Params: String):string;
 var url : string;
+URLResponse : String;
 QuestionMarkIndex : Integer;
 begin
 
@@ -213,9 +214,10 @@ begin
     end;
 
 
-    GetURL(url);
+    URLResponse :=  GetURL(url);
 
     log('Webhook Called:' + url, CHATTY);
+    log('Webhook Response:' + URLResponse, CHATTY);
   end;
   except on E: Exception do
   begin
@@ -910,7 +912,10 @@ procedure TDocumentConverter.HaltWithConfigError(ErrorNo: Integer; Msg: String);
 begin
 
   Log('*******************************************', ERRORS);
-  Log('Config Error: ' + Msg, ERRORS);
+  Log('CONFIG ERROR: ' + Msg, ERRORS);
+  Log('*******************************************', ERRORS);
+  LOG('Please check help -h for further information.');
+  LOG('halting without any conversions....');
   halt(200);
 end;
 
