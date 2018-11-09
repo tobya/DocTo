@@ -47,7 +47,7 @@ Parameters markers are case insensitive. Short and Long can be used mixed.
   -Q  Quiet Mode: Nothing will be output to console.  To see any errors you must 
       set -G or -GL. Equivalent to setting -L 0
       --quiet
-  -R  Remove Files after successful conversion: Default false;
+  -R  Remove Files after successful conversion: Default false; To use specifiy value eg -R true
       --deletefiles
   -W  Webhook: Url to call on events. See -HW for more details.
       --webhook

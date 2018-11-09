@@ -71,14 +71,13 @@
         <DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_3_Win32)'!=''">
-        <Debugger_HostApplication>cmd</Debugger_HostApplication>
+        <Debugger_HostApplication>D:\Development\GitHub\DocTo\test\testremove.bat</Debugger_HostApplication>
         <VerInfo_Build>27</VerInfo_Build>
         <VerInfo_PreRelease>false</VerInfo_PreRelease>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <VerInfo_AutoGenVersion>false</VerInfo_AutoGenVersion>
         <VerInfo_Release>14</VerInfo_Release>
         <Icon_MainIcon>d2icon_QhU_icon.ico</Icon_MainIcon>
-        <Debugger_RunParams>-f ..\test\inputfiles -o d:\tesmp\nodir -t 16 --writelogfile -L 10 -G</Debugger_RunParams>
         <VerInfo_MinorVer>8</VerInfo_MinorVer>
         <VerInfo_Keys>CompanyName=Toflidium Software;FileDescription=DocTo - Convert doc files to any available format;FileVersion=0.8.14.27;InternalName=;LegalCopyright=Toby Allen;LegalTrademarks=;OriginalFilename=docto.exe;ProductName=DocTo;ProductVersion=0.8.0.0;Comments=https://github.com/tobya/DocTo</VerInfo_Keys>
         <DCC_ExeOutput>..\exe</DCC_ExeOutput>
@@ -176,17 +175,17 @@
                 <Platform value="Win64">False</Platform>
             </Platforms>
             <Deployment>
-                <DeployFile LocalName="..\exe\docto.rsm" Configuration="TobyBuild" Class="DebugSymbols">
-                    <Platform Name="Win32">
-                        <RemoteName>docto.rsm</RemoteName>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\osx32\libcgunwind.1.0.dylib" Class="DependencyModule">
                     <Platform Name="OSX32"/>
                     <Platform Name="iOSSimulator"/>
                 </DeployFile>
                 <DeployFile LocalName="..\exe\docto.exe" Configuration="TobyBuild" Class="ProjectOutput">
                     <Platform Name="Win32"/>
+                </DeployFile>
+                <DeployFile LocalName="..\exe\docto.rsm" Configuration="TobyBuild" Class="DebugSymbols">
+                    <Platform Name="Win32">
+                        <RemoteName>docto.rsm</RemoteName>
+                    </Platform>
                 </DeployFile>
                 <DeployClass Required="true" Name="DependencyPackage">
                     <Platform Name="iOSDevice">

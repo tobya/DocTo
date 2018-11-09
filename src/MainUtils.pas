@@ -51,6 +51,7 @@ type
     procedure SetIgnore_MACOSX(const Value: boolean);
     procedure SetEncoding(const Value: Integer);
     procedure SetSkipDocsWithTOC(const Value: Boolean);
+    procedure HaltWithConfigError(ErrorNo: Integer; Msg: String);
 
   protected
     Formats : TStringlist;
@@ -91,6 +92,7 @@ type
     procedure SetOutputLog(const Value: Boolean);
     procedure SetOutputLogFile(const Value: String);
     function IsValidFormat(FormatID : Integer): Boolean;
+
     procedure HaltWithError(ErrorNo:Integer; Msg : String);
     procedure SetLogToFile(const Value: Boolean);
     procedure SetLogFilename(const Value: String);
@@ -506,6 +508,8 @@ begin
   Halt(ErrorNo);
 end;
 
+
+
 function TDocumentConverter.IsValidFormat(FormatID: Integer): Boolean;
 var
   i : integer;
@@ -527,6 +531,7 @@ pstr : string;
 id, value, tmppath : string;
 HelpStrings : TStringList;
 tmpext : String;
+valueBool : Boolean;
 
 begin
   //Initialise
@@ -694,8 +699,7 @@ begin
         //If not forcing, and the format is invalid by list, then raise error.
         if (not (id = '-TF')) and ( not IsValidFormat(FOutputFileFormat)) then
         begin
-          LogError('File Format ' + value + ' is invalid, please see help. -h.  To force use, use -TF');
-          halt(200);
+          HaltWithConfigError(200, 'File Format ' + value + ' is invalid, please see help. -h.  To force use, use -TF');
         end;
       end
       else
@@ -710,8 +714,8 @@ begin
         end
         else if idx = -1 then
         begin
-          Log('File Format ' + OutputFileFormatString + ' is invalid, please see help. -h');
-          halt(200);
+          HaltWithConfigError(200,'File Format ' + OutputFileFormatString + ' is invalid, please see help. -h');
+
         end;
       end;
       log('Type Integer is: ' + inttostr(FOutputFileFormat), VERBOSE);
@@ -745,9 +749,23 @@ begin
       Ignore_MACOSX := StrToBool( value);
     end
     else if (id = '-R')
-          or (id = '--DELETEFILES') then
+         or (id = '--DELETEFILES') then
     begin
-      RemoveFileOnConvert  := lowercase(value) = 'true';
+
+
+      if TryStrToBool(value, valueBool)  then
+      begin
+        RemoveFileOnConvert  := valueBool;
+      end
+      else
+      begin
+          HaltWithConfigError(200,'If -R is used it must be followed by a boolean value such as true or false');
+
+      end;
+
+
+
+
     end
     else if (id = '-W') or
             (id = '--WEBHOOK') then
@@ -814,7 +832,7 @@ begin
     end
     else
     begin
-      HaltWithError(203,'Unknown Switch:' + pstr);
+      HaltWithConfigError(203,'Unknown Switch:' + pstr);
     end;
 
 
@@ -844,6 +862,7 @@ begin
 
 
 end;
+
 
 
 procedure TDocumentConverter.Log(Msg: String; Level : Integer = ERRORS );
@@ -885,6 +904,14 @@ begin
 
   Log('*******************************************', ERRORS);
   Log('Error: ' + Msg, ERRORS);
+end;
+
+procedure TDocumentConverter.HaltWithConfigError(ErrorNo: Integer; Msg: String);
+begin
+
+  Log('*******************************************', ERRORS);
+  Log('Config Error: ' + Msg, ERRORS);
+  halt(200);
 end;
 
 procedure TDocumentConverter.LogHelp(HelpResName: String);
