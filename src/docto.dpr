@@ -24,7 +24,8 @@ uses
   WordUtils in 'WordUtils.pas',
   MainUtils in 'MainUtils.pas',
   ResourceUtils in 'ResourceUtils.pas',
-  PathUtils in 'PathUtils.pas';
+  PathUtils in 'PathUtils.pas',
+  datamodSSL in 'datamodSSL.pas' {dmSSL: TDataModule};
 
 var
   i : integer;

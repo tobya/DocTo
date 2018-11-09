@@ -40,17 +40,20 @@ REM Try on Single no output file with Verbose Logging
 
 
 
-REM Should produce an error
+REM Should produce an error incorrect format.
 "../exe/docto.exe"  -f "%~d0%~p0Inputfiles\pie3.doc"  -o "%~d0%~p0GeneratedFiles\Pie3.pdf"    -T  wdFormatTestPDF
 
-REM Should produce an error
+REM Should produce an error - input file does not exist
 "../exe/docto.exe"  -f "%~d0%~p0Inputfiles\pie3_doesntexist.doc"  -o "%~d0%~p0GeneratedFiles\Pie3.pdf"    -T  wdFormatPDF
 
-REM Test Webhook
+REM Test http Webhook
 REM ---------------------------------
-REM To view visit http://toflidium.com/webhooks/docto/docto_test_values.txt
+REM To view visit https://toflidium.com/webhooks/docto/docto_test_values.txt
 REM ---------------------------------
 "../exe/docto.exe"  -f "%~d0%~p0Inputfiles\pie3.doc"  -o "%~d0%~p0GeneratedFiles\Pie3.pdf"    -T  wdFormatPDF -W http://toflidium.com/webhooks/docto/webhook_test.php
+REM Check https webhook.
+
+"../exe/docto.exe"  -f "%~d0%~p0Inputfiles\pie3.doc"  -o "%~d0%~p0GeneratedFiles\Pie3.pdf"    -T  wdFormatPDF -W https://toflidium.com/webhooks/docto/webhook_test.php
 
 
 REM If output Dir left out default to input
