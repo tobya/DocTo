@@ -13,7 +13,7 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMA
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ****************************************************************)
 interface
-uses classes, Windows, sysutils, ActiveX, ComObj, WinINet, Variants,  Types,  ResourceUtils,
+uses classes, Windows, sysutils, ActiveX, ComObj, WinINet, Variants,  Types,  ResourceUtils,    strutils,
      PathUtils, ShellAPI, datamodssl;
 
 Const
@@ -567,7 +567,19 @@ begin
     if ParamCount -1  > iParam then
     begin
       try
+
         value := Trim(Params[iParam +1]);
+        //Check if next item is a param or value.
+        if value[1] = '-' then
+        begin
+            value := '';
+            inc(iParam);
+        end else
+        begin
+            //jump to next id + value
+            inc(iParam,2);
+        end;
+
       except on E: Exception do
         HaltWithError(202,E.message);
       end;
@@ -577,8 +589,7 @@ begin
       value := '';
     end;
 
-    //jump to next id + value
-    inc(iParam,2);
+
 
 
     if (id = '-O') or
@@ -761,7 +772,7 @@ begin
       end
       else
       begin
-          HaltWithConfigError(200,'If -R is used it must be followed by a boolean value such as true or false');
+          HaltWithConfigError(200,'If -R is used it must be followed by true or false');
 
       end;
 
