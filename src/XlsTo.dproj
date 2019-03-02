@@ -81,7 +81,7 @@
         <Manifest_File>None</Manifest_File>
         <VerInfo_Keys>CompanyName=Toflidium Software;FileDescription=XLSTo XL to csv,pdf,etc;FileVersion=0.8.15.7;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=http://github.com/tobya/docto</VerInfo_Keys>
         <VerInfo_MinorVer>8</VerInfo_MinorVer>
-        <Debugger_RunParams>-L 10 -f &quot;D:\Development\GitHub\DocTo\test\Inputfiles\Week 1 Test.xls&quot;  -o &quot;D:\Development\GitHub\DocTo\test\GeneratedFiles\&quot;    -T  xlcsv -OX .csv</Debugger_RunParams>
+        <Debugger_RunParams>-L 10 -f &quot;D:\Development\GitHub\DocTo\test\Inputfiles\Week 1 Test.xls&quot;  -o &quot;D:\Development\GitHub\DocTo\test\GeneratedFiles\&quot;    -T  xlcsv -OX .csv -L 10 --ExcelProtect</Debugger_RunParams>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
@@ -102,7 +102,7 @@
         <DCCReference Include="ResourceUtils.pas"/>
         <DCCReference Include="PathUtils.pas"/>
         <None Include="res\xlsFormats.txt"/>
-        <None Include="..\test\testxlsrun.bat"/>
+        <None Include="..\test\testxlsrun_protect.bat"/>
         <None Include="xlsFormatsExt.txt"/>
         <None Include="res\xlsFormatsExt.txt"/>
         <BuildConfiguration Include="Release">

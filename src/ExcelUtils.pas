@@ -89,6 +89,12 @@ begin
             log(OutputFilename, verbose);
             ExcelApp.Workbooks.Open( FileToConvert);
 
+            if ProtectExcelSheet then
+            begin
+              log('Protecting Workbook', VERBOSE);
+              ExcelApp.ActiveWorkbook.Protect(EmptyParam, EmptyParam, EmptyParam);
+            end;
+
             //PDF and XPS are not an actual standard xls output format so we created our own.
             if OutputFileFormat = 50000 then //pdf
             begin

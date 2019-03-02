@@ -62,6 +62,8 @@ Extra Parameters
   --skipdocswithtoc
       EXPERIMENTAL.  Will skip any docs that contain a TOC to prevent hanging.
       Currently matches some false positives.  Default False.
+  --excelprotect
+      Protect a Workbook
 
 ERROR CODES:
 200 : Invalid File Format specified

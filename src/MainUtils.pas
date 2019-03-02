@@ -52,6 +52,9 @@ type
     procedure SetEncoding(const Value: Integer);
     procedure SetSkipDocsWithTOC(const Value: Boolean);
     procedure HaltWithConfigError(ErrorNo: Integer; Msg: String);
+    procedure SetProtectExcelSheet(const Value: boolean);
+    procedure SetProtectExcelSheetPassword(const Value: string);
+
 
   protected
     Formats : TStringlist;
@@ -79,8 +82,12 @@ type
     FCompatibilityMode: Integer;
     FEncoding : Integer;
 
+    fProtectExcelSheet : boolean;
+    fProtectExcelSheetPassword: string;
+
     FHaltOnWordError: Boolean;
     FRemoveFileOnConvert: boolean;
+
 
 
     FIsFileOutput: Boolean;
@@ -120,6 +127,8 @@ type
     property RemoveFileOnConvert: boolean read FRemoveFileOnConvert write SetRemoveFileOnConvert;
     property Ignore_MACOSX : boolean   read FIgnore_MACOSX write SetIgnore_MACOSX;
 
+    property     ProtectExcelSheet : boolean read fProtectExcelSheet write SetProtectExcelSheet;
+    property ProtectExcelSheetPassword: string read fProtectExcelSheetPassword write SetProtectExcelSheetPassword;
 
     procedure SetExtension(const Value: String); virtual;
     function GetExtension: String;  virtual;
@@ -310,6 +319,7 @@ begin
   FIgnore_MACOSX := true;
   fSkipDocsWithTOC := false;
   FFirstLogEntry := true;
+  FProtectExcelSheet := false;
 
   FInputFiles := TStringList.Create;
 end;
@@ -807,6 +817,11 @@ begin
     begin
       fSkipDocsWithTOC := true;
     end
+    else if (id = '--EXCELPROTECT' )then
+    BEGIN
+    log('Set Excel Protect', VERBOSE);
+     FProtectExcelSheet := true;
+    END
     //Help etc
     else if (id = '-H') or
             (id = '-?') or
@@ -1095,6 +1110,16 @@ end;
 procedure TDocumentConverter.SetOutputLogFile(const Value: String);
 begin
   FOutputLogFile := Value;
+end;
+
+procedure TDocumentConverter.SetProtectExcelSheet(const Value: boolean);
+begin
+  FProtectExcelSheet := Value;
+end;
+
+procedure TDocumentConverter.SetProtectExcelSheetPassword(const Value: string);
+begin
+  FProtectExcelSheetPassword := Value;
 end;
 
 procedure TDocumentConverter.SetRemoveFileOnConvert(const Value: boolean);
