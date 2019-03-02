@@ -350,7 +350,7 @@ begin
 
     if not Continue  then HaltWithError(201, 'Input File, Output File and FileFormat must all be specified');
 
-    //Set Output Filename if Dir Provided.
+    // Set Output Filename if Dir Provided.
     if (IsFileInput and IsDirOutput) then
     begin
       if OutputExt = '' then
@@ -362,7 +362,7 @@ begin
       OutputFile :=  OutputFile  + ChangeFileExt( ExtractFileName(InputFile),OutputExt);
     end;
 
-    //Add file to InputFiles List if only one.
+    // Add file to InputFiles List if only one.
     if FInputFiles.Count = 0 then
     begin
       FInputFiles.Add(FInputFile);
@@ -385,7 +385,7 @@ begin
 
         log('Current Directory: ' + GetCurrentDir,10);
 
-        //Ensure directory exists
+        // Ensure directory exists
         OutputFilePath := ExtractFilePath( FileToCreate);
         if (OutputFilePath = '') then
         begin
@@ -412,7 +412,7 @@ begin
             begin
               if RemoveFileOnConvert then
               begin
-                //Check file exists and Delete if requested
+                // Check file exists and Delete if requested
                 if FileExists(FileToCreate) then
                 begin
                   DeleteFile(FileToConvert);
@@ -424,14 +424,14 @@ begin
 
           //  UrlToCall := 'action=convert&type='+ FOutputFileFormatString + '&outputfilename=' + URLEncode(FileToCreate)+ '&inputfilename=' + URLEncode(InputFile);
 
-            //Make a call to webhook if it exists
+            // Make a call to webhook if it exists
           //  CallWebHook(UrlToCall);
 
             AfterConversion(InputFile, FileToCreate);
 
             log('Creating File: ' + FileToCreate,CHATTY);
           end
-          else    //Conversion not successful
+          else    // Conversion not successful
           begin
               OnConversionError(ConversionInfo.InputFile, ConversionInfo.OutputFile, ConversionInfo.Error);
           end;
@@ -505,7 +505,7 @@ procedure TDocumentConverter.HaltWithError(ErrorNo: Integer; Msg: String);
 begin
   LogError(Msg);
   LogError('Exiting with Error Code : ' + inttostr(ErrorNo));
-  //Ensure word is quit before halting.
+  // Ensure word is quit before halting.
   DestroyOfficeApp();
   Halt(ErrorNo);
 end;
@@ -536,7 +536,7 @@ tmpext : String;
 valueBool : Boolean;
 
 begin
-  //Initialise
+  // Initialise
   iParam := 0;
   Formats := AvailableFormats();
   fFormatsExtensions := FormatsExtensions();
@@ -577,7 +577,7 @@ begin
       value := '';
     end;
 
-    //jump to next id + value
+    // jump to next id + value
     inc(iParam,2);
 
 
@@ -631,7 +631,7 @@ begin
 
         tmppath := ExtractFilePath(FInputFile);
 
-        //If we are given a filename with no path, get currentdir and add to file.
+        // If we are given a filename with no path, get currentdir and add to file.
         if (tmppath = '') then
         begin
           tmppath := GetCurrentDir();
@@ -658,9 +658,9 @@ begin
       end;
 
 
-      //Set Output Directory to Input Directry at this stage. This ensure if no
-      //output directory  (-o) is specified, then it will default to same as
-      //input dir. If output has been supplied as param it will overwrite later.
+      // Set Output Directory to Input Directry at this stage. This ensure if no
+      // output directory  (-o) is specified, then it will default to same as
+      // input dir. If output has been supplied as param it will overwrite later.
       if FOutputFile = '' then
       begin
 
@@ -688,7 +688,7 @@ begin
     begin
 
       OutputLog := false;
-      //Doesn't require a value
+      // Doesn't require a value
       dec(iParam);
     end
     else if (id = '-T') or (id = '-TF') or
@@ -791,12 +791,12 @@ begin
     begin
       HaltOnWordError := not(lowercase(value) = 'false');
     end
-    //Long form only
+    // Long form only
     else if (id = '--SKIPDOCSWITHTOC') then
     begin
       fSkipDocsWithTOC := true;
     end
-    //Help etc
+    // Help etc
     else if (id = '-H') or
             (id = '-?') or
             (id = '?') then
@@ -842,11 +842,11 @@ begin
 
   end;
 
-  //Code to run when all parameters have been loaded.
-  //Get Files
+  // Code to run when all parameters have been loaded.
+  // Get Files
 
    // IsFileInput := true;
-    //If input is Dir rather than file, enumerate files.
+    // If input is Dir rather than file, enumerate files.
     if DirectoryExists(InputFile) then
     begin
        IsDirInput := true;
@@ -1036,7 +1036,7 @@ procedure TDocumentConverter.SetLogToFile(const Value: Boolean);
 begin
   FLogToFile := Value;
 
-  //Set up logfile.
+  // Set up logfile.
   if FLogtoFile then
   begin
     if not assigned(fLogFile) then
