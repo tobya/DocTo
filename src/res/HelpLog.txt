@@ -40,6 +40,9 @@ Parameters markers are case insensitive. Short and Long can be used mixed.
       --encoding
   -M  Ignore all files in __MACOSX\ subdirectory if it exists.  Default True.
       --ignoremacos
+  -N  Make list of files that take over n seconds to complete.  This list of files will be ingored on
+      subsequent runs.
+      --listlongrunning
   -G  Write Log to file in directory
       --writelogfile
   -GL Log File Name to Use. Default 'DocTo.Log';
