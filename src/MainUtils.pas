@@ -46,8 +46,10 @@ type
   private
     FIgnore_MACOSX: boolean;
     FFirstLogEntry: boolean;
-    FIgnore_ErrorDocs : boolean;
-    FIgnore_ErrorDocs_Seconds : Integer;
+    FList_ErrorDocs : boolean;
+    FList_ErrorDocs_Seconds : Integer;
+   FIgnore_ErrorDocs : boolean;
+
 
     procedure SetCompatibilityMode(const Value: Integer);
     procedure SetIgnore_MACOSX(const Value: boolean);
@@ -55,8 +57,9 @@ type
     procedure SetSkipDocsWithTOC(const Value: Boolean);
     procedure HaltWithConfigError(ErrorNo: Integer; Msg: String);
 
+    procedure SetList_ErrorDocs(const Value: Boolean);
+    procedure SetList_ErrorDocs_Seconds(const Value: Integer);
     procedure SetIgnore_ErrorDocs(const Value: Boolean);
-    procedure SetIgnore_ErrorDocs_Seconds(const Value: Integer);
   protected
     Formats : TStringlist;
     fFormatsExtensions : TStringlist;
@@ -85,6 +88,8 @@ type
 
     FHaltOnWordError: Boolean;
     FRemoveFileOnConvert: boolean;
+
+    FIgnoreErrorDocsFile : TStringList;
 
 
     FIsFileOutput: Boolean;
@@ -123,8 +128,9 @@ type
     property LogLevel : integer read FLogLevel write SetLogLevel;
     property RemoveFileOnConvert: boolean read FRemoveFileOnConvert write SetRemoveFileOnConvert;
     property Ignore_MACOSX : boolean   read FIgnore_MACOSX write SetIgnore_MACOSX;
-    property Ignore_ErrorDocs : Boolean read FIgnore_ErrorDocs write SetIgnore_ErrorDocs ;
-    property Ignore_ErrorDocs_Seconds : Integer read FIgnore_ErrorDocs_Seconds write SetIgnore_ErrorDocs_Seconds ;
+    property List_ErrorDocs : Boolean read FList_ErrorDocs write SetList_ErrorDocs ;
+    property List_ErrorDocs_Seconds : Integer read FList_ErrorDocs_Seconds write SetList_ErrorDocs_Seconds ;
+    property Ignore_ErrorDocs : Boolean read FIgnore_ErrorDocs write SetIgnore_ErrorDocs;
 
 
     procedure SetExtension(const Value: String); virtual;
@@ -246,18 +252,21 @@ var
   sl : TStringList;
   ignorecount : integer;
 const
-  ignorefilename = 'docto.ignore.txt';
+  ignorelistfilename = 'docto.ignore.txt';
 begin
-  if (Ignore_ErrorDocs) then
+  if (List_ErrorDocs) then
   begin
-    if ((EndTime - StartTime) /1000) > Ignore_ErrorDocs_Seconds then
+
+    // Check if the length of time taken to convert.
+    if ((EndTime - StartTime) /1000) > List_ErrorDocs_Seconds then
     begin
 
+      sl := TStringList.Create();
       try
-        sl := TStringList.Create();
-        if  FileExists(ignorefilename) then
+
+        if  FileExists(ignorelistfilename) then
         begin
-          sl.LoadFromFile(ignorefilename);
+          sl.LoadFromFile(ignorelistfilename);
         end else begin
           sl.Add('[Comments]');
           sl.Add('COMMENT1=THIS FILE RECORDS ANY WORD DOCUMETNS THAT TOOK LONGER THAN X SECONDS TO COMPLETE.');
@@ -267,7 +276,8 @@ begin
           SL.Add('[FILES TO IGNORE]');
           SL.Add('IGNORECOUNT=0');
         end;
-        log('Writing filename to Ignore List', CHATTY);
+
+        log('Writing filename to Ignore List: ' + DocumentPath , CHATTY);
 
         ignorecount := StrToInt(sl.Values['IGNORECOUNT']);
         INC(ignorecount);
@@ -290,34 +300,42 @@ end;
 *)
 function TDocumentConverter.CheckShouldIgnore(DocumentPath: String): Boolean;
 var
-  sl : TStringList;
+ // sl : TStringList;
   fn : string;
   ignorecount : integer;
   I: Integer;
 const
-  ignorefilename = 'docto.ignore.txt';
+  ignorelistfilename = 'docto.ignore.txt';
 begin
   Result := False;
   if (Ignore_ErrorDocs) then
   begin
 
-      try
-        sl := TStringList.Create();
-        if  FileExists(ignorefilename) then
+      //Create and Load on first call
+      if FIgnoreErrorDocsFile = nil then
+      begin
+
+        FIgnoreErrorDocsFile := TStringList.Create();
+
+        if  FileExists(ignorelistfilename) then
         begin
-          sl.LoadFromFile(ignorefilename);
+          FIgnoreErrorDocsFile.LoadFromFile(ignorelistfilename);
         end else begin
+          log('No docto.ignore.txt file found.', CHATTY);
           Result := false;
           exit;
         end;
+      end;
 
 
+      if FIgnoreErrorDocsFile.Count > 0 then
+      begin
         log('Checking Ignore List for filename:' + DocumentPath, VERBOSE);
-        ignorecount := StrToInt(sl.Values['IGNORECOUNT']);
+        ignorecount := StrToInt(FIgnoreErrorDocsFile.Values['IGNORECOUNT']);
 
         for I := 1 to ignorecount do
         BEGIN
-         fn := sl.Values['IGNOREFILE' + INTTOSTR(I)];
+         fn := FIgnoreErrorDocsFile.Values['IGNOREFILE' + INTTOSTR(I)];
          log('Check Against: ' + fn, VERBOSE);
          if fn = DocumentPath then
          begin
@@ -325,10 +343,9 @@ begin
            break;
          end;
         END;
-
-      finally
-        sl.free;
       end;
+
+
 
 
   end;
@@ -431,6 +448,12 @@ begin
     FLogFile.Free;
     FLogFile := nil;
   end;
+
+  if assigned(FIgnoreErrorDocsFile) then
+  begin
+    FIgnoreErrorDocsFile.Free;
+  end;
+
 
   FInputFiles.Free;
 end;
@@ -883,8 +906,14 @@ begin
     else if (id = '-N')  or
             (id = '--LISTLONGRUNNING') then
     begin
+      List_ErrorDocs := True;
+      List_ErrorDocs_Seconds := StrToInt(value);
+    end
+    else if (id = '-NX')  or
+            (id = '--IGNORELONGRUNNINGLIST') then
+    begin
       Ignore_ErrorDocs := True;
-      Ignore_ErrorDocs_Seconds := StrToInt(value);
+      dec(iParam);
     end
     else if (id = '-R')
          or (id = '--DELETEFILES') then
@@ -1119,19 +1148,24 @@ begin
   FHaltOnWordError := Value;
 end;
 
-procedure TDocumentConverter.SetIgnore_MACOSX(const Value: boolean);
-begin
-  FIgnore_MACOSX := Value;
-end;
-
 procedure TDocumentConverter.SetIgnore_ErrorDocs(const Value: Boolean);
 begin
   FIgnore_ErrorDocs := Value;
 end;
 
-procedure TDocumentConverter.SetIgnore_ErrorDocs_Seconds(const Value: Integer);
+procedure TDocumentConverter.SetIgnore_MACOSX(const Value: boolean);
 begin
-  FIgnore_ErrorDocs_Seconds := Value;
+  FIgnore_MACOSX := Value;
+end;
+
+procedure TDocumentConverter.SetList_ErrorDocs(const Value: Boolean);
+begin
+  FList_ErrorDocs := Value;
+end;
+
+procedure TDocumentConverter.SetList_ErrorDocs_Seconds(const Value: Integer);
+begin
+  FList_ErrorDocs_Seconds := Value;
 end;
 
 procedure TDocumentConverter.SetInputFile(const Value: String);

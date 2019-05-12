@@ -41,8 +41,11 @@ Parameters markers are case insensitive. Short and Long can be used mixed.
   -M  Ignore all files in __MACOSX\ subdirectory if it exists.  Default True.
       --ignoremacos
   -N  Make list of files that take over n seconds to complete.  This list of files will be ingored on
-      subsequent runs.
+      subsequent runs. Use number of seconds over that conversion takes and add to list.
+      filename=docto.ignore.txt
       --listlongrunning
+  -NX Ignore any file listed in docto.ignore.txt, created by -N
+      --ignorelongrunninglist
   -G  Write Log to file in directory
       --writelogfile
   -GL Log File Name to Use. Default 'DocTo.Log';
