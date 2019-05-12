@@ -237,6 +237,10 @@ begin
   end;
 end;
 
+
+// Check howlong a document took to convert.  If greater > X then record in ignorelist.
+// This can be used to find error documents as a modal window is displayed and execution does not
+// continue until MANUALLY clicked. Suggested value of -N 5 seconds.
 procedure TDocumentConverter.CheckDocumentTiming(StartTime, EndTime: cardinal; DocumentPath : String);
 var
   sl : TStringList;
@@ -257,18 +261,21 @@ begin
         end else begin
           sl.Add('[Comments]');
           sl.Add('COMMENT1=THIS FILE RECORDS ANY WORD DOCUMETNS THAT TOOK LONGER THAN X SECONDS TO COMPLETE.');
-        sl.Add('COMMENT2=THIS SHOULD OVER TIME ALLOW YOU TO TRACK DOWN ALL FILES CAUSING PROBLEMS');
-        SL.Add('COMMENT3=THESE FILES WILL BE IGNORED ON SUBSEQUENT RUNS AS LONG AS "-N" IS USED');
-        SL.Add('COMMENT4=----DO NOT DELETE THIS FILE-----------');
-        SL.Add('[FILES TO IGNORE]');
-        SL.Add('IGNORECOUNT=0');
+          sl.Add('COMMENT2=THIS SHOULD OVER TIME ALLOW YOU TO TRACK DOWN ALL FILES CAUSING PROBLEMS');
+          SL.Add('COMMENT3=THESE FILES WILL BE IGNORED ON SUBSEQUENT RUNS AS LONG AS "-N" IS USED');
+          SL.Add('COMMENT4=----DO NOT DELETE THIS FILE-----------');
+          SL.Add('[FILES TO IGNORE]');
+          SL.Add('IGNORECOUNT=0');
         end;
         log('Writing filename to Ignore List', CHATTY);
+
         ignorecount := StrToInt(sl.Values['IGNORECOUNT']);
         INC(ignorecount);
+
         sl.Add('IGNOREFILE' + INTTOSTR(ignorecount) + '=' + DocumentPath);
         sl.Values['IGNORECOUNT'] := INTTOSTR(ignorecount);
         sl.SaveToFile('docto.ignore.txt');
+
       finally
         sl.free;
       end;
@@ -277,6 +284,10 @@ begin
   end;
 end;
 
+
+(*
+  Check if document is to be ignored. Load ignore file and checklist.
+*)
 function TDocumentConverter.CheckShouldIgnore(DocumentPath: String): Boolean;
 var
   sl : TStringList;
@@ -783,7 +794,6 @@ begin
       // input dir. If output has been supplied as param it will overwrite later.
       if FOutputFile = '' then
       begin
-
         FOutputFile :=  IncludeTrailingBackslash(tmppath);
         IsDirOutput := true;
       end;
@@ -880,18 +890,15 @@ begin
          or (id = '--DELETEFILES') then
     begin
 
-
+      // -R value must be followed by true or false.
       if TryStrToBool(value, valueBool)  then
       begin
         RemoveFileOnConvert  := valueBool;
       end
       else
       begin
-          HaltWithConfigError(200,'If -R is used it must be followed by a boolean value such as true or false');
-
+          HaltWithConfigError(200,'If -R is used it must be followed by true or false');
       end;
-
-
 
 
     end
