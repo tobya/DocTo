@@ -40,9 +40,8 @@ Parameters markers are case insensitive. Short and Long can be used mixed.
       --encoding
   -M  Ignore all files in __MACOSX\ subdirectory if it exists.  Default True.
       --ignoremacos
-  -N  Make list of files that take over n seconds to complete.  This list of files will be ingored on
-      subsequent runs. Use number of seconds over that conversion takes and add to list.
-      filename=docto.ignore.txt
+  -N  Make list of files that take over n seconds to complete. Use number of seconds
+      over that conversion takes and add to list. filename='docto.ignore.txt'
       --listlongrunning
   -NX Ignore any file listed in docto.ignore.txt, created by -N
       --ignorelongrunninglist
@@ -68,6 +67,9 @@ Extra Parameters
   --skipdocswithtoc
       EXPERIMENTAL.  Will skip any docs that contain a TOC to prevent hanging.
       Currently matches some false positives.  Default False.
+  --donotoverwrite
+      Existing files are overridden by default, if you do not wish a file to be
+      skipped if its output exists, use this.
 
 ERROR CODES:
 200 : Invalid File Format specified
