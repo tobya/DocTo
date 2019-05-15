@@ -1,4 +1,4 @@
-unit WordUtils;
+﻿unit WordUtils;
 (*************************************************************
 Copyright © 2012 Toby Allen (http://github.com/tobya)
 
@@ -138,24 +138,12 @@ begin
         NonsensePassword := 'tfm554!ghAGWRDD';
 
         try
-          //Open doc and save in requested format.
+          // Open doc and save in requested format.
           Wordapp.documents.Open( FileToConvert,  // FileName
                                 false,          // ConfirmConversions
                                 true,            // ReadOnly
                                 EmptyParam,    // AddToRecentFiles,
                                 NonsensePassword    // PasswordDocument,
-                                    // PasswordTemplate,
-                                    // Revert,
-                                   // WritePasswordDocument,
-                                   // WritePasswordTemplate,
-                                    // Format,
-                                   // Encoding,
-                                   // Visible,
-                                    // OpenAndRepair,
-                                    // DocumentDirection,
-                                    // NoEncodingDialog,
-                                    // XMLTransform     *)
-
                                 );
 
           // For some reason if the document contains a TableofContents, it hangs Word.  In older
@@ -167,13 +155,13 @@ begin
             begin
              log('SKIPPED - Document has TOC: ' + fileToConvert , STANDARD);
              Result.Error := 'SKIPPED - Document has TOC:';
-              WordExitAction := aClose;
+             WordExitAction := aClose;
             end;
           end;
         except
         on E: Exception do
         begin
-          // if Errro contains EOleException The password is incorrect.
+          // if ErroR contains EOleException The password is incorrect.
           // then it is password protected and should be skipped.
           if ContainsStr(E.Message, 'The password is incorrect' ) then
           begin
@@ -207,7 +195,7 @@ begin
       case WordExitAction of
       aExit :
       begin
-        // document wasnt opened, so jus exit function.
+        // document wasnt opened, so just exit function.
         Result.Successful := false;
         Result.OutputFile := '';
         Exit();
