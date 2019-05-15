@@ -46,6 +46,10 @@ type
   private
     FIgnore_MACOSX: boolean;
     FFirstLogEntry: boolean;
+    FList_ErrorDocs : boolean;
+    FList_ErrorDocs_Seconds : Integer;
+   FIgnore_ErrorDocs : boolean;
+
 
     procedure SetCompatibilityMode(const Value: Integer);
     procedure SetIgnore_MACOSX(const Value: boolean);
@@ -53,6 +57,9 @@ type
     procedure SetSkipDocsWithTOC(const Value: Boolean);
     procedure HaltWithConfigError(ErrorNo: Integer; Msg: String);
 
+    procedure SetList_ErrorDocs(const Value: Boolean);
+    procedure SetList_ErrorDocs_Seconds(const Value: Integer);
+    procedure SetIgnore_ErrorDocs(const Value: Boolean);
   protected
     Formats : TStringlist;
     fFormatsExtensions : TStringlist;
@@ -81,6 +88,8 @@ type
 
     FHaltOnWordError: Boolean;
     FRemoveFileOnConvert: boolean;
+
+    FIgnoreErrorDocsFile : TStringList;
 
 
     FIsFileOutput: Boolean;
@@ -119,6 +128,9 @@ type
     property LogLevel : integer read FLogLevel write SetLogLevel;
     property RemoveFileOnConvert: boolean read FRemoveFileOnConvert write SetRemoveFileOnConvert;
     property Ignore_MACOSX : boolean   read FIgnore_MACOSX write SetIgnore_MACOSX;
+    property List_ErrorDocs : Boolean read FList_ErrorDocs write SetList_ErrorDocs ;
+    property List_ErrorDocs_Seconds : Integer read FList_ErrorDocs_Seconds write SetList_ErrorDocs_Seconds ;
+    property Ignore_ErrorDocs : Boolean read FIgnore_ErrorDocs write SetIgnore_ErrorDocs;
 
 
     procedure SetExtension(const Value: String); virtual;
@@ -129,7 +141,11 @@ type
     function AllowDirectory(DirName : String; FullPath : String) : Boolean;
     function AllowFile(FileName : String; Fullpath : String): Boolean;
 
+    // Timing
+    procedure CheckDocumentTiming(StartTime, EndTime : cardinal; DocumentPath : String);
 
+    // Check Should Ignore
+    function CheckShouldIgnore(DocumentPath : String): Boolean;
 
   public
 
@@ -225,6 +241,115 @@ begin
   end;
 
   end;
+end;
+
+
+// Check howlong a document took to convert.  If greater > X then record in ignorelist.
+// This can be used to find error documents as a modal window is displayed and execution does not
+// continue until MANUALLY clicked. Suggested value of -N 5 seconds.
+procedure TDocumentConverter.CheckDocumentTiming(StartTime, EndTime: cardinal; DocumentPath : String);
+var
+  sl : TStringList;
+  ignorecount : integer;
+const
+  ignorelistfilename = 'docto.ignore.txt';
+begin
+  if (List_ErrorDocs) then
+  begin
+
+    // Check if the length of time taken to convert.
+    if ((EndTime - StartTime) /1000) > List_ErrorDocs_Seconds then
+    begin
+
+      sl := TStringList.Create();
+      try
+
+        if  FileExists(ignorelistfilename) then
+        begin
+          sl.LoadFromFile(ignorelistfilename);
+        end else begin
+          sl.Add('[Comments]');
+          sl.Add('COMMENT1=THIS FILE RECORDS ANY WORD DOCUMETNS THAT TOOK LONGER THAN X SECONDS TO COMPLETE.');
+          sl.Add('COMMENT2=THIS SHOULD OVER TIME ALLOW YOU TO TRACK DOWN ALL FILES CAUSING PROBLEMS');
+          SL.Add('COMMENT3=THESE FILES WILL BE IGNORED ON SUBSEQUENT RUNS AS LONG AS "-N" IS USED');
+          SL.Add('COMMENT4=----DO NOT DELETE THIS FILE-----------');
+          SL.Add('[FILES TO IGNORE]');
+          SL.Add('IGNORECOUNT=0');
+        end;
+
+        log('Writing filename to Ignore List: ' + DocumentPath , CHATTY);
+
+        ignorecount := StrToInt(sl.Values['IGNORECOUNT']);
+        INC(ignorecount);
+
+        sl.Add('IGNOREFILE' + INTTOSTR(ignorecount) + '=' + DocumentPath);
+        sl.Values['IGNORECOUNT'] := INTTOSTR(ignorecount);
+        sl.SaveToFile('docto.ignore.txt');
+
+      finally
+        sl.free;
+      end;
+
+    end;
+  end;
+end;
+
+
+(*
+  Check if document is to be ignored. Load ignore file and checklist.
+*)
+function TDocumentConverter.CheckShouldIgnore(DocumentPath: String): Boolean;
+var
+ // sl : TStringList;
+  fn : string;
+  ignorecount : integer;
+  I: Integer;
+const
+  ignorelistfilename = 'docto.ignore.txt';
+begin
+  Result := False;
+  if (Ignore_ErrorDocs) then
+  begin
+
+      //Create and Load on first call
+      if FIgnoreErrorDocsFile = nil then
+      begin
+
+        FIgnoreErrorDocsFile := TStringList.Create();
+
+        if  FileExists(ignorelistfilename) then
+        begin
+          FIgnoreErrorDocsFile.LoadFromFile(ignorelistfilename);
+        end else begin
+          log('No docto.ignore.txt file found.', CHATTY);
+          Result := false;
+          exit;
+        end;
+      end;
+
+
+      if FIgnoreErrorDocsFile.Count > 0 then
+      begin
+        log('Checking Ignore List for filename:' + DocumentPath, VERBOSE);
+        ignorecount := StrToInt(FIgnoreErrorDocsFile.Values['IGNORECOUNT']);
+
+        for I := 1 to ignorecount do
+        BEGIN
+         fn := FIgnoreErrorDocsFile.Values['IGNOREFILE' + INTTOSTR(I)];
+         log('Check Against: ' + fn, VERBOSE);
+         if fn = DocumentPath then
+         begin
+           Result := true;
+           break;
+         end;
+        END;
+      end;
+
+
+
+
+  end;
+
 end;
 
 procedure TDocumentConverter.ConfigLoggingLevel(Params: TStrings);
@@ -324,6 +449,12 @@ begin
     FLogFile := nil;
   end;
 
+  if assigned(FIgnoreErrorDocsFile) then
+  begin
+    FIgnoreErrorDocsFile.Free;
+  end;
+
+
   FInputFiles.Free;
 end;
 
@@ -334,23 +465,26 @@ end;
 function TDocumentConverter.Execute: string;
 var
 
-  Continue : Boolean;
+  DoExecute : Boolean;
   i : integer;
   FileToConvert, FileToCreate, UrlToCall : String;
   OutputFilePath : String;
   ErrorMessage : String;
   ConversionInfo : TConversionInfo;
+  StartTime , EndTime : cardinal;
+
 begin
 
-    Continue := false;
+
+    DoExecute := false;
     if (InputFile > '') and (OutputFile > '') and (OutputFileFormat > -1) then
     begin
-      Continue := true;
+      DoExecute := true;
     end;
 
-    if not Continue  then HaltWithError(201, 'Input File, Output File and FileFormat must all be specified');
+    if not DoExecute  then HaltWithError(201, 'Input File, Output File and FileFormat must all be specified');
 
-    //Set Output Filename if Dir Provided.
+    // Set Output Filename if Dir Provided.
     if (IsFileInput and IsDirOutput) then
     begin
       if OutputExt = '' then
@@ -362,7 +496,7 @@ begin
       OutputFile :=  OutputFile  + ChangeFileExt( ExtractFileName(InputFile),OutputExt);
     end;
 
-    //Add file to InputFiles List if only one.
+    // Add file to InputFiles List if only one.
     if FInputFiles.Count = 0 then
     begin
       FInputFiles.Add(FInputFile);
@@ -374,6 +508,16 @@ begin
     for i := 0 to FInputFiles.Count -1 do
     begin
       FileToConvert := FInputFiles[i];
+
+      // Check if we should ignore this file as it has previously provided an error.
+      if CheckShouldIgnore(FileToConvert) then
+      begin
+        log('Skipped: File on ignore list. ' + FileToConvert );
+
+        // Jump to end of loop.
+        Continue;
+      end;
+
       if IsDirInput then
       begin
         FileToCreate := NewFileNameFromBase(FInputFile ,FOutputFile,FileToConvert, FOutputExt);
@@ -383,9 +527,12 @@ begin
         FileToCreate :=  OutputFile;
       end;
 
+
+
+
         log('Current Directory: ' + GetCurrentDir,10);
 
-        //Ensure directory exists
+        // Ensure directory exists
         OutputFilePath := ExtractFilePath( FileToCreate);
         if (OutputFilePath = '') then
         begin
@@ -405,14 +552,21 @@ begin
       end;*)
        try
 
+            StartTime := GettickCount();
 
             ConversionInfo :=  ExecuteConversion(FileToConvert, FileToCreate, OutputFileFormat);
 
             if ConversionInfo.Successful then
             begin
+              EndTime := getTickCount();
+              CheckDocumentTiming(StartTime, EndTime, FileToConvert);
+            end;
+
+            if RemoveFileOnConvert then
+            begin
               if RemoveFileOnConvert then
               begin
-                //Check file exists and Delete if requested
+                // Check file exists and Delete if requested
                 if FileExists(FileToCreate) then
                 begin
                   DeleteFile(FileToConvert);
@@ -424,14 +578,14 @@ begin
 
           //  UrlToCall := 'action=convert&type='+ FOutputFileFormatString + '&outputfilename=' + URLEncode(FileToCreate)+ '&inputfilename=' + URLEncode(InputFile);
 
-            //Make a call to webhook if it exists
+            // Make a call to webhook if it exists
           //  CallWebHook(UrlToCall);
 
             AfterConversion(InputFile, FileToCreate);
 
             log('Creating File: ' + FileToCreate,CHATTY);
           end
-          else    //Conversion not successful
+          else    // Conversion not successful
           begin
               OnConversionError(ConversionInfo.InputFile, ConversionInfo.OutputFile, ConversionInfo.Error);
           end;
@@ -505,7 +659,7 @@ procedure TDocumentConverter.HaltWithError(ErrorNo: Integer; Msg: String);
 begin
   LogError(Msg);
   LogError('Exiting with Error Code : ' + inttostr(ErrorNo));
-  //Ensure word is quit before halting.
+  // Ensure word is quit before halting.
   DestroyOfficeApp();
   Halt(ErrorNo);
 end;
@@ -536,7 +690,7 @@ tmpext : String;
 valueBool : Boolean;
 
 begin
-  //Initialise
+  // Initialise
   iParam := 0;
   Formats := AvailableFormats();
   fFormatsExtensions := FormatsExtensions();
@@ -577,7 +731,7 @@ begin
       value := '';
     end;
 
-    //jump to next id + value
+    // jump to next id + value
     inc(iParam,2);
 
 
@@ -631,7 +785,7 @@ begin
 
         tmppath := ExtractFilePath(FInputFile);
 
-        //If we are given a filename with no path, get currentdir and add to file.
+        // If we are given a filename with no path, get currentdir and add to file.
         if (tmppath = '') then
         begin
           tmppath := GetCurrentDir();
@@ -658,12 +812,11 @@ begin
       end;
 
 
-      //Set Output Directory to Input Directry at this stage. This ensure if no
-      //output directory  (-o) is specified, then it will default to same as
-      //input dir. If output has been supplied as param it will overwrite later.
+      // Set Output Directory to Input Directry at this stage. This ensure if no
+      // output directory  (-o) is specified, then it will default to same as
+      // input dir. If output has been supplied as param it will overwrite later.
       if FOutputFile = '' then
       begin
-
         FOutputFile :=  IncludeTrailingBackslash(tmppath);
         IsDirOutput := true;
       end;
@@ -688,7 +841,7 @@ begin
     begin
 
       OutputLog := false;
-      //Doesn't require a value
+      // Doesn't require a value
       dec(iParam);
     end
     else if (id = '-T') or (id = '-TF') or
@@ -750,22 +903,31 @@ begin
     begin
       Ignore_MACOSX := StrToBool( value);
     end
+    else if (id = '-N')  or
+            (id = '--LISTLONGRUNNING') then
+    begin
+      List_ErrorDocs := True;
+      List_ErrorDocs_Seconds := StrToInt(value);
+    end
+    else if (id = '-NX')  or
+            (id = '--IGNORELONGRUNNINGLIST') then
+    begin
+      Ignore_ErrorDocs := True;
+      dec(iParam);
+    end
     else if (id = '-R')
          or (id = '--DELETEFILES') then
     begin
 
-
+      // -R value must be followed by true or false.
       if TryStrToBool(value, valueBool)  then
       begin
         RemoveFileOnConvert  := valueBool;
       end
       else
       begin
-          HaltWithConfigError(200,'If -R is used it must be followed by a boolean value such as true or false');
-
+          HaltWithConfigError(200,'If -R is used it must be followed by true or false');
       end;
-
-
 
 
     end
@@ -791,12 +953,12 @@ begin
     begin
       HaltOnWordError := not(lowercase(value) = 'false');
     end
-    //Long form only
+    // Long form only
     else if (id = '--SKIPDOCSWITHTOC') then
     begin
       fSkipDocsWithTOC := true;
     end
-    //Help etc
+    // Help etc
     else if (id = '-H') or
             (id = '-?') or
             (id = '?') then
@@ -842,11 +1004,11 @@ begin
 
   end;
 
-  //Code to run when all parameters have been loaded.
-  //Get Files
+  // Code to run when all parameters have been loaded.
+  // Get Files
 
    // IsFileInput := true;
-    //If input is Dir rather than file, enumerate files.
+    // If input is Dir rather than file, enumerate files.
     if DirectoryExists(InputFile) then
     begin
        IsDirInput := true;
@@ -986,9 +1148,24 @@ begin
   FHaltOnWordError := Value;
 end;
 
+procedure TDocumentConverter.SetIgnore_ErrorDocs(const Value: Boolean);
+begin
+  FIgnore_ErrorDocs := Value;
+end;
+
 procedure TDocumentConverter.SetIgnore_MACOSX(const Value: boolean);
 begin
   FIgnore_MACOSX := Value;
+end;
+
+procedure TDocumentConverter.SetList_ErrorDocs(const Value: Boolean);
+begin
+  FList_ErrorDocs := Value;
+end;
+
+procedure TDocumentConverter.SetList_ErrorDocs_Seconds(const Value: Integer);
+begin
+  FList_ErrorDocs_Seconds := Value;
 end;
 
 procedure TDocumentConverter.SetInputFile(const Value: String);
@@ -1036,7 +1213,7 @@ procedure TDocumentConverter.SetLogToFile(const Value: Boolean);
 begin
   FLogToFile := Value;
 
-  //Set up logfile.
+  // Set up logfile.
   if FLogtoFile then
   begin
     if not assigned(fLogFile) then
