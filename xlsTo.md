@@ -1,7 +1,7 @@
 # XLSTo
 
 Simple utility for converting an Excel Spreadsheet  '.xls' file to any other supported file format 
-such as .txt .csv .pdf etc.  
+such as `.txt` `.csv` `.pdf` etc.  
 
 Can also be used to convert .csv, .txt to .xls .
 
