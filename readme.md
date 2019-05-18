@@ -32,9 +32,9 @@ Further information available [here](xlsTo.md)
 ## Features
 
   1. Convert Doc/RTF/Text file to any Word SaveAs Type Doc/Text/RTF/PDF
-  1. Single File Conversion
-  1. Multiple / Directory File Conversion
-  1. Delete after conversion
+  1. [Single File Conversion](https://github.com/tobya/DocTo/wiki/Converting-a-File-to-PDF)
+  1. [Multiple / Directory File Conversio].(https://github.com/tobya/DocTo/wiki/Converting-a-directory-of-files)
+  1. [Delete after conversion](https://github.com/tobya/DocTo/wiki/Delete-%5Cinput-File-after-conversion)
   1. [Fire Webhook on each conversion.](https://github.com/tobya/DocTo#webhooks)
 
   
@@ -98,58 +98,70 @@ http://webapps.stackexchange.com/questions/74859/what-format-does-word-onedrive-
     Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\MyDir\MyFile"
     Parameters markers are case insensitive. Short and Long can be used mixed.
       -H  This message
-          --help -?
-      -F  Input File or Directory.  Please use full path filename.
-          --inputfile
-      -FX Input Extension to search for if directory.  Default ".doc" (will find ".docx" also)
-          --inputextension
-      -O  Output File or Directory to place converted Docs
-          --outputfile
-      -OX Output Extension if -F is Directory. Please include '.' eg. '.pdf' .
-          If not provided, pulled from standard list.
-          --outputextension
-      -T  Format(Type) to convert file to, either integer or wdSaveFormat constant.
-          Available from http://msdn.microsoft.com/en-us/library/microsoft.office.interop.word.wdsaveformat.aspx
-          or http://msdn.microsoft.com/en-us/library/office/bb241279(v=office.12).aspx
-          See current List Below.
-          --format
-      -TF Force Format.  -T value if integer is checked against current list compiled in and not passed if unavailable.
-          -TF will pass through value without checking. Word will return an "EOleException  Value out of range" error if invalid.
-          Use instead of -T.
-          --forceformat
-      -L  Log Level Integer: 1 ERRORS Only, 2 STANDARD, 5 CHATTY, 10 VERBOSE
-          Default: 2=STANDARD
-          --loglevel
-      -C  Compatibility Mode Integer. Set to an INTEGER value from https://msdn.microsoft.com/en-us/library/office/ff192388.aspx.
-          Set the compatibility mode when you want to convert documents to a later version of word.
-          See List Below
-          --compatability
-      -E  Encoding Integer: Sets codepage Encoding.  See
-          https://msdn.microsoft.com/en-us/library/office/ff860880.aspx for more details and values.
-          --encoding          
-      -M  Ignore all files in __MACOSX\ subdirectory if it exists.  Default True.
-          --ignoremacos
-      -G  Write Log to file in directory
-          --writelogfile
-      -GL Log File Name to Use. Default 'DocTo.Log';
-          --logfilename
-      -Q  Quiet Mode: Nothing will be output to console.  To see any errors you must set -G or -GL
-          Equivalent to setting -L 0
-          --quiet
-      -R  Remove Files after successful conversion: Default false; To use specifiy value eg -R true
-          --deletefiles
-      -W  Webhook: Url to call on events (plain url no params). See -HW for more details.
-          --webhook
-      -HW Webhook Help.
-      -X  Halt on COM Error: Default True;  If you have trouble with some files not converting, set this to false to ignore
-          errors and continue with batch job.
-          --halterror
-      -V  Show Versions.  DocTo and Word/Excel
-    Extra Parameters
+      --HELP -?
+  -F  Input File or Directory
+      --inputfile
+  -FX Input Extension to search for if directory.  Default "*.doc*" (will find ".docx" also)
+      --inputextension
+  -O  Output File or Directory to place converted Docs
+      --outputfile
+  -OX Output Extension if -F is Directory. Please include '.' eg. '.pdf' .
+      If not provided, pulled from standard list.
+      --outputextension
+  -T  Format(Type) to convert file to, either integer or wdSaveFormat constant.
+      Available from http://msdn.microsoft.com/en-us/library/microsoft.office.interop.word.wdsaveformat.aspx
+      or http://msdn.microsoft.com/en-us/library/office/bb241279(v=office.12).aspx
+      See current List Below.
+      --format
+  -TF Force Format.  -T value if integer is checked against current list compiled in 
+      and not passed if unavailable.
+      -TF will pass through value without checking. Word will return an 
+      "EOleException  Value out of range" error if invalid.
+      Use instead of -T.
+      --forceformat
+  -L  Log Level Integer: 1 ERRORS Only, 2 STANDARD, 5 CHATTY, 9 DEBUG, 10 VERBOSE
+      Default: 2=STANDARD
+      --loglevel
+  -C  Compatibility Mode Integer. Set to an INTEGER value from 
+      https://msdn.microsoft.com/en-us/library/office/ff192388.aspx.
+      Set the compatibility mode when you want to convert documents to a later version of word.
+      See List Below
+      --compatability
+  -E  Encoding Integer: Sets codepage Encoding.  See
+      https://msdn.microsoft.com/en-us/library/office/ff860880.aspx for more details and values.
+      --encoding
+  -M  Ignore all files in ____MACOSX\___ subdirectory if it exists.  Default True.
+      --ignoremacos
+  -N  Make list of files that take over n seconds to complete. Use number of seconds
+      over that conversion takes and add to list. filename='docto.ignore.txt'
+      --listlongrunning
+  -NX Ignore any file listed in docto.ignore.txt, created by -N
+      --ignorelongrunninglist
+  -G  Write Log to file in directory
+      --writelogfile
+  -GL Log File Name to Use. Default 'DocTo.Log';
+      --logfilename
+  -Q  Quiet Mode: Nothing will be output to console.  To see any errors you must 
+      set -G or -GL. Equivalent to setting -L 0
+      --quiet
+  -R  Remove Files after successful conversion: Default false; To use specifiy value eg -R true
+      --deletefiles
+  -W  Webhook: Url to call on events. See -HW for more details.
+      --webhook
+  -HW Webhook Help.
+  -X  Halt on COM Error: Default True;  If you have trouble with some files 
+      not converting, set this to false to ignore errors and continue with batch job.
+      --halterror
+  -V  Show Versions.  DocTo and Word/Excel
 
-      --skipdocswithtoc
-        EXPERIMENTAL.  Will skip any docs that contain a TOC to prevent hanging.
-        Currently matches some false positives.  Default False.
+Extra Parameters
+
+  --skipdocswithtoc
+      EXPERIMENTAL.  Will skip any docs that contain a TOC to prevent hanging.
+      Currently matches some false positives.  Default False.
+  --donotoverwrite
+      Existing files are overridden by default, if you do not wish a file to be
+      skipped if its output exists, use this.
 
     ERROR CODES:
     200 : Invalid File Format specified
