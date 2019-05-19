@@ -24,7 +24,7 @@ Const
   ERRORS = 1;
   SILENT = 0;
 
-  DOCTO_VERSION = '0.8.17';
+  DOCTO_VERSION = '0.9.18';
 
 type
 
@@ -83,6 +83,7 @@ type
     FWebHook : String;
     FInputExtension : String;
     FSkipDocsWithTOC : Boolean;
+    fSkipDocsExist : Boolean;
     FCompatibilityMode: Integer;
     FEncoding : Integer;
 
@@ -183,6 +184,7 @@ type
     Property Version : String read FVersionString;
     property HaltOnWordError : Boolean read FHaltOnWordError write SetHaltOnWordError;
     property SkipDocsWithTOC : Boolean read FSkipDocsWithTOC write SetSkipDocsWithTOC;
+    property SkipDocsExist : Boolean read FSkipDocsExist write FSkipDocsExist;
     property InputExtension: String read GetExtension write SetExtension;
     property CompatibilityMode : Integer read FCompatibilityMode write SetCompatibilityMode;
     property Encoding : Integer read FEncoding write SetEncoding;
@@ -271,7 +273,7 @@ begin
           sl.Add('[Comments]');
           sl.Add('COMMENT1=THIS FILE RECORDS ANY WORD DOCUMETNS THAT TOOK LONGER THAN X SECONDS TO COMPLETE.');
           sl.Add('COMMENT2=THIS SHOULD OVER TIME ALLOW YOU TO TRACK DOWN ALL FILES CAUSING PROBLEMS');
-          SL.Add('COMMENT3=THESE FILES WILL BE IGNORED ON SUBSEQUENT RUNS AS LONG AS "-N" IS USED');
+          SL.Add('COMMENT3=THESE FILES WILL BE IGNORED ON SUBSEQUENT RUNS AS LONG AS "-NX" IS USED');
           SL.Add('COMMENT4=----DO NOT DELETE THIS FILE-----------');
           SL.Add('[FILES TO IGNORE]');
           SL.Add('IGNORECOUNT=0');
@@ -434,6 +436,7 @@ begin
   FEncoding := -1;
   FIgnore_MACOSX := true;
   fSkipDocsWithTOC := false;
+  fSkipDocsExist :=  false;
   FFirstLogEntry := true;
 
   FInputFiles := TStringList.Create;
@@ -467,14 +470,13 @@ var
 
   DoExecute : Boolean;
   i : integer;
-  FileToConvert, FileToCreate, UrlToCall : String;
+  FileToConvert, FileToCreate : String;
   OutputFilePath : String;
   ErrorMessage : String;
   ConversionInfo : TConversionInfo;
   StartTime , EndTime : cardinal;
 
 begin
-
 
     DoExecute := false;
     if (InputFile > '') and (OutputFile > '') and (OutputFileFormat > -1) then
@@ -533,6 +535,7 @@ begin
         log('Current Directory: ' + GetCurrentDir,10);
 
         // Ensure directory exists
+
         OutputFilePath := ExtractFilePath( FileToCreate);
         if (OutputFilePath = '') then
         begin
@@ -545,11 +548,13 @@ begin
 
 
       log('Ready to Execute' , VERBOSE);
-      (*if FileExists(FileToCreate) then //Not working currently as file doesnt include .ext
+      if FileExists(FileToCreate) and (SkipDocsExist) then //Not working currently as file doesnt include .ext
       begin
-        raise Exception.Create('FileExists Cannot Create: ' + FileToCreate);
+        log('Skipped: FileExists Cannot Create: ' + FileToCreate,Error);
 
-      end;*)
+        // Jump to end of loop
+        Continue;
+      end;
        try
 
             StartTime := GettickCount();
@@ -957,6 +962,12 @@ begin
     else if (id = '--SKIPDOCSWITHTOC') then
     begin
       fSkipDocsWithTOC := true;
+      dec(iParam);
+    end
+    else if (id = '--DONOTOVERWRITE') then
+    begin
+      fSkipDocsExist := true;
+      dec(iParam);
     end
     // Help etc
     else if (id = '-H') or
