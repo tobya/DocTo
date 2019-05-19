@@ -184,6 +184,13 @@
                         <RemoteName>docto.rsm</RemoteName>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="..\exe\docto.exe" Configuration="TobyBuild" Class="ProjectOutput">
+                    <Platform Name="Win32"/>
+                </DeployFile>
+                <DeployFile LocalName="$(BDS)\Redist\osx32\libcgunwind.1.0.dylib" Class="DependencyModule">
+                    <Platform Name="OSX32"/>
+                    <Platform Name="iOSSimulator"/>
+                </DeployFile>
                 <DeployClass Required="true" Name="DependencyPackage">
                     <Platform Name="iOSDevice">
                         <Operation>1</Operation>
