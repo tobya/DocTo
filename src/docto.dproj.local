@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
+    <Transaction>1899/12/30 00:00:00.000.547,D:\Development\GitHub\DocTo\src\New1.txt=D:\Development\GitHub\DocTo\src\res\HelpErrors.txt</Transaction>
     <Transaction>1899/12/30 00:00:00.000.606,=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.547,D:\Development\GitHub\DocTo\src\res\HelpErrors.txt=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
     <Transaction>2016/05/07 18:18:35.000.138,=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
-    <Transaction>2016/05/07 18:18:48.000.672,D:\Development\GitHub\DocTo\src\res\wdEncoding.txt=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
+    <Transaction>2016/05/07 18:18:48.000.672,D:\Development\GitHub\DocTo\src\New1.txt=D:\Development\GitHub\DocTo\src\res\wdEncoding.txt</Transaction>
     <Transaction>2018/07/30 15:26:37.000.443,=D:\Development\GitHub\DocTo\src\Unit1.pas</Transaction>
-    <Transaction>2018/07/30 15:28:03.000.644,D:\Development\GitHub\DocTo\src\Unit1.dfm=D:\Development\GitHub\DocTo\src\datamodSSL.dfm</Transaction>
-    <Transaction>2018/07/30 15:28:03.000.644,D:\Development\GitHub\DocTo\src\Unit1.pas=D:\Development\GitHub\DocTo\src\datamodSSL.pas</Transaction>
+    <Transaction>2018/07/30 15:28:03.000.644,D:\Development\GitHub\DocTo\src\datamodSSL.dfm=D:\Development\GitHub\DocTo\src\Unit1.dfm</Transaction>
+    <Transaction>2018/07/30 15:28:03.000.644,D:\Development\GitHub\DocTo\src\datamodSSL.pas=D:\Development\GitHub\DocTo\src\Unit1.pas</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="..\..\DocTo"/>

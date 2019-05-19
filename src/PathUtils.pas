@@ -76,7 +76,7 @@ begin
 
   if not assigned(FParts) then FParts := TStringlist.Create();
 
-  FParts.add('Drive=' + Drive + ':\');
+  FParts.Add('Drive=' + Drive + ':\');
   FParts.Add('Folder=' + Folder);
   FParts.Add('Filename=' + Filename);
   FParts.Add('Ext=' + Extension);
