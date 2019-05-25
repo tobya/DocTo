@@ -10,7 +10,7 @@ Can be used to convert older excel documents to latest format.
 Must have Microsoft Excel installed on host machine.
 
 Download Release From Github Releases - https://github.com/tobya/DocTo/releases/
-Further Information available at http://tobya.github.com/DocTo
+Further Information available at https://tobya.github.io/DocTo/
 
 DocTo
 =====
@@ -72,7 +72,7 @@ If you are using XLSTo or DocTo in the wild somewhere, please add details to thi
 
     Help
     Version:0.7.9
-    Source: http://github.com/tobya/DocTo/
+    Source: https://github.com/tobya/DocTo/
     Command Line Parameters
     Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\MyDir\MyFile"
     Parameters markers are case insensitive. Short and Long can be used mixed.
@@ -88,8 +88,8 @@ If you are using XLSTo or DocTo in the wild somewhere, please add details to thi
           If not provided, pulled from standard list.
           --outputextension
       -T  Format(Type) to convert file to, either integer or wdSaveFormat constant.
-          Available from http://msdn.microsoft.com/en-us/library/microsoft.office.interop.word.wdsaveformat.aspx
-          or http://msdn.microsoft.com/en-us/library/office/bb241279(v=office.12).aspx
+          Available from https://docs.microsoft.com/en-us/dotnet/api/microsoft.office.interop.word.wdsaveformat
+          or https://docs.microsoft.com/en-us/dotnet/api/microsoft.office.interop.excel.xlfileformat
           See current List Below.
           --format
       -TF Force Format.  -T value if integer is checked against current list compiled in and not passed if unavailable.

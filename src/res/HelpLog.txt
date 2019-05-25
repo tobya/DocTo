@@ -1,7 +1,7 @@
 Help
 Docto Version:%s
 Office Version : %s
-Source: http://github.com/tobya/DocTo/
+Source: https://github.com/tobya/DocTo/
 Command Line Parameters
 Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\MyDir\MyFile"
 Parameters markers are case insensitive. Short and Long can be used mixed.
@@ -17,8 +17,8 @@ Parameters markers are case insensitive. Short and Long can be used mixed.
       If not provided, pulled from standard list.
       --outputextension
   -T  Format(Type) to convert file to, either integer or wdSaveFormat constant.
-      Available from http://msdn.microsoft.com/en-us/library/microsoft.office.interop.word.wdsaveformat.aspx
-      or http://msdn.microsoft.com/en-us/library/office/bb241279(v=office.12).aspx
+      Available from https://docs.microsoft.com/en-us/dotnet/api/microsoft.office.interop.word.wdsaveformat
+      or https://docs.microsoft.com/en-us/dotnet/api/microsoft.office.interop.excel.xlfileformat
       See current List Below.
       --format
   -TF Force Format.  -T value if integer is checked against current list compiled in 
