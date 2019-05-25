@@ -126,7 +126,7 @@ https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-u
           https://msdn.microsoft.com/en-us/library/office/ff192388.aspx.
           Set the compatibility mode when you want to convert documents to a later version of word.
           See List Below
-          --compatability
+          --compatibility
       -E  Encoding Integer: Sets codepage Encoding.  See
           https://msdn.microsoft.com/en-us/library/office/ff860880.aspx for more details and values.
           --encoding
@@ -187,7 +187,7 @@ https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-u
 
 ## Get Involved.
 
-The project complies with Delphi (I use XE4 but it should compile with most versions including 7). I am happy to accept any PR anyone might like to submit.
+The project compiles with Delphi (I use XE4 but it should compile with most versions including 7). I am happy to accept any PR anyone might like to submit.
 
 ## Updates     
 

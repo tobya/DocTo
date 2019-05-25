@@ -1,4 +1,4 @@
-REM Explaination 
+REM Explanation 
 REM For use of FOR type FOR /? at prompt
 REM The first part specifies ; lines to be ignored
 REM I want the first 2 items (delimited by , or [space] on each line from the file specified.
