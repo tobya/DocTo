@@ -1,6 +1,6 @@
 ﻿unit WordUtils;
 (*************************************************************
-Copyright © 2012 Toby Allen (http://github.com/tobya)
+Copyright © 2012 Toby Allen (https://github.com/tobya)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction,
 including without limitation the rights to use, copy, modify, merge, publish, distribute, sub-license, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
@@ -132,7 +132,7 @@ begin
         log('ExecuteConversion:' + fileToConvert, Verbose);
 
         // Check if document has password as per
-        // http://wordmvp.com/FAQs/MacrosVBA/CheckIfPWProtectB4Open.htm
+        // https://wordmvp.com/FAQs/MacrosVBA/CheckIfPWProtectB4Open.htm
         // Always open with password, if none it will be ignored,
         // if the file has a password set then we can catch error.
         NonsensePassword := 'tfm554!ghAGWRDD';
@@ -208,7 +208,7 @@ begin
       begin
         try
             //SaveAs2 was introducted in 2010 V 14 by this list
-            //http://stackoverflow.com/a/29077879/6244
+            //https://stackoverflow.com/a/29077879/6244
             if (strtoint( OfficeAppVersion) < 14) then
             begin
                   log('Version < 14 Using Saveas Function', VERBOSE);

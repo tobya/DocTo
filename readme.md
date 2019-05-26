@@ -13,7 +13,7 @@ Can be used to convert older word documents to latest format.
 Must have Microsoft Word installed on host machine.
 
 Download Release From Github Releases - https://github.com/tobya/DocTo/releases/
-Further Information available at http://tobya.github.com/DocTo
+Further Information available at https://tobya.github.io/DocTo/
 
 XLSTo
 =====
@@ -87,13 +87,13 @@ OneDrive Conversion
 If you need to upgrade a bunch of files to work without conversion on OneDrive /Office365 / Word 20XX then you can use DocTo.
 See this StackExchange question 
 
-http://webapps.stackexchange.com/questions/74859/what-format-does-word-onedrive-use
+https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-use
 
 ## Command Line Help
 
     Help
     Version:0.9.18
-    Source: http://github.com/tobya/DocTo/
+    Source: https://github.com/tobya/DocTo/
     Command Line Parameters
     Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\MyDir\MyFile"
     Parameters markers are case insensitive. Short and Long can be used mixed.
@@ -109,8 +109,8 @@ http://webapps.stackexchange.com/questions/74859/what-format-does-word-onedrive-
           If not provided, pulled from standard list.
           --outputextension
       -T  Format(Type) to convert file to, either integer or wdSaveFormat constant.
-          Available from http://msdn.microsoft.com/en-us/library/microsoft.office.interop.word.wdsaveformat.aspx
-          or http://msdn.microsoft.com/en-us/library/office/bb241279(v=office.12).aspx
+          Available from https://docs.microsoft.com/en-us/dotnet/api/microsoft.office.interop.word.wdsaveformat
+          or https://docs.microsoft.com/en-us/dotnet/api/microsoft.office.interop.excel.xlfileformat
           See current List Below.
           --format
       -TF Force Format.  -T value if integer is checked against current list compiled in 
