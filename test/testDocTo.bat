@@ -1,4 +1,4 @@
-REM Explaination 
+REM Explanation
 REM Test runs to check docto scenarios
 REM execute docto inserting variables 
 REM %~d0 and %~p0 together give the full directory this batch file is executing in.

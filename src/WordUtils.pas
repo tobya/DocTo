@@ -195,7 +195,7 @@ begin
       case WordExitAction of
       aExit :
       begin
-        // document wasnt opened, so just exit function.
+        // document wasn't opened, so just exit function.
         Result.Successful := false;
         Result.OutputFile := '';
         Exit();
@@ -207,7 +207,7 @@ begin
       aSave:
       begin
         try
-            //SaveAs2 was introducted in 2010 V 14 by this list
+            //SaveAs2 was introduced in 2010 V 14 by this list
             //https://stackoverflow.com/a/29077879/6244
             if (strtoint( OfficeAppVersion) < 14) then
             begin

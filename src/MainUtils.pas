@@ -402,7 +402,7 @@ end;
 
 
 // ConvertErrorText removed a lone CR which can overwrite 1 error
-// message with another if concatination see issue #37
+// message with another if concatenation see issue #37
 // https://github.com/tobya/DocTo/issues/37
 function TDocumentConverter.ConvertErrorText(Msg: String): String;
 var
@@ -771,7 +771,7 @@ begin
             (id = '--OUTPUTEXTENSION') then
     begin
 
-     //If the first character isnt . add it.
+     //If the first character isn't . add it.
      if value[1] = '.' then
      begin
         FOutputExt := value;

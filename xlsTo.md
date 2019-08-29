@@ -102,7 +102,7 @@ If you are using XLSTo or DocTo in the wild somewhere, please add details to thi
       -C  Compatibility Mode Integer. Set to an INTEGER value from https://msdn.microsoft.com/en-us/library/office/ff192388.aspx.
           Set the compatibility mode when you want to convert documents to a later version of word.
           See List Below
-          --compatability
+          --compatibility
       -E  Encoding Integer: Sets codepage Encoding.  See
           https://msdn.microsoft.com/en-us/library/office/ff860880.aspx for more details and values.
           --encoding          
