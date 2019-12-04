@@ -19,6 +19,7 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ****************************************************************)
 {$APPTYPE CONSOLE}
 {$R 'wdFormats.res' 'wdFormats.rc'}
+{$R 'xlsFormats.res' 'xlsFormats.rc'}
 {$R *.res}
 uses
   SysUtils,
@@ -28,12 +29,14 @@ uses
   MainUtils in 'MainUtils.pas',
   ResourceUtils in 'ResourceUtils.pas',
   PathUtils in 'PathUtils.pas',
-  datamodSSL in 'datamodSSL.pas' {dmSSL: TDataModule};
+  datamodSSL in 'datamodSSL.pas' {dmSSL: TDataModule},
+  ExcelUtils in 'ExcelUtils.pas';
 
 var
-  i : integer;
+  i, Converter : integer;
   paramlist : TStringlist;
   DocConv : TWordDocConverter;
+  XLSConv : TExcelXLSConverter;
   LogResult : String;
 begin
 
@@ -42,6 +45,7 @@ begin
   try
    try
      DocConv := TWordDocConverter.Create;
+     XLSConv := TExcelXLSConverter.Create;
     try
 
       for i := 1 to ParamCount do
@@ -50,15 +54,25 @@ begin
       end;
 
       CoInitialize(nil);
+
+      Converter := DocConv.ChooseConverter(ParamList);
+
+      if Converter = MSWord then
+      begin
       DocConv.LoadConfig(paramlist);
-
-
-      LogResult :=  DocConv.Execute;
+            LogResult :=  DocConv.Execute;
       DocConv.log( LogResult );
+      end
+      else begin
+        XLSConv.LoadConfig(ParamList);
+        LogResult :=  XLSConv.Execute;
+        XLSConv.log( LogResult );
+      end;
 
       CoUninitialize;
     finally
       DocConv.free;
+      XLSConv.Free;
     end;
    except on E: Exception do
     begin

@@ -24,7 +24,11 @@ Const
   ERRORS = 1;
   SILENT = 0;
 
-  DOCTO_VERSION = '0.9.18';
+  // APP
+  MSWORD = 1;
+  MSEXCEL = 2;
+
+  DOCTO_VERSION = '1.0.1.alpha';
 
 type
 
@@ -60,6 +64,7 @@ type
     procedure SetList_ErrorDocs(const Value: Boolean);
     procedure SetList_ErrorDocs_Seconds(const Value: Integer);
     procedure SetIgnore_ErrorDocs(const Value: Boolean);
+
   protected
     Formats : TStringlist;
     fFormatsExtensions : TStringlist;
@@ -152,7 +157,11 @@ type
 
     Constructor Create();
     Destructor Destroy(); override;
+
+
     procedure LoadConfig(Params: TStrings);
+    function ChooseConverter(Params: TStrings): integer;
+
     procedure ConfigLoggingLevel(Params: TStrings);
 
     function Execute() : string; virtual;
@@ -686,6 +695,75 @@ begin
   end;
 end;
 
+function TDocumentConverter.ChooseConverter(Params: TStrings) : integer;
+var  f , iParam, idx: integer;
+pstr : string;
+id, value, tmppath : string;
+HelpStrings : TStringList;
+tmpext : String;
+valueBool : Boolean;
+
+begin
+  // Initialise
+  iParam := 0;
+
+  ConfigLoggingLevel(Params);
+
+  OutputLog := true;
+  OutputLogFile := '';
+
+  log('Loading ChooseConverter...',VERBOSE);
+  log('Parameter Count is ' + inttostr(params.Count), VERBOSE);
+
+  if Params.Count = 0 then
+  begin
+      log('Parameters Expected: -H for help');
+      halt(1);
+  end ;
+
+  Result := MSWord;
+
+
+  While iParam <= Params.Count -1 do
+  begin
+    pstr := Params[iParam];
+
+    id := UpperCase( pstr);
+    if ParamCount -1  > iParam then
+    begin
+      try
+        value := Trim(Params[iParam +1]);
+      except on E: Exception do
+        HaltWithError(202,E.message);
+      end;
+    end
+    else
+    begin
+      value := '';
+    end;
+
+    // jump to next id + value
+    inc(iParam,2);
+
+
+    if (id = '-XL') or
+       (id = '--EXCEL') then
+    begin
+       Result := MSEXCEL;
+
+
+    end
+    else if (id = '-WD') or
+            (id = '--WORD') then
+    begin
+      Result := MSWORD;
+
+    end;
+
+  end;
+
+end;
+
 procedure TDocumentConverter.LoadConfig(Params: TStrings);
 var  f , iParam, idx: integer;
 pstr : string;
@@ -766,6 +844,14 @@ begin
       end;
 
 
+    end
+    else if (id = '-XL') or
+            (id = '--EXCEL') or
+            (id = '-WD') or
+            (id = '--WORD')    then
+    begin
+      // ignore
+      dec(iparam);
     end
     else if (id = '-OX') or
             (id = '--OUTPUTEXTENSION') then
