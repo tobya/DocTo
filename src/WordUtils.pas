@@ -38,6 +38,21 @@ wdDoNotSaveChanges    =	 0; //	Do not save pending changes.
 wdSaveChanges         =	-1; //	Save pending changes automatically without prompting the user.
 wdPromptToSaveChanges	= -2;	//  Prompt the user to save pending changes.
 
+wdExportOptimizeForOnScreen	 = 1;
+wdExportOptimizeForPrint  =	0;
+
+wdExportAllDocument	= 0;
+wdExportCurrentPage	= 2;
+wdExportFromTo	=3;
+wdExportSelection	=1;
+
+wdExportDocumentContent =	0; //	Exports the document without markup.
+wdExportDocumentWithMarkup	=7;
+
+wdExportCreateHeadingBookmarks =	1;//	Create a bookmark in the exported document for each Microsoft Word heading, which includes only headings within the main document and text boxes not within headers, footers, endnotes, footnotes, or comments.
+wdExportCreateNoBookmarks=	0; //	Do not create bookmarks in the exported document.
+wdExportCreateWordBookmarks=	2;  //Create a bookmark in the exported document for each Word bookmark, which includes all bookmarks except those contained within headers and footers.
+
 
 
 
@@ -206,6 +221,40 @@ begin
       end;
       aSave:
       begin
+
+        if OutputfileFormat = 17 then
+        begin
+        // Saveas works for pdf but github issue 79 requestes exporting bookmarks
+        // also which requires ExportAsFixedFormat
+          (*  WordApp.ActiveDocument.ExportAsFixedFormat
+            OutputFileName:= _
+            ExportFormat:= _
+    wdExportFormatPDF, OpenAfterExport:=True, OptimizeFor:= _
+    wdExportOptimizeForPrint, Range:=wdExportAllDocument, From:=1, To:=1, _
+    Item:=wdExportDocumentContent, IncludeDocProps:=True, KeepIRM:=True, _
+    CreateBookmarks:=wdExportCreateHeadingBookmarks, DocStructureTags:=True, _
+    BitmapMissingFonts:=True, UseISO19005_1:=False  *)
+
+WordApp.ActiveDocument.ExportAsFixedFormat(
+         OutputFilename,  //   OutputFileName:=
+         OutputfileFormat, //   ExportFormat:=
+         true,//   OpenAfterExport:=True,
+         wdExportOptimizeForPrint,//   OptimizeFor:= _
+         wdExportAllDocument,//   Range
+         1,//   From:=1,
+         1,//   To:=1, _
+         wdExportDocumentContent,//   Item:=wdExportDocumentContent,
+         True,//   IncludeDocProps:=True,
+         true,//   KeepIRM:=True, _
+         wdExportCreateWordBookmarks,//   CreateBookmarks:=wdExportCreateHeadingBookmarks,
+         true,//   DocStructureTags:=True, _
+         true,//   BitmapMissingFonts:=True,
+         False//   UseISO19005_1:=False
+         );
+        end else
+        begin
+
+
         try
             //SaveAs2 was introduced in 2010 V 14 by this list
             //https://stackoverflow.com/a/29077879/6244
@@ -259,6 +308,7 @@ begin
         finally
                 // Close the document - do not save changes if doc has changed in any way.
                 Wordapp.activedocument.Close(wdDoNotSaveChanges);
+        end;
         end;
     end;
     end;
