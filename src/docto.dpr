@@ -18,9 +18,8 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
 OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ****************************************************************)
 {$APPTYPE CONSOLE}
-{$R 'wdFormats.res' 'wdFormats.rc'}
-{$R 'xlsFormats.res' 'xlsFormats.rc'}
-{$R *.res}
+{$R 'Docto.res' 'Docto.rc'}
+
 uses
   SysUtils,
   Classes,
