@@ -28,6 +28,7 @@ public
   { public declarations }
 
   Procedure Load(ResourceName: String);
+  Function Exists(Key : String) : Boolean;
 
 published
   { published declarations }
@@ -54,11 +55,23 @@ end;
 
 
 
-procedure TResourceStrings.Load(ResourceName: String);
+function TResourceStrings.Exists(Key: String): Boolean;
+var idx : integer;
 begin
-
-        LoadStringListFromResource('HELP',Self);
+  Result := false;
+  idx :=  Self.IndexOfName(Key);
+  if idx > -1 then
+  begin
+    Result :=  True;
+  end;
 
 end;
+
+procedure TResourceStrings.Load(ResourceName: String);
+begin
+        LoadStringListFromResource(ResourceName,Self);
+end;
+
+
 
 end.

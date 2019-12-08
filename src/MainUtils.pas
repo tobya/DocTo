@@ -374,18 +374,19 @@ var
 begin
 LogLevel := STANDARD;
 iParam := 0;
-lOG(ID,VERBOSE);
+//lOG(ID,VERBOSE);
+//log('top');
 While iParam <= Params.Count -1 do
   begin
     pstr := Params[iParam];
-    log(inttostr(iparam), VERBOSE);
+   // log('-xx-' + inttostr(iparam), VERBOSE);
     id := UpperCase( pstr);
     if ParamCount -1  > iParam then
     begin
       try
         value := Trim(Params[iParam +1]);
       except on E: Exception do
-        HaltWithError(202,E.message);
+        HaltWithError(202,E.message );
       end;
     end
     else
@@ -393,13 +394,14 @@ While iParam <= Params.Count -1 do
       value := '';
     end;
     inc(iParam,2);
-    lOG(ID,VERBOSE);
+   // lOG(ID,VERBOSE);
     if id  = '-L' then
     begin
+     // log('asdfas' + value);
       if isNumber(value) then
       begin
         LogLevel := strtoint(value);
-
+       // break;
       end
     end
     else if id  = '-Q' then
@@ -408,8 +410,10 @@ While iParam <= Params.Count -1 do
       OutputLog := false;
       //Doesn't require a value
       dec(iParam);
-    end
+    end ;
+
   end;
+
   Log('Log Level Set To:' + IntToStr(FLogLevel),CHATTY);
 end;
 
@@ -772,7 +776,7 @@ procedure TDocumentConverter.LoadConfig(Params: TStrings);
 var  f , iParam, idx: integer;
 pstr : string;
 id, value, tmppath : string;
-HelpStrings : TResourceStrings;
+HelpStrings, WordConstants : TResourceStrings;
 tmpext : String;
 valueBool : Boolean;
 
@@ -1026,9 +1030,17 @@ begin
 
 
     end
-    else if (id = '--BOOKMARKSOURCE') then
+    else if (id = '--PDFBOOKMARKSOURCE') then
     begin
-//       FBookMarkSource =
+         WordConstants := TResourceStrings.Create;
+         WordConstants.Load('WORDCONSTANTS');
+         //Log(WordConstants.Text, Verbose);
+         if (WordConstants.Exists(value)) then
+         begin
+           FBookMarkSource := StrToInt( WordConstants.Values[value]);
+           log('Set Bookmark To: ' + InttoStr(FBookmarkSource), Verbose);
+         end;
+
     end
     else if (id = '-W') or
             (id = '--WEBHOOK') then
