@@ -18,8 +18,8 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
 OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ****************************************************************)
 {$APPTYPE CONSOLE}
-{$R 'Docto.res' 'Docto.rc'}
-
+{$R 'ExtraFiles.res' 'ExtraFiles.rc'}
+{$R *.res}
 uses
   SysUtils,
   Classes,
