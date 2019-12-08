@@ -14,7 +14,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 ****************************************************************)
 interface
 
-uses Classes,Sysutils, MainUtils, ResourceUtils,  ActiveX, ComObj, WinINet, Variants,  Types;
+uses Classes,Sysutils, MainUtils, ResourceUtils,  ActiveX, ComObj, WinINet, Variants;
 
 type
 
@@ -130,7 +130,7 @@ var
 
 begin
   Extensions := Tstringlist.Create();
-  LoadStringListFromResource('EXTENSIONS',Extensions);
+  LoadStringListFromResource('XLSEXTENSIONS',Extensions);
 
   result := Extensions;
 end;

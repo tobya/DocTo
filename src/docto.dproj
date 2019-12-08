@@ -71,24 +71,25 @@
         <DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_3_Win32)'!=''">
+        <VerInfo_MajorVer>1</VerInfo_MajorVer>
         <Debugger_RunParams>-f &quot;D:\Development\GitHub\DocTo\test\Inputfiles\&quot;  -o &quot;D:\Development\GitHub\DocTo\test\GeneratedFiles&quot;    -T  wdFormatPDF -OX pdf  -NX -L 5</Debugger_RunParams>
-        <VerInfo_Build>34</VerInfo_Build>
+        <VerInfo_Build>41</VerInfo_Build>
         <VerInfo_PreRelease>false</VerInfo_PreRelease>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <VerInfo_AutoGenVersion>false</VerInfo_AutoGenVersion>
-        <VerInfo_Release>18</VerInfo_Release>
-        <Icon_MainIcon>d2icon_QhU_icon.ico</Icon_MainIcon>
-        <VerInfo_MinorVer>9</VerInfo_MinorVer>
-        <VerInfo_Keys>CompanyName=Toflidium Software;FileDescription=DocTo - Convert doc files to any available format;FileVersion=0.9.18.34;InternalName=;LegalCopyright=Toby Allen;LegalTrademarks=;OriginalFilename=docto.exe;ProductName=DocTo;ProductVersion=0.9.0.0;Comments=https://github.com/tobya/DocTo</VerInfo_Keys>
+        <VerInfo_Release>19</VerInfo_Release>
+        <Icon_MainIcon>docto_Icon2.ico</Icon_MainIcon>
+        <VerInfo_MinorVer>0</VerInfo_MinorVer>
+        <VerInfo_Keys>CompanyName=Toflidium Software;FileDescription=DocTo - Convert doc files to any available format;FileVersion=1.0.19.41;InternalName=;LegalCopyright=Toby Allen;LegalTrademarks=;OriginalFilename=docto.exe;ProductName=DocTo;ProductVersion=1.0.19.40;Comments=https://github.com/tobya/DocTo</VerInfo_Keys>
         <DCC_ExeOutput>..\exe</DCC_ExeOutput>
-        <Manifest_File>None</Manifest_File>
+        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <RcCompile Include="wdFormats.rc">
-            <Form>wdFormats.res</Form>
+        <RcCompile Include="ExtraFiles.rc">
+            <Form>ExtraFiles.res</Form>
         </RcCompile>
         <DCCReference Include="WordUtils.pas"/>
         <DCCReference Include="MainUtils.pas"/>
@@ -96,12 +97,9 @@
         <DCCReference Include="PathUtils.pas"/>
         <DCCReference Include="datamodSSL.pas">
             <Form>dmSSL</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <RcCompile Include="xlsFormats.rc">
-            <Form>xlsFormats.res</Form>
-        </RcCompile>
+        <DCCReference Include="ExcelUtils.pas"/>
         <None Include="..\readme.md"/>
         <None Include="res\wdFormats.txt"/>
         <None Include="res\HelpLog.txt"/>
@@ -114,7 +112,7 @@
         <None Include="..\changes.txt"/>
         <None Include="res\xlsFormats.txt"/>
         <None Include="res\xlsFormatsExt.txt"/>
-        <None Include="res\wdConstants.txt"/>
+        <None Include="..\changes.md"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -147,7 +145,7 @@
                     <VersionInfo Name="MajorVer">0</VersionInfo>
                     <VersionInfo Name="MinorVer">4</VersionInfo>
                     <VersionInfo Name="Release">4</VersionInfo>
-                    <VersionInfo Name="Build">50</VersionInfo>
+                    <VersionInfo Name="Build">57</VersionInfo>
                     <VersionInfo Name="Debug">True</VersionInfo>
                     <VersionInfo Name="PreRelease">True</VersionInfo>
                     <VersionInfo Name="Special">False</VersionInfo>
@@ -159,7 +157,7 @@
                 <VersionInfoKeys>
                     <VersionInfoKeys Name="CompanyName">Toflidium Software</VersionInfoKeys>
                     <VersionInfoKeys Name="FileDescription"/>
-                    <VersionInfoKeys Name="FileVersion">0.4.4.50</VersionInfoKeys>
+                    <VersionInfoKeys Name="FileVersion">0.4.4.57</VersionInfoKeys>
                     <VersionInfoKeys Name="InternalName"/>
                     <VersionInfoKeys Name="LegalCopyright">Toflidium Software</VersionInfoKeys>
                     <VersionInfoKeys Name="LegalTrademarks"/>
@@ -171,7 +169,10 @@
                 <Parameters>
                     <Parameters Name="RunParams">-f &quot;C:\Temp\recipeZXLists\Courses\2010\12 Week September\Week 3\Mondaye\&quot;  -o c:\temp\myout -T wdFormatText -ox .txt -W &quot;http://home.hisbik.ie/webhooks/docto.php&quot;</Parameters>
                 </Parameters>
-                <Excluded_Packages/>
+                <Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k180.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp180.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                </Excluded_Packages>
             </Delphi.Personality>
             <Platforms>
                 <Platform value="OSX32">False</Platform>
@@ -190,6 +191,9 @@
                     <Platform Name="Win32">
                         <RemoteName>docto.rsm</RemoteName>
                     </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\exe\docto.exe" Configuration="TobyBuild" Class="ProjectOutput">
+                    <Platform Name="Win32"/>
                 </DeployFile>
                 <DeployClass Required="true" Name="DependencyPackage">
                     <Platform Name="iOSDevice">

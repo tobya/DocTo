@@ -24,7 +24,11 @@ Const
   ERRORS = 1;
   SILENT = 0;
 
-  DOCTO_VERSION = '0.9.18';
+  // APP
+  MSWORD = 1;
+  MSEXCEL = 2;
+
+  DOCTO_VERSION = '1.0.19.40.alpha';
 
 type
 
@@ -159,6 +163,8 @@ type
 
     // Load Config
     procedure LoadConfig(Params: TStrings);
+    function ChooseConverter(Params: TStrings): integer;
+
     procedure ConfigLoggingLevel(Params: TStrings);
 
     function Execute() : string; virtual;
@@ -693,11 +699,80 @@ begin
   end;
 end;
 
+function TDocumentConverter.ChooseConverter(Params: TStrings) : integer;
+var  f , iParam, idx: integer;
+pstr : string;
+id, value, tmppath : string;
+HelpStrings : TResourceStrings;
+tmpext : String;
+valueBool : Boolean;
+
+begin
+  // Initialise
+  iParam := 0;
+
+  ConfigLoggingLevel(Params);
+
+  OutputLog := true;
+  OutputLogFile := '';
+
+  log('Loading ChooseConverter...',VERBOSE);
+  log('Parameter Count is ' + inttostr(params.Count), VERBOSE);
+
+  if Params.Count = 0 then
+  begin
+      log('Parameters Expected: -H for help');
+      halt(1);
+  end ;
+
+  Result := MSWord;
+
+
+  While iParam <= Params.Count -1 do
+  begin
+    pstr := Params[iParam];
+
+    id := UpperCase( pstr);
+    if ParamCount -1  > iParam then
+    begin
+      try
+        value := Trim(Params[iParam +1]);
+      except on E: Exception do
+        HaltWithError(202,E.message);
+      end;
+    end
+    else
+    begin
+      value := '';
+    end;
+
+    // jump to next id + value
+    inc(iParam,2);
+
+
+    if (id = '-XL') or
+       (id = '--EXCEL') then
+    begin
+       Result := MSEXCEL;
+
+
+    end
+    else if (id = '-WD') or
+            (id = '--WORD') then
+    begin
+      Result := MSWORD;
+
+    end;
+
+  end;
+
+end;
+
 procedure TDocumentConverter.LoadConfig(Params: TStrings);
 var  f , iParam, idx: integer;
 pstr : string;
 id, value, tmppath : string;
-HelpStrings : TStringList;
+HelpStrings : TResourceStrings;
 tmpext : String;
 valueBool : Boolean;
 
@@ -773,6 +848,14 @@ begin
       end;
 
 
+    end
+    else if (id = '-XL') or
+            (id = '--EXCEL') or
+            (id = '-WD') or
+            (id = '--WORD')    then
+    begin
+      // ignore
+      dec(iparam);
     end
     else if (id = '-OX') or
             (id = '--OUTPUTEXTENSION') then
@@ -985,24 +1068,26 @@ begin
             (id = '-?') or
             (id = '?') then
     begin
-      HelpStrings := TStringList.Create;
-      try
-        LoadStringListFromResource('HELP',HelpStrings);
-        log(format( HelpStrings.Text, [DOCTO_VERSION, OfficeAppVersion]));
-      finally
-        HelpStrings.Free;
-      end;
+      HelpStrings := TResourceStrings.Create();
+      HelpStrings.Load('HELP');
+      log(format( HelpStrings.Text, [DOCTO_VERSION, OfficeAppVersion]));
+      HelpStrings.Free;
       log('');
       log('FILE FORMATS');
       for f := 0 to Formats.Count -1 do
       begin
         log(Formats.Names[f] + '=' + Formats.Values[Formats.Names[f]]);
       end;
-
+        LogHelp('HELPJSON');
       halt(2);
+    end
+    else if (id = '--help-excel') then
+    begin
+      LogHelp('EXCELFORMATS');
     end
     else if (id = '-HJ') then
     begin
+    log( 'hJ');
     LogHelp('HELPJSON');
       halt(2);
     end
@@ -1104,11 +1189,11 @@ begin
 end;
 
 procedure TDocumentConverter.LogHelp(HelpResName: String);
-var HelpStrings : TStringList;
+var HelpStrings : TResourceStrings;
 begin
-      HelpStrings := TStringList.Create;
+      HelpStrings := TResourceStrings.Create;
       try
-        LoadStringListFromResource(HelpResName,HelpStrings);
+       HelpStrings.Load(HelpResName);
         log(HelpStrings.Text);
       finally
         HelpStrings.Free;
