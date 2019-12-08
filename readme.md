@@ -94,7 +94,7 @@ https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-u
       --HELP -?
       -XL Use Excel for Conversion
           --excel
-      -WD Use Word for Converstion (Default)
+      -WD Use Word for Conversion (Default)
           --word
       -F  Input File or Directory
           --inputfile
