@@ -73,14 +73,14 @@
     <PropertyGroup Condition="'$(Cfg_3_Win32)'!=''">
         <VerInfo_MajorVer>1</VerInfo_MajorVer>
         <Debugger_RunParams>-f &quot;D:\Development\GitHub\DocTo\test\Inputfiles\&quot;  -o &quot;D:\Development\GitHub\DocTo\test\GeneratedFiles&quot;    -T  wdFormatPDF -OX pdf  -NX -L 5</Debugger_RunParams>
-        <VerInfo_Build>41</VerInfo_Build>
+        <VerInfo_Build>43</VerInfo_Build>
         <VerInfo_PreRelease>false</VerInfo_PreRelease>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <VerInfo_AutoGenVersion>false</VerInfo_AutoGenVersion>
         <VerInfo_Release>19</VerInfo_Release>
         <Icon_MainIcon>docto_Icon2.ico</Icon_MainIcon>
         <VerInfo_MinorVer>0</VerInfo_MinorVer>
-        <VerInfo_Keys>CompanyName=Toflidium Software;FileDescription=DocTo - Convert doc files to any available format;FileVersion=1.0.19.41;InternalName=;LegalCopyright=Toby Allen;LegalTrademarks=;OriginalFilename=docto.exe;ProductName=DocTo;ProductVersion=1.0.19.40;Comments=https://github.com/tobya/DocTo</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Toflidium Software;FileDescription=DocTo - Convert doc files to any available format;FileVersion=1.0.19.43;InternalName=;LegalCopyright=Toby Allen;LegalTrademarks=;OriginalFilename=docto.exe;ProductName=DocTo;ProductVersion=1.0.19.40;Comments=https://github.com/tobya/DocTo</VerInfo_Keys>
         <DCC_ExeOutput>..\exe</DCC_ExeOutput>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
     </PropertyGroup>
@@ -145,7 +145,7 @@
                     <VersionInfo Name="MajorVer">0</VersionInfo>
                     <VersionInfo Name="MinorVer">4</VersionInfo>
                     <VersionInfo Name="Release">4</VersionInfo>
-                    <VersionInfo Name="Build">57</VersionInfo>
+                    <VersionInfo Name="Build">59</VersionInfo>
                     <VersionInfo Name="Debug">True</VersionInfo>
                     <VersionInfo Name="PreRelease">True</VersionInfo>
                     <VersionInfo Name="Special">False</VersionInfo>
@@ -157,7 +157,7 @@
                 <VersionInfoKeys>
                     <VersionInfoKeys Name="CompanyName">Toflidium Software</VersionInfoKeys>
                     <VersionInfoKeys Name="FileDescription"/>
-                    <VersionInfoKeys Name="FileVersion">0.4.4.57</VersionInfoKeys>
+                    <VersionInfoKeys Name="FileVersion">0.4.4.59</VersionInfoKeys>
                     <VersionInfoKeys Name="InternalName"/>
                     <VersionInfoKeys Name="LegalCopyright">Toflidium Software</VersionInfoKeys>
                     <VersionInfoKeys Name="LegalTrademarks"/>
@@ -183,9 +183,6 @@
                 <DeployFile LocalName="$(BDS)\Redist\osx32\libcgunwind.1.0.dylib" Class="DependencyModule">
                     <Platform Name="OSX32"/>
                     <Platform Name="iOSSimulator"/>
-                </DeployFile>
-                <DeployFile LocalName="..\exe\docto.exe" Configuration="TobyBuild" Class="ProjectOutput">
-                    <Platform Name="Win32"/>
                 </DeployFile>
                 <DeployFile LocalName="..\exe\docto.rsm" Configuration="TobyBuild" Class="DebugSymbols">
                     <Platform Name="Win32">
