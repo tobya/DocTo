@@ -28,7 +28,7 @@ Const
   MSWORD = 1;
   MSEXCEL = 2;
 
-  DOCTO_VERSION = '1.0.1.alpha';
+  DOCTO_VERSION = '1.0.2.alpha';
 
 type
 
@@ -699,7 +699,7 @@ function TDocumentConverter.ChooseConverter(Params: TStrings) : integer;
 var  f , iParam, idx: integer;
 pstr : string;
 id, value, tmppath : string;
-HelpStrings : TStringList;
+HelpStrings : TResourceStrings;
 tmpext : String;
 valueBool : Boolean;
 
@@ -768,7 +768,7 @@ procedure TDocumentConverter.LoadConfig(Params: TStrings);
 var  f , iParam, idx: integer;
 pstr : string;
 id, value, tmppath : string;
-HelpStrings : TStringList;
+HelpStrings : TResourceStrings;
 tmpext : String;
 valueBool : Boolean;
 
@@ -1060,24 +1060,26 @@ begin
             (id = '-?') or
             (id = '?') then
     begin
-      HelpStrings := TStringList.Create;
-      try
-        LoadStringListFromResource('HELP',HelpStrings);
-        log(format( HelpStrings.Text, [DOCTO_VERSION, OfficeAppVersion]));
-      finally
-        HelpStrings.Free;
-      end;
+      HelpStrings := TResourceStrings.Create();
+      HelpStrings.Load('HELP');
+      log(format( HelpStrings.Text, [DOCTO_VERSION, OfficeAppVersion]));
+      HelpStrings.Free;
       log('');
       log('FILE FORMATS');
       for f := 0 to Formats.Count -1 do
       begin
         log(Formats.Names[f] + '=' + Formats.Values[Formats.Names[f]]);
       end;
-
+        LogHelp('HELPJSON');
       halt(2);
+    end
+    else if (id = '--help-excel') then
+    begin
+      LogHelp('EXCELFORMATS');
     end
     else if (id = '-HJ') then
     begin
+    log( 'hJ');
     LogHelp('HELPJSON');
       halt(2);
     end
@@ -1179,11 +1181,11 @@ begin
 end;
 
 procedure TDocumentConverter.LogHelp(HelpResName: String);
-var HelpStrings : TStringList;
+var HelpStrings : TResourceStrings;
 begin
-      HelpStrings := TStringList.Create;
+      HelpStrings := TResourceStrings.Create;
       try
-        LoadStringListFromResource(HelpResName,HelpStrings);
+       HelpStrings.Load(HelpResName);
         log(HelpStrings.Text);
       finally
         HelpStrings.Free;
