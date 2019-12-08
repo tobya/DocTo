@@ -1,6 +1,7 @@
 WORDFORMATS     TEXT    res\wdFormats.txt
 EXTENSIONS      TEXT    res\wdFormatsExt.txt
-HELP    TEXT    res\HelpLog.txt
-HELPJSON TEXT   res\HelpJSONLog.txt
-HELPWEBHOOK TEXT res\HelpWebHook.txt
-HELPERRORS TEXT res\HelpErrors.txt
+HELP            TEXT    res\HelpLog.txt
+HELPJSON        TEXT   res\HelpJSONLog.txt
+HELPWEBHOOK     TEXT res\HelpWebHook.txt
+HELPERRORS      TEXT res\HelpErrors.txt
+WORDCONSTANTS   TEXT    res\wdConstants.txt

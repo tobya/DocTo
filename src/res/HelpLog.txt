@@ -62,6 +62,9 @@ Parameters markers are case insensitive. Short and Long can be used mixed.
       --halterror
   -V  Show Versions.  DocTo and Word/Excel
 
+  --bookmarksource      PDF conversions can take their bookmarks from
+                        word-bookmarks, word-headings or none
+
 Extra Parameters
 
   --skipdocswithtoc

@@ -48,7 +48,8 @@ type
     FFirstLogEntry: boolean;
     FList_ErrorDocs : boolean;
     FList_ErrorDocs_Seconds : Integer;
-   FIgnore_ErrorDocs : boolean;
+    FIgnore_ErrorDocs : boolean;
+    FBookMarkSource : integer;
 
 
     procedure SetCompatibilityMode(const Value: Integer);
@@ -60,6 +61,7 @@ type
     procedure SetList_ErrorDocs(const Value: Boolean);
     procedure SetList_ErrorDocs_Seconds(const Value: Integer);
     procedure SetIgnore_ErrorDocs(const Value: Boolean);
+
   protected
     Formats : TStringlist;
     fFormatsExtensions : TStringlist;
@@ -91,6 +93,8 @@ type
     FRemoveFileOnConvert: boolean;
 
     FIgnoreErrorDocsFile : TStringList;
+
+
 
 
     FIsFileOutput: Boolean;
@@ -152,6 +156,8 @@ type
 
     Constructor Create();
     Destructor Destroy(); override;
+
+    // Load Config
     procedure LoadConfig(Params: TStrings);
     procedure ConfigLoggingLevel(Params: TStrings);
 
@@ -188,6 +194,7 @@ type
     property InputExtension: String read GetExtension write SetExtension;
     property CompatibilityMode : Integer read FCompatibilityMode write SetCompatibilityMode;
     property Encoding : Integer read FEncoding write SetEncoding;
+    property BookMarkSource: Integer read FBookMarkSource;
 
   end;
 
@@ -935,6 +942,10 @@ begin
       end;
 
 
+    end
+    else if (id = '--BOOKMARKSOURCE') then
+    begin
+//       FBookMarkSource =
     end
     else if (id = '-W') or
             (id = '--WEBHOOK') then

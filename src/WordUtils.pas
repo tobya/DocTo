@@ -21,6 +21,7 @@ TWordDocConverter = Class(TDocumentConverter)
 Private
     FWordVersion : String;
     WordApp : OleVariant;
+
 public
     Constructor Create();
     function CreateOfficeApp() : boolean;  override;
@@ -28,6 +29,7 @@ public
     function ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): TConversionInfo; override;
     function AvailableFormats() : TStringList; override;
     function FormatsExtensions(): TStringList; override;
+    function WordConstants: TStringList;
     function OfficeAppVersion() : String; override;
 End;
 
@@ -80,6 +82,16 @@ begin
   result := Extensions;
 end;
 
+function TWordDocConverter.WordConstants() : TStringList;
+var
+  Constants : TStringList;
+
+begin
+  Constants := Tstringlist.Create();
+  LoadStringListFromResource('WORDCONSTANTS',Constants);
+
+  result := Constants;
+end;
 
 
 
@@ -226,30 +238,22 @@ begin
         begin
         // Saveas works for pdf but github issue 79 requestes exporting bookmarks
         // also which requires ExportAsFixedFormat
-          (*  WordApp.ActiveDocument.ExportAsFixedFormat
-            OutputFileName:= _
-            ExportFormat:= _
-    wdExportFormatPDF, OpenAfterExport:=True, OptimizeFor:= _
-    wdExportOptimizeForPrint, Range:=wdExportAllDocument, From:=1, To:=1, _
-    Item:=wdExportDocumentContent, IncludeDocProps:=True, KeepIRM:=True, _
-    CreateBookmarks:=wdExportCreateHeadingBookmarks, DocStructureTags:=True, _
-    BitmapMissingFonts:=True, UseISO19005_1:=False  *)
-
-WordApp.ActiveDocument.ExportAsFixedFormat(
-         OutputFilename,  //   OutputFileName:=
-         OutputfileFormat, //   ExportFormat:=
-         true,//   OpenAfterExport:=True,
-         wdExportOptimizeForPrint,//   OptimizeFor:= _
-         wdExportAllDocument,//   Range
-         1,//   From:=1,
-         1,//   To:=1, _
-         wdExportDocumentContent,//   Item:=wdExportDocumentContent,
-         True,//   IncludeDocProps:=True,
-         true,//   KeepIRM:=True, _
-         wdExportCreateWordBookmarks,//   CreateBookmarks:=wdExportCreateHeadingBookmarks,
-         true,//   DocStructureTags:=True, _
-         true,//   BitmapMissingFonts:=True,
-         False//   UseISO19005_1:=False
+        // https://docs.microsoft.com/en-us/office/vba/api/word.document.exportasfixedformat
+        WordApp.ActiveDocument.ExportAsFixedFormat(
+                   OutputFilename,  //   OutputFileName:=
+                   OutputfileFormat, //   ExportFormat:=
+                   true,//   OpenAfterExport:=True,
+                   wdExportOptimizeForPrint,//   OptimizeFor:= _
+                   wdExportAllDocument,//   Range
+                   1,//   From:=1,
+                   1,//   To:=1, _
+                   wdExportDocumentContent,//   Item:=
+                   True,//   IncludeDocProps:=True,
+                   true,//   KeepIRM:=True, _
+                   wdExportCreateWordBookmarks,//   CreateBookmarks
+                   true,//   DocStructureTags:=True, _
+                   true,//   BitmapMissingFonts:=True,
+                   False//   UseISO19005_1:=False
          );
         end else
         begin

@@ -1,0 +1,6 @@
+wdExportCreateHeadingBookmarks=1
+WordHeadings=1
+wdExportCreateNoBookmarks=0
+None=0
+wdExportCreateWordBookmarks=2
+WordBookmarks=2

@@ -2,16 +2,25 @@
 <BorlandProject>
 	<Transactions>
     <Transaction>1899/12/30 00:00:00.000.606,=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.547,D:\Development\GitHub\DocTo\src\res\HelpErrors.txt=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
+    <Transaction>1899/12/30 00:00:00.000.547,D:\Development\GitHub\DocTo\src\New1.txt=D:\Development\GitHub\DocTo\src\res\HelpErrors.txt</Transaction>
     <Transaction>2016/05/07 18:18:35.000.138,=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
-    <Transaction>2016/05/07 18:18:48.000.672,D:\Development\GitHub\DocTo\src\res\wdEncoding.txt=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
+    <Transaction>2016/05/07 18:18:48.000.672,D:\Development\GitHub\DocTo\src\New1.txt=D:\Development\GitHub\DocTo\src\res\wdEncoding.txt</Transaction>
     <Transaction>2018/07/30 15:26:37.000.443,=D:\Development\GitHub\DocTo\src\Unit1.pas</Transaction>
-    <Transaction>2018/07/30 15:28:03.000.644,D:\Development\GitHub\DocTo\src\Unit1.dfm=D:\Development\GitHub\DocTo\src\datamodSSL.dfm</Transaction>
-    <Transaction>2018/07/30 15:28:03.000.644,D:\Development\GitHub\DocTo\src\Unit1.pas=D:\Development\GitHub\DocTo\src\datamodSSL.pas</Transaction>
+    <Transaction>2018/07/30 15:28:03.000.644,D:\Development\GitHub\DocTo\src\datamodSSL.pas=D:\Development\GitHub\DocTo\src\Unit1.pas</Transaction>
+    <Transaction>2018/07/30 15:28:03.000.644,D:\Development\GitHub\DocTo\src\datamodSSL.dfm=D:\Development\GitHub\DocTo\src\Unit1.dfm</Transaction>
+    <Transaction>2019/12/04 21:44:44.000.850,=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
+    <Transaction>2019/12/04 21:45:32.000.832,D:\Development\GitHub\DocTo\src\New1.txt=D:\Development\GitHub\DocTo\changes.txt</Transaction>
+    <Transaction>2019/12/04 21:46:37.000.447,=D:\Development\GitHub\DocTo\src\ExcelUtils.pas</Transaction>
+    <Transaction>2019/12/04 22:24:12.000.751,=D:\Development\GitHub\DocTo\src\res\xlsFormatsExt.txt</Transaction>
+    <Transaction>2019/12/04 22:24:12.000.645,=D:\Development\GitHub\DocTo\src\res\xlsFormats.txt</Transaction>
+    <Transaction>2019/12/04 22:26:42.000.891,=D:\Development\GitHub\DocTo\src\xlsFormats.rc</Transaction>
+    <Transaction>2019/12/05 21:00:49.740,=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
+    <Transaction>2019/12/05 21:01:42.789,D:\Development\GitHub\DocTo\src\res\wdConstants.txt=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="..\..\DocTo"/>
     <File Path="..\readme.md"/>
+    <File Path="..\changes.txt"/>
     <File Path="res"/>
     <File Path="res\HelpErrors.txt"/>
     <File Path="res\HelpJSONLog.txt"/>
@@ -21,6 +30,9 @@
     <File Path="res\wdEncoding.txt"/>
     <File Path="res\wdFormats.txt"/>
     <File Path="res\wdFormatsExt.txt"/>
+    <File Path="res\xlsFormats.txt"/>
+    <File Path="res\xlsFormatsExt.txt"/>
+    <File Path="res\wdConstants.txt"/>
     <File Path="MainUtils.pas"/>
     <File Path="PathUtils.pas"/>
     <File Path="ResourceUtils.pas"/>
@@ -28,5 +40,6 @@
     <File Path="WordUtils.pas"/>
     <File Path="datamodSSL.pas"/>
     <File Path="datamodSSL.dfm"/>
+    <File Path="xlsFormats.rc"/>
   </ProjectSortOrder>
 </BorlandProject>
