@@ -2,10 +2,13 @@ Help
 Docto Version:%s
 Office Version : %s
 Source: https://github.com/tobya/DocTo/
-Command Line Parameters
+Description: DocTo converts Word Documents and Excel Spreadsheets to other formats.
+
+Command Line Parameters:
 Each Parameter should be followed by its value eg
         -f "c:\Docs\MyDoc.doc" -O "C:\MyDir\MyFile"
-Parameters markers are case insensitive. Short and Long can be used mixed.
+Parameters markers are case insensitive. Short and Long can be used mixed. All
+parameters and values need to be seperated by a ' ' space.
   -H  This message
       --HELP -?
   -XL Use Excel for Conversion
