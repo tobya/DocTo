@@ -16,6 +16,24 @@ interface
 
 uses Classes;
 
+
+type
+
+TResourceStrings = class(TStringList)
+private
+  { private declarations }
+protected
+  { protected declarations }
+public
+  { public declarations }
+
+  Procedure Load(ResourceName: String);
+
+published
+  { published declarations }
+end;
+
+
 procedure LoadStringListFromResource(const ResName: string;SL : TStringList);
 
 implementation
@@ -32,4 +50,15 @@ begin
     RS.Free;
   end;
 end;
+{ TResourceStrings }
+
+
+
+procedure TResourceStrings.Load(ResourceName: String);
+begin
+
+        LoadStringListFromResource('HELP',Self);
+
+end;
+
 end.

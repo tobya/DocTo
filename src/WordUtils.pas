@@ -60,7 +60,7 @@ var
 
 begin
   Extensions := Tstringlist.Create();
-  LoadStringListFromResource('EXTENSIONS',Extensions);
+  LoadStringListFromResource('DOCEXTENSIONS',Extensions);
 
   result := Extensions;
 end;

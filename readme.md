@@ -18,20 +18,13 @@ Further Information available at https://tobya.github.io/DocTo/
 XLSTo
 =====
 
-Simple utility for converting an Excel Spreadsheet '.xls' file to any other supported file format such as .txt .csv .pdf etc.
-
-Can also be used to convert .csv, .txt to .xls .
-
-Can be used to convert older excel documents to latest format.
-
-Must have Microsoft Excel installed on host machine.
-
-Further information available [here](xlsTo.md)
+XLSTo is now incorporated into DocTo.  Previously XLSTo was a seperate EXE that was used to convert xls files to csv or pdf.  This can now be done with the main `DocTo.exe` by simply adding the -XL flag.
 
 
 ## Features
 
   1. Convert Doc/RTF/Text file to any Word SaveAs Type Doc/Text/RTF/PDF
+  1. Convert XLS/XLSX/CSV file to any Excel SaveAs Type CSV/Text/PDF
   1. [Single File Conversion](https://github.com/tobya/DocTo/wiki/Converting-a-File-to-PDF)
   1. [Multiple / Directory File Conversion.](https://github.com/tobya/DocTo/wiki/Converting-a-directory-of-files)
   1. [Delete after conversion](https://github.com/tobya/DocTo/wiki/Delete-%5Cinput-File-after-conversion)
@@ -92,13 +85,17 @@ https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-u
 ## Command Line Help
 
     Help
-    Version:0.9.18
+    Version:1.0.1.alphpa
     Source: https://github.com/tobya/DocTo/
     Command Line Parameters
     Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\MyDir\MyFile"
     Parameters markers are case insensitive. Short and Long can be used mixed.
       -H  This message
       --HELP -?
+      -XL Use Excel for Conversion
+          --excel
+      -WD Use Word for Conversion (Default)
+          --word
       -F  Input File or Directory
           --inputfile
       -FX Input Extension to search for if directory.  Default "*.doc*" (will find ".docx" also)
