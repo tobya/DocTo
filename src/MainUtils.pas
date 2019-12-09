@@ -28,7 +28,7 @@ Const
   MSWORD = 1;
   MSEXCEL = 2;
 
-  DOCTO_VERSION = '1.0.19.40.alpha';
+  DOCTO_VERSION = '1.0.21.41.alpha';
 
 type
 
@@ -52,7 +52,8 @@ type
     FFirstLogEntry: boolean;
     FList_ErrorDocs : boolean;
     FList_ErrorDocs_Seconds : Integer;
-   FIgnore_ErrorDocs : boolean;
+    FIgnore_ErrorDocs : boolean;
+    FBookMarkSource : integer;
 
 
     procedure SetCompatibilityMode(const Value: Integer);
@@ -96,6 +97,8 @@ type
     FRemoveFileOnConvert: boolean;
 
     FIgnoreErrorDocsFile : TStringList;
+
+
 
 
     FIsFileOutput: Boolean;
@@ -158,7 +161,7 @@ type
     Constructor Create();
     Destructor Destroy(); override;
 
-
+    // Load Config
     procedure LoadConfig(Params: TStrings);
     function ChooseConverter(Params: TStrings): integer;
 
@@ -197,6 +200,7 @@ type
     property InputExtension: String read GetExtension write SetExtension;
     property CompatibilityMode : Integer read FCompatibilityMode write SetCompatibilityMode;
     property Encoding : Integer read FEncoding write SetEncoding;
+    property BookMarkSource: Integer read FBookMarkSource;
 
   end;
 
@@ -370,18 +374,19 @@ var
 begin
 LogLevel := STANDARD;
 iParam := 0;
-lOG(ID,VERBOSE);
+//lOG(ID,VERBOSE);
+//log('top');
 While iParam <= Params.Count -1 do
   begin
     pstr := Params[iParam];
-    log(inttostr(iparam), VERBOSE);
+   // log('-xx-' + inttostr(iparam), VERBOSE);
     id := UpperCase( pstr);
     if ParamCount -1  > iParam then
     begin
       try
         value := Trim(Params[iParam +1]);
       except on E: Exception do
-        HaltWithError(202,E.message);
+        HaltWithError(202,E.message );
       end;
     end
     else
@@ -389,13 +394,14 @@ While iParam <= Params.Count -1 do
       value := '';
     end;
     inc(iParam,2);
-    lOG(ID,VERBOSE);
+   // lOG(ID,VERBOSE);
     if id  = '-L' then
     begin
+     // log('asdfas' + value);
       if isNumber(value) then
       begin
         LogLevel := strtoint(value);
-
+       // break;
       end
     end
     else if id  = '-Q' then
@@ -404,8 +410,10 @@ While iParam <= Params.Count -1 do
       OutputLog := false;
       //Doesn't require a value
       dec(iParam);
-    end
+    end ;
+
   end;
+
   Log('Log Level Set To:' + IntToStr(FLogLevel),CHATTY);
 end;
 
@@ -447,6 +455,7 @@ begin
   fSkipDocsWithTOC := false;
   fSkipDocsExist :=  false;
   FFirstLogEntry := true;
+  FBookMarkSource := 1; //wdExportCreateHeadingBookmarks
 
   FInputFiles := TStringList.Create;
 end;
@@ -768,7 +777,7 @@ procedure TDocumentConverter.LoadConfig(Params: TStrings);
 var  f , iParam, idx: integer;
 pstr : string;
 id, value, tmppath : string;
-HelpStrings : TResourceStrings;
+HelpStrings, WordConstants : TResourceStrings;
 tmpext : String;
 valueBool : Boolean;
 
@@ -1020,6 +1029,18 @@ begin
           HaltWithConfigError(200,'If -R is used it must be followed by true or false');
       end;
 
+
+    end
+    else if (id = '--BOOKMARKSOURCE') then
+    begin
+         WordConstants := TResourceStrings.Create;
+         WordConstants.Load('WORDCONSTANTS');
+         //Log(WordConstants.Text, Verbose);
+         if (WordConstants.Exists(value)) then
+         begin
+           FBookMarkSource := StrToInt( WordConstants.Values[value]);
+           log('Set Bookmark To: ' + InttoStr(FBookmarkSource), Verbose);
+         end;
 
     end
     else if (id = '-W') or

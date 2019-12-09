@@ -14,6 +14,8 @@ test/privatetest/
 exe/
 test/InputFiles/ignore/
 test/InputFiles/generatedfiles/
+test/Generated*
+test/InputFiles3*
 
 ############
 # Delphi

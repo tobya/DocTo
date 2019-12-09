@@ -21,6 +21,7 @@ TWordDocConverter = Class(TDocumentConverter)
 Private
     FWordVersion : String;
     WordApp : OleVariant;
+
 public
     Constructor Create();
     function CreateOfficeApp() : boolean;  override;
@@ -28,6 +29,7 @@ public
     function ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): TConversionInfo; override;
     function AvailableFormats() : TStringList; override;
     function FormatsExtensions(): TStringList; override;
+    function WordConstants: TStringList;
     function OfficeAppVersion() : String; override;
 End;
 
@@ -37,6 +39,21 @@ const
 wdDoNotSaveChanges    =	 0; //	Do not save pending changes.
 wdSaveChanges         =	-1; //	Save pending changes automatically without prompting the user.
 wdPromptToSaveChanges	= -2;	//  Prompt the user to save pending changes.
+
+wdExportOptimizeForOnScreen	 = 1;
+wdExportOptimizeForPrint  =	0;
+
+wdExportAllDocument	= 0;
+wdExportCurrentPage	= 2;
+wdExportFromTo	=3;
+wdExportSelection	=1;
+
+wdExportDocumentContent =	0; //	Exports the document without markup.
+wdExportDocumentWithMarkup	=7;
+
+wdExportCreateHeadingBookmarks =	1;//	Create a bookmark in the exported document for each Microsoft Word heading, which includes only headings within the main document and text boxes not within headers, footers, endnotes, footnotes, or comments.
+wdExportCreateNoBookmarks=	0; //	Do not create bookmarks in the exported document.
+wdExportCreateWordBookmarks=	2;  //Create a bookmark in the exported document for each Word bookmark, which includes all bookmarks except those contained within headers and footers.
 
 
 
@@ -65,6 +82,16 @@ begin
   result := Extensions;
 end;
 
+function TWordDocConverter.WordConstants() : TStringList;
+var
+  Constants : TStringList;
+
+begin
+  Constants := Tstringlist.Create();
+  LoadStringListFromResource('WORDCONSTANTS',Constants);
+
+  result := Constants;
+end;
 
 
 
@@ -206,6 +233,32 @@ begin
       end;
       aSave:
       begin
+
+        if OutputfileFormat = 17 then
+        begin
+        // Saveas works for pdf but github issue 79 requestes exporting bookmarks
+        // also which requires ExportAsFixedFormat
+        // https://docs.microsoft.com/en-us/office/vba/api/word.document.exportasfixedformat
+        WordApp.ActiveDocument.ExportAsFixedFormat(
+                   OutputFilename,  //   OutputFileName:=
+                   OutputfileFormat, //   ExportFormat:=
+                   true,//   OpenAfterExport:=True,
+                   wdExportOptimizeForPrint,//   OptimizeFor:= _
+                   wdExportAllDocument,//   Range
+                   1,//   From:=1,
+                   1,//   To:=1, _
+                   wdExportDocumentContent,//   Item:=
+                   True,//   IncludeDocProps:=True,
+                   true,//   KeepIRM:=True, _
+                   BookmarkSource,//   CreateBookmarks
+                   true,//   DocStructureTags:=True, _
+                   true,//   BitmapMissingFonts:=True,
+                   False//   UseISO19005_1:=False
+         );
+        end else
+        begin
+
+
         try
             //SaveAs2 was introduced in 2010 V 14 by this list
             //https://stackoverflow.com/a/29077879/6244
@@ -259,6 +312,7 @@ begin
         finally
                 // Close the document - do not save changes if doc has changed in any way.
                 Wordapp.activedocument.Close(wdDoNotSaveChanges);
+        end;
         end;
     end;
     end;
