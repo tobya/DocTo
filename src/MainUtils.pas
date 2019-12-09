@@ -28,7 +28,7 @@ Const
   MSWORD = 1;
   MSEXCEL = 2;
 
-  DOCTO_VERSION = '1.0.19.40.alpha';
+  DOCTO_VERSION = '1.0.21.41.alpha';
 
 type
 
@@ -455,6 +455,7 @@ begin
   fSkipDocsWithTOC := false;
   fSkipDocsExist :=  false;
   FFirstLogEntry := true;
+  FBookMarkSource := 1; //wdExportCreateHeadingBookmarks
 
   FInputFiles := TStringList.Create;
 end;

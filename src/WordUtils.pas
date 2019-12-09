@@ -250,7 +250,7 @@ begin
                    wdExportDocumentContent,//   Item:=
                    True,//   IncludeDocProps:=True,
                    true,//   KeepIRM:=True, _
-                   wdExportCreateWordBookmarks,//   CreateBookmarks
+                   BookmarkSource,//   CreateBookmarks
                    true,//   DocStructureTags:=True, _
                    true,//   BitmapMissingFonts:=True,
                    False//   UseISO19005_1:=False
