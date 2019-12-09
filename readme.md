@@ -3,14 +3,14 @@
 DocTo
 ====
 
-Simple utility for converting a Microsoft Word Document '.doc' file to any other supported format 
-such as .txt .rtf .pdf.  
+Simple utility for converting a Microsoft Word Document '.doc' and Microsoft Excel '.xls' files to any other supported format 
+such as .txt .csv .rtf .pdf.  
 
-Can also be used to convert .txt, .rtf to .doc or .pdf format.
+Can also be used to convert .txt, .rtf, .csv to .doc, .xls or .pdf format.
 
 Can be used to convert older word documents to latest format.
 
-Must have Microsoft Word installed on host machine.
+Must have Microsoft Word or Excel installed on host machine.
 
 Download Release From Github Releases - https://github.com/tobya/DocTo/releases/
 Further Information available at https://tobya.github.io/DocTo/
