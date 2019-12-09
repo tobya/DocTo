@@ -1031,7 +1031,7 @@ begin
 
 
     end
-    else if (id = '--PDFBOOKMARKSOURCE') then
+    else if (id = '--BOOKMARKSOURCE') then
     begin
          WordConstants := TResourceStrings.Create;
          WordConstants.Load('WORDCONSTANTS');

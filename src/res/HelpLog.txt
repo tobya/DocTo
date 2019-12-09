@@ -72,7 +72,7 @@ parameters and values need to be seperated by a ' ' space.
 
   -V  Show Versions.  DocTo and Word/Excel
 
-  --pdfbookmarksource  PDF conversions can take their bookmarks from
+  --bookmarksource     PDF conversions can take their bookmarks from
                        WordBookmarks, WordHeadings (default) or None
 
 Extra Parameters
