@@ -34,6 +34,7 @@ public
 End;
 
 
+
 const
 
 wdDoNotSaveChanges    =	 0; //	Do not save pending changes.

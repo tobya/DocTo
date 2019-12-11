@@ -27,6 +27,7 @@ Const
   // APP
   MSWORD = 1;
   MSEXCEL = 2;
+  MSPOWERPOINT = 3;
 
   DOCTO_VERSION = '1.0.21.41.alpha';
 
@@ -767,7 +768,13 @@ begin
     begin
       Result := MSWORD;
 
+    end
+    else if (id = '-PP') or
+            (id = '--POWERPOINT') then
+    begin
+       Result := MSPOWERPOINT;
     end;
+
 
   end;
 
@@ -857,7 +864,9 @@ begin
     else if (id = '-XL') or
             (id = '--EXCEL') or
             (id = '-WD') or
-            (id = '--WORD')    then
+            (id = '--WORD') or
+            (id = '-PP') or
+            (id = '--POWERPOINT') then
     begin
       // ignore
       dec(iparam);

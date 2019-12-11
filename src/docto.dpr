@@ -29,13 +29,15 @@ uses
   ResourceUtils in 'ResourceUtils.pas',
   PathUtils in 'PathUtils.pas',
   datamodSSL in 'datamodSSL.pas' {dmSSL: TDataModule},
-  ExcelUtils in 'ExcelUtils.pas';
+  ExcelUtils in 'ExcelUtils.pas',
+  PowerPointUtils in 'PowerPointUtils.pas';
 
 var
   i, Converter : integer;
   paramlist : TStringlist;
   DocConv : TWordDocConverter;
   XLSConv : TExcelXLSConverter;
+  PPConv : TPowerPointConverter;
   LogResult : String;
 begin
 
@@ -45,6 +47,7 @@ begin
    try
      DocConv := TWordDocConverter.Create;
      XLSConv := TExcelXLSConverter.Create;
+     PPConv := TPowerPointConverter.Create;
     try
 
       for i := 1 to ParamCount do
@@ -62,16 +65,24 @@ begin
             LogResult :=  DocConv.Execute;
       DocConv.log( LogResult );
       end
-      else begin
+      else IF Converter = MSEXCEL  then begin
         XLSConv.LoadConfig(ParamList);
         LogResult :=  XLSConv.Execute;
         XLSConv.log( LogResult );
+      end
+      ELSE if Converter = MSPOWERPOINT then
+      begin
+        PPConv.LoadConfig(ParamList);
+        LogResult := PPConv.Execute;
+        PPConv.Log(LogResult);
       end;
 
       CoUninitialize;
     finally
       DocConv.free;
       XLSConv.Free;
+      PPConv.Free;
+
     end;
    except on E: Exception do
     begin
