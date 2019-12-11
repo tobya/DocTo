@@ -242,13 +242,13 @@ begin
         WordApp.ActiveDocument.ExportAsFixedFormat(
                    OutputFilename,  //   OutputFileName:=
                    OutputfileFormat, //   ExportFormat:=
-                   true,//   OpenAfterExport:=True,
+                   false,//   OpenAfterExport:=True,
                    wdExportOptimizeForPrint,//   OptimizeFor:= _
                    wdExportAllDocument,//   Range
                    1,//   From:=1,
                    1,//   To:=1, _
                    wdExportDocumentContent,//   Item:=
-                   True,//   IncludeDocProps:=True,
+                   false,//   IncludeDocProps:=True,
                    true,//   KeepIRM:=True, _
                    BookmarkSource,//   CreateBookmarks
                    true,//   DocStructureTags:=True, _

@@ -1,15 +1,4 @@
-Help
-Docto Version:%s
-Office Version : %s
-Source: https://github.com/tobya/DocTo/
-Description: DocTo converts Word Documents and Excel Spreadsheets to other formats.
-
-Command Line Parameters:
-Each Parameter should be followed by its value eg
-        -f "c:\Docs\MyDoc.doc" -O "C:\MyDir\MyFile"
-Parameters markers are case insensitive. Short and Long can be used mixed. All
-parameters and values need to be seperated by a ' ' space.
-  -H  This message
+ -H  This message
       --HELP -?
   -XL Use Excel for Conversion
       --excel
@@ -74,13 +63,13 @@ parameters and values need to be seperated by a ' ' space.
       not converting, set this to false to ignore errors and continue with
       batch job.
       --halterror
+
   -V  Show Versions.  DocTo and Word/Excel
 
-  --bookmarksource     PDF conversions can take their bookmarks from
-                       WordBookmarks, WordHeadings (default) or None
-  --eff-openonconvert  Default False; Should PDF file open in system
-                       viewer on conversion.
-
+  --bookmarksource        PDF conversions can take their bookmarks from
+                          WordBookmarks, WordHeadings (default) or None
+  --pdf-openonconvert     Default False; Should PDF file open in system
+                          viewer on conversion.
 
 Extra Parameters
 
@@ -90,27 +79,3 @@ Extra Parameters
   --donotoverwrite
       Existing files are overridden by default, if you do not wish a file to be
       skipped if its output exists, use this.
-
-ERROR CODES:
-200 : Invalid File Format specified
-201 : Insufficient Inputs.  Minimum of Input File, Output File & Type
-202 : Incorrect switches.  Switch requires value
-203 : Unknown switch in command
-204 : Input File does not exist
-220 : Word or COM Error
-221 : Word not Installed
-400 : Unknown Error
-
-COMPATIBILITY MODES:
-FROM https://msdn.microsoft.com/en-us/library/office/ff836084.aspx
-
-wdCurrent  : 65535 Compatibility mode equivalent to the latest version of
-                    Microsoft Word.
-wdWord2003 : 11    Word 2010 is put into a mode that is most compatible with
-                   Word 2003. Features new to Word 2010 are disabled in this mode.
-wdWord2007 : 12    Word 2010 is put into a mode that is most compatible with
-                   Office Word 2007.
-                   Features new to Word 2010 are disabled in this mode.
-wdWord2010 : 14    Word 2013 is put into a mode that is most compatible with .
-                   Features new to Word 2013 are disabled in this mode.
-wdWord2013 : 15    Default. All Word 2013 features are enabled.
