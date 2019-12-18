@@ -242,7 +242,7 @@ begin
         WordApp.ActiveDocument.ExportAsFixedFormat(
                    OutputFilename,  //   OutputFileName:=
                    OutputfileFormat, //   ExportFormat:=
-                   true,//   OpenAfterExport:=True,
+                   OpenAfterExport, // OpenAfterExport
                    wdExportOptimizeForPrint,//   OptimizeFor:= _
                    wdExportAllDocument,//   Range
                    1,//   From:=1,
