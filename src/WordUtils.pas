@@ -13,7 +13,7 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMA
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ****************************************************************)
 interface
-uses Classes, MainUtils, ResourceUtils,  ActiveX, ComObj, WinINet, Variants, sysutils, Types, StrUtils;
+uses Classes, MainUtils, ResourceUtils,  ActiveX, ComObj, WinINet, Variants, sysutils, Types, StrUtils,Word_TLB_Constants;
 
 type
 
@@ -32,30 +32,6 @@ public
     function WordConstants: TStringList;
     function OfficeAppVersion() : String; override;
 End;
-
-
-const
-
-wdDoNotSaveChanges    =	 0; //	Do not save pending changes.
-wdSaveChanges         =	-1; //	Save pending changes automatically without prompting the user.
-wdPromptToSaveChanges	= -2;	//  Prompt the user to save pending changes.
-
-wdExportOptimizeForOnScreen	 = 1;
-wdExportOptimizeForPrint  =	0;
-
-wdExportAllDocument	= 0;
-wdExportCurrentPage	= 2;
-wdExportFromTo	=3;
-wdExportSelection	=1;
-
-wdExportDocumentContent =	0; //	Exports the document without markup.
-wdExportDocumentWithMarkup	=7;
-
-wdExportCreateHeadingBookmarks =	1;//	Create a bookmark in the exported document for each Microsoft Word heading, which includes only headings within the main document and text boxes not within headers, footers, endnotes, footnotes, or comments.
-wdExportCreateNoBookmarks=	0; //	Do not create bookmarks in the exported document.
-wdExportCreateWordBookmarks=	2;  //Create a bookmark in the exported document for each Word bookmark, which includes all bookmarks except those contained within headers and footers.
-
-
 
 
 implementation
@@ -233,8 +209,9 @@ begin
       end;
       aSave:
       begin
+
         try
-          if OutputfileFormat = 17 then
+          if OutputfileFormat = wdFormatPDF then
           begin
             // Saveas works for pdf but github issue 79 requestes exporting bookmarks
             // also which requires ExportAsFixedFormat
