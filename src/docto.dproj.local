@@ -10,8 +10,8 @@
     <Transaction>2019/12/04 21:44:44.000.850,=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
     <Transaction>2019/12/04 21:45:32.000.832,D:\Development\GitHub\DocTo\changes.txt=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
     <Transaction>2019/12/04 21:46:37.000.447,=D:\Development\GitHub\DocTo\src\ExcelUtils.pas</Transaction>
-    <Transaction>2019/12/04 22:24:12.000.751,=D:\Development\GitHub\DocTo\src\res\xlsFormatsExt.txt</Transaction>
     <Transaction>2019/12/04 22:24:12.000.645,=D:\Development\GitHub\DocTo\src\res\xlsFormats.txt</Transaction>
+    <Transaction>2019/12/04 22:24:12.000.751,=D:\Development\GitHub\DocTo\src\res\xlsFormatsExt.txt</Transaction>
     <Transaction>2019/12/04 22:26:42.000.891,=D:\Development\GitHub\DocTo\src\xlsFormats.rc</Transaction>
     <Transaction>2019/12/08 15:01:54.000.284,C:\DEVELOPMENT\Delphi\github\DocTo\src\Docto.rc=C:\DEVELOPMENT\Delphi\github\DocTo\src\wdFormats.rc</Transaction>
     <Transaction>2019/12/08 15:18:29.000.644,C:\DEVELOPMENT\Delphi\github\DocTo\src\xlsFormats.rc=</Transaction>
@@ -19,6 +19,10 @@
     <Transaction>2019/12/08 16:12:32.000.100,C:\DEVELOPMENT\Delphi\github\DocTo\src\New1.md=C:\DEVELOPMENT\Delphi\github\DocTo\changes.md</Transaction>
     <Transaction>2019/12/08 16:13:40.000.332,C:\DEVELOPMENT\Delphi\github\DocTo\src\Docto.rc=C:\DEVELOPMENT\Delphi\github\DocTo\src\ExtraFiles.rc</Transaction>
     <Transaction>2019/12/08 21:24:12.000.560,=C:\DEVELOPMENT\Delphi\github\DocTo\src\res\wdConstants.txt</Transaction>
+    <Transaction>2019/12/21 16:41:51.492,=D:\Development\GitHub\DocTo\src\Word_TLB.pas</Transaction>
+    <Transaction>2019/12/21 16:44:07.296,=D:\Development\GitHub\DocTo\src\Unit1.pas</Transaction>
+    <Transaction>2019/12/21 16:44:27.322,D:\Development\GitHub\DocTo\src\Word_TLB_Constants.pas=D:\Development\GitHub\DocTo\src\Unit1.pas</Transaction>
+    <Transaction>2019/12/21 16:44:45.218,D:\Development\GitHub\DocTo\src\Word_TLB.pas=</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="..\..\DocTo"/>
@@ -30,13 +34,14 @@
     <File Path="res\HelpJSONLog.txt"/>
     <File Path="res\HelpLog.txt"/>
     <File Path="res\HelpWebHook.txt"/>
+    <File Path="res\ppFormats.txt"/>
     <File Path="res\WdCompatibilityMode.txt"/>
+    <File Path="res\wdConstants.txt"/>
     <File Path="res\wdEncoding.txt"/>
     <File Path="res\wdFormats.txt"/>
     <File Path="res\wdFormatsExt.txt"/>
     <File Path="res\xlsFormats.txt"/>
     <File Path="res\xlsFormatsExt.txt"/>
-    <File Path="res\wdConstants.txt"/>
     <File Path="MainUtils.pas"/>
     <File Path="PathUtils.pas"/>
     <File Path="ResourceUtils.pas"/>
@@ -45,5 +50,6 @@
     <File Path="datamodSSL.pas"/>
     <File Path="datamodSSL.dfm"/>
     <File Path="ExcelUtils.pas"/>
+    <File Path="Word_TLB_Constants.pas"/>
   </ProjectSortOrder>
 </BorlandProject>
