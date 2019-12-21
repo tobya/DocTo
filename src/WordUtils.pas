@@ -233,88 +233,86 @@ begin
       end;
       aSave:
       begin
-
-        if OutputfileFormat = 17 then
-        begin
-        // Saveas works for pdf but github issue 79 requestes exporting bookmarks
-        // also which requires ExportAsFixedFormat
-        // https://docs.microsoft.com/en-us/office/vba/api/word.document.exportasfixedformat
-        WordApp.ActiveDocument.ExportAsFixedFormat(
-                   OutputFilename,  //   OutputFileName:=
-                   OutputfileFormat, //   ExportFormat:=
-                   true,//   OpenAfterExport:=True,
-                   wdExportOptimizeForPrint,//   OptimizeFor:= _
-                   wdExportAllDocument,//   Range
-                   1,//   From:=1,
-                   1,//   To:=1, _
-                   wdExportDocumentContent,//   Item:=
-                   True,//   IncludeDocProps:=True,
-                   true,//   KeepIRM:=True, _
-                   BookmarkSource,//   CreateBookmarks
-                   true,//   DocStructureTags:=True, _
-                   true,//   BitmapMissingFonts:=True,
-                   False//   UseISO19005_1:=False
-         );
-        end else
-        begin
-
-
         try
-            //SaveAs2 was introduced in 2010 V 14 by this list
-            //https://stackoverflow.com/a/29077879/6244
-            if (strtoint( OfficeAppVersion) < 14) then
-            begin
-                  log('Version < 14 Using Saveas Function', VERBOSE);
-                  Wordapp.activedocument.Saveas(OutputFilename ,
-                                                OutputFileFormat,
-                                                EmptyParam, //LockComments,
-                                                EmptyParam, //Password,
-                                                EmptyParam, //AddToRecentFiles,
-                                                EmptyParam, //WritePassword,
-                                                EmptyParam, //ReadOnlyRecommended,
-                                                EmptyParam, //EmbedTrueTypeFonts,
-                                                EmptyParam, //SaveNativePictureFormat,
-                                                EmptyParam, //SaveFormsData,
-                                                EmptyParam, //SaveAsAOCELetter,
-                                                wdEncoding, //Encoding,
-                                                EmptyParam, //InsertLineBreaks,
-                                                EmptyParam, //AllowSubstitutions,
-                                                EmptyParam, //LineEnding,
-                                                EmptyParam //AddBiDiMarks
-                                                );
+          if OutputfileFormat = 17 then
+          begin
+            // Saveas works for pdf but github issue 79 requestes exporting bookmarks
+            // also which requires ExportAsFixedFormat
+            // https://docs.microsoft.com/en-us/office/vba/api/word.document.exportasfixedformat
+            WordApp.ActiveDocument.ExportAsFixedFormat(
+                     OutputFilename,  //   OutputFileName:=
+                     OutputfileFormat, //   ExportFormat:=
+                     true,//   OpenAfterExport:=True,
+                     wdExportOptimizeForPrint,//   OptimizeFor:= _
+                     wdExportAllDocument,//   Range
+                     1,//   From:=1,
+                     1,//   To:=1, _
+                     wdExportDocumentContent,//   Item:=
+                     True,//   IncludeDocProps:=True,
+                     true,//   KeepIRM:=True, _
+                     BookmarkSource,//   CreateBookmarks
+                     true,//   DocStructureTags:=True, _
+                     true,//   BitmapMissingFonts:=True,
+                     False//   UseISO19005_1:=False
+            );
+          end
+          else
+          begin
+              //SaveAs2 was introduced in 2010 V 14 by this list
+              //https://stackoverflow.com/a/29077879/6244
+              if (strtoint( OfficeAppVersion) < 14) then
+              begin
+                    log('Version < 14 Using Saveas Function', VERBOSE);
+                    Wordapp.activedocument.Saveas(OutputFilename ,
+                                                  OutputFileFormat,
+                                                  EmptyParam, //LockComments,
+                                                  EmptyParam, //Password,
+                                                  EmptyParam, //AddToRecentFiles,
+                                                  EmptyParam, //WritePassword,
+                                                  EmptyParam, //ReadOnlyRecommended,
+                                                  EmptyParam, //EmbedTrueTypeFonts,
+                                                  EmptyParam, //SaveNativePictureFormat,
+                                                  EmptyParam, //SaveFormsData,
+                                                  EmptyParam, //SaveAsAOCELetter,
+                                                  wdEncoding, //Encoding,
+                                                  EmptyParam, //InsertLineBreaks,
+                                                  EmptyParam, //AllowSubstitutions,
+                                                  EmptyParam, //LineEnding,
+                                                  EmptyParam //AddBiDiMarks
+                                                  );
 
-            end
-            else
-            begin
-                  log('Version >= 14 Using Saveas2 Function', VERBOSE);
-                  Wordapp.activedocument.Saveas2(OutputFilename ,OutputFileFormat,
-                                            EmptyParam,  //LockComments
-                                            EmptyParam,  //Password
-                                            EmptyParam,  //AddToRecentFiles
-                                            EmptyParam,  //WritePassword
-                                            EmptyParam,  //ReadOnlyRecommended
-                                            EmptyParam,  //EmbedTrueTypeFonts
-                                            EmptyParam,  //SaveNativePictureFo
-                                            EmptyParam,  //SaveFormsData
-                                            EmptyParam,  //SaveAsAOCELetter
-                                            wdEncoding,  //Encoding
-                                            EmptyParam,  //InsertLineBreaks
-                                            EmptyParam,  //AllowSubstitutions
-                                            EmptyParam,  //LineEnding
-                                            EmptyParam,  //AddBiDiMarks
-                                            CompatibilityMode  //CompatibilityMode
-                                            );
-            end;
-            Result.Successful := true;
-            Result.OutputFile := OutputFilename;
-            Result.Error := '';
-            log('FileCreated: ' + OutputFilename, STANDARD);
-        finally
-                // Close the document - do not save changes if doc has changed in any way.
-                Wordapp.activedocument.Close(wdDoNotSaveChanges);
-        end;
-        end;
-    end;
+              end
+              else
+              begin
+                    log('Version >= 14 Using Saveas2 Function', VERBOSE);
+                    Wordapp.activedocument.Saveas2(OutputFilename ,OutputFileFormat,
+                                              EmptyParam,  //LockComments
+                                              EmptyParam,  //Password
+                                              EmptyParam,  //AddToRecentFiles
+                                              EmptyParam,  //WritePassword
+                                              EmptyParam,  //ReadOnlyRecommended
+                                              EmptyParam,  //EmbedTrueTypeFonts
+                                              EmptyParam,  //SaveNativePictureFo
+                                              EmptyParam,  //SaveFormsData
+                                              EmptyParam,  //SaveAsAOCELetter
+                                              wdEncoding,  //Encoding
+                                              EmptyParam,  //InsertLineBreaks
+                                              EmptyParam,  //AllowSubstitutions
+                                              EmptyParam,  //LineEnding
+                                              EmptyParam,  //AddBiDiMarks
+                                              CompatibilityMode  //CompatibilityMode
+                                              );
+              end;
+              Result.Successful := true;
+              Result.OutputFile := OutputFilename;
+              Result.Error := '';
+              log('FileCreated: ' + OutputFilename, STANDARD);
+          end;
+       finally
+            // Close the document - do not save changes if doc has changed in any way.
+            Wordapp.activedocument.Close(wdDoNotSaveChanges);
+       end;
+     end;
     end;
 
 
