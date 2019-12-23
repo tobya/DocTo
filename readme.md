@@ -192,4 +192,3 @@ The project compiles with Delphi (I use XE4 but it should compile with most vers
 
 0.5.5   Changes made to logging.  -Q and -L 0 now work correctly ensuring nothing is output to console.  Must specify -G or -GL to get access to logs and errors.
                                 Also -L 10 now outputs extra as logging param is loaded first.
-

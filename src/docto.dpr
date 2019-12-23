@@ -30,7 +30,8 @@ uses
   PathUtils in 'PathUtils.pas',
   datamodSSL in 'datamodSSL.pas' {dmSSL: TDataModule},
   ExcelUtils in 'ExcelUtils.pas',
-  PowerPointUtils in 'PowerPointUtils.pas';
+  PowerPointUtils in 'PowerPointUtils.pas',
+  Word_TLB_Constants in 'Word_TLB_Constants.pas';
 
 var
   i, Converter : integer;

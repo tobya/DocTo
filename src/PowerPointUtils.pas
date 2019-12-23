@@ -18,7 +18,6 @@ public
     function ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): TConversionInfo; override;
     function AvailableFormats() : TStringList; override;
     function FormatsExtensions(): TStringList; override;
-    function WordConstants: TStringList;
     function OfficeAppVersion() : String; override;
 End;
 
@@ -40,7 +39,6 @@ begin
   if  VarIsEmpty(PPApp) then
   begin
     PPApp :=  CreateOleObject('PowerPoint.Application');
-//    PPApp.Visible := false;
   end;
   Result := true;
 end;
@@ -79,9 +77,6 @@ begin
 
 end;
 
-function TPowerPointConverter.WordConstants: TStringList;
-begin
 
-end;
 
 end.
