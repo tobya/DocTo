@@ -37,35 +37,23 @@ End;
 implementation
 
 function TWordDocConverter.AvailableFormats() : TStringList;
-var
-  Formats : TStringList;
-
 begin
-  Formats := Tstringlist.Create();
-  LoadStringListFromResource('WORDFORMATS',Formats);
-
+  Formats := TResourceStrings.Create('WORDFORMATS');
   result := Formats;
 end;
 
 function TWordDocConverter.FormatsExtensions() : TStringList;
-var
-  Extensions : TStringList;
 
 begin
-  Extensions := Tstringlist.Create();
-  LoadStringListFromResource('DOCEXTENSIONS',Extensions);
-
+  Extensions := TResourceStrings.Create('DOCEXTENSIONS');
   result := Extensions;
 end;
 
 function TWordDocConverter.WordConstants() : TStringList;
-var
-  Constants : TStringList;
+
 
 begin
-  Constants := Tstringlist.Create();
-  LoadStringListFromResource('WORDCONSTANTS',Constants);
-
+  Constants := TResourceStrings.Create('WORDCONSTANTS');
   result := Constants;
 end;
 

@@ -1033,8 +1033,8 @@ begin
     end
     else if (id = '--BOOKMARKSOURCE') then
     begin
-         WordConstants := TResourceStrings.Create;
-         WordConstants.Load('WORDCONSTANTS');
+         WordConstants := TResourceStrings.Create('WORDCONSTANTS');
+//         WordConstants.Load('WORDCONSTANTS');
          //Log(WordConstants.Text, Verbose);
          if (WordConstants.Exists(value)) then
          begin
@@ -1081,7 +1081,7 @@ begin
             (id = '-?') or
             (id = '?') then
     begin
-      HelpStrings := TResourceStrings.Create();
+      HelpStrings := TResourceStrings.Create('HELP');
       HelpStrings.Load('HELP');
       log(format( HelpStrings.Text, [DOCTO_VERSION, OfficeAppVersion]));
       HelpStrings.Free;
@@ -1204,9 +1204,9 @@ end;
 procedure TDocumentConverter.LogHelp(HelpResName: String);
 var HelpStrings : TResourceStrings;
 begin
-      HelpStrings := TResourceStrings.Create;
+      HelpStrings := TResourceStrings.Create(HelpResName);
       try
-       HelpStrings.Load(HelpResName);
+
         log(HelpStrings.Text);
       finally
         HelpStrings.Free;

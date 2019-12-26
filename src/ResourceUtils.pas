@@ -26,7 +26,7 @@ protected
   { protected declarations }
 public
   { public declarations }
-
+  Constructor Create(ResourceName : String);
   Procedure Load(ResourceName: String);
   Function Exists(Key : String) : Boolean;
 
@@ -54,6 +54,12 @@ end;
 { TResourceStrings }
 
 
+
+constructor TResourceStrings.Create(ResourceName: String);
+begin
+  inherited Create;
+  Load(ResourceName);
+end;
 
 function TResourceStrings.Exists(Key: String): Boolean;
 var idx : integer;
