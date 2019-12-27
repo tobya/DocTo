@@ -11,10 +11,10 @@ Parameters markers are case insensitive. Short and Long can be used mixed. All
 parameters and values need to be seperated by a ' ' space.
   -H  This message
       --HELP -?
-  -XL Use Excel for Conversion
-      --excel
   -WD Use Word for Converstion (Default)
       --word
+  -XL Use Excel for Conversion
+      --excel
   -F  Input File or Directory
       --inputfile
   -FX Input Extension to search for if directory.
@@ -74,20 +74,20 @@ parameters and values need to be seperated by a ' ' space.
       not converting, set this to false to ignore errors and continue with
       batch job.
       --halterror
-
   -V  Show Versions.  DocTo and Word/Excel
 
-  --bookmarksource     PDF conversions can take their bookmarks from
-                       WordBookmarks, WordHeadings (default) or None
-
-Extra Parameters
-
-  --skipdocswithtoc
-      EXPERIMENTAL.  Will skip any docs that contain a TOC to prevent hanging.
-      Currently matches some false positives.  Default False.
+Extra Parameters:
+  --bookmarksource     
+      PDF conversions can take their bookmarks from
+      WordBookmarks, WordHeadings (default) or None
   --donotoverwrite
       Existing files are overridden by default, if you do not wish a file to be
       skipped if its output exists, use this.
+      
+Experimental:      
+  --skipdocswithtoc
+      EXPERIMENTAL.  Will skip any docs that contain a TOC to prevent hanging.
+      Currently matches some false positives.  Default False.
 
 ERROR CODES:
 200 : Invalid File Format specified

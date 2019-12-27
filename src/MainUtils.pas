@@ -1,24 +1,23 @@
 ﻿unit MainUtils;
 (*************************************************************
 Copyright © 2012 Toby Allen (https://github.com/tobya)
-
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction,
 including without limitation the rights to use, copy, modify, merge, publish, distribute, sub-license, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
 subject to the following conditions:
-
 The above copyright notice, and every other copyright notice found in this software, and all the attributions in every file, and this permission notice shall be included in all copies or substantial portions of the Software.
-
 THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ****************************************************************)
 interface
-uses classes, Windows, sysutils, ActiveX, ComObj, WinINet, Variants,  Types,  ResourceUtils,
-     PathUtils, ShellAPI, datamodssl;
+uses  classes, Windows, sysutils, ActiveX, ComObj, WinINet, Variants,
+      Types,  ResourceUtils,
+      PathUtils, ShellAPI, datamodssl;
 
 Const
   VERBOSE = 10;
   DEBUG = 9;
+  HELP = 8;
   CHATTY = 5;
   STANDARD = 2;
   ERRORS = 1;
@@ -28,7 +27,7 @@ Const
   MSWORD = 1;
   MSEXCEL = 2;
 
-  DOCTO_VERSION = '1.0.21.41.alpha';
+  DOCTO_VERSION = '1.0.23.41.alpha';
 
 type
 
@@ -183,6 +182,7 @@ type
     FUNCTION AfterConversion(InputFile, OutputFile: String):string;
     Function OnConversionError(InputFile, OutputFile, Error: String):string;
     procedure LogHelp(HelpResName : String);
+
 
 
     property OutputLog : Boolean read FOutputLog write SetOutputLog;
@@ -1081,22 +1081,22 @@ begin
             (id = '-?') or
             (id = '?') then
     begin
+
       HelpStrings := TResourceStrings.Create('HELP');
-      HelpStrings.Load('HELP');
-      log(format( HelpStrings.Text, [DOCTO_VERSION, OfficeAppVersion]));
+      log(format( HelpStrings.Text, [DOCTO_VERSION, OfficeAppVersion]),Help);
       HelpStrings.Free;
+
       log('');
-      log('FILE FORMATS');
-      for f := 0 to Formats.Count -1 do
-      begin
-        log(Formats.Names[f] + '=' + Formats.Values[Formats.Names[f]]);
-      end;
-        LogHelp('HELPJSON');
+      log('FILE FORMATS', Formats, Help);
+
+      // Log after TODO done
+      //LogHelp('HELPJSON');
       halt(2);
     end
-    else if (id = '--help-excel') then
+    else if (id = '--HELP-EXCEL') then
     begin
       LogHelp('EXCELFORMATS');
+      halt(2);
     end
     else if (id = '-HJ') then
     begin
@@ -1150,14 +1150,34 @@ end;
 
 
 procedure TDocumentConverter.Log(Msg: String; Level : Integer = ERRORS );
+var
+  OutputLog, OutputTimeStamp : Boolean;
 begin
+  Outputlog := false;
+  OutputTimeStamp := false;
+
 
 
 
   if Level <= FLogLevel then
   begin
+    OutputLog := true;
+  END;
+
+
 
     if FFirstLogEntry then
+    begin
+    OutputTimeStamp := true;
+     end;
+
+  if Level = HELP then
+  begin
+      OutputLog := true;
+      OutputTimeStamp := false;
+  end;
+
+    if OutputTimeStamp then
     begin
       FFirstLogEntry := false;
       Msg := '[' + FormatDateTime('YYYYMMDD HH:NN:SS -' , now) +  ']: '  +  Msg;
@@ -1173,7 +1193,7 @@ begin
       FLogFile.Add(Msg);
       FLogFile.SaveToFile(FLogFilename);
     end;
-  end;
+
 end;
 
 procedure TDocumentConverter.Log(Msg: String; List:  TStrings; Level: Integer);
@@ -1207,7 +1227,7 @@ begin
       HelpStrings := TResourceStrings.Create(HelpResName);
       try
 
-        log(HelpStrings.Text);
+        log(HelpStrings.Text,Help);
       finally
         HelpStrings.Free;
       end;

@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-
-  </Transactions>
+	</Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="..\..\docto"/>
     <File Path="..\changes.md"/>
@@ -29,6 +28,6 @@
     <File Path="datamodSSL.pas"/>
     <File Path="datamodSSL.dfm"/>
     <File Path="ExcelUtils.pas"/>
-
+    <File Path="Word_TLB_Constants.pas"/>
   </ProjectSortOrder>
 </BorlandProject>
