@@ -511,7 +511,7 @@ begin
     begin
       if OutputExt = '' then
       begin
-        OutputExt := '.' + fFormatsExtensions.Values[OutputFileFormatString];
+        OutputExt := '.' + FormatsExtensions.Values[OutputFileFormatString];
         log('Output Extension is ' + outputExt, CHATTY);
       end;
 

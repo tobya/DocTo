@@ -109,8 +109,7 @@ begin
 end;
 
 function TWordDocConverter.ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): TConversionInfo;
-Type
-  TExitAction = (aSave,aClose, aExit);
+
 var
   wdEncoding : OleVariant;
   NonsensePassword : OleVariant;
