@@ -2,16 +2,17 @@ unit Excel_TLB_Constants;
 
 
 // ************************************************************************ //
-// WARNING                                                                    
-// -------                                                                   // 'Refresh' command of the Type Library Editor activated while editing the   
-// Type Library, the contents of this file will be regenerated and all        
-// manual modifications will be lost.                                         
+// NOTE
+// -------
+// This file is created by importing the Excel Type Library and then extracting
+// the constants section of the TLB.pas file.  Other declaraitons are not required.
 // ************************************************************************ //
 
 // $Rev: 52393 $
 // File generated on 27 Dec 2019 19:52:33 from Type Library described below.
 
-// ************************************************************************  //86\Microsoft Shared\OFFICE16\MSO.DLL)
+// ************************************************************************
+//86\Microsoft Shared\OFFICE16\MSO.DLL)
 //   (2) v2.0 stdole, (C:\Windows\SysWOW64\stdole2.tlb)
 //   (3) v5.3 VBIDE, (C:\Program Files (x86)\Microsoft Office\Root\VFS\ProgramFilesCommonX86\Microsoft Shared\VBA\VBA6\VBE6EXT.OLB)
 // Type Lib: C:\Program Files (x86)\Microsoft Office\Root\Office16\EXCEL.EXE (1)
