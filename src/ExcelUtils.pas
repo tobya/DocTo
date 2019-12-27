@@ -14,7 +14,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 ****************************************************************)
 interface
 
-uses Classes,Sysutils, MainUtils, ResourceUtils,  ActiveX, ComObj, WinINet, Variants;
+uses Classes,Sysutils, MainUtils, ResourceUtils,  ActiveX, ComObj, WinINet, Variants, StrUtils;
 
 type
 
@@ -74,7 +74,16 @@ begin
   Result := true;
 end;
 
+
+
+//Useful Links:
+//    https://docs.microsoft.com/en-us/office/vba/api/excel.workbooks.open
+
+
 function TExcelXLSConverter.ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): TConversionInfo;
+var
+    NonsensePassword :OleVariant;
+    ExitAction :TExitAction;
 begin
             //Open doc and save in requested format.
 
@@ -83,8 +92,70 @@ begin
             log(OutputFilename, VERBOSE);
             OutputFilename := stringreplace(OutputFilename, '\\', '\', [rfReplaceAll]);
             log(OutputFilename, verbose);
-            ExcelApp.Workbooks.Open( FileToConvert);
+            ExitAction := aSave;
+              NonsensePassword := 'tfm554!ghAGWRDD';
+              try
+            ExcelApp.Workbooks.Open( FileToConvert,
+                                      EmptyParam,
+                                      False,
+                                      EmptyParam,
+                                      NonsensePassword
+                                      );
+                Except on E : Exception do
+                begin
 
+                            // if ErroR contains EOleException The password is incorrect.
+                          // then it is password protected and should be skipped.
+                          if ContainsStr(E.Message, 'The password you supplied is not correct' ) then
+                          begin
+                             log('Error Occured:' +  E.Message + ' ' + E.ClassName, Verbose);
+                             log('SKIPPED - Password Protected:' + fileToConvert, STANDARD);
+                             Result.Error := 'SKIPPED - Password Protected:';
+                             ExitAction := aExit;
+
+                          end
+                          else
+                          begin
+                            // fallback error log
+                            logerror(ConvertErrorText(E.ClassName) + ' ' + ConvertErrorText(E.Message));
+                            Result.Successful := false;
+                            Result.OutputFile := '';
+                            Result.Error := E.Message;
+                            Exit();
+                          end;
+                end;
+
+              end;
+            //FileName					,
+//UpdateLinks					,
+//,
+//ReadOnly					,
+//Format						,
+//Password					,
+//WriteResPassword			,
+//IgnoreReadOnlyRecommended,
+//Origin						,
+//Delimiter					,
+//Editable					,
+//,
+//Notify						,
+//Converter					,
+//AddToMru					,
+//Local						,
+
+
+    case exitAction of
+        aExit:
+           begin
+                   Result.Successful := false;
+        Result.OutputFile := '';
+        end;
+        aClose:
+        begin
+            ExcelApp.ActiveWorkbook.Close();
+           end;
+        aSave:
+        begin
             //PDF and XPS are not an actual standard xls output format so we created our own.
             if OutputFileFormat = 50000 then //pdf
             begin
@@ -117,6 +188,8 @@ begin
             end;
 
             ExcelApp.ActiveWorkbook.Close();
+            end;
+    end;
 end;
 
 
