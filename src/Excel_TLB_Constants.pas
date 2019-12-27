@@ -2801,8 +2801,9 @@ const
 
 
 // Constants for enum XlFixedFormatType
-  xlTypePDF = $00000000;
-  xlTypeXPS = $00000001;
+// Modified.
+  XlFixedFormatType_xlTypePDF = $00000000;
+  XlFixedFormatType_xlTypeXPS = $00000001;
 
 
 // Constants for enum XlFixedFormatQuality

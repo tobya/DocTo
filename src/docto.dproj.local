@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>2019 12 27 20:00:55.237,=C:\dev\github\docto\src\Excel_TLB_Constants.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.237,=C:\dev\github\docto\src\Excel_TLB_Constants.pas</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="..\..\docto"/>
