@@ -101,6 +101,7 @@
         </DCCReference>
         <DCCReference Include="ExcelUtils.pas"/>
         <DCCReference Include="Word_TLB_Constants.pas"/>
+        <DCCReference Include="Excel_TLB_Constants.pas"/>
         <None Include="..\readme.md"/>
         <None Include="res\wdFormats.txt"/>
         <None Include="res\HelpLog.txt"/>

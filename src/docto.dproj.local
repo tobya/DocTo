@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-	</Transactions>
+    <Transaction>2019 12 27 20:00:55.237,=C:\dev\github\docto\src\Excel_TLB_Constants.pas</Transaction>
+  </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="..\..\docto"/>
     <File Path="..\changes.md"/>
@@ -29,5 +30,6 @@
     <File Path="datamodSSL.dfm"/>
     <File Path="ExcelUtils.pas"/>
     <File Path="Word_TLB_Constants.pas"/>
+    <File Path="Excel_TLB_Constants.pas"/>
   </ProjectSortOrder>
 </BorlandProject>
