@@ -45,13 +45,13 @@ end;
 function TWordDocConverter.FormatsExtensions() : TStringList;
 
 begin
-  Extensions := TResourceStrings.Create('DOCEXTENSIONS');
-  result := Extensions;
+  fFormatsExtensions := TResourceStrings.Create('DOCEXTENSIONS');
+  result := fFormatsExtensions;
 end;
 
 function TWordDocConverter.WordConstants() : TStringList;
-
-
+  var
+    Constants : TResourceStrings;
 begin
   Constants := TResourceStrings.Create('WORDCONSTANTS');
   result := Constants;

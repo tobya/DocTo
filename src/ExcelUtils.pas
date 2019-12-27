@@ -41,13 +41,9 @@ implementation
 
 
 function TExcelXLSConverter.AvailableFormats() : TStringList;
-var
-  Formats : TStringList;
 
 begin
-  Formats := Tstringlist.Create();
-  LoadStringListFromResource('EXCELFORMATS',Formats);
-
+  Formats := TResourceStrings.Create('EXCELFORMATS');
   result := Formats;
 end;
 
