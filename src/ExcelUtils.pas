@@ -14,7 +14,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 ****************************************************************)
 interface
 
-uses Classes,Sysutils, MainUtils, ResourceUtils,  ActiveX, ComObj, WinINet, Variants;
+uses Classes,Sysutils, MainUtils, ResourceUtils,  ActiveX, ComObj, WinINet, Variants, Excel_TLB_Constants;
 
 type
 
@@ -33,7 +33,11 @@ public
     function OfficeAppVersion() : String; override;
 End;
 
-
+const
+  xlTypePDF=50000 ;
+  xlpdf=50000 ;
+  xlTypeXPS=50001  ;
+  xlXPS=50001 ;
 
 
 implementation
@@ -85,22 +89,22 @@ begin
             log(OutputFilename, verbose);
             ExcelApp.Workbooks.Open( FileToConvert);
 
-            //PDF and XPS are not an actual standard xls output format so we created our own.
-            if OutputFileFormat = 50000 then //pdf
+            //PDF and XPS are saved using a differnt function.
+            if OutputFileFormat = xlTypePDF then //pdf
             begin
                 ExcelApp.Application.DisplayAlerts := False ;
                 //Unlike Word, in Excel you must call a different function to save a pdf. Ensure we export entire workbook.
                 ExcelApp.activeWorkbook.ExportAsFixedFormat(0, OutputFilename  );
                 ExcelApp.ActiveWorkBook.save;
             end
-            else if OutputFileFormat = 50001 then //xps
+            else if OutputFileFormat = xlTypeXPS then //xps
             begin
                 ExcelApp.Application.DisplayAlerts := False ;
                 //Unlike Word, in Excel you must call a different function to save a pdf. Ensure we export entire workbook.
                 ExcelApp.activeWorkbook.ExportAsFixedFormat(1, OutputFilename  );
                 ExcelApp.ActiveWorkBook.save;
             end
-            else if OutputFileFormat = 6 then //CSV
+            else if OutputFileFormat = xlCSV then //CSV
              begin
               //CSV pops up alert. must be hidden for automation
                 ExcelApp.Application.DisplayAlerts := False ;

@@ -101,6 +101,7 @@
         </DCCReference>
         <DCCReference Include="ExcelUtils.pas"/>
         <DCCReference Include="Word_TLB_Constants.pas"/>
+        <DCCReference Include="Excel_TLB_Constants.pas"/>
         <None Include="..\readme.md"/>
         <None Include="res\wdFormats.txt"/>
         <None Include="res\HelpLog.txt"/>
@@ -183,6 +184,10 @@
                 <Platform value="Win64">False</Platform>
             </Platforms>
             <Deployment>
+                <DeployFile LocalName="$(BDS)\Redist\osx32\libcgunwind.1.0.dylib" Class="DependencyModule">
+                    <Platform Name="OSX32"/>
+                    <Platform Name="iOSSimulator"/>
+                </DeployFile>
                 <DeployFile LocalName="..\exe\docto.rsm" Configuration="TobyBuild" Class="DebugSymbols">
                     <Platform Name="Win32">
                         <RemoteName>docto.rsm</RemoteName>
@@ -190,10 +195,6 @@
                 </DeployFile>
                 <DeployFile LocalName="..\exe\docto.exe" Configuration="TobyBuild" Class="ProjectOutput">
                     <Platform Name="Win32"/>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\Redist\osx32\libcgunwind.1.0.dylib" Class="DependencyModule">
-                    <Platform Name="OSX32"/>
-                    <Platform Name="iOSSimulator"/>
                 </DeployFile>
                 <DeployClass Required="true" Name="DependencyPackage">
                     <Platform Name="iOSDevice">
