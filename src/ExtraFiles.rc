@@ -8,3 +8,5 @@ HELPJSON TEXT   res\HelpJSONLog.txt
 HELPWEBHOOK TEXT res\HelpWebHook.txt
 HELPERRORS TEXT res\HelpErrors.txt
 WORDCONSTANTS   TEXT    res\wdConstants.txt
+
+XLCONST TEXT res\XLConst.txt
