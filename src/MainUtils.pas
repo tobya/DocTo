@@ -780,6 +780,8 @@ id, value, tmppath : string;
 HelpStrings, WordConstants : TResourceStrings;
 tmpext : String;
 valueBool : Boolean;
+  X: Integer;
+  Sval : String;
 
 begin
   // Initialise
@@ -1079,13 +1081,21 @@ begin
     // Help etc
     else if (id = '-H') or
             (id = '-?') or
-            (id = '?') then
+            (id = '?') OR
+            (id = '-help') then
     begin
 
+      //log(Value, help);
       HelpStrings := TResourceStrings.Create('HELP');
       log(format( HelpStrings.Text, [DOCTO_VERSION, OfficeAppVersion]),Help);
-      HelpStrings.Free;
 
+
+      if Value > '' then
+      begin
+        HelpStrings.Load('XLCONSTANTS');
+        log(Value + '=' + inttostr(HelpStrings.ValueasInt[Value]),help);
+      end;
+      HelpStrings.Free;
       log('');
       log('FILE FORMATS', Formats, Help);
 
