@@ -14,13 +14,21 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 ****************************************************************)
 interface
 
-uses Classes;
+uses Classes, strutils, sysutils;
 
 
 type
 
 TResourceStrings = class(TStringList)
 private
+    FValuesAreHex: Boolean;
+    FValuesAreInt: Boolean;
+    procedure SetValuesAreHex(const Value: Boolean);
+    procedure SetValuesAreInt(const Value: Boolean);
+    function GetValueasInt(Name: String): Integer;
+    procedure SetValueasInt(Name: String; const Value: Integer);
+    function GetValuebyIndexasInt(idx: integer): Integer;
+    procedure SetValuebyIndexasInt(idx: integer; const Value: Integer);
   { private declarations }
 protected
   { protected declarations }
@@ -29,6 +37,10 @@ public
   Constructor Create(ResourceName : String);
   Procedure Load(ResourceName: String);
   Function Exists(Key : String) : Boolean;
+  Property ValuesAreHex : Boolean read FValuesAreHex write SetValuesAreHex;
+  property ValuesAreInt : Boolean  read FValuesAreInt write SetValuesAreInt;
+  Property ValueasInt[Name: String]: Integer read GetValueasInt write SetValueasInt;
+  Property ValuebyIndexasInt[idx: integer] : Integer read GetValuebyIndexasInt write SetValuebyIndexasInt;
 
 published
   { published declarations }
@@ -58,6 +70,8 @@ end;
 constructor TResourceStrings.Create(ResourceName: String);
 begin
   inherited Create;
+  FValuesAreHex := false;
+  FValuesAreInt := false;
   Load(ResourceName);
 end;
 
@@ -73,11 +87,49 @@ begin
 
 end;
 
+function TResourceStrings.GetValueasInt(Name: String): Integer;
+  var
+    val : String;
+begin
+    val := Self.Values[Name];
+    Result := Strtoint(val);
+end;
+
+function TResourceStrings.GetValuebyIndexasInt(idx: integer): Integer;
+  var
+    val : String;
+begin
+    val := Self.ValueFromIndex[idx];
+    Result := Strtoint(val);
+
+end;
+
 procedure TResourceStrings.Load(ResourceName: String);
 begin
         LoadStringListFromResource(ResourceName,Self);
 end;
 
 
+
+procedure TResourceStrings.SetValueasInt(Name: String; const Value: Integer);
+begin
+
+end;
+
+procedure TResourceStrings.SetValuebyIndexasInt(idx: integer;
+  const Value: Integer);
+begin
+
+end;
+
+procedure TResourceStrings.SetValuesAreHex(const Value: Boolean);
+begin
+  FValuesAreHex := Value;
+end;
+
+procedure TResourceStrings.SetValuesAreInt(const Value: Boolean);
+begin
+  FValuesAreInt := Value;
+end;
 
 end.
