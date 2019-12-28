@@ -19,6 +19,7 @@ uses Classes, strutils, sysutils;
 
 type
 
+
 TResourceStrings = class(TStringList)
 private
     FValuesAreHex: Boolean;
@@ -57,6 +58,7 @@ var
   RS: TResourceStream;
 begin
   RS := TResourceStream.Create(HInstance, ResName, 'Text');
+  SL.Clear;
   try
     SL.LoadFromStream(RS);
   finally
