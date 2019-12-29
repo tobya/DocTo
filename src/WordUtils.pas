@@ -144,6 +144,7 @@ begin
             if Wordapp.ActiveDocument.TablesOfContents.count > 0 then
             begin
              log('SKIPPED - Document has TOC: ' + fileToConvert , STANDARD);
+             Result.Successful := false;
              Result.Error := 'SKIPPED - Document has TOC:';
              ExitAction := aClose;
             end;
@@ -156,6 +157,7 @@ begin
           if ContainsStr(E.Message, 'The password is incorrect' ) then
           begin
              log('SKIPPED - Password Protected:' + fileToConvert, STANDARD);
+             Result.Successful := false;
              Result.Error := 'SKIPPED - Password Protected:';
              ExitAction := aExit;
           end
@@ -267,11 +269,12 @@ begin
                                               CompatibilityMode  //CompatibilityMode
                                               );
               end;
+
+          end;
               Result.Successful := true;
               Result.OutputFile := OutputFilename;
               Result.Error := '';
               log('FileCreated: ' + OutputFilename, STANDARD);
-          end;
        finally
             // Close the document - do not save changes if doc has changed in any way.
             Wordapp.activedocument.Close(wdDoNotSaveChanges);
