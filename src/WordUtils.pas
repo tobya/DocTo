@@ -109,15 +109,14 @@ begin
 end;
 
 function TWordDocConverter.ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): TConversionInfo;
-Type
-  TWordExitAction = (aSave,aClose, aExit);
+
 var
   wdEncoding : OleVariant;
   NonsensePassword : OleVariant;
-  WordExitAction : TWordExitAction;
+  ExitAction : TExitAction;
 
 begin
-        WordExitAction := aSave;
+        ExitAction := aSave;
         Result.Successful := false;
         Result.InputFile := fileToConvert;
         log('ExecuteConversion:' + fileToConvert, Verbose);
@@ -146,7 +145,7 @@ begin
             begin
              log('SKIPPED - Document has TOC: ' + fileToConvert , STANDARD);
              Result.Error := 'SKIPPED - Document has TOC:';
-             WordExitAction := aClose;
+             ExitAction := aClose;
             end;
           end;
         except
@@ -158,7 +157,7 @@ begin
           begin
              log('SKIPPED - Password Protected:' + fileToConvert, STANDARD);
              Result.Error := 'SKIPPED - Password Protected:';
-             WordExitAction := aExit;
+             ExitAction := aExit;
           end
           else
           begin
@@ -183,7 +182,7 @@ begin
            wdEncoding := Encoding;
         end;
 
-      case WordExitAction of
+      case ExitAction of
       aExit :
       begin
         // document wasn't opened, so just exit function.
