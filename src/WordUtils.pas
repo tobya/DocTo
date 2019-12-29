@@ -112,6 +112,8 @@ function TWordDocConverter.ExecuteConversion(fileToConvert: String; OutputFilena
 
 var
   wdEncoding : OleVariant;
+  ExitAction : TExitAction;
+  NonsensePassword : OleVariant;
 begin
         //Open doc and save in requested format.
         ExitAction := aSave;
