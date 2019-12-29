@@ -72,15 +72,15 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_3_Win32)'!=''">
         <VerInfo_MajorVer>1</VerInfo_MajorVer>
-        <Debugger_RunParams>-f &quot;D:\Development\GitHub\DocTo\test\Inputfiles\&quot;  -o &quot;D:\Development\GitHub\DocTo\test\GeneratedFiles&quot;    -T  wdFormatPDF -OX pdf  -NX -L 5</Debugger_RunParams>
-        <VerInfo_Build>43</VerInfo_Build>
+        <Debugger_RunParams>-f C:\dev\github\docto\test\Inputfiles\ -o C:\dev\github\docto\test\generatedfiles\ -t wdFormatpdf -w &quot;https://toflidium.com/webhooks/docto/webhook_test.php&quot; -l 10</Debugger_RunParams>
+        <VerInfo_Build>44</VerInfo_Build>
         <VerInfo_PreRelease>false</VerInfo_PreRelease>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <VerInfo_AutoGenVersion>false</VerInfo_AutoGenVersion>
         <VerInfo_Release>19</VerInfo_Release>
         <Icon_MainIcon>docto_Icon2.ico</Icon_MainIcon>
         <VerInfo_MinorVer>0</VerInfo_MinorVer>
-        <VerInfo_Keys>CompanyName=Toflidium Software;FileDescription=DocTo - Convert doc files to any available format;FileVersion=1.0.19.43;InternalName=;LegalCopyright=Toby Allen;LegalTrademarks=;OriginalFilename=docto.exe;ProductName=DocTo;ProductVersion=1.0.19.40;Comments=https://github.com/tobya/DocTo</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Toflidium Software;FileDescription=DocTo - Convert doc files to any available format;FileVersion=1.0.19.44;InternalName=;LegalCopyright=Toby Allen;LegalTrademarks=;OriginalFilename=docto.exe;ProductName=DocTo;ProductVersion=1.0.19.40;Comments=https://github.com/tobya/DocTo</VerInfo_Keys>
         <DCC_ExeOutput>..\exe</DCC_ExeOutput>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
     </PropertyGroup>
@@ -100,6 +100,8 @@
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="ExcelUtils.pas"/>
+        <DCCReference Include="Word_TLB_Constants.pas"/>
+        <DCCReference Include="Excel_TLB_Constants.pas"/>
         <None Include="..\readme.md"/>
         <None Include="res\wdFormats.txt"/>
         <None Include="res\HelpLog.txt"/>
@@ -113,7 +115,9 @@
         <None Include="res\xlsFormats.txt"/>
         <None Include="res\xlsFormatsExt.txt"/>
         <None Include="..\changes.md"/>
-        <None Include="res\wdConstants.txt"/>
+        <None Include="res\ppFormats.txt"/>
+        <None Include="res\WDConst.txt"/>
+        <None Include="res\wdExtraConst.txt"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -146,7 +150,7 @@
                     <VersionInfo Name="MajorVer">0</VersionInfo>
                     <VersionInfo Name="MinorVer">4</VersionInfo>
                     <VersionInfo Name="Release">4</VersionInfo>
-                    <VersionInfo Name="Build">59</VersionInfo>
+                    <VersionInfo Name="Build">60</VersionInfo>
                     <VersionInfo Name="Debug">True</VersionInfo>
                     <VersionInfo Name="PreRelease">True</VersionInfo>
                     <VersionInfo Name="Special">False</VersionInfo>
@@ -158,7 +162,7 @@
                 <VersionInfoKeys>
                     <VersionInfoKeys Name="CompanyName">Toflidium Software</VersionInfoKeys>
                     <VersionInfoKeys Name="FileDescription"/>
-                    <VersionInfoKeys Name="FileVersion">0.4.4.59</VersionInfoKeys>
+                    <VersionInfoKeys Name="FileVersion">0.4.4.60</VersionInfoKeys>
                     <VersionInfoKeys Name="InternalName"/>
                     <VersionInfoKeys Name="LegalCopyright">Toflidium Software</VersionInfoKeys>
                     <VersionInfoKeys Name="LegalTrademarks"/>
@@ -181,17 +185,17 @@
                 <Platform value="Win64">False</Platform>
             </Platforms>
             <Deployment>
+                <DeployFile LocalName="..\exe\docto.rsm" Configuration="TobyBuild" Class="DebugSymbols">
+                    <Platform Name="Win32">
+                        <RemoteName>docto.rsm</RemoteName>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="..\exe\docto.exe" Configuration="TobyBuild" Class="ProjectOutput">
                     <Platform Name="Win32"/>
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\osx32\libcgunwind.1.0.dylib" Class="DependencyModule">
                     <Platform Name="OSX32"/>
                     <Platform Name="iOSSimulator"/>
-                </DeployFile>
-                <DeployFile LocalName="..\exe\docto.rsm" Configuration="TobyBuild" Class="DebugSymbols">
-                    <Platform Name="Win32">
-                        <RemoteName>docto.rsm</RemoteName>
-                    </Platform>
                 </DeployFile>
                 <DeployClass Required="true" Name="DependencyPackage">
                     <Platform Name="iOSDevice">

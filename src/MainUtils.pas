@@ -1,24 +1,23 @@
 ﻿unit MainUtils;
 (*************************************************************
 Copyright © 2012 Toby Allen (https://github.com/tobya)
-
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction,
 including without limitation the rights to use, copy, modify, merge, publish, distribute, sub-license, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
 subject to the following conditions:
-
 The above copyright notice, and every other copyright notice found in this software, and all the attributions in every file, and this permission notice shall be included in all copies or substantial portions of the Software.
-
 THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ****************************************************************)
 interface
-uses classes, Windows, sysutils, ActiveX, ComObj, WinINet, Variants,  Types,  ResourceUtils,
-     PathUtils, ShellAPI, datamodssl;
+uses  classes, Windows, sysutils, ActiveX, ComObj, WinINet, Variants,
+      Types,  ResourceUtils,
+      PathUtils, ShellAPI, datamodssl;
 
 Const
   VERBOSE = 10;
   DEBUG = 9;
+  HELP = 8;
   CHATTY = 5;
   STANDARD = 2;
   ERRORS = 1;
@@ -28,7 +27,7 @@ Const
   MSWORD = 1;
   MSEXCEL = 2;
 
-  DOCTO_VERSION = '1.0.21.41.alpha';
+  DOCTO_VERSION = '1.0.23.41.alpha';
 
 type
 
@@ -46,6 +45,8 @@ type
 
   End;
 
+  TExitAction = (aSave,aClose, aExit);
+
   TDocumentConverter = class
   private
     FIgnore_MACOSX: boolean;
@@ -54,6 +55,8 @@ type
     FList_ErrorDocs_Seconds : Integer;
     FIgnore_ErrorDocs : boolean;
     FBookMarkSource : integer;
+
+    FNetHandle: HINTERNET;
 
 
     procedure SetCompatibilityMode(const Value: Integer);
@@ -84,8 +87,8 @@ type
     FInputFiles : TStringList;
     FLogFilename: String;
     FDoSubDirs: Boolean;
-    FIsFileInput: Boolean;
-    FIsDirInput: Boolean;
+    FInputIsFile: Boolean;
+    FInputIsDir: Boolean;
     FOutputExt: string;
     FWebHook : String;
     FInputExtension : String;
@@ -103,8 +106,8 @@ type
 
 
 
-    FIsFileOutput: Boolean;
-    FIsDirOutput: Boolean;
+    FOutputIsFile: Boolean;
+    FOutputIsDir: Boolean;
     procedure SetInputFile(const Value: String);
     procedure SetOutputFile(const Value: String);
     procedure SetOutputFileFormat(const Value: Integer);
@@ -130,10 +133,10 @@ type
     procedure SetIsDirOutput(const Value: Boolean);
     procedure SetIsFileOutput(const Value: Boolean);
     procedure SetLogLevel(const Value: integer);
-    property IsFileInput : Boolean read FIsFileInput write SetIsFileInput;
-    property IsDirInput : Boolean read FIsDirInput write SetIsDirInput;
-    property IsFileOutput : Boolean read FIsFileOutput write SetIsFileOutput;
-    property IsDirOutput : Boolean read FIsDirOutput write SetIsDirOutput;
+    property InputIsFile : Boolean read FInputIsFile write SetIsFileInput;
+    property InputIsDir : Boolean read FInputIsDir write SetIsDirInput;
+    property OutputIsFile : Boolean read FOutputIsFile write SetIsFileOutput;
+    property OutputIsDir : Boolean read FOutputIsDir write SetIsDirOutput;
     property DoSubDirs : Boolean read FDoSubDirs write SetDoSubDirs;
     property OutputExt : string read FOutputExt write SetOutputExt;
     property LogLevel : integer read FLogLevel write SetLogLevel;
@@ -186,6 +189,7 @@ type
     FUNCTION AfterConversion(InputFile, OutputFile: String):string;
     Function OnConversionError(InputFile, OutputFile, Error: String):string;
     procedure LogHelp(HelpResName : String);
+
 
 
     property OutputLog : Boolean read FOutputLog write SetOutputLog;
@@ -287,8 +291,8 @@ begin
           sl.LoadFromFile(ignorelistfilename);
         end else begin
           sl.Add('[Comments]');
-          sl.Add('COMMENT1=THIS FILE RECORDS ANY WORD DOCUMETNS THAT TOOK LONGER THAN X SECONDS TO COMPLETE.');
-          sl.Add('COMMENT2=THIS SHOULD OVER TIME ALLOW YOU TO TRACK DOWN ALL FILES CAUSING PROBLEMS');
+          sl.Add('COMMENT1=THIS FILE RECORDS ANY WORD DOCUMENTS THAT TOOK LONGER THAN X SECONDS TO COMPLETE.');
+          sl.Add('COMMENT2=THIS SHOULD, OVER TIME ALLOW YOU TO TRACK DOWN ALL FILES CAUSING PROBLEMS');
           SL.Add('COMMENT3=THESE FILES WILL BE IGNORED ON SUBSEQUENT RUNS AS LONG AS "-NX" IS USED');
           SL.Add('COMMENT4=----DO NOT DELETE THIS FILE-----------');
           SL.Add('[FILES TO IGNORE]');
@@ -448,10 +452,10 @@ begin
   FRemoveFileOnConvert := false;
   FWebHook := '';
   FOutputExt := '';
-  FIsFileInput := false;
-  FIsDirInput := false;
-  FIsFileOutput := false;
-  FIsDirOutput := false;
+  FInputIsFile := false;
+  FInputIsDir := false;
+  FOutputIsFile := false;
+  FOutputIsDir := false;
   FCompatibilityMode := 0;
   FEncoding := -1;
   FIgnore_MACOSX := true;
@@ -480,6 +484,12 @@ begin
 
 
   FInputFiles.Free;
+
+  if assigned(FNetHandle) then
+  begin
+    InternetCloseHandle(FNetHandle);
+  end;
+
 end;
 
 
@@ -508,11 +518,11 @@ begin
     if not DoExecute  then HaltWithError(201, 'Input File, Output File and FileFormat must all be specified');
 
     // Set Output Filename if Dir Provided.
-    if (IsFileInput and IsDirOutput) then
+    if (InputIsFile and OutputIsDir) then
     begin
       if OutputExt = '' then
       begin
-        OutputExt := '.' + fFormatsExtensions.Values[OutputFileFormatString];
+        OutputExt := '.' + FormatsExtensions.Values[OutputFileFormatString];
         log('Output Extension is ' + outputExt, CHATTY);
       end;
 
@@ -541,7 +551,7 @@ begin
         Continue;
       end;
 
-      if IsDirInput then
+      if InputIsDir then
       begin
         FileToCreate := NewFileNameFromBase(FInputFile ,FOutputFile,FileToConvert, FOutputExt);
       end
@@ -588,7 +598,7 @@ begin
               CheckDocumentTiming(StartTime, EndTime, FileToConvert);
             end;
 
-            if RemoveFileOnConvert then
+            if ConversionInfo.Successful then
             begin
               if RemoveFileOnConvert then
               begin
@@ -601,13 +611,8 @@ begin
               end;
 
 
-
-          //  UrlToCall := 'action=convert&type='+ FOutputFileFormatString + '&outputfilename=' + URLEncode(FileToCreate)+ '&inputfilename=' + URLEncode(InputFile);
-
-            // Make a call to webhook if it exists
-          //  CallWebHook(UrlToCall);
-
-            AfterConversion(InputFile, FileToCreate);
+            // Make a call to webhook if it existS
+            AfterConversion(FileToConvert, FileToCreate);
 
             log('Creating File: ' + FileToCreate,CHATTY);
           end
@@ -783,6 +788,8 @@ id, value, tmppath : string;
 HelpStrings, WordConstants : TResourceStrings;
 tmpext : String;
 valueBool : Boolean;
+  X: Integer;
+  Sval : String;
 
 begin
   // Initialise
@@ -829,8 +836,17 @@ begin
     // jump to next id + value
     inc(iParam,2);
 
-
-    if (id = '-O') or
+    if  (id = '-XL') or
+        (id = '--EXCEL') or
+        (id = '-WD') or
+        (id = '--WORD') or
+        (id = '-PP') or
+        (id = '--POWERPOINT')    then
+    begin
+      // ignore here as these are checked in ChooseConverter
+      dec(iparam);
+    end
+    else if (id = '-O') or
        (id = '--OUTPUTFILE') then
     begin
       FOutputFile :=  value;
@@ -838,33 +854,27 @@ begin
 
       tmpext := ExtractFileExt(FOutputFile);
 
-
+      // if no extension then assume directory, otherwise no way to
+      // tell file with no ext from dir.
       if (tmpext = '') then
       begin
         FOutputFile := IncludeTrailingBackslash(value);
-        IsDirOutput := true;
-        IsFileOutput := false;
+        OutputIsDir := true;
+        OutputIsFile := false;
         ForceDirectories(FOutputFile);
         log('Output directory is: ' + FOutputFile,CHATTY);
 
       end
       else
       begin
-        IsFileOutput := true;
-        IsDirOutput := false;
+        OutputIsFile := true;
+        OutputIsDir := false;
         log('Output file is: ' + FOutputFile,CHATTY);
       end;
 
 
     end
-    else if (id = '-XL') or
-            (id = '--EXCEL') or
-            (id = '-WD') or
-            (id = '--WORD')    then
-    begin
-      // ignore
-      dec(iparam);
-    end
+
     else if (id = '-OX') or
             (id = '--OUTPUTEXTENSION') then
     begin
@@ -902,13 +912,13 @@ begin
       end
       else if (FileExists(FInputFile)) then
       begin
-        IsFileInput := true;
-        IsDirInput := false;
+        InputIsFile := true;
+        InputIsDir := false;
       end
       else if (DirectoryExists(FInputFile)) then
       begin
-        IsFileInput := false;
-        IsDirInput := true;
+        InputIsFile := false;
+        InputIsDir := true;
 
         // Create Absolute path from any relative path
         FInputFile := ExpandFileName(FInputFile);
@@ -921,7 +931,7 @@ begin
       if FOutputFile = '' then
       begin
         FOutputFile :=  IncludeTrailingBackslash(tmppath);
-        IsDirOutput := true;
+        OutputIsDir := true;
       end;
 
     end
@@ -1041,8 +1051,8 @@ begin
     end
     else if (id = '--BOOKMARKSOURCE') then
     begin
-         WordConstants := TResourceStrings.Create;
-         WordConstants.Load('WORDCONSTANTS');
+         WordConstants := TResourceStrings.Create('WORDCONSTANTS');
+//         WordConstants.Load('WORDCONSTANTS');
          //Log(WordConstants.Text, Verbose);
          if (WordConstants.Exists(value)) then
          begin
@@ -1087,24 +1097,32 @@ begin
     // Help etc
     else if (id = '-H') or
             (id = '-?') or
-            (id = '?') then
+            (id = '?') OR
+            (id = '-help') then
     begin
-      HelpStrings := TResourceStrings.Create();
-      HelpStrings.Load('HELP');
-      log(format( HelpStrings.Text, [DOCTO_VERSION, OfficeAppVersion]));
+
+      //log(Value, help);
+      HelpStrings := TResourceStrings.Create('HELP');
+      log(format( HelpStrings.Text, [DOCTO_VERSION, OfficeAppVersion]),Help);
+
+
+      if Value > '' then
+      begin
+        HelpStrings.Load('XLCONSTANTS');
+        log(Value + '=' + inttostr(HelpStrings.ValueasInt[Value]),help);
+      end;
       HelpStrings.Free;
       log('');
-      log('FILE FORMATS');
-      for f := 0 to Formats.Count -1 do
-      begin
-        log(Formats.Names[f] + '=' + Formats.Values[Formats.Names[f]]);
-      end;
-        LogHelp('HELPJSON');
+      log('FILE FORMATS', Formats, Help);
+
+      // Log after TODO done
+      //LogHelp('HELPJSON');
       halt(2);
     end
-    else if (id = '--help-excel') then
+    else if (id = '--HELP-EXCEL') then
     begin
       LogHelp('EXCELFORMATS');
+      halt(2);
     end
     else if (id = '-HJ') then
     begin
@@ -1139,7 +1157,7 @@ begin
     // If input is Dir rather than file, enumerate files.
     if DirectoryExists(InputFile) then
     begin
-       IsDirInput := true;
+       InputIsDir := true;
        DoSubDirs := true;
 
        ListFiles(finputfile, '*' + InputExtension,true,FInputFiles);
@@ -1148,7 +1166,7 @@ begin
     end
     else
     begin
-      IsFileInput := true;
+      InputIsFile := true;
     end;
 
 
@@ -1158,14 +1176,34 @@ end;
 
 
 procedure TDocumentConverter.Log(Msg: String; Level : Integer = ERRORS );
+var
+  OutputLog, OutputTimeStamp : Boolean;
 begin
+  Outputlog := false;
+  OutputTimeStamp := false;
+
 
 
 
   if Level <= FLogLevel then
   begin
+    OutputLog := true;
+  END;
+
+
 
     if FFirstLogEntry then
+    begin
+    OutputTimeStamp := true;
+     end;
+
+  if Level = HELP then
+  begin
+      OutputLog := true;
+      OutputTimeStamp := false;
+  end;
+
+    if OutputTimeStamp then
     begin
       FFirstLogEntry := false;
       Msg := '[' + FormatDateTime('YYYYMMDD HH:NN:SS -' , now) +  ']: '  +  Msg;
@@ -1181,7 +1219,7 @@ begin
       FLogFile.Add(Msg);
       FLogFile.SaveToFile(FLogFilename);
     end;
-  end;
+
 end;
 
 procedure TDocumentConverter.Log(Msg: String; List:  TStrings; Level: Integer);
@@ -1212,10 +1250,10 @@ end;
 procedure TDocumentConverter.LogHelp(HelpResName: String);
 var HelpStrings : TResourceStrings;
 begin
-      HelpStrings := TResourceStrings.Create;
+      HelpStrings := TResourceStrings.Create(HelpResName);
       try
-       HelpStrings.Load(HelpResName);
-        log(HelpStrings.Text);
+
+        log(HelpStrings.Text,Help);
       finally
         HelpStrings.Free;
       end;
@@ -1303,22 +1341,22 @@ end;
 
 procedure TDocumentConverter.SetIsDirInput(const Value: Boolean);
 begin
-  FIsDirInput := Value;
+  FInputIsDir := Value;
 end;
 
 procedure TDocumentConverter.SetIsDirOutput(const Value: Boolean);
 begin
-  FIsDirOutput := Value;
+  FOutputIsDir := Value;
 end;
 
 procedure TDocumentConverter.SetIsFileInput(const Value: Boolean);
 begin
-  FIsFileInput := Value;
+  FInputIsFile := Value;
 end;
 
 procedure TDocumentConverter.SetIsFileOutput(const Value: Boolean);
 begin
-  FIsFileOutput := Value;
+  FOutputIsFile := Value;
 end;
 
 procedure TDocumentConverter.SetLogFilename(const Value: String);
@@ -1468,21 +1506,23 @@ end;
 
 
 
-
-
 function TDocumentConverter.GetUrl(Url: string): String;
 var
-  NetHandle: HINTERNET;
+
   UrlHandle: HINTERNET;
   Buffer: array[0..1023] of byte;
   BytesRead: DWord;
   StrBuffer: UTF8String;
 begin
   Result := '';
-  NetHandle := InternetOpen('github/tobya/DocTo', INTERNET_OPEN_TYPE_PRECONFIG, nil, nil, 0);
-  if Assigned(NetHandle) then
-    try
-      UrlHandle := InternetOpenUrl(NetHandle, PChar(Url), nil, 0, INTERNET_FLAG_RELOAD, 0);
+  // Intialising Win Internet Connection with InternetOpen only needs to be called once.
+  if not assigned(FNetHandle) then
+  begin
+    FNetHandle := InternetOpen('github/tobya/DocTo', INTERNET_OPEN_TYPE_PRECONFIG, nil, nil, 0);
+  end;
+  if Assigned(FNetHandle) then
+  begin
+      UrlHandle := InternetOpenUrl(FNetHandle, PChar(Url), nil, 0, INTERNET_FLAG_RELOAD, 0);
       if Assigned(UrlHandle) then
         try
           repeat
@@ -1494,12 +1534,14 @@ begin
           InternetCloseHandle(UrlHandle);
         end
       else
-        raise Exception.CreateFmt('Cannot open URL %s', [Url]);
-    finally
-      InternetCloseHandle(NetHandle);
-    end
+      begin
+        raise Exception.CreateFmt('Cannot open URL: %s', [Url]);
+      end;
+  end
   else
+  begin
     raise Exception.Create('Unable to initialize Wininet');
+  end;
 end;
 
 

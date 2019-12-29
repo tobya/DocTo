@@ -29,7 +29,9 @@ uses
   ResourceUtils in 'ResourceUtils.pas',
   PathUtils in 'PathUtils.pas',
   datamodSSL in 'datamodSSL.pas' {dmSSL: TDataModule},
-  ExcelUtils in 'ExcelUtils.pas';
+  ExcelUtils in 'ExcelUtils.pas',
+  Word_TLB_Constants in 'Word_TLB_Constants.pas',
+  Excel_TLB_Constants in 'Excel_TLB_Constants.pas';
 
 var
   i, Converter : integer;
