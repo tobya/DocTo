@@ -48,6 +48,10 @@
         <VerInfo_Release>2</VerInfo_Release>
         <VerInfo_Build>15</VerInfo_Build>
         <VerInfo_AutoGenVersion>true</VerInfo_AutoGenVersion>
+         <VerInfo_Release>19</VerInfo_Release>  
+        <Icon_MainIcon>docto_Icon2.ico</Icon_MainIcon>  
+        <VerInfo_MinorVer>0</VerInfo_MinorVer>  
+        <VerInfo_Keys>CompanyName=Toflidium Software;FileDescription=DocTo - Convert doc files to any available format;FileVersion=1.0.19.44;InternalName=;LegalCopyright=Toby Allen;LegalTrademarks=;OriginalFilename=docto.exe;ProductName=DocTo;ProductVersion=1.0.19.40;Comments=https://github.com/tobya/DocTo</VerInfo_Keys>
         <DCC_UsePackage>vclx;vcl;VclSmp;rtl;vclimg;svnui;svn;bdertl;TeeUI;TeeDB;Tee;vclactnband;vcldb;dbrtl;vcldbx;vcltouch;xmlrtl;dsnap;dsnapcon;vclib;ibxpress;adortl;IndyCore;IndySystem;IndyProtocols;inet;intrawebdb_110_150;Intraweb_110_150;vclie;inetdb;webdsnap;websnap;inetdbbde;inetdbxpress;soaprtl;vclribbon;DbxCommonDriver;DBXInterBaseDriver;DBXMySQLDriver;dbexpress;dbxcds;$(DCC_UsePackage)</DCC_UsePackage>
         <DCC_SymbolReferenceInfo>1</DCC_SymbolReferenceInfo>
         <DCC_E>false</DCC_E>
@@ -175,6 +179,7 @@
                     <Excluded_Packages Name="$(BDSBIN)\dclofficexp180.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
                 </Excluded_Packages>
             </Delphi.Personality>
+             <Deployment>
             <Platforms>
                 <Platform value="OSX32">False</Platform>
                 <Platform value="Win32">True</Platform>

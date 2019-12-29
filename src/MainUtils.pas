@@ -23,15 +23,13 @@ Const
   ERRORS = 1;
   SILENT = 0;
 
-<<<<<<< HEAD
-  DOCTO_VERSION = '0.8.13';
-=======
+
   // APP
   MSWORD = 1;
   MSEXCEL = 2;
 
   DOCTO_VERSION = '1.0.23.41.alpha';
->>>>>>> master
+
 
 type
 
@@ -66,9 +64,9 @@ type
     procedure SetCompatibilityMode(const Value: Integer);
     procedure SetIgnore_MACOSX(const Value: boolean);
     procedure SetEncoding(const Value: Integer);
-<<<<<<< HEAD
+
     procedure SetIsURLInput(const Value: Boolean);
-=======
+
     procedure SetSkipDocsWithTOC(const Value: Boolean);
     procedure HaltWithConfigError(ErrorNo: Integer; Msg: String);
 
@@ -77,7 +75,7 @@ type
     procedure SetIgnore_ErrorDocs(const Value: Boolean);
     procedure SetPDFOpenAfterExport(const Value: Boolean);
 
->>>>>>> master
+
   protected
     Formats : TStringlist;
     fFormatsExtensions : TStringlist;
@@ -95,14 +93,13 @@ type
     FInputFiles : TStringList;
     FLogFilename: String;
     FDoSubDirs: Boolean;
-<<<<<<< HEAD
-    FIsFileInput: Boolean;
-    FIsDirInput: Boolean;
+
+
     FisURLInput: Boolean;
-=======
+
     FInputIsFile: Boolean;
     FInputIsDir: Boolean;
->>>>>>> master
+
     FOutputExt: string;
     FWebHook : String;
     FInputExtension : String;
@@ -147,18 +144,14 @@ type
     procedure SetIsDirOutput(const Value: Boolean);
     procedure SetIsFileOutput(const Value: Boolean);
     procedure SetLogLevel(const Value: integer);
-<<<<<<< HEAD
-    property IsFileInput : Boolean read FIsFileInput write SetIsFileInput;
-    property IsDirInput : Boolean read FIsDirInput write SetIsDirInput;
+
     property IsURLInput : Boolean read FIsURLInput write setIsURLInput;
-    property IsFileOutput : Boolean read FIsFileOutput write SetIsFileOutput;
-    property IsDirOutput : Boolean read FIsDirOutput write SetIsDirOutput;
-=======
+
     property InputIsFile : Boolean read FInputIsFile write SetIsFileInput;
     property InputIsDir : Boolean read FInputIsDir write SetIsDirInput;
     property OutputIsFile : Boolean read FOutputIsFile write SetIsFileOutput;
     property OutputIsDir : Boolean read FOutputIsDir write SetIsDirOutput;
->>>>>>> master
+
     property DoSubDirs : Boolean read FDoSubDirs write SetDoSubDirs;
     property OutputExt : string read FOutputExt write SetOutputExt;
     property LogLevel : integer read FLogLevel write SetLogLevel;
@@ -654,11 +647,9 @@ begin
             begin
 
 
-<<<<<<< HEAD
-              HaltWithError(221,'Word Does not appear to be installed:' +E.ClassName + '  ' + ErrorMessage);
-=======
+
               HaltWithError(221,'Word Does not appear to be installed:' + E.ClassName + '  ' + ErrorMessage);
->>>>>>> master
+
             end
             else
             begin
@@ -937,8 +928,8 @@ begin
       if (tmppath = 'https:')
       or (tmppath = 'http:') then // URL allow to try to load.
       begin
-        IsFileInput := true;
-        IsDirInput := false;
+        InputIsFile := true;
+        InputIsDir := false;
         IsURLInput := true;
       end
       else if (FileExists(FInputFile) = false) and (DirectoryExists(FInputFile) = false) then
@@ -952,13 +943,10 @@ begin
       end
       else if (DirectoryExists(FInputFile)) then
       begin
-<<<<<<< HEAD
-        IsFileInput := false;
-        IsDirInput := true;
-=======
+
         InputIsFile := false;
         InputIsDir := true;
->>>>>>> master
+
 
         // Create Absolute path from any relative path
         FInputFile := ExpandFileName(FInputFile);
