@@ -84,8 +84,8 @@ type
     FInputFiles : TStringList;
     FLogFilename: String;
     FDoSubDirs: Boolean;
-    FIsFileInput: Boolean;
-    FIsDirInput: Boolean;
+    FInputIsFile: Boolean;
+    FInputIsDir: Boolean;
     FOutputExt: string;
     FWebHook : String;
     FInputExtension : String;
@@ -102,8 +102,8 @@ type
 
 
 
-    FIsFileOutput: Boolean;
-    FIsDirOutput: Boolean;
+    FOutputIsFile: Boolean;
+    FOutputIsDir: Boolean;
     procedure SetInputFile(const Value: String);
     procedure SetOutputFile(const Value: String);
     procedure SetOutputFileFormat(const Value: Integer);
@@ -129,10 +129,10 @@ type
     procedure SetIsDirOutput(const Value: Boolean);
     procedure SetIsFileOutput(const Value: Boolean);
     procedure SetLogLevel(const Value: integer);
-    property IsFileInput : Boolean read FIsFileInput write SetIsFileInput;
-    property IsDirInput : Boolean read FIsDirInput write SetIsDirInput;
-    property IsFileOutput : Boolean read FIsFileOutput write SetIsFileOutput;
-    property IsDirOutput : Boolean read FIsDirOutput write SetIsDirOutput;
+    property InputIsFile : Boolean read FInputIsFile write SetIsFileInput;
+    property InputIsDir : Boolean read FInputIsDir write SetIsDirInput;
+    property OutputIsFile : Boolean read FOutputIsFile write SetIsFileOutput;
+    property OutputIsDir : Boolean read FOutputIsDir write SetIsDirOutput;
     property DoSubDirs : Boolean read FDoSubDirs write SetDoSubDirs;
     property OutputExt : string read FOutputExt write SetOutputExt;
     property LogLevel : integer read FLogLevel write SetLogLevel;
@@ -447,10 +447,10 @@ begin
   FRemoveFileOnConvert := false;
   FWebHook := '';
   FOutputExt := '';
-  FIsFileInput := false;
-  FIsDirInput := false;
-  FIsFileOutput := false;
-  FIsDirOutput := false;
+  FInputIsFile := false;
+  FInputIsDir := false;
+  FOutputIsFile := false;
+  FOutputIsDir := false;
   FCompatibilityMode := 0;
   FEncoding := -1;
   FIgnore_MACOSX := true;
@@ -507,7 +507,7 @@ begin
     if not DoExecute  then HaltWithError(201, 'Input File, Output File and FileFormat must all be specified');
 
     // Set Output Filename if Dir Provided.
-    if (IsFileInput and IsDirOutput) then
+    if (InputIsFile and OutputIsDir) then
     begin
       if OutputExt = '' then
       begin
@@ -540,7 +540,7 @@ begin
         Continue;
       end;
 
-      if IsDirInput then
+      if InputIsDir then
       begin
         FileToCreate := NewFileNameFromBase(FInputFile ,FOutputFile,FileToConvert, FOutputExt);
       end
@@ -849,16 +849,16 @@ begin
       if (tmpext = '') then
       begin
         FOutputFile := IncludeTrailingBackslash(value);
-        IsDirOutput := true;
-        IsFileOutput := false;
+        OutputIsDir := true;
+        OutputIsFile := false;
         ForceDirectories(FOutputFile);
         log('Output directory is: ' + FOutputFile,CHATTY);
 
       end
       else
       begin
-        IsFileOutput := true;
-        IsDirOutput := false;
+        OutputIsFile := true;
+        OutputIsDir := false;
         log('Output file is: ' + FOutputFile,CHATTY);
       end;
 
@@ -902,13 +902,13 @@ begin
       end
       else if (FileExists(FInputFile)) then
       begin
-        IsFileInput := true;
-        IsDirInput := false;
+        InputIsFile := true;
+        InputIsDir := false;
       end
       else if (DirectoryExists(FInputFile)) then
       begin
-        IsFileInput := false;
-        IsDirInput := true;
+        InputIsFile := false;
+        InputIsDir := true;
 
         // Create Absolute path from any relative path
         FInputFile := ExpandFileName(FInputFile);
@@ -921,7 +921,7 @@ begin
       if FOutputFile = '' then
       begin
         FOutputFile :=  IncludeTrailingBackslash(tmppath);
-        IsDirOutput := true;
+        OutputIsDir := true;
       end;
 
     end
@@ -1134,7 +1134,7 @@ begin
     // If input is Dir rather than file, enumerate files.
     if DirectoryExists(InputFile) then
     begin
-       IsDirInput := true;
+       InputIsDir := true;
        DoSubDirs := true;
 
        ListFiles(finputfile, '*' + InputExtension,true,FInputFiles);
@@ -1143,7 +1143,7 @@ begin
     end
     else
     begin
-      IsFileInput := true;
+      InputIsFile := true;
     end;
 
 
@@ -1318,22 +1318,22 @@ end;
 
 procedure TDocumentConverter.SetIsDirInput(const Value: Boolean);
 begin
-  FIsDirInput := Value;
+  FInputIsDir := Value;
 end;
 
 procedure TDocumentConverter.SetIsDirOutput(const Value: Boolean);
 begin
-  FIsDirOutput := Value;
+  FOutputIsDir := Value;
 end;
 
 procedure TDocumentConverter.SetIsFileInput(const Value: Boolean);
 begin
-  FIsFileInput := Value;
+  FInputIsFile := Value;
 end;
 
 procedure TDocumentConverter.SetIsFileOutput(const Value: Boolean);
 begin
-  FIsFileOutput := Value;
+  FOutputIsFile := Value;
 end;
 
 procedure TDocumentConverter.SetLogFilename(const Value: String);
