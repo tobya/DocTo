@@ -89,12 +89,12 @@ https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-u
 
 ## Command Line Help
 
-    Help
-    Version:1.0.1.alphpa
-    Source: https://github.com/tobya/DocTo/
-    Command Line Parameters
-    Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\MyDir\MyFile"
-    Parameters markers are case insensitive. Short and Long can be used mixed.
+  Help
+  Version:1.0.1.alphpa
+  Source: https://github.com/tobya/DocTo/
+  Command Line Parameters
+  Each Parameter should be followed by its value  -f "c:\Docs\MyDoc.doc" -O "C:\MyDir\MyFile"
+  Parameters markers are case insensitive. Short and Long can be used mixed.
    -H  This message
       --HELP -?
   -WD Use Word for Converstion (Default)
