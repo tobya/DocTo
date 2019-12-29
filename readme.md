@@ -162,15 +162,18 @@ https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-u
         --halterror
     -V  Show Versions.  DocTo and Word/Excel
 
-  Extra Parameters:
-    --bookmarksource     
+    Extra Parameters:
+    --bookmarksource --pdf-BookmarkSource     
         PDF conversions can take their bookmarks from
         WordBookmarks, WordHeadings (default) or None
     --donotoverwrite
         Existing files are overridden by default, if you do not wish a file to be
         skipped if its output exists, use this.
+    --pdf--OpenAfterExport
+        When converting to pdf or xps you can choose to open the converted file
+        after conversion. Default False.
         
-  Experimental:      
+    Experimental:      
     --skipdocswithtoc
         EXPERIMENTAL.  Will skip any docs that contain a TOC to prevent hanging.
         Currently matches some false positives.  Default False. 

@@ -48,17 +48,20 @@ published
 end;
 
 
-procedure LoadStringListFromResource(const ResName: string;SL : TStringList);
+procedure LoadStringListFromResource(const ResName: string;SL : TStringList; Append: Boolean = false);
 
 implementation
 
 
-procedure LoadStringListFromResource(const ResName: string;SL : TStringList);
+procedure LoadStringListFromResource(const ResName: string;SL : TStringList; Append: Boolean = false);
 var
   RS: TResourceStream;
 begin
   RS := TResourceStream.Create(HInstance, ResName, 'Text');
-  SL.Clear;
+  if not(Append) then
+  begin
+    SL.Clear;
+  end;
   try
     SL.LoadFromStream(RS);
   finally

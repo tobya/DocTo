@@ -1050,15 +1050,18 @@ begin
 
 
     end
-    else if (id = '--BOOKMARKSOURCE') then
+    else if (id = '--BOOKMARKSOURCE') or
+            (id = '--PDF-BOOKMARKSOURCE') then
     begin
          WordConstants := TResourceStrings.Create('WORDCONSTANTS');
-//         WordConstants.Load('WORDCONSTANTS');
-         //Log(WordConstants.Text, Verbose);
+         WordConstants.Append('WORDCONSTANTS_EXTRA');
          if (WordConstants.Exists(value)) then
          begin
            FBookMarkSource := StrToInt( WordConstants.Values[value]);
            log('Set Bookmark To: ' + InttoStr(FBookmarkSource), Verbose);
+         end else
+         begin
+           HaltWithConfigError(205,'Invalid value for --PDF-BOOKMARKSOURCE :' + value);
          end;
 
     end
