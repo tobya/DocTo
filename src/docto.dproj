@@ -72,7 +72,7 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_3_Win32)'!=''">
         <VerInfo_MajorVer>1</VerInfo_MajorVer>
-        <Debugger_RunParams>-PP -f &quot;C:\DEVELOPMENT\Delphi\github\DocTo\test\inputfilespp\Presentation1.ppt&quot; -O &quot;C:\DEVELOPMENT\Delphi\github\DocTo\test\generatedfiles\&quot; -t 6 -L 10</Debugger_RunParams>
+        <Debugger_RunParams>-PP -f &quot;C:\dev\github\docto\test\inputfilespp\Presentation2.ppt&quot; -o &quot;C:\dev\github\docto\test\GeneratedFiles\pres8.pdf&quot; -t 17 -l 10</Debugger_RunParams>
         <VerInfo_Build>43</VerInfo_Build>
         <VerInfo_PreRelease>false</VerInfo_PreRelease>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
@@ -101,6 +101,8 @@
         </DCCReference>
         <DCCReference Include="ExcelUtils.pas"/>
         <DCCReference Include="PowerPointUtils.pas"/>
+        <DCCReference Include="Word_TLB_Constants.pas"/>
+        <DCCReference Include="PowerPoint_TLB_Constants.pas"/>
         <None Include="..\readme.md"/>
         <None Include="res\wdFormats.txt"/>
         <None Include="res\HelpLog.txt"/>
@@ -183,6 +185,10 @@
                 <Platform value="Win64">False</Platform>
             </Platforms>
             <Deployment>
+                <DeployFile LocalName="$(BDS)\Redist\osx32\libcgunwind.1.0.dylib" Class="DependencyModule">
+                    <Platform Name="OSX32"/>
+                    <Platform Name="iOSSimulator"/>
+                </DeployFile>
                 <DeployFile LocalName="..\exe\docto.rsm" Configuration="TobyBuild" Class="DebugSymbols">
                     <Platform Name="Win32">
                         <RemoteName>docto.rsm</RemoteName>
@@ -190,10 +196,6 @@
                 </DeployFile>
                 <DeployFile LocalName="..\exe\docto.exe" Configuration="TobyBuild" Class="ProjectOutput">
                     <Platform Name="Win32"/>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\Redist\osx32\libcgunwind.1.0.dylib" Class="DependencyModule">
-                    <Platform Name="OSX32"/>
-                    <Platform Name="iOSSimulator"/>
                 </DeployFile>
                 <DeployClass Required="true" Name="DependencyPackage">
                     <Platform Name="iOSDevice">

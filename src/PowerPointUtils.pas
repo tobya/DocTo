@@ -39,6 +39,7 @@ begin
   if  VarIsEmpty(PPApp) then
   begin
     PPApp :=  CreateOleObject('PowerPoint.Application');
+ //      ppApp.Visible := 0;
   end;
   Result := true;
 end;
@@ -47,7 +48,7 @@ function TPowerPointConverter.DestroyOfficeApp: boolean;
 begin
   if not VarIsEmpty(PPApp) then
   begin
-    PPApp.Quit();
+    PPApp.Quit;
   end;
   Result := true;
 end;
@@ -60,8 +61,10 @@ begin
         Result.Successful := false;
         Result.InputFile := fileToConvert;
 
-        PPApp.ActivePresentation.SaveAs(OutputFileName, 17, false);
+        ppApp.Presentations.Open(fileToConvert);
 
+        PPApp.ActivePresentation.SaveAs(OutputFileName, OutputFileFormat, false);
+        PPApp.ActivePresentation.Save;
         Result.InputFile := fileToConvert;
         Result.Successful := true;
 

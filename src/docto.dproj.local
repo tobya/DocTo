@@ -1,31 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>1899/12/30 00:00:00.000.547,D:\Development\GitHub\DocTo\src\res\HelpErrors.txt=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.606,=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
-    <Transaction>2016/05/07 18:18:35.000.138,=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
-    <Transaction>2016/05/07 18:18:48.000.672,D:\Development\GitHub\DocTo\src\New1.txt=D:\Development\GitHub\DocTo\src\res\wdEncoding.txt</Transaction>
-    <Transaction>2018/07/30 15:26:37.000.443,=D:\Development\GitHub\DocTo\src\Unit1.pas</Transaction>
-    <Transaction>2018/07/30 15:28:03.000.644,D:\Development\GitHub\DocTo\src\datamodSSL.pas=D:\Development\GitHub\DocTo\src\Unit1.pas</Transaction>
-    <Transaction>2019/12/04 21:44:44.000.850,=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
-    <Transaction>2019/12/04 21:45:32.000.832,D:\Development\GitHub\DocTo\src\New1.txt=D:\Development\GitHub\DocTo\changes.txt</Transaction>
-    <Transaction>2019/12/04 21:46:37.000.447,=D:\Development\GitHub\DocTo\src\ExcelUtils.pas</Transaction>
-    <Transaction>2019/12/04 22:24:12.000.645,=D:\Development\GitHub\DocTo\src\res\xlsFormats.txt</Transaction>
-    <Transaction>2019/12/04 22:24:12.000.751,=D:\Development\GitHub\DocTo\src\res\xlsFormatsExt.txt</Transaction>
-    <Transaction>2019/12/04 22:26:42.000.891,=D:\Development\GitHub\DocTo\src\xlsFormats.rc</Transaction>
-    <Transaction>2019/12/08 15:01:54.000.284,C:\DEVELOPMENT\Delphi\github\DocTo\src\wdFormats.rc=C:\DEVELOPMENT\Delphi\github\DocTo\src\Docto.rc</Transaction>
-    <Transaction>2019/12/08 15:18:29.000.644,C:\DEVELOPMENT\Delphi\github\DocTo\src\xlsFormats.rc=</Transaction>
-    <Transaction>2019/12/08 16:12:21.000.515,=C:\DEVELOPMENT\Delphi\github\DocTo\src\New1.md</Transaction>
-    <Transaction>2019/12/08 16:12:32.000.100,C:\DEVELOPMENT\Delphi\github\DocTo\changes.md=C:\DEVELOPMENT\Delphi\github\DocTo\src\New1.md</Transaction>
-    <Transaction>2019/12/08 16:13:40.000.332,C:\DEVELOPMENT\Delphi\github\DocTo\src\ExtraFiles.rc=C:\DEVELOPMENT\Delphi\github\DocTo\src\Docto.rc</Transaction>
-    <Transaction>2019/12/08 21:24:12.000.560,=C:\DEVELOPMENT\Delphi\github\DocTo\src\res\wdConstants.txt</Transaction>
-    <Transaction>2019/12/11 21:39:14.419,=C:\DEVELOPMENT\Delphi\github\DocTo\src\Unit1.pas</Transaction>
-    <Transaction>2019/12/11 21:41:21.286,C:\DEVELOPMENT\Delphi\github\DocTo\src\PowerPointUtils.pas=C:\DEVELOPMENT\Delphi\github\DocTo\src\Unit1.pas</Transaction>
-    <Transaction>2019/12/11 21:49:39.670,=C:\DEVELOPMENT\Delphi\github\DocTo\src\New1.txt</Transaction>
-    <Transaction>2019/12/11 21:49:54.790,C:\DEVELOPMENT\Delphi\github\DocTo\src\res\ppFormats.txt=C:\DEVELOPMENT\Delphi\github\DocTo\src\New1.txt</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.850,=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.832,D:\Development\GitHub\DocTo\src\New1.txt=D:\Development\GitHub\DocTo\changes.txt</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.672,D:\Development\GitHub\DocTo\src\New1.txt=D:\Development\GitHub\DocTo\src\res\wdEncoding.txt</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.606,=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.138,=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.284,C:\DEVELOPMENT\Delphi\github\DocTo\src\wdFormats.rc=C:\DEVELOPMENT\Delphi\github\DocTo\src\Docto.rc</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.644,C:\DEVELOPMENT\Delphi\github\DocTo\src\xlsFormats.rc=</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.332,C:\DEVELOPMENT\Delphi\github\DocTo\src\ExtraFiles.rc=C:\DEVELOPMENT\Delphi\github\DocTo\src\Docto.rc</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.547,D:\Development\GitHub\DocTo\src\res\HelpErrors.txt=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.419,=C:\DEVELOPMENT\Delphi\github\DocTo\src\Unit1.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.670,=C:\DEVELOPMENT\Delphi\github\DocTo\src\New1.txt</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.790,C:\DEVELOPMENT\Delphi\github\DocTo\src\res\ppFormats.txt=C:\DEVELOPMENT\Delphi\github\DocTo\src\New1.txt</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.447,=D:\Development\GitHub\DocTo\src\ExcelUtils.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.645,=D:\Development\GitHub\DocTo\src\res\xlsFormats.txt</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.751,=D:\Development\GitHub\DocTo\src\res\xlsFormatsExt.txt</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.443,=D:\Development\GitHub\DocTo\src\Unit1.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.286,C:\DEVELOPMENT\Delphi\github\DocTo\src\PowerPointUtils.pas=C:\DEVELOPMENT\Delphi\github\DocTo\src\Unit1.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.515,=C:\DEVELOPMENT\Delphi\github\DocTo\src\New1.md</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.100,C:\DEVELOPMENT\Delphi\github\DocTo\changes.md=C:\DEVELOPMENT\Delphi\github\DocTo\src\New1.md</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.560,=C:\DEVELOPMENT\Delphi\github\DocTo\src\res\wdConstants.txt</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.644,D:\Development\GitHub\DocTo\src\datamodSSL.pas=D:\Development\GitHub\DocTo\src\Unit1.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.891,=D:\Development\GitHub\DocTo\src\xlsFormats.rc</Transaction>
+    <Transaction>2019 12 29 08:10:47.676,=C:\dev\github\docto\src\PowerPoint_TLB_Constants.pas</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
-    <File Path="..\..\DocTo"/>
+    <File Path="..\..\docto"/>
     <File Path="..\changes.md"/>
     <File Path="..\changes.txt"/>
     <File Path="..\readme.md"/>
@@ -42,7 +43,6 @@
     <File Path="res\wdFormatsExt.txt"/>
     <File Path="res\xlsFormats.txt"/>
     <File Path="res\xlsFormatsExt.txt"/>
-    <File Path="res\ppFormats.txt"/>
     <File Path="MainUtils.pas"/>
     <File Path="PathUtils.pas"/>
     <File Path="ResourceUtils.pas"/>
@@ -52,5 +52,7 @@
     <File Path="datamodSSL.dfm"/>
     <File Path="ExcelUtils.pas"/>
     <File Path="PowerPointUtils.pas"/>
+    <File Path="Word_TLB_Constants.pas"/>
+    <File Path="PowerPoint_TLB_Constants.pas"/>
   </ProjectSortOrder>
 </BorlandProject>
