@@ -9,6 +9,7 @@ Each Parameter should be followed by its value eg
         -f "c:\Docs\MyDoc.doc" -O "C:\MyDir\MyFile"
 Parameters markers are case insensitive. Short and Long can be used mixed. All
 parameters and values need to be seperated by a ' ' space.
+
   -H  This message
       --HELP -?
   -WD Use Word for Converstion (Default)

@@ -199,31 +199,33 @@ begin
       aSave:
       begin
 
-        try
-          if OutputfileFormat = wdFormatPDF then
-          begin
-            // Saveas works for pdf but github issue 79 requestes exporting bookmarks
-            // also which requires ExportAsFixedFormat
-            // https://docs.microsoft.com/en-us/office/vba/api/word.document.exportasfixedformat
-            WordApp.ActiveDocument.ExportAsFixedFormat(
-                     OutputFilename,  //   OutputFileName:=
-                     OutputfileFormat, //   ExportFormat:=
-                     true,//   OpenAfterExport:=True,
-                     wdExportOptimizeForPrint,//   OptimizeFor:= _
-                     wdExportAllDocument,//   Range
-                     1,//   From:=1,
-                     1,//   To:=1, _
-                     wdExportDocumentContent,//   Item:=
-                     True,//   IncludeDocProps:=True,
-                     true,//   KeepIRM:=True, _
-                     BookmarkSource,//   CreateBookmarks
-                     true,//   DocStructureTags:=True, _
-                     true,//   BitmapMissingFonts:=True,
-                     False//   UseISO19005_1:=False
-            );
-          end
-          else
-          begin
+
+      try
+        if (OutputFileFormat = wdFormatPDF) or
+            (OutputFileFormat = wdFormatXPS) then
+        begin
+        // Saveas works for PDF but github issue 79 requestes exporting bookmarks
+        // also which requires ExportAsFixedFormat
+        // https://docs.microsoft.com/en-us/office/vba/api/word.document.exportasfixedformat
+        WordApp.ActiveDocument.ExportAsFixedFormat(
+                   OutputFilename,  //   OutputFileName:=
+                   OutputfileFormat, //   ExportFormat:=
+                   PDFOpenAfterExport, // OpenAfterExport
+                   wdExportOptimizeForPrint,//   OptimizeFor:= _
+                   wdExportAllDocument,//   Range
+                   1,//   From:=1,
+                   1,//   To:=1, _
+                   wdExportDocumentContent,//   Item:=
+                   True,//   IncludeDocProps:=True,
+                   true,//   KeepIRM:=True, _
+                   BookmarkSource,//   CreateBookmarks
+                   true,//   DocStructureTags:=True, _
+                   true,//   BitmapMissingFonts:=True,
+                   False//   UseISO19005_1:=False
+         );
+        end else
+        begin
+
               //SaveAs2 was introduced in 2010 V 14 by this list
               //https://stackoverflow.com/a/29077879/6244
               if (strtoint( OfficeAppVersion) < 14) then
