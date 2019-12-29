@@ -2,8 +2,6 @@
 <BorlandProject>
 	<Transactions>
     <Transaction>1899 12 30 00:00:00.000.237,=C:\dev\github\docto\src\Excel_TLB_Constants.pas</Transaction>
-    <Transaction>2019 12 28 09:47:38.877,=C:\dev\github\docto\src\res\WDConst.txt</Transaction>
-    <Transaction>2019 12 28 09:50:06.164,=C:\dev\github\docto\src\res\wdExtraConst.txt</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="..\..\docto"/>
@@ -17,13 +15,12 @@
     <File Path="res\HelpWebHook.txt"/>
     <File Path="res\ppFormats.txt"/>
     <File Path="res\WdCompatibilityMode.txt"/>
+    <File Path="res\wdConstants.txt"/>
     <File Path="res\wdEncoding.txt"/>
     <File Path="res\wdFormats.txt"/>
     <File Path="res\wdFormatsExt.txt"/>
     <File Path="res\xlsFormats.txt"/>
     <File Path="res\xlsFormatsExt.txt"/>
-    <File Path="res\WDConst.txt"/>
-    <File Path="res\wdExtraConst.txt"/>
     <File Path="MainUtils.pas"/>
     <File Path="PathUtils.pas"/>
     <File Path="ResourceUtils.pas"/>
