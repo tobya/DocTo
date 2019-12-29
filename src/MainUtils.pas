@@ -68,7 +68,7 @@ type
     procedure SetList_ErrorDocs(const Value: Boolean);
     procedure SetList_ErrorDocs_Seconds(const Value: Integer);
     procedure SetIgnore_ErrorDocs(const Value: Boolean);
-    procedure SetOpenAfterExport(const Value: Boolean);
+    procedure SetPDFOpenAfterExport(const Value: Boolean);
 
   protected
     Formats : TStringlist;
@@ -96,7 +96,7 @@ type
     fSkipDocsExist : Boolean;
     FCompatibilityMode: Integer;
     FEncoding : Integer;
-    FOpenAfterExport : boolean;
+    FPDFOpenAfterExport : boolean;
 
     FHaltOnWordError: Boolean;
     FRemoveFileOnConvert: boolean;
@@ -145,7 +145,7 @@ type
     property List_ErrorDocs : Boolean read FList_ErrorDocs write SetList_ErrorDocs ;
     property List_ErrorDocs_Seconds : Integer read FList_ErrorDocs_Seconds write SetList_ErrorDocs_Seconds ;
     property Ignore_ErrorDocs : Boolean read FIgnore_ErrorDocs write SetIgnore_ErrorDocs;
-    property OpenAfterExport: Boolean read FOpenAfterExport write SetOpenAfterExport;
+    property pdfOpenAfterExport: Boolean read FPDFOpenAfterExport write SetpdfOpenAfterExport;
 
 
     procedure SetExtension(const Value: String); virtual;
@@ -463,6 +463,7 @@ begin
   fSkipDocsExist :=  false;
   FFirstLogEntry := true;
   FBookMarkSource := 1; //wdExportCreateHeadingBookmarks
+  fPDFOpenAfterExport := false;
 
   FInputFiles := TStringList.Create;
 end;
@@ -1028,9 +1029,9 @@ begin
       Ignore_ErrorDocs := True;
       dec(iParam);
     end
-    else if (id = '-OAE') or (id = '--OPENAFTEREXPORT') then
+    else if (id = '--PDF-OPENAFTEREXPORT') then
     begin
-      OpenAfterExport := true;
+      PDFOpenAfterExport := true;
       dec(iParam);
     end
     else if (id = '-R')
@@ -1399,9 +1400,9 @@ begin
   end;
 end;
 
-procedure TDocumentConverter.SetOpenAfterExport(const Value: Boolean);
+procedure TDocumentConverter.SetPDFOpenAfterExport(const Value: Boolean);
 begin
-  FOpenAfterExport := Value;
+  FPDFOpenAfterExport := Value;
 end;
 
 procedure TDocumentConverter.SetOutputExt(const Value: string);
