@@ -45,6 +45,8 @@ type
 
   End;
 
+  TExitAction = (aSave,aClose, aExit);
+
   TDocumentConverter = class
   private
     FIgnore_MACOSX: boolean;
@@ -509,7 +511,7 @@ begin
     begin
       if OutputExt = '' then
       begin
-        OutputExt := '.' + fFormatsExtensions.Values[OutputFileFormatString];
+        OutputExt := '.' + FormatsExtensions.Values[OutputFileFormatString];
         log('Output Extension is ' + outputExt, CHATTY);
       end;
 
@@ -826,8 +828,15 @@ begin
     // jump to next id + value
     inc(iParam,2);
 
-
-    if (id = '-O') or
+    if (id = '-XL') or
+            (id = '--EXCEL') or
+            (id = '-WD') or
+            (id = '--WORD')    then
+    begin
+      // ignore here as these are checked in ChooseConverter
+      dec(iparam);
+    end
+    else if (id = '-O') or
        (id = '--OUTPUTFILE') then
     begin
       FOutputFile :=  value;
@@ -835,7 +844,8 @@ begin
 
       tmpext := ExtractFileExt(FOutputFile);
 
-
+      // if no extension then assume directory, otherwise no way to
+      // tell file with no ext from dir.
       if (tmpext = '') then
       begin
         FOutputFile := IncludeTrailingBackslash(value);
@@ -854,14 +864,7 @@ begin
 
 
     end
-    else if (id = '-XL') or
-            (id = '--EXCEL') or
-            (id = '-WD') or
-            (id = '--WORD')    then
-    begin
-      // ignore
-      dec(iparam);
-    end
+
     else if (id = '-OX') or
             (id = '--OUTPUTEXTENSION') then
     begin

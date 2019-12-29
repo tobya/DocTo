@@ -72,7 +72,7 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_3_Win32)'!=''">
         <VerInfo_MajorVer>1</VerInfo_MajorVer>
-        <Debugger_RunParams>-f &quot;D:\Development\GitHub\DocTo\test\Inputfiles\&quot;  -o &quot;D:\Development\GitHub\DocTo\test\GeneratedFiles&quot;    -T  wdFormatPDF -OX pdf  -NX -L 5</Debugger_RunParams>
+        <Debugger_RunParams>-XL  -f &quot;C:\dev\github\docto\test\inputfilesexcel\Book1 with password.xls&quot;  -o &quot;C:\dev\github\docto\test\GeneratedFiles&quot;    -T  xlpdf -l 10</Debugger_RunParams>
         <VerInfo_Build>44</VerInfo_Build>
         <VerInfo_PreRelease>false</VerInfo_PreRelease>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
