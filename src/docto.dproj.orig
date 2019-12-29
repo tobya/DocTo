@@ -1,147 +1,411 @@
-﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-		<PropertyGroup>
-			<ProjectGuid>{2F967344-8067-49DA-9E3E-F6B7D7BC6CE5}</ProjectGuid>
-			<MainSource>docto.dpr</MainSource>
-			<Base>True</Base>
-			<Config Condition="'$(Config)'==''">Debug</Config>
-			<AppType>Console</AppType>
-			<FrameworkType>None</FrameworkType>
-			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
-			<ProjectVersion>14.4</ProjectVersion>
-			<Platform Condition="'$(Platform)'==''">Win32</Platform>
-			<TargetedPlatforms>1</TargetedPlatforms>
-			<Platform>Win32</Platform>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
-			<Base>true</Base>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
-			<Cfg_1>true</Cfg_1>
-			<CfgParent>Base</CfgParent>
-			<Base>true</Base>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
-			<Cfg_2>true</Cfg_2>
-			<CfgParent>Base</CfgParent>
-			<Base>true</Base>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Base)'!=''">
-			<VerInfo_MinorVer>3</VerInfo_MinorVer>
-			<VerInfo_PreRelease>true</VerInfo_PreRelease>
-			<VerInfo_Locale>6153</VerInfo_Locale>
-			<VerInfo_MajorVer>0</VerInfo_MajorVer>
-			<VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-			<DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Winapi;System.Win;$(DCC_Namespace)</DCC_Namespace>
-			<VerInfo_Debug>true</VerInfo_Debug>
-			<VerInfo_Keys>CompanyName=Toflidium Software;FileDescription=DocTo - Convert doc files to any available format;FileVersion=0.3.2.15;InternalName=;LegalCopyright=Toby Allen;LegalTrademarks=;OriginalFilename=docto.exe;ProductName=DocTo;ProductVersion=0.3.0.0;Comments=</VerInfo_Keys>
-			<VerInfo_Release>2</VerInfo_Release>
-			<VerInfo_Build>15</VerInfo_Build>
-			<VerInfo_AutoGenVersion>true</VerInfo_AutoGenVersion>
-			<DCC_UsePackage>vclx;vcl;VclSmp;rtl;vclimg;svnui;svn;bdertl;TeeUI;TeeDB;Tee;vclactnband;vcldb;dbrtl;vcldbx;vcltouch;xmlrtl;dsnap;dsnapcon;vclib;ibxpress;adortl;IndyCore;IndySystem;IndyProtocols;inet;intrawebdb_110_150;Intraweb_110_150;vclie;inetdb;webdsnap;websnap;inetdbbde;inetdbxpress;soaprtl;vclribbon;DbxCommonDriver;DBXInterBaseDriver;DBXMySQLDriver;dbexpress;dbxcds;$(DCC_UsePackage)</DCC_UsePackage>
-			<DCC_SymbolReferenceInfo>1</DCC_SymbolReferenceInfo>
-			<DCC_E>false</DCC_E>
-			<DCC_ImageBase>00400000</DCC_ImageBase>
-			<DCC_N>true</DCC_N>
-			<DCC_S>false</DCC_S>
-			<DCC_F>false</DCC_F>
-			<DCC_K>false</DCC_K>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Cfg_1)'!=''">
-			<DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
-			<DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
-			<DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
-			<DCC_DebugInformation>false</DCC_DebugInformation>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Cfg_2)'!=''">
-			<DCC_ExeOutput>../exe</DCC_ExeOutput>
-			<DCC_ConsoleTarget>true</DCC_ConsoleTarget>
-			<DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
-			<DCC_Optimize>false</DCC_Optimize>
-			<DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
-		</PropertyGroup>
-		<ItemGroup>
-			<DelphiCompile Include="docto.dpr">
-				<MainSource>MainSource</MainSource>
-			</DelphiCompile>
-			<DCCReference Include="WordUtils.pas"/>
-			<DCCReference Include="MainUtils.pas"/>
-			<DCCReference Include="ResourceUtils.pas"/>
-			<DCCReference Include="PathUtils.pas"/>
-			<None Include="..\readme.md"/>
-			<None Include="res\wdFormats.txt"/>
-			<None Include="res\HelpLog.txt"/>
-			<None Include="res\HelpJSONLog.txt"/>
-			<None Include="res\HelpWebHook.txt"/>
-			<None Include="docto.todo"/>
-			<None Include="res\wdFormatsExt.txt"/>
-			<BuildConfiguration Include="Debug">
-				<Key>Cfg_2</Key>
-				<CfgParent>Base</CfgParent>
-			</BuildConfiguration>
-			<BuildConfiguration Include="Base">
-				<Key>Base</Key>
-			</BuildConfiguration>
-			<BuildConfiguration Include="Release">
-				<Key>Cfg_1</Key>
-				<CfgParent>Base</CfgParent>
-			</BuildConfiguration>
-		</ItemGroup>
-		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')" Project="$(BDS)\Bin\CodeGear.Delphi.Targets"/>
-		<Import Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')" Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj"/>
-		<ProjectExtensions>
-			<Borland.Personality>Delphi.Personality.12</Borland.Personality>
-			<Borland.ProjectType>VCLApplication</Borland.ProjectType>
-			<BorlandProject>
-				<Delphi.Personality>
-					<Source>
-						<Source Name="MainSource">docto.dpr</Source>
-					</Source>
-					<VersionInfo>
-						<VersionInfo Name="IncludeVerInfo">True</VersionInfo>
-						<VersionInfo Name="AutoIncBuild">True</VersionInfo>
-						<VersionInfo Name="MajorVer">0</VersionInfo>
-						<VersionInfo Name="MinorVer">4</VersionInfo>
-
-
-						<VersionInfo Name="Release">4</VersionInfo>
-						<VersionInfo Name="Build">28</VersionInfo>
-
-						<VersionInfo Name="Debug">True</VersionInfo>
-						<VersionInfo Name="PreRelease">True</VersionInfo>
-						<VersionInfo Name="Special">False</VersionInfo>
-						<VersionInfo Name="Private">False</VersionInfo>
-						<VersionInfo Name="DLL">False</VersionInfo>
-						<VersionInfo Name="Locale">1033</VersionInfo>
-						<VersionInfo Name="CodePage">1252</VersionInfo>
-					</VersionInfo>
-					<VersionInfoKeys>
-						<VersionInfoKeys Name="CompanyName">Toflidium Software</VersionInfoKeys>
-						<VersionInfoKeys Name="FileDescription"/>
-
-						<VersionInfoKeys Name="FileVersion">0.4.4.28</VersionInfoKeys>
-
-						<VersionInfoKeys Name="InternalName"/>
-						<VersionInfoKeys Name="LegalCopyright">Toflidium Software</VersionInfoKeys>
-						<VersionInfoKeys Name="LegalTrademarks"/>
-						<VersionInfoKeys Name="OriginalFilename"/>
-						<VersionInfoKeys Name="ProductName">DocTo</VersionInfoKeys>
-						<VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
-						<VersionInfoKeys Name="Comments"/>
-					</VersionInfoKeys>
-					<Parameters>
-						<Parameters Name="RunParams">-f &quot;C:\Temp\recipeZXLists\Courses\2010\12 Week September\Week 3\Mondaye\&quot;  -o c:\temp\myout -T wdFormatText -ox .txt -W &quot;http://home.hisbik.ie/webhooks/docto.php&quot;</Parameters>
-					</Parameters>
-					<Excluded_Packages>
-						<Excluded_Packages Name="$(BDSBIN)\dcloffice2k170.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
-						<Excluded_Packages Name="$(BDSBIN)\dclofficexp170.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
-					</Excluded_Packages>
-				</Delphi.Personality>
-				<Platforms>
-					<Platform value="OSX32">False</Platform>
-					<Platform value="Win64">False</Platform>
-					<Platform value="Win32">True</Platform>
-				</Platforms>
-			</BorlandProject>
-			<ProjectFileVersion>12</ProjectFileVersion>
-		</ProjectExtensions>
-	</Project>
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{2F967344-8067-49DA-9E3E-F6B7D7BC6CE5}</ProjectGuid>
+        <MainSource>docto.dpr</MainSource>
+        <Base>True</Base>
+        <Config Condition="'$(Config)'==''">TobyBuild</Config>
+        <AppType>Console</AppType>
+        <FrameworkType>None</FrameworkType>
+        <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
+        <ProjectVersion>14.6</ProjectVersion>
+        <Platform Condition="'$(Platform)'==''">Win32</Platform>
+        <TargetedPlatforms>1</TargetedPlatforms>
+        <Platform>Win32</Platform>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
+        <Cfg_1>true</Cfg_1>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
+        <Cfg_2>true</Cfg_2>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='TobyBuild' or '$(Cfg_3)'!=''">
+        <Cfg_3>true</Cfg_3>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_3)'=='true') or '$(Cfg_3_Win32)'!=''">
+        <Cfg_3_Win32>true</Cfg_3_Win32>
+        <CfgParent>Cfg_3</CfgParent>
+        <Cfg_3>true</Cfg_3>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base)'!=''">
+        <VerInfo_MinorVer>3</VerInfo_MinorVer>
+        <VerInfo_PreRelease>true</VerInfo_PreRelease>
+        <VerInfo_Locale>6153</VerInfo_Locale>
+        <VerInfo_MajorVer>0</VerInfo_MajorVer>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Winapi;System.Win;$(DCC_Namespace)</DCC_Namespace>
+        <VerInfo_Debug>true</VerInfo_Debug>
+        <VerInfo_Keys>CompanyName=Toflidium Software;FileDescription=DocTo - Convert doc files to any available format;FileVersion=0.3.2.15;InternalName=;LegalCopyright=Toby Allen;LegalTrademarks=;OriginalFilename=docto.exe;ProductName=DocTo;ProductVersion=0.3.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Release>2</VerInfo_Release>
+        <VerInfo_Build>15</VerInfo_Build>
+        <VerInfo_AutoGenVersion>true</VerInfo_AutoGenVersion>
+        <DCC_UsePackage>vclx;vcl;VclSmp;rtl;vclimg;svnui;svn;bdertl;TeeUI;TeeDB;Tee;vclactnband;vcldb;dbrtl;vcldbx;vcltouch;xmlrtl;dsnap;dsnapcon;vclib;ibxpress;adortl;IndyCore;IndySystem;IndyProtocols;inet;intrawebdb_110_150;Intraweb_110_150;vclie;inetdb;webdsnap;websnap;inetdbbde;inetdbxpress;soaprtl;vclribbon;DbxCommonDriver;DBXInterBaseDriver;DBXMySQLDriver;dbexpress;dbxcds;$(DCC_UsePackage)</DCC_UsePackage>
+        <DCC_SymbolReferenceInfo>1</DCC_SymbolReferenceInfo>
+        <DCC_E>false</DCC_E>
+        <DCC_ImageBase>00400000</DCC_ImageBase>
+        <DCC_N>true</DCC_N>
+        <DCC_S>false</DCC_S>
+        <DCC_F>false</DCC_F>
+        <DCC_K>false</DCC_K>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_1)'!=''">
+        <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+        <DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
+        <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+        <DCC_DebugInformation>false</DCC_DebugInformation>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2)'!=''">
+        <DCC_ExeOutput>../exe</DCC_ExeOutput>
+        <DCC_ConsoleTarget>true</DCC_ConsoleTarget>
+        <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+        <DCC_Optimize>false</DCC_Optimize>
+        <DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_3_Win32)'!=''">
+<<<<<<< HEAD
+        <Debugger_HostApplication>cmd</Debugger_HostApplication>
+        <VerInfo_Build>24</VerInfo_Build>
+        <VerInfo_PreRelease>false</VerInfo_PreRelease>
+        <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
+        <VerInfo_AutoGenVersion>false</VerInfo_AutoGenVersion>
+        <VerInfo_Release>13</VerInfo_Release>
+        <Icon_MainIcon>d2icon_QhU_icon.ico</Icon_MainIcon>
+        <Debugger_RunParams> -f &quot;https://backoffice.cookingisfun.ie/reports/studentcoursestatus.php?CourseID=900348&amp;authtoken=a8db962c-136a-4a59-a6c9-cf8ec00f0cb3&quot; -o d:\temp\myfile7.pdf -l 10 -t wdFormatPDF</Debugger_RunParams>
+        <VerInfo_MinorVer>8</VerInfo_MinorVer>
+        <VerInfo_Keys>CompanyName=Toflidium Software;FileDescription=DocTo - Convert doc files to any available format;FileVersion=0.8.13.24;InternalName=;LegalCopyright=Toby Allen;LegalTrademarks=;OriginalFilename=docto.exe;ProductName=DocTo;ProductVersion=0.8.0.0;Comments=</VerInfo_Keys>
+=======
+        <VerInfo_MajorVer>1</VerInfo_MajorVer>
+        <Debugger_RunParams>-f C:\dev\github\docto\test\Inputfiles\ -o C:\dev\github\docto\test\generatedfiles\ -t wdFormatpdf -w &quot;https://toflidium.com/webhooks/docto/webhook_test.php&quot; -l 10</Debugger_RunParams>
+        <VerInfo_Build>44</VerInfo_Build>
+        <VerInfo_PreRelease>false</VerInfo_PreRelease>
+        <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
+        <VerInfo_AutoGenVersion>false</VerInfo_AutoGenVersion>
+        <VerInfo_Release>19</VerInfo_Release>
+        <Icon_MainIcon>docto_Icon2.ico</Icon_MainIcon>
+        <VerInfo_MinorVer>0</VerInfo_MinorVer>
+        <VerInfo_Keys>CompanyName=Toflidium Software;FileDescription=DocTo - Convert doc files to any available format;FileVersion=1.0.19.44;InternalName=;LegalCopyright=Toby Allen;LegalTrademarks=;OriginalFilename=docto.exe;ProductName=DocTo;ProductVersion=1.0.19.40;Comments=https://github.com/tobya/DocTo</VerInfo_Keys>
+>>>>>>> master
+        <DCC_ExeOutput>..\exe</DCC_ExeOutput>
+        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+    </PropertyGroup>
+    <ItemGroup>
+        <DelphiCompile Include="$(MainSource)">
+            <MainSource>MainSource</MainSource>
+        </DelphiCompile>
+        <RcCompile Include="ExtraFiles.rc">
+            <Form>ExtraFiles.res</Form>
+        </RcCompile>
+        <DCCReference Include="WordUtils.pas"/>
+        <DCCReference Include="MainUtils.pas"/>
+        <DCCReference Include="ResourceUtils.pas"/>
+        <DCCReference Include="PathUtils.pas"/>
+        <DCCReference Include="datamodSSL.pas">
+            <Form>dmSSL</Form>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="ExcelUtils.pas"/>
+        <DCCReference Include="Word_TLB_Constants.pas"/>
+        <DCCReference Include="Excel_TLB_Constants.pas"/>
+        <None Include="..\readme.md"/>
+        <None Include="res\wdFormats.txt"/>
+        <None Include="res\HelpLog.txt"/>
+        <None Include="res\HelpJSONLog.txt"/>
+        <None Include="res\HelpWebHook.txt"/>
+        <None Include="res\wdFormatsExt.txt"/>
+        <None Include="res\WdCompatibilityMode.txt"/>
+        <None Include="res\HelpErrors.txt"/>
+        <None Include="res\wdEncoding.txt"/>
+        <None Include="..\changes.txt"/>
+        <None Include="res\xlsFormats.txt"/>
+        <None Include="res\xlsFormatsExt.txt"/>
+        <None Include="..\changes.md"/>
+        <None Include="res\ppFormats.txt"/>
+        <None Include="res\WDConst.txt"/>
+        <None Include="res\wdExtraConst.txt"/>
+        <BuildConfiguration Include="Debug">
+            <Key>Cfg_2</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+        <BuildConfiguration Include="TobyBuild">
+            <Key>Cfg_3</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Base">
+            <Key>Base</Key>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Release">
+            <Key>Cfg_1</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+    </ItemGroup>
+    <Import Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')" Project="$(BDS)\Bin\CodeGear.Delphi.Targets"/>
+    <Import Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')" Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj"/>
+    <ProjectExtensions>
+        <Borland.Personality>Delphi.Personality.12</Borland.Personality>
+        <Borland.ProjectType>VCLApplication</Borland.ProjectType>
+        <BorlandProject>
+            <Delphi.Personality>
+                <Source>
+                    <Source Name="MainSource">docto.dpr</Source>
+                </Source>
+                <VersionInfo>
+                    <VersionInfo Name="IncludeVerInfo">True</VersionInfo>
+                    <VersionInfo Name="AutoIncBuild">True</VersionInfo>
+                    <VersionInfo Name="MajorVer">0</VersionInfo>
+                    <VersionInfo Name="MinorVer">4</VersionInfo>
+                    <VersionInfo Name="Release">4</VersionInfo>
+<<<<<<< HEAD
+                    <VersionInfo Name="Build">40</VersionInfo>
+=======
+                    <VersionInfo Name="Build">60</VersionInfo>
+>>>>>>> master
+                    <VersionInfo Name="Debug">True</VersionInfo>
+                    <VersionInfo Name="PreRelease">True</VersionInfo>
+                    <VersionInfo Name="Special">False</VersionInfo>
+                    <VersionInfo Name="Private">False</VersionInfo>
+                    <VersionInfo Name="DLL">False</VersionInfo>
+                    <VersionInfo Name="Locale">1033</VersionInfo>
+                    <VersionInfo Name="CodePage">1252</VersionInfo>
+                </VersionInfo>
+                <VersionInfoKeys>
+                    <VersionInfoKeys Name="CompanyName">Toflidium Software</VersionInfoKeys>
+                    <VersionInfoKeys Name="FileDescription"/>
+<<<<<<< HEAD
+                    <VersionInfoKeys Name="FileVersion">0.4.4.40</VersionInfoKeys>
+=======
+                    <VersionInfoKeys Name="FileVersion">0.4.4.60</VersionInfoKeys>
+>>>>>>> master
+                    <VersionInfoKeys Name="InternalName"/>
+                    <VersionInfoKeys Name="LegalCopyright">Toflidium Software</VersionInfoKeys>
+                    <VersionInfoKeys Name="LegalTrademarks"/>
+                    <VersionInfoKeys Name="OriginalFilename"/>
+                    <VersionInfoKeys Name="ProductName">DocTo</VersionInfoKeys>
+                    <VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
+                    <VersionInfoKeys Name="Comments"/>
+                </VersionInfoKeys>
+                <Parameters>
+                    <Parameters Name="RunParams">-f &quot;C:\Temp\recipeZXLists\Courses\2010\12 Week September\Week 3\Mondaye\&quot;  -o c:\temp\myout -T wdFormatText -ox .txt -W &quot;http://home.hisbik.ie/webhooks/docto.php&quot;</Parameters>
+                </Parameters>
+                <Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k180.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp180.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                </Excluded_Packages>
+            </Delphi.Personality>
+            <Platforms>
+                <Platform value="OSX32">False</Platform>
+                <Platform value="Win32">True</Platform>
+                <Platform value="Win64">False</Platform>
+            </Platforms>
+            <Deployment>
+<<<<<<< HEAD
+                <DeployFile LocalName="..\exe\docto.exe" Configuration="TobyBuild" Class="ProjectOutput">
+                    <Platform Name="Win32"/>
+                </DeployFile>
+=======
+>>>>>>> master
+                <DeployFile LocalName="..\exe\docto.rsm" Configuration="TobyBuild" Class="DebugSymbols">
+                    <Platform Name="Win32">
+                        <RemoteName>docto.rsm</RemoteName>
+                    </Platform>
+                </DeployFile>
+<<<<<<< HEAD
+=======
+                <DeployFile LocalName="..\exe\docto.exe" Configuration="TobyBuild" Class="ProjectOutput">
+                    <Platform Name="Win32"/>
+                </DeployFile>
+>>>>>>> master
+                <DeployFile LocalName="$(BDS)\Redist\osx32\libcgunwind.1.0.dylib" Class="DependencyModule">
+                    <Platform Name="OSX32"/>
+                    <Platform Name="iOSSimulator"/>
+                </DeployFile>
+                <DeployClass Required="true" Name="DependencyPackage">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
+                    </Platform>
+                    <Platform Name="Win32">
+                        <Operation>0</Operation>
+                        <Extensions>.bpl</Extensions>
+                    </Platform>
+                    <Platform Name="OSX32">
+                        <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="DependencyModule">
+                    <Platform Name="OSX32">
+                        <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
+                    </Platform>
+                    <Platform Name="Win32">
+                        <Operation>0</Operation>
+                        <Extensions>.dll;.bpl</Extensions>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="iPad_Launch2048">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="ProjectOSXInfoPList"/>
+                <DeployClass Name="ProjectiOSDeviceInfoPList"/>
+                <DeployClass Name="ProjectiOSDeviceDebug">
+                    <Platform Name="iOSDevice">
+                        <RemoteDir>..\$(PROJECTNAME).app.dSYM\Contents\Resources\DWARF</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="iPad_Launch1024">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="ProjectiOSResource">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="ProjectiOSSimulatorInfoPList"/>
+                <DeployClass Name="ProjectOSXEntitlements"/>
+                <DeployClass Name="iPhone_Launch640">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="ProjectOSXResource">
+                    <Platform Name="OSX32">
+                        <RemoteDir>Contents\Resources</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="iPhone_Launch320">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="iPad_Launch768">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Required="true" Name="ProjectOutput">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="Win32">
+                        <Operation>0</Operation>
+                    </Platform>
+                    <Platform Name="OSX32">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="ProjectiOSDeviceResourceRules"/>
+                <DeployClass Name="File">
+                    <Platform Name="iOSDevice">
+                        <Operation>0</Operation>
+                    </Platform>
+                    <Platform Name="Win32">
+                        <Operation>0</Operation>
+                    </Platform>
+                    <Platform Name="OSX32">
+                        <Operation>0</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>0</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="DebugSymbols">
+                    <Platform Name="OSX32">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="Win32">
+                        <Operation>0</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="DependencyFramework">
+                    <Platform Name="OSX32">
+                        <Operation>1</Operation>
+                        <Extensions>.framework</Extensions>
+                    </Platform>
+                    <Platform Name="Win32">
+                        <Operation>0</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="iPhone_Launch640x1136">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="ProjectiOSEntitlements"/>
+                <DeployClass Name="iPad_Launch1536">
+                    <Platform Name="iOSDevice">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="AdditionalDebugSymbols">
+                    <Platform Name="OSX32">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="Win32">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
+                        <Operation>0</Operation>
+                    </Platform>
+                </DeployClass>
+                <ProjectRoot Platform="iOSDevice" Name="$(PROJECTNAME).app"/>
+                <ProjectRoot Platform="Win32" Name="$(PROJECTNAME)"/>
+                <ProjectRoot Platform="OSX32" Name="$(PROJECTNAME)"/>
+                <ProjectRoot Platform="iOSSimulator" Name="$(PROJECTNAME).app"/>
+                <ProjectRoot Platform="Win64" Name="$(PROJECTNAME)"/>
+            </Deployment>
+<<<<<<< HEAD
+=======
+            <ModelSupport>False</ModelSupport>
+>>>>>>> master
+        </BorlandProject>
+        <ProjectFileVersion>12</ProjectFileVersion>
+    </ProjectExtensions>
+    <Import Project="$(MSBuildProjectName).deployproj" Condition="Exists('$(MSBuildProjectName).deployproj')"/>
+</Project>

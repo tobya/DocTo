@@ -12,6 +12,10 @@ exe/help.txt
 test/privatetest/
 *.group*
 exe/
+test/InputFiles/ignore/
+test/InputFiles/generatedfiles/
+test/Generated*
+test/InputFiles3*
 
 ############
 # Delphi
@@ -23,6 +27,7 @@ __history/
 *.identcache
 *.orig
 *.local
+*.res
 
 #################
 ## Eclipse

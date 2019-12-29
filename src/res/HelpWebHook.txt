@@ -2,7 +2,7 @@ Webhook Help
 
 The Webhook URL will be called on the following events with the following parameters
 
-  - File Converstion
+  - File Conversion
     - action=convert
     - type=wdFormatType (or int if no matching format type)
     - ouputfilename=File being written to.

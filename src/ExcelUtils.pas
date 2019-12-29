@@ -1,6 +1,6 @@
 unit ExcelUtils;
 (*************************************************************
-Copyright © 2012 Toby Allen (http://github.com/tobya)
+Copyright © 2012 Toby Allen (https://github.com/tobya)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction,
 including without limitation the rights to use, copy, modify, merge, publish, distribute, sub-license, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
@@ -14,7 +14,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 ****************************************************************)
 interface
 
-uses Classes,Sysutils, MainUtils, ResourceUtils,  ActiveX, ComObj, WinINet, Variants,  Types;
+uses Classes,Sysutils, MainUtils, ResourceUtils,  ActiveX, ComObj, WinINet, Variants, Excel_TLB_Constants,StrUtils;
 
 type
 
@@ -27,13 +27,17 @@ public
     constructor Create() ;
     function CreateOfficeApp() : boolean;  override;
     function DestroyOfficeApp() : boolean; override;
-    function ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): string; override;
+    function ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): TConversionInfo; override;
     function AvailableFormats() : TStringList; override;
     function FormatsExtensions(): TStringList; override;
     function OfficeAppVersion() : String; override;
 End;
 
-
+const
+  xlTypePDF=50000 ;
+  xlpdf=50000 ;
+  xlTypeXPS=50001  ;
+  xlXPS=50001 ;
 
 
 implementation
@@ -41,13 +45,9 @@ implementation
 
 
 function TExcelXLSConverter.AvailableFormats() : TStringList;
-var
-  Formats : TStringList;
 
 begin
-  Formats := Tstringlist.Create();
-  LoadStringListFromResource('EXCELFORMATS',Formats);
-
+  Formats := TResourceStrings.Create('EXCELFORMATS');
   result := Formats;
 end;
 
@@ -78,33 +78,95 @@ begin
   Result := true;
 end;
 
-function TExcelXLSConverter.ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): string;
+
+
+//Useful Links:
+//    https://docs.microsoft.com/en-us/office/vba/api/excel.workbooks.open
+//    https://docs.microsoft.com/en-us/office/vba/api/excel.workbook.exportasfixedformat
+
+function TExcelXLSConverter.ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): TConversionInfo;
+var
+    NonsensePassword :OleVariant;
+    ExitAction :TExitAction;
 begin
-            //Open doc and save in requested format.
+      //Excel is particuarily sensitive to having \\ at end of filename, eg it won't create file.
+      //so we remove any double \\
+      OutputFilename := stringreplace(OutputFilename, '\\', '\', [rfReplaceAll]);
+      log(OutputFilename, verbose);
+      ExitAction := aSave;
+      Result.InputFile := fileToConvert;
+      Result.Successful := false;
+      NonsensePassword := 'tfm554!ghAGWRDD';
+        try
+          ExcelApp.Workbooks.Open( FileToConvert,   //FileName					,
+                                EmptyParam,    //UpdateLinks					,
+                                False,         //ReadOnly					,
+                                EmptyParam,      //Format						,
+                                NonsensePassword  //Password					,
+                                );
+                                //WriteResPassword			,
+                                //IgnoreReadOnlyRecommended,
+                                //Origin						,
+                                //Delimiter					,
+                                //Editable					,
+                                //,
+                                //Notify						,
+                                //Converter					,
+                                //AddToMru					,
+                                //Local						,
+          Except on E : Exception do
+          begin
 
-            //Excel is particuarily sensitive to having \\ at end of filename, eg it won't create file.
-            //so we remove any double \\
-            log(OutputFilename, VERBOSE);
-            OutputFilename := stringreplace(OutputFilename, '\\', '\', [rfReplaceAll]);
-            log(OutputFilename, verbose);
-            ExcelApp.Workbooks.Open( FileToConvert);
+                      // if ErroR contains EOleException The password is incorrect.
+                    // then it is password protected and should be skipped.
+                    if ContainsStr(E.Message, 'The password you supplied is not correct' ) then
+                    begin
+                       log('Error Occured:' +  E.Message + ' ' + E.ClassName, Verbose);
+                       log('SKIPPED - Password Protected:' + fileToConvert, STANDARD);
+                       Result.Successful := false;
+                       Result.Error := 'SKIPPED - Password Protected:';
+                       ExitAction := aExit;
 
-            //PDF and XPS are not an actual standard xls output format so we created our own.
-            if OutputFileFormat = 50000 then //pdf
+                    end
+                    else
+                    begin
+                      // fallback error log
+                      logerror(ConvertErrorText(E.ClassName) + ' ' + ConvertErrorText(E.Message));
+                      Result.Successful := false;
+                      Result.OutputFile := '';
+                      Result.Error := E.Message;
+                      ExitAction := aExit;
+                    end;
+          end;
+
+        end;
+
+     case exitAction of
+        aExit: // exit without Closing. (usually because no file is open)
+        begin
+          Result.Successful := false;
+          Result.OutputFile := '';
+        end;
+        aClose: // Just Close
+        begin
+            ExcelApp.ActiveWorkbook.Close();
+        end;
+        aSave: // Go ahead and save
+        begin
+            //Unlike Word, in Excel you must call a different function to save a pdf and XPS.
+            if OutputFileFormat = xlTypePDF then
             begin
                 ExcelApp.Application.DisplayAlerts := False ;
-                //Unlike Word, in Excel you must call a different function to save a pdf. Ensure we export entire workbook.
-                ExcelApp.activeWorkbook.ExportAsFixedFormat(0, OutputFilename  );
+                ExcelApp.activeWorkbook.ExportAsFixedFormat(XlFixedFormatType_xlTypePDF, OutputFilename  );
                 ExcelApp.ActiveWorkBook.save;
             end
-            else if OutputFileFormat = 50001 then //xps
+            else if OutputFileFormat = xlTypeXPS then
             begin
                 ExcelApp.Application.DisplayAlerts := False ;
-                //Unlike Word, in Excel you must call a different function to save a pdf. Ensure we export entire workbook.
-                ExcelApp.activeWorkbook.ExportAsFixedFormat(1, OutputFilename  );
+                ExcelApp.activeWorkbook.ExportAsFixedFormat(XlFixedFormatType_xlTypeXPS, OutputFilename  );
                 ExcelApp.ActiveWorkBook.save;
             end
-            else if OutputFileFormat = 6 then //CSV
+            else if OutputFileFormat = xlCSV then
              begin
               //CSV pops up alert. must be hidden for automation
                 ExcelApp.Application.DisplayAlerts := False ;
@@ -121,6 +183,8 @@ begin
             end;
 
             ExcelApp.ActiveWorkbook.Close();
+            end;
+    end;
 end;
 
 
@@ -130,7 +194,7 @@ var
 
 begin
   Extensions := Tstringlist.Create();
-  LoadStringListFromResource('EXTENSIONS',Extensions);
+  LoadStringListFromResource('XLSEXTENSIONS',Extensions);
 
   result := Extensions;
 end;

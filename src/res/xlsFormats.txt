@@ -51,4 +51,6 @@ xlWorks2FarEast=28
 xlWQ1=34
 xlXMLSpreadsheet=46
 xlTypePDF=50000
+xlpdf=50000
 xlTypeXPS=50001
+xlXPS=50001

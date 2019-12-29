@@ -1,4 +1,4 @@
-REM Explaination 
+REM Explanation
 REM Test runs to check docto scenarios
 REM execute docto inserting variables 
 REM %~d0 and %~p0 together give the full directory this batch file is executing in.
@@ -42,17 +42,20 @@ REM Try on Single no output file with Verbose Logging
 
 
 
-REM Should produce an error
+REM Should produce an error incorrect format.
 "../exe/docto.exe"  -f "%~d0%~p0Inputfiles\pie3.doc"  -o "%~d0%~p0GeneratedFiles\Pie3.pdf"    -T  wdFormatTestPDF
 
-REM Should produce an error
+REM Should produce an error - input file does not exist
 "../exe/docto.exe"  -f "%~d0%~p0Inputfiles\pie3_doesntexist.doc"  -o "%~d0%~p0GeneratedFiles\Pie3.pdf"    -T  wdFormatPDF
 
-REM Test Webhook
+REM Test http Webhook
 REM ---------------------------------
-REM To view visit http://toflidium.com/webhooks/docto/docto_test_values.txt
+REM To view visit https://toflidium.com/webhooks/docto/docto_test_values.txt
 REM ---------------------------------
 "../exe/docto.exe"  -f "%~d0%~p0Inputfiles\pie3.doc"  -o "%~d0%~p0GeneratedFiles\Pie3.pdf"    -T  wdFormatPDF -W http://toflidium.com/webhooks/docto/webhook_test.php
+REM Check https webhook.
+
+"../exe/docto.exe"  -f "%~d0%~p0Inputfiles\pie3.doc"  -o "%~d0%~p0GeneratedFiles\Pie3.pdf"    -T  wdFormatPDF -W https://toflidium.com/webhooks/docto/webhook_test.php
 
 
 REM If output Dir left out default to input
@@ -65,4 +68,7 @@ REM Check that works with -o before -f
 REM Check Unicode to txt conversion. issue #32
 "../exe/docto.exe"  -f "%~d0%~p0Inputfiles\UnicodeTest.doc"  -o "%~d0%~p0GeneratedFiles\UnicodeTest.txt"    -T  wdFormatEncodedText -E 65001 
 
+REM Check Logging
+"../exe/docto.exe"    -o "%~d0%~p0GeneratedFiles\Pie3.pdf"    -T  wdFormatPDF -f "%~d0%~p0Inputfiles\pie3.doc"  -G -L 10
+"../exe/docto.exe"    -o "%~d0%~p0GeneratedFiles\Pie3.pdf"    -T  wdFormatPDF -f "%~d0%~p0Inputfiles\pie3.doc"  -GL outputlog.log -L 10
 

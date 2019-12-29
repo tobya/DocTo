@@ -51,4 +51,6 @@ xlWorks2FarEast=xls
 xlWQ1=wq
 xlXMLSpreadsheet=xmlx
 xlTypePDF=pdf
+xlPDF=pdf
 xlTypeXPS=xps
+xlXPS=xps

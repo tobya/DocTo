@@ -1,10 +1,13 @@
 program docto;
 (*************************************************************
-Copyright © 2012-2016 Toby Allen (http://github.com/tobya)
+Copyright © 2012-2016 Toby Allen (https://github.com/tobya)
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction,
-including without limitation the rights to use, copy, modify, merge, publish, distribute, sub-license, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the “Software”), to deal in the
+Software without restriction,
+including without limitation the rights to use, copy, modify, merge, publish,
+distribute, sub-license, and/or sell copies of the Software, and to permit persons
+to whom the Software is furnished to do so, subject to the following conditions:
 
 The above copyright notice, and every other copyright notice found in this software, and all the attributions in every file, and this permission notice shall be included in all copies or substantial portions of the Software.
 
@@ -15,7 +18,7 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
 OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ****************************************************************)
 {$APPTYPE CONSOLE}
-{$R 'wdFormats.res' 'wdFormats.rc'}
+{$R 'ExtraFiles.res' 'ExtraFiles.rc'}
 {$R *.res}
 uses
   SysUtils,
@@ -24,12 +27,17 @@ uses
   WordUtils in 'WordUtils.pas',
   MainUtils in 'MainUtils.pas',
   ResourceUtils in 'ResourceUtils.pas',
-  PathUtils in 'PathUtils.pas';
+  PathUtils in 'PathUtils.pas',
+  datamodSSL in 'datamodSSL.pas' {dmSSL: TDataModule},
+  ExcelUtils in 'ExcelUtils.pas',
+  Word_TLB_Constants in 'Word_TLB_Constants.pas',
+  Excel_TLB_Constants in 'Excel_TLB_Constants.pas';
 
 var
-  i : integer;
+  i, Converter : integer;
   paramlist : TStringlist;
   DocConv : TWordDocConverter;
+  XLSConv : TExcelXLSConverter;
   LogResult : String;
 begin
 
@@ -38,6 +46,7 @@ begin
   try
    try
      DocConv := TWordDocConverter.Create;
+     XLSConv := TExcelXLSConverter.Create;
     try
 
       for i := 1 to ParamCount do
@@ -46,19 +55,30 @@ begin
       end;
 
       CoInitialize(nil);
+
+      Converter := DocConv.ChooseConverter(ParamList);
+
+      if Converter = MSWord then
+      begin
       DocConv.LoadConfig(paramlist);
-
-
-      LogResult :=  DocConv.Execute;
+            LogResult :=  DocConv.Execute;
       DocConv.log( LogResult );
+      end
+      else begin
+        XLSConv.LoadConfig(ParamList);
+        LogResult :=  XLSConv.Execute;
+        XLSConv.log( LogResult );
+      end;
 
       CoUninitialize;
     finally
       DocConv.free;
+      XLSConv.Free;
     end;
    except on E: Exception do
     begin
-         Writeln('Exiting with Error 400: ' + E.ClassName + ' ' + E.Message);
+         Writeln('Exiting with Error 400: ' + E.ClassName );
+         Writeln(E.Message);
          halt(400);
     end;
 
