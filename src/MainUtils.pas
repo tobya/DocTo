@@ -56,6 +56,8 @@ type
     FIgnore_ErrorDocs : boolean;
     FBookMarkSource : integer;
 
+    FNetHandle: HINTERNET;
+
 
     procedure SetCompatibilityMode(const Value: Integer);
     procedure SetIgnore_MACOSX(const Value: boolean);
@@ -479,6 +481,12 @@ begin
 
 
   FInputFiles.Free;
+
+  if assigned(FNetHandle) then
+  begin
+    InternetCloseHandle(FNetHandle);
+  end;
+
 end;
 
 
@@ -830,10 +838,12 @@ begin
     // jump to next id + value
     inc(iParam,2);
 
-    if (id = '-XL') or
-            (id = '--EXCEL') or
-            (id = '-WD') or
-            (id = '--WORD')    then
+    if  (id = '-XL') or
+        (id = '--EXCEL') or
+        (id = '-WD') or
+        (id = '--WORD') or
+        (id = '-PP') or
+        (id = '--POWERPOINT')    then
     begin
       // ignore here as these are checked in ChooseConverter
       dec(iparam);
@@ -1488,21 +1498,23 @@ end;
 
 
 
-
-
 function TDocumentConverter.GetUrl(Url: string): String;
 var
-  NetHandle: HINTERNET;
+
   UrlHandle: HINTERNET;
   Buffer: array[0..1023] of byte;
   BytesRead: DWord;
   StrBuffer: UTF8String;
 begin
   Result := '';
-  NetHandle := InternetOpen('github/tobya/DocTo', INTERNET_OPEN_TYPE_PRECONFIG, nil, nil, 0);
-  if Assigned(NetHandle) then
-    try
-      UrlHandle := InternetOpenUrl(NetHandle, PChar(Url), nil, 0, INTERNET_FLAG_RELOAD, 0);
+  // Intialising Win Internet Connection with InternetOpen only needs to be called once.
+  if not assigned(FNetHandle) then
+  begin
+    FNetHandle := InternetOpen('github/tobya/DocTo', INTERNET_OPEN_TYPE_PRECONFIG, nil, nil, 0);
+  end;
+  if Assigned(FNetHandle) then
+  begin
+      UrlHandle := InternetOpenUrl(FNetHandle, PChar(Url), nil, 0, INTERNET_FLAG_RELOAD, 0);
       if Assigned(UrlHandle) then
         try
           repeat
@@ -1514,12 +1526,14 @@ begin
           InternetCloseHandle(UrlHandle);
         end
       else
-        raise Exception.CreateFmt('Cannot open URL %s', [Url]);
-    finally
-      InternetCloseHandle(NetHandle);
-    end
+      begin
+        raise Exception.CreateFmt('Cannot open URL: %s', [Url]);
+      end;
+  end
   else
+  begin
     raise Exception.Create('Unable to initialize Wininet');
+  end;
 end;
 
 
