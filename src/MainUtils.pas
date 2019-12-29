@@ -595,7 +595,7 @@ begin
               CheckDocumentTiming(StartTime, EndTime, FileToConvert);
             end;
 
-            if RemoveFileOnConvert then
+            if ConversionInfo.Successful then
             begin
               if RemoveFileOnConvert then
               begin
@@ -608,13 +608,8 @@ begin
               end;
 
 
-
-          //  UrlToCall := 'action=convert&type='+ FOutputFileFormatString + '&outputfilename=' + URLEncode(FileToCreate)+ '&inputfilename=' + URLEncode(InputFile);
-
-            // Make a call to webhook if it exists
-          //  CallWebHook(UrlToCall);
-
-            AfterConversion(InputFile, FileToCreate);
+            // Make a call to webhook if it existS
+            AfterConversion(FileToConvert, FileToCreate);
 
             log('Creating File: ' + FileToCreate,CHATTY);
           end
