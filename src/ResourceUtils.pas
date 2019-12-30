@@ -37,6 +37,7 @@ public
   { public declarations }
   Constructor Create(ResourceName : String);
   Procedure Load(ResourceName: String);
+  Procedure Append(ResourceName : String);
   Function Exists(Key : String) : Boolean;
   Property ValuesAreHex : Boolean read FValuesAreHex write SetValuesAreHex;
   property ValuesAreInt : Boolean  read FValuesAreInt write SetValuesAreInt;
@@ -71,6 +72,11 @@ end;
 { TResourceStrings }
 
 
+
+procedure TResourceStrings.Append(ResourceName: String);
+begin
+       LoadStringListFromResource(ResourceName,Self,true);
+end;
 
 constructor TResourceStrings.Create(ResourceName: String);
 begin
