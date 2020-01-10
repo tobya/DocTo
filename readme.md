@@ -200,9 +200,14 @@ https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-u
                           Word 2013 are disabled in this mode.
       wdWord2013  : 15    Default. All Word 2013 features are enabled.
 
+Compiling
+--
+The project compiles with Delphi (I use XE4 but it should compile with most versions including 7). The project will not compile on Linux as it uses several Windows only components such as COM and Word and Excel do not have Linux versions anyway so there would be no point.
+
+
 ## Get Involved.
 
-The project compiles with Delphi (I use XE4 but it should compile with most versions including 7). I am happy to accept any PR anyone might like to submit.
+ I am happy to accept any PR anyone might like to submit.  If a large amount of work involved, please open an issue first to ensure the effort wont be wasted.
 
 ## Updates     
 
