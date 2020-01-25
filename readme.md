@@ -31,9 +31,14 @@ XLSTo is now incorporated into DocTo.  Previously XLSTo was a seperate EXE that 
   1. [Delete after conversion](https://github.com/tobya/DocTo/wiki/Delete-%5Cinput-File-after-conversion)
   1. [Fire https Webhook on each conversion.](https://github.com/tobya/DocTo#webhooks)
 
-## Package Manager
+## Installation
 
-Available for [installation via Chocolatey ](https://chocolatey.org/packages/docto)
+Download .exe from Release https://github.com/tobya/docTo/releases
+
+Package Manager
+--
+
+Also Available for [installation via Chocolatey ](https://chocolatey.org/packages/docto)
 
 > choco install docto
   
