@@ -159,6 +159,7 @@ begin
                 ExcelApp.Application.DisplayAlerts := False ;
                 ExcelApp.activeWorkbook.ExportAsFixedFormat(XlFixedFormatType_xlTypePDF, OutputFilename  );
                 ExcelApp.ActiveWorkBook.save;
+
             end
             else if OutputFileFormat = xlTypeXPS then
             begin
@@ -181,7 +182,8 @@ begin
               ExcelApp.ActiveWorkBook.Save;
 
             end;
-
+            Result.Successful := true;
+            Result.OutputFile := OutputFilename;
             ExcelApp.ActiveWorkbook.Close();
             end;
     end;

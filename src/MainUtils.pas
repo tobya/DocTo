@@ -611,7 +611,7 @@ begin
             // Make a call to webhook if it existS
             AfterConversion(FileToConvert, FileToCreate);
 
-            log('Creating File: ' + FileToCreate,CHATTY);
+            log('Creating File: ' + FileToCreate,STANDARD);
           end
           else    // Conversion not successful
           begin
@@ -848,7 +848,6 @@ begin
     begin
       FOutputFile :=  value;
 
-
       tmpext := ExtractFileExt(FOutputFile);
 
       // if no extension then assume directory, otherwise no way to
@@ -859,14 +858,14 @@ begin
         OutputIsDir := true;
         OutputIsFile := false;
         ForceDirectories(FOutputFile);
-        log('Output directory is: ' + FOutputFile,CHATTY);
+        log('Output directory: ' + FOutputFile,CHATTY);
 
       end
       else
       begin
         OutputIsFile := true;
         OutputIsDir := false;
-        log('Output file is: ' + FOutputFile,CHATTY);
+        log('Output file: ' + FOutputFile,CHATTY);
       end;
 
 
@@ -1183,14 +1182,12 @@ begin
   if Level <= FLogLevel then
   begin
     OutputLog := true;
-  END;
+  end;
 
-
-
-    if FFirstLogEntry then
-    begin
+  if FFirstLogEntry then
+  begin
     OutputTimeStamp := true;
-     end;
+  end;
 
   if Level = HELP then
   begin
@@ -1198,22 +1195,23 @@ begin
       OutputTimeStamp := false;
   end;
 
-    if OutputTimeStamp then
-    begin
-      FFirstLogEntry := false;
-      Msg := '[' + FormatDateTime('YYYYMMDD HH:NN:SS -' , now) +  ']: '  +  Msg;
-    end;
+  if OutputTimeStamp then
+  begin
+    FFirstLogEntry := false;
+    Msg := '[' + FormatDateTime('YYYYMMDD HH:NN:SS -' , now) +  ']: '  +  Msg;
+  end;
 
 
-    if OutputLog = true then
-    begin
-      ConsoleLog.Log(self, Msg);
-    end;
-    if FLogtoFile then
-    begin
-      FLogFile.Add(Msg);
-      FLogFile.SaveToFile(FLogFilename);
-    end;
+  if OutputLog = true then
+  begin
+    ConsoleLog.Log(self, Msg);
+  end;
+
+  if FLogtoFile then
+  begin
+    FLogFile.Add(Msg);
+    FLogFile.SaveToFile(FLogFilename);
+  end;
 
 end;
 

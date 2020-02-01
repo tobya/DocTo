@@ -58,7 +58,7 @@ begin
 
       Converter := DocConv.ChooseConverter(ParamList);
 
-      DocConv.LogVersionInfo;
+      //DocConv.LogVersionInfo;
       if Converter = MSWord then
       begin
         DocConv.Log('Converter:MS Word' ,CHATTY);
