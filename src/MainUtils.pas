@@ -399,8 +399,7 @@ While iParam <= Params.Count -1 do
     begin
       value := '';
     end;
-    // Check every parameter as some do not have a value eg. -XL
-    inc(iParam,1);
+
 
     if id  = '-L' then
     begin
@@ -415,6 +414,8 @@ While iParam <= Params.Count -1 do
       OutputLog := false;
     end ;
 
+    // Check every parameter as some do not have a value eg. -XL
+    inc(iParam,1);
   end;
 
   Log('Log Level Set To:' + IntToStr(FLogLevel),CHATTY);
@@ -844,7 +845,7 @@ begin
       dec(iparam);
     end
     else if (id = '-O') or
-       (id = '--OUTPUTFILE') then
+            (id = '--OUTPUTFILE') then
     begin
       FOutputFile :=  value;
 
