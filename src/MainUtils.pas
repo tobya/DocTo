@@ -400,7 +400,7 @@ While iParam <= Params.Count -1 do
     begin
       value := '';
     end;
-    inc(iParam,2);
+    inc(iParam,1);
    // lOG(ID,VERBOSE);
     if id  = '-L' then
     begin
