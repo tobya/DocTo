@@ -69,12 +69,12 @@ begin
   begin
     CreateOfficeApp();
     WdVersion := Wordapp.Version;
-    log('WordVersion:' + WdVersion,VERBOSE);
+    //log('WordVersion:' + WdVersion,VERBOSE);
 
     //Get Major version as that is all we are interested in and strtofloat causes errors Issue#31
     decimalPos := pos('.',WdVersion);
     FWordVersion  := LeftStr(WdVersion,decimalPos -1);
-    log('WordVersion Major:' + FWordVersion,VERBOSE);
+    //log('WordVersion Major:' + FWordVersion,VERBOSE);
   end;
   result := FWordVersion;
 end;

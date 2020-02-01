@@ -189,7 +189,7 @@ type
     FUNCTION AfterConversion(InputFile, OutputFile: String):string;
     Function OnConversionError(InputFile, OutputFile, Error: String):string;
     procedure LogHelp(HelpResName : String);
-
+    procedure LogVersionInfo();
 
 
     property OutputLog : Boolean read FOutputLog write SetOutputLog;
@@ -381,12 +381,11 @@ var
 begin
 LogLevel := STANDARD;
 iParam := 0;
-//lOG(ID,VERBOSE);
-//log('top');
+
 While iParam <= Params.Count -1 do
   begin
     pstr := Params[iParam];
-   // log('-xx-' + inttostr(iparam), VERBOSE);
+
     id := UpperCase( pstr);
     if ParamCount -1  > iParam then
     begin
@@ -400,23 +399,20 @@ While iParam <= Params.Count -1 do
     begin
       value := '';
     end;
-    inc(iParam,2);
-   // lOG(ID,VERBOSE);
+    // Check every parameter as some do not have a value eg. -XL
+    inc(iParam,1);
+
     if id  = '-L' then
     begin
-     // log('asdfas' + value);
+
       if isNumber(value) then
       begin
         LogLevel := strtoint(value);
-       // break;
       end
     end
     else if id  = '-Q' then
     begin
-
       OutputLog := false;
-      //Doesn't require a value
-      dec(iParam);
     end ;
 
   end;
@@ -614,7 +610,7 @@ begin
             // Make a call to webhook if it existS
             AfterConversion(FileToConvert, FileToCreate);
 
-            log('Creating File: ' + FileToCreate,CHATTY);
+            log('Creating File: ' + FileToCreate,STANDARD);
           end
           else    // Conversion not successful
           begin
@@ -852,7 +848,6 @@ begin
       // Before doing anything else expand file name to remove any relative paths.
       FOutputFile :=  ExpandFileName( value);
 
-
       tmpext := ExtractFileExt(FOutputFile);
 
       // if no extension then assume directory, otherwise no way to
@@ -863,14 +858,14 @@ begin
         OutputIsDir := true;
         OutputIsFile := false;
         ForceDirectories(FOutputFile);
-        log('Output directory is: ' + FOutputFile,CHATTY);
+        log('Output directory: ' + FOutputFile,CHATTY);
 
       end
       else
       begin
         OutputIsFile := true;
         OutputIsDir := false;
-        log('Output file is: ' + FOutputFile,CHATTY);
+        log('Output file: ' + FOutputFile,CHATTY);
       end;
 
 
@@ -1074,13 +1069,7 @@ begin
     end
     else if (id = '-V') then
     begin
-      // Prevent Date from Printing.
-      FFirstLogEntry := false;
-
-      // Log versions.
-      log('DocTo Version:' + DOCTO_VERSION);
-      log('OfficeApp Version:' +  OfficeAppVersion(),0);
-      log('Source: https://github.com/tobya/DocTo/');
+      LogVersionInfo();
       halt(2);
 
     end
@@ -1186,6 +1175,7 @@ var
   OutputLog, OutputTimeStamp : Boolean;
 begin
   Outputlog := false;
+ //   Outputlog := true;
   OutputTimeStamp := false;
 
 
@@ -1194,14 +1184,12 @@ begin
   if Level <= FLogLevel then
   begin
     OutputLog := true;
-  END;
+  end;
 
-
-
-    if FFirstLogEntry then
-    begin
+  if FFirstLogEntry then
+  begin
     OutputTimeStamp := true;
-     end;
+  end;
 
   if Level = HELP then
   begin
@@ -1209,22 +1197,23 @@ begin
       OutputTimeStamp := false;
   end;
 
-    if OutputTimeStamp then
-    begin
-      FFirstLogEntry := false;
-      Msg := '[' + FormatDateTime('YYYYMMDD HH:NN:SS -' , now) +  ']: '  +  Msg;
-    end;
+  if OutputTimeStamp then
+  begin
+    FFirstLogEntry := false;
+    Msg := '[' + FormatDateTime('YYYYMMDD HH:NN:SS -' , now) +  ']: '  +  Msg;
+  end;
 
 
-    if OutputLog = true then
-    begin
-      ConsoleLog.Log(self, Msg);
-    end;
-    if FLogtoFile then
-    begin
-      FLogFile.Add(Msg);
-      FLogFile.SaveToFile(FLogFilename);
-    end;
+  if OutputLog = true then
+  begin
+    ConsoleLog.Log(self, Msg);
+  end;
+
+  if FLogtoFile then
+  begin
+    FLogFile.Add(Msg);
+    FLogFile.SaveToFile(FLogFilename);
+  end;
 
 end;
 
@@ -1263,6 +1252,18 @@ begin
       finally
         HelpStrings.Free;
       end;
+end;
+
+procedure TDocumentConverter.LogVersionInfo;
+begin
+      // Prevent Date from Printing.
+      FFirstLogEntry := false;
+
+      // Log versions.
+      log('DocTo Version:' + DOCTO_VERSION);
+      log('OfficeApp Version:' +  OfficeAppVersion(),0);
+      log('Source: https://github.com/tobya/DocTo/');
+
 end;
 
 function TDocumentConverter.NewFileNameFromBase(OldBase, NewBase,
