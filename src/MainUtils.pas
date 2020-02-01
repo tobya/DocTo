@@ -27,7 +27,7 @@ Const
   MSWORD = 1;
   MSEXCEL = 2;
 
-  DOCTO_VERSION = '1.0.23.41.alpha';
+  DOCTO_VERSION = '1.1.25.46';
 
 type
 
@@ -563,7 +563,6 @@ begin
         log('Current Directory: ' + GetCurrentDir,10);
 
         // Ensure directory exists
-
         OutputFilePath := ExtractFilePath( FileToCreate);
         if (OutputFilePath = '') then
         begin
@@ -846,7 +845,8 @@ begin
     else if (id = '-O') or
        (id = '--OUTPUTFILE') then
     begin
-      FOutputFile :=  value;
+      // Before doing anything else expand file name to remove any relative paths.
+      FOutputFile :=  ExpandFileName( value);
 
       tmpext := ExtractFileExt(FOutputFile);
 
@@ -889,10 +889,12 @@ begin
     else if (id = '-F') or
             (id = '--INPUTFILE') then
     begin
-      FInputFile := value;
+      // Before doing anything else expand file name to remove any relative paths.
+      FInputFile := ExpandFileName(value);
+
       log('Input File is: ' + FInputFile,CHATTY);
 
-        tmppath := ExtractFilePath(FInputFile);
+      tmppath := ExtractFilePath(FInputFile);
 
         // If we are given a filename with no path, get currentdir and add to file.
         if (tmppath = '') then
