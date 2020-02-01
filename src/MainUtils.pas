@@ -381,12 +381,11 @@ var
 begin
 LogLevel := STANDARD;
 iParam := 0;
-//lOG(ID,VERBOSE);
-//log('top');
+
 While iParam <= Params.Count -1 do
   begin
     pstr := Params[iParam];
-   // log('-xx-' + inttostr(iparam), VERBOSE);
+
     id := UpperCase( pstr);
     if ParamCount -1  > iParam then
     begin
@@ -400,23 +399,20 @@ While iParam <= Params.Count -1 do
     begin
       value := '';
     end;
+    // Check every parameter as some do not have a value eg. -XL
     inc(iParam,1);
-   // lOG(ID,VERBOSE);
+
     if id  = '-L' then
     begin
-     // log('asdfas' + value);
+
       if isNumber(value) then
       begin
         LogLevel := strtoint(value);
-       // break;
       end
     end
     else if id  = '-Q' then
     begin
-
       OutputLog := false;
-      //Doesn't require a value
-      dec(iParam);
     end ;
 
   end;
