@@ -189,7 +189,7 @@ type
     FUNCTION AfterConversion(InputFile, OutputFile: String):string;
     Function OnConversionError(InputFile, OutputFile, Error: String):string;
     procedure LogHelp(HelpResName : String);
-
+    procedure LogVersionInfo();
 
 
     property OutputLog : Boolean read FOutputLog write SetOutputLog;
@@ -1072,13 +1072,7 @@ begin
     end
     else if (id = '-V') then
     begin
-      // Prevent Date from Printing.
-      FFirstLogEntry := false;
-
-      // Log versions.
-      log('DocTo Version:' + DOCTO_VERSION);
-      log('OfficeApp Version:' +  OfficeAppVersion(),0);
-      log('Source: https://github.com/tobya/DocTo/');
+      LogVersionInfo();
       halt(2);
 
     end
@@ -1184,6 +1178,7 @@ var
   OutputLog, OutputTimeStamp : Boolean;
 begin
   Outputlog := false;
+ //   Outputlog := true;
   OutputTimeStamp := false;
 
 
@@ -1261,6 +1256,18 @@ begin
       finally
         HelpStrings.Free;
       end;
+end;
+
+procedure TDocumentConverter.LogVersionInfo;
+begin
+      // Prevent Date from Printing.
+      FFirstLogEntry := false;
+
+      // Log versions.
+      log('DocTo Version:' + DOCTO_VERSION);
+      log('OfficeApp Version:' +  OfficeAppVersion(),0);
+      log('Source: https://github.com/tobya/DocTo/');
+
 end;
 
 function TDocumentConverter.NewFileNameFromBase(OldBase, NewBase,
