@@ -10,7 +10,7 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMA
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ****************************************************************)
 interface
-uses  classes, Windows, sysutils, ActiveX, ComObj, WinINet, Variants,
+uses  classes, Windows, sysutils, ActiveX, ComObj, WinINet, Variants, iduri,
       Types,  ResourceUtils,
       PathUtils, ShellAPI, datamodssl;
 
@@ -235,28 +235,28 @@ QuestionMarkIndex : Integer;
 begin
 
   try
-  if FWebHook > '' then
-  begin
-    QuestionMarkIndex := pos('?',FWebHook);
-    if QuestionMarkIndex = 0  then
+    if FWebHook > '' then
     begin
-      url := FWebHook + '?'  + Params;
-    end
-    else if QuestionMarkIndex = length(FWebHook) then  //last character
-    begin
-      url := FWebHook + Params;
-    end
-    else
-    begin
-      url := FWebHook + '&' + Params;
+      QuestionMarkIndex := pos('?',FWebHook);
+      if QuestionMarkIndex = 0  then
+      begin
+        url := FWebHook + '?'  + Params;
+      end
+      else if QuestionMarkIndex = length(FWebHook) then  //last character
+      begin
+        url := FWebHook + Params;
+      end
+      else
+      begin
+        url := FWebHook + '&' + Params;
+      end;
+
+
+      URLResponse :=  GetURL(url);
+
+      log('Webhook Called:' + url, CHATTY);
+      log('Webhook Response:' + URLResponse, CHATTY);
     end;
-
-
-    URLResponse :=  GetURL(url);
-
-    log('Webhook Called:' + url, CHATTY);
-    log('Webhook Response:' + URLResponse, CHATTY);
-  end;
   except on E: Exception do
   begin
     logerror(ConvertErrorText( E.ClassName) + ' ' + ConvertErrorText( E.Message));
@@ -393,7 +393,7 @@ var
   i : integer;
   FileToConvert, FileToCreate : String;
   OutputFilePath : String;
-  ErrorMessage : String;
+  ErrorMessage, EventMsg : String;
   ConversionInfo : TConversionInfo;
   StartTime , EndTime : cardinal;
 
@@ -478,7 +478,7 @@ begin
        try
 
             StartTime := GettickCount();
-
+             log('Executing Conversion ... ',VERBOSE);
             ConversionInfo :=  ExecuteConversion(FileToConvert, FileToCreate, OutputFileFormat);
 
             if ConversionInfo.Successful then
@@ -501,9 +501,9 @@ begin
 
 
             // Make a call to webhook if it existS
-            AfterConversion(FileToConvert, FileToCreate);
+            EventMsg := AfterConversion(FileToConvert, FileToCreate);
 
-            log('Creating File: ' + FileToCreate,STANDARD);
+
           end
           else    // Conversion not successful
           begin
@@ -518,8 +518,6 @@ begin
 
             if pos('Invalid class string',E.Message) > 0 then
             begin
-
-
               HaltWithError(221,'Word Does not appear to be installed:' + E.ClassName + '  ' + ErrorMessage);
             end
             else
@@ -1349,7 +1347,7 @@ end;
 
 function TDocumentConverter.URLEncode(Param: String): String;
 begin
- result :=  param;
+  Result :=  TIDURI.ParamsEncode(Param);
 end;
 
 function IsNumber(Str: String) : Boolean;
@@ -1414,6 +1412,8 @@ var
   BytesRead: DWord;
   StrBuffer: UTF8String;
 begin
+
+
   Result := '';
   // Intialising Win Internet Connection with InternetOpen only needs to be called once.
   if not assigned(FNetHandle) then
