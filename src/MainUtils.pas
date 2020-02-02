@@ -27,7 +27,7 @@ Const
   MSWORD = 1;
   MSEXCEL = 2;
 
-  DOCTO_VERSION = '1.1.25.46';
+  DOCTO_VERSION = '1.2.25.47';
 
 type
 
