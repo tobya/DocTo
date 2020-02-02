@@ -266,114 +266,6 @@ begin
 end;
 
 
-// Check howlong a document took to convert.  If greater > X then record in ignorelist.
-// This can be used to find error documents as a modal window is displayed and execution does not
-// continue until MANUALLY clicked. Suggested value of -N 5 seconds.
-procedure TDocumentConverter.CheckDocumentTiming(StartTime, EndTime: cardinal; DocumentPath : String);
-var
-  sl : TStringList;
-  ignorecount : integer;
-const
-  ignorelistfilename = 'docto.ignore.txt';
-begin
-  if (List_ErrorDocs) then
-  begin
-
-    // Check if the length of time taken to convert.
-    if ((EndTime - StartTime) /1000) > List_ErrorDocs_Seconds then
-    begin
-
-      sl := TStringList.Create();
-      try
-
-        if  FileExists(ignorelistfilename) then
-        begin
-          sl.LoadFromFile(ignorelistfilename);
-        end else begin
-          sl.Add('[Comments]');
-          sl.Add('COMMENT1=THIS FILE RECORDS ANY WORD DOCUMENTS THAT TOOK LONGER THAN X SECONDS TO COMPLETE.');
-          sl.Add('COMMENT2=THIS SHOULD, OVER TIME ALLOW YOU TO TRACK DOWN ALL FILES CAUSING PROBLEMS');
-          SL.Add('COMMENT3=THESE FILES WILL BE IGNORED ON SUBSEQUENT RUNS AS LONG AS "-NX" IS USED');
-          SL.Add('COMMENT4=----DO NOT DELETE THIS FILE-----------');
-          SL.Add('[FILES TO IGNORE]');
-          SL.Add('IGNORECOUNT=0');
-        end;
-
-        log('Writing filename to Ignore List: ' + DocumentPath , CHATTY);
-
-        ignorecount := StrToInt(sl.Values['IGNORECOUNT']);
-        INC(ignorecount);
-
-        sl.Add('IGNOREFILE' + INTTOSTR(ignorecount) + '=' + DocumentPath);
-        sl.Values['IGNORECOUNT'] := INTTOSTR(ignorecount);
-        sl.SaveToFile('docto.ignore.txt');
-
-      finally
-        sl.free;
-      end;
-
-    end;
-  end;
-end;
-
-
-(*
-  Check if document is to be ignored. Load ignore file and checklist.
-*)
-function TDocumentConverter.CheckShouldIgnore(DocumentPath: String): Boolean;
-var
- // sl : TStringList;
-  fn : string;
-  ignorecount : integer;
-  I: Integer;
-const
-  ignorelistfilename = 'docto.ignore.txt';
-begin
-  Result := False;
-  if (Ignore_ErrorDocs) then
-  begin
-
-      //Create and Load on first call
-      if FIgnoreErrorDocsFile = nil then
-      begin
-
-        FIgnoreErrorDocsFile := TStringList.Create();
-
-        if  FileExists(ignorelistfilename) then
-        begin
-          FIgnoreErrorDocsFile.LoadFromFile(ignorelistfilename);
-        end else begin
-          log('No docto.ignore.txt file found.', CHATTY);
-          Result := false;
-          exit;
-        end;
-      end;
-
-
-      if FIgnoreErrorDocsFile.Count > 0 then
-      begin
-        log('Checking Ignore List for filename:' + DocumentPath, VERBOSE);
-        ignorecount := StrToInt(FIgnoreErrorDocsFile.Values['IGNORECOUNT']);
-
-        for I := 1 to ignorecount do
-        BEGIN
-         fn := FIgnoreErrorDocsFile.Values['IGNOREFILE' + INTTOSTR(I)];
-         log('Check Against: ' + fn, VERBOSE);
-         if fn = DocumentPath then
-         begin
-           Result := true;
-           break;
-         end;
-        END;
-      end;
-
-
-
-
-  end;
-
-end;
-
 procedure TDocumentConverter.ConfigLoggingLevel(Params: TStrings);
 var
   iParam : Integer;
@@ -1584,5 +1476,112 @@ function TDocumentConverter.AllowFile(FileName, Fullpath: String): Boolean;
 begin
 
 end;
+
+
+
+// Check howlong a document took to convert.  If greater > X then record in ignorelist.
+// This can be used to find error documents as a modal window is displayed and execution does not
+// continue until MANUALLY clicked. Suggested value of -N 5 seconds.
+procedure TDocumentConverter.CheckDocumentTiming(StartTime, EndTime: cardinal; DocumentPath : String);
+var
+  sl : TStringList;
+  ignorecount : integer;
+const
+  ignorelistfilename = 'docto.ignore.txt';
+begin
+  if (List_ErrorDocs) then
+  begin
+
+    // Check if the length of time taken to convert.
+    if ((EndTime - StartTime) /1000) > List_ErrorDocs_Seconds then
+    begin
+
+      sl := TStringList.Create();
+      try
+
+        if  FileExists(ignorelistfilename) then
+        begin
+          sl.LoadFromFile(ignorelistfilename);
+        end else begin
+          sl.Add('[Comments]');
+          sl.Add('COMMENT1=THIS FILE RECORDS ANY WORD DOCUMENTS THAT TOOK LONGER THAN X SECONDS TO COMPLETE.');
+          sl.Add('COMMENT2=THIS SHOULD, OVER TIME ALLOW YOU TO TRACK DOWN ALL FILES CAUSING PROBLEMS');
+          SL.Add('COMMENT3=THESE FILES WILL BE IGNORED ON SUBSEQUENT RUNS AS LONG AS "-NX" IS USED');
+          SL.Add('COMMENT4=----DO NOT DELETE THIS FILE-----------');
+          SL.Add('[FILES TO IGNORE]');
+          SL.Add('IGNORECOUNT=0');
+        end;
+
+        log('Writing filename to Ignore List: ' + DocumentPath , CHATTY);
+
+        ignorecount := StrToInt(sl.Values['IGNORECOUNT']);
+        INC(ignorecount);
+
+        sl.Add('IGNOREFILE' + INTTOSTR(ignorecount) + '=' + DocumentPath);
+        sl.Values['IGNORECOUNT'] := INTTOSTR(ignorecount);
+        sl.SaveToFile('docto.ignore.txt');
+
+      finally
+        sl.free;
+      end;
+
+    end;
+  end;
+end;
+
+
+(*
+  Check if document is to be ignored. Load ignore file and checklist.
+*)
+function TDocumentConverter.CheckShouldIgnore(DocumentPath: String): Boolean;
+var
+ // sl : TStringList;
+  fn : string;
+  ignorecount : integer;
+  I: Integer;
+const
+  ignorelistfilename = 'docto.ignore.txt';
+begin
+  Result := False;
+  if (Ignore_ErrorDocs) then
+  begin
+
+      //Create and Load on first call
+      if FIgnoreErrorDocsFile = nil then
+      begin
+        FIgnoreErrorDocsFile := TStringList.Create();
+
+        if  FileExists(ignorelistfilename) then
+        begin
+          FIgnoreErrorDocsFile.LoadFromFile(ignorelistfilename);
+        end else begin
+          log('No docto.ignore.txt file found.', CHATTY);
+          Result := false;
+          exit;
+        end;
+      end;
+
+
+      if FIgnoreErrorDocsFile.Count > 0 then
+      begin
+        log('Checking Ignore List for filename:' + DocumentPath, VERBOSE);
+        ignorecount := StrToInt(FIgnoreErrorDocsFile.Values['IGNORECOUNT']);
+
+        for I := 1 to ignorecount do
+        BEGIN
+         fn := FIgnoreErrorDocsFile.Values['IGNOREFILE' + INTTOSTR(I)];
+         log('Check Against: ' + fn, VERBOSE);
+         if fn = DocumentPath then
+         begin
+           Result := true;
+           break;
+         end;
+        END;
+      end;
+
+  end;
+
+end;
+
 
 end.
