@@ -9,7 +9,7 @@ wdFormatTemplate dot
 wdFormatText txt
 wdFormatTextLineBreaks txt
 wdFormatUnicodeText txt
-wdFormatWebArchive .webarchive
+wdFormatWebArchive webarchive
 wdFormatXML xml  
 wdFormatDocument doc
 wdFormatDocumentDefault doc
@@ -20,4 +20,3 @@ wdFormatXMLDocumentMacroEnabled xml
 wdFormatXMLTemplate xml 
 wdFormatXMLTemplateMacroEnabled xml
 wdFormatXPS xps
- 

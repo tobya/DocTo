@@ -37,6 +37,7 @@ public
   { public declarations }
   Constructor Create(ResourceName : String);
   Procedure Load(ResourceName: String);
+  Procedure Append(ResourceName : String);
   Function Exists(Key : String) : Boolean;
   Property ValuesAreHex : Boolean read FValuesAreHex write SetValuesAreHex;
   property ValuesAreInt : Boolean  read FValuesAreInt write SetValuesAreInt;
@@ -48,17 +49,20 @@ published
 end;
 
 
-procedure LoadStringListFromResource(const ResName: string;SL : TStringList);
+procedure LoadStringListFromResource(const ResName: string;SL : TStringList; Append: Boolean = false);
 
 implementation
 
 
-procedure LoadStringListFromResource(const ResName: string;SL : TStringList);
+procedure LoadStringListFromResource(const ResName: string;SL : TStringList; Append: Boolean = false);
 var
   RS: TResourceStream;
 begin
   RS := TResourceStream.Create(HInstance, ResName, 'Text');
-  SL.Clear;
+  if not(Append) then
+  begin
+    SL.Clear;
+  end;
   try
     SL.LoadFromStream(RS);
   finally
@@ -68,6 +72,11 @@ end;
 { TResourceStrings }
 
 
+
+procedure TResourceStrings.Append(ResourceName: String);
+begin
+       LoadStringListFromResource(ResourceName,Self,true);
+end;
 
 constructor TResourceStrings.Create(ResourceName: String);
 begin

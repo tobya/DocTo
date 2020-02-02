@@ -10,7 +10,7 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMA
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ****************************************************************)
 interface
-uses  classes, Windows, sysutils, ActiveX, ComObj, WinINet, Variants,
+uses  classes, Windows, sysutils, ActiveX, ComObj, WinINet, Variants, iduri,
       Types,  ResourceUtils,
       PathUtils, ShellAPI, datamodssl;
 
@@ -28,7 +28,7 @@ Const
   MSEXCEL = 2;
   MSPOWERPOINT = 3;
 
-  DOCTO_VERSION = '1.0.23.41.alpha';
+  DOCTO_VERSION = '1.2.25.47';
 
 type
 
@@ -57,6 +57,8 @@ type
     FIgnore_ErrorDocs : boolean;
     FBookMarkSource : integer;
 
+    FNetHandle: HINTERNET;
+
 
     procedure SetCompatibilityMode(const Value: Integer);
     procedure SetIgnore_MACOSX(const Value: boolean);
@@ -67,6 +69,7 @@ type
     procedure SetList_ErrorDocs(const Value: Boolean);
     procedure SetList_ErrorDocs_Seconds(const Value: Integer);
     procedure SetIgnore_ErrorDocs(const Value: Boolean);
+    procedure SetPDFOpenAfterExport(const Value: Boolean);
 
   protected
     Formats : TStringlist;
@@ -94,6 +97,7 @@ type
     fSkipDocsExist : Boolean;
     FCompatibilityMode: Integer;
     FEncoding : Integer;
+    FPDFOpenAfterExport : boolean;
 
     FHaltOnWordError: Boolean;
     FRemoveFileOnConvert: boolean;
@@ -142,6 +146,7 @@ type
     property List_ErrorDocs : Boolean read FList_ErrorDocs write SetList_ErrorDocs ;
     property List_ErrorDocs_Seconds : Integer read FList_ErrorDocs_Seconds write SetList_ErrorDocs_Seconds ;
     property Ignore_ErrorDocs : Boolean read FIgnore_ErrorDocs write SetIgnore_ErrorDocs;
+    property pdfOpenAfterExport: Boolean read FPDFOpenAfterExport write SetpdfOpenAfterExport;
 
 
     procedure SetExtension(const Value: String); virtual;
@@ -185,7 +190,7 @@ type
     FUNCTION AfterConversion(InputFile, OutputFile: String):string;
     Function OnConversionError(InputFile, OutputFile, Error: String):string;
     procedure LogHelp(HelpResName : String);
-
+    procedure LogVersionInfo();
 
 
     property OutputLog : Boolean read FOutputLog write SetOutputLog;
@@ -231,28 +236,28 @@ QuestionMarkIndex : Integer;
 begin
 
   try
-  if FWebHook > '' then
-  begin
-    QuestionMarkIndex := pos('?',FWebHook);
-    if QuestionMarkIndex = 0  then
+    if FWebHook > '' then
     begin
-      url := FWebHook + '?'  + Params;
-    end
-    else if QuestionMarkIndex = length(FWebHook) then  //last character
-    begin
-      url := FWebHook + Params;
-    end
-    else
-    begin
-      url := FWebHook + '&' + Params;
+      QuestionMarkIndex := pos('?',FWebHook);
+      if QuestionMarkIndex = 0  then
+      begin
+        url := FWebHook + '?'  + Params;
+      end
+      else if QuestionMarkIndex = length(FWebHook) then  //last character
+      begin
+        url := FWebHook + Params;
+      end
+      else
+      begin
+        url := FWebHook + '&' + Params;
+      end;
+
+
+      URLResponse :=  GetURL(url);
+
+      log('Webhook Called:' + url, CHATTY);
+      log('Webhook Response:' + URLResponse, CHATTY);
     end;
-
-
-    URLResponse :=  GetURL(url);
-
-    log('Webhook Called:' + url, CHATTY);
-    log('Webhook Response:' + URLResponse, CHATTY);
-  end;
   except on E: Exception do
   begin
     logerror(ConvertErrorText( E.ClassName) + ' ' + ConvertErrorText( E.Message));
@@ -262,114 +267,6 @@ begin
 end;
 
 
-// Check howlong a document took to convert.  If greater > X then record in ignorelist.
-// This can be used to find error documents as a modal window is displayed and execution does not
-// continue until MANUALLY clicked. Suggested value of -N 5 seconds.
-procedure TDocumentConverter.CheckDocumentTiming(StartTime, EndTime: cardinal; DocumentPath : String);
-var
-  sl : TStringList;
-  ignorecount : integer;
-const
-  ignorelistfilename = 'docto.ignore.txt';
-begin
-  if (List_ErrorDocs) then
-  begin
-
-    // Check if the length of time taken to convert.
-    if ((EndTime - StartTime) /1000) > List_ErrorDocs_Seconds then
-    begin
-
-      sl := TStringList.Create();
-      try
-
-        if  FileExists(ignorelistfilename) then
-        begin
-          sl.LoadFromFile(ignorelistfilename);
-        end else begin
-          sl.Add('[Comments]');
-          sl.Add('COMMENT1=THIS FILE RECORDS ANY WORD DOCUMENTS THAT TOOK LONGER THAN X SECONDS TO COMPLETE.');
-          sl.Add('COMMENT2=THIS SHOULD, OVER TIME ALLOW YOU TO TRACK DOWN ALL FILES CAUSING PROBLEMS');
-          SL.Add('COMMENT3=THESE FILES WILL BE IGNORED ON SUBSEQUENT RUNS AS LONG AS "-NX" IS USED');
-          SL.Add('COMMENT4=----DO NOT DELETE THIS FILE-----------');
-          SL.Add('[FILES TO IGNORE]');
-          SL.Add('IGNORECOUNT=0');
-        end;
-
-        log('Writing filename to Ignore List: ' + DocumentPath , CHATTY);
-
-        ignorecount := StrToInt(sl.Values['IGNORECOUNT']);
-        INC(ignorecount);
-
-        sl.Add('IGNOREFILE' + INTTOSTR(ignorecount) + '=' + DocumentPath);
-        sl.Values['IGNORECOUNT'] := INTTOSTR(ignorecount);
-        sl.SaveToFile('docto.ignore.txt');
-
-      finally
-        sl.free;
-      end;
-
-    end;
-  end;
-end;
-
-
-(*
-  Check if document is to be ignored. Load ignore file and checklist.
-*)
-function TDocumentConverter.CheckShouldIgnore(DocumentPath: String): Boolean;
-var
- // sl : TStringList;
-  fn : string;
-  ignorecount : integer;
-  I: Integer;
-const
-  ignorelistfilename = 'docto.ignore.txt';
-begin
-  Result := False;
-  if (Ignore_ErrorDocs) then
-  begin
-
-      //Create and Load on first call
-      if FIgnoreErrorDocsFile = nil then
-      begin
-
-        FIgnoreErrorDocsFile := TStringList.Create();
-
-        if  FileExists(ignorelistfilename) then
-        begin
-          FIgnoreErrorDocsFile.LoadFromFile(ignorelistfilename);
-        end else begin
-          log('No docto.ignore.txt file found.', CHATTY);
-          Result := false;
-          exit;
-        end;
-      end;
-
-
-      if FIgnoreErrorDocsFile.Count > 0 then
-      begin
-        log('Checking Ignore List for filename:' + DocumentPath, VERBOSE);
-        ignorecount := StrToInt(FIgnoreErrorDocsFile.Values['IGNORECOUNT']);
-
-        for I := 1 to ignorecount do
-        BEGIN
-         fn := FIgnoreErrorDocsFile.Values['IGNOREFILE' + INTTOSTR(I)];
-         log('Check Against: ' + fn, VERBOSE);
-         if fn = DocumentPath then
-         begin
-           Result := true;
-           break;
-         end;
-        END;
-      end;
-
-
-
-
-  end;
-
-end;
-
 procedure TDocumentConverter.ConfigLoggingLevel(Params: TStrings);
 var
   iParam : Integer;
@@ -377,12 +274,11 @@ var
 begin
 LogLevel := STANDARD;
 iParam := 0;
-//lOG(ID,VERBOSE);
-//log('top');
+
 While iParam <= Params.Count -1 do
   begin
     pstr := Params[iParam];
-   // log('-xx-' + inttostr(iparam), VERBOSE);
+
     id := UpperCase( pstr);
     if ParamCount -1  > iParam then
     begin
@@ -396,25 +292,23 @@ While iParam <= Params.Count -1 do
     begin
       value := '';
     end;
-    inc(iParam,2);
-   // lOG(ID,VERBOSE);
+
+
     if id  = '-L' then
     begin
-     // log('asdfas' + value);
+
       if isNumber(value) then
       begin
         LogLevel := strtoint(value);
-       // break;
       end
     end
     else if id  = '-Q' then
     begin
-
       OutputLog := false;
-      //Doesn't require a value
-      dec(iParam);
     end ;
 
+    // Check every parameter as some do not have a value eg. -XL
+    inc(iParam,1);
   end;
 
   Log('Log Level Set To:' + IntToStr(FLogLevel),CHATTY);
@@ -459,6 +353,7 @@ begin
   fSkipDocsExist :=  false;
   FFirstLogEntry := true;
   FBookMarkSource := 1; //wdExportCreateHeadingBookmarks
+  fPDFOpenAfterExport := false;
 
   FInputFiles := TStringList.Create;
 end;
@@ -480,6 +375,12 @@ begin
 
 
   FInputFiles.Free;
+
+  if assigned(FNetHandle) then
+  begin
+    InternetCloseHandle(FNetHandle);
+  end;
+
 end;
 
 
@@ -493,7 +394,7 @@ var
   i : integer;
   FileToConvert, FileToCreate : String;
   OutputFilePath : String;
-  ErrorMessage : String;
+  ErrorMessage, EventMsg : String;
   ConversionInfo : TConversionInfo;
   StartTime , EndTime : cardinal;
 
@@ -556,7 +457,6 @@ begin
         log('Current Directory: ' + GetCurrentDir,10);
 
         // Ensure directory exists
-
         OutputFilePath := ExtractFilePath( FileToCreate);
         if (OutputFilePath = '') then
         begin
@@ -579,7 +479,7 @@ begin
        try
 
             StartTime := GettickCount();
-
+             log('Executing Conversion ... ',VERBOSE);
             ConversionInfo :=  ExecuteConversion(FileToConvert, FileToCreate, OutputFileFormat);
 
             if ConversionInfo.Successful then
@@ -588,7 +488,7 @@ begin
               CheckDocumentTiming(StartTime, EndTime, FileToConvert);
             end;
 
-            if RemoveFileOnConvert then
+            if ConversionInfo.Successful then
             begin
               if RemoveFileOnConvert then
               begin
@@ -601,15 +501,10 @@ begin
               end;
 
 
+            // Make a call to webhook if it existS
+            EventMsg := AfterConversion(FileToConvert, FileToCreate);
 
-          //  UrlToCall := 'action=convert&type='+ FOutputFileFormatString + '&outputfilename=' + URLEncode(FileToCreate)+ '&inputfilename=' + URLEncode(InputFile);
 
-            // Make a call to webhook if it exists
-          //  CallWebHook(UrlToCall);
-
-            AfterConversion(InputFile, FileToCreate);
-
-            log('Creating File: ' + FileToCreate,CHATTY);
           end
           else    // Conversion not successful
           begin
@@ -624,8 +519,6 @@ begin
 
             if pos('Invalid class string',E.Message) > 0 then
             begin
-
-
               HaltWithError(221,'Word Does not appear to be installed:' + E.ClassName + '  ' + ErrorMessage);
             end
             else
@@ -837,20 +730,21 @@ begin
     // jump to next id + value
     inc(iParam,2);
 
-    if (id = '-XL') or
-            (id = '--EXCEL') or
-            (id = '-WD') or
-            (id = '--WORD') or (id = '-PP') or
-            (id = '--POWERPOINT')    then
+if  (id = '-XL') or
+        (id = '--EXCEL') or
+        (id = '-WD') or
+        (id = '--WORD') or
+        (id = '-PP') or
+        (id = '--POWERPOINT')    then
     begin
       // ignore here as these are checked in ChooseConverter
       dec(iparam);
     end
     else if (id = '-O') or
-       (id = '--OUTPUTFILE') then
+            (id = '--OUTPUTFILE') then
     begin
-      FOutputFile :=  value;
-
+      // Before doing anything else expand file name to remove any relative paths.
+      FOutputFile :=  ExpandFileName( value);
 
       tmpext := ExtractFileExt(FOutputFile);
 
@@ -862,14 +756,14 @@ begin
         OutputIsDir := true;
         OutputIsFile := false;
         ForceDirectories(FOutputFile);
-        log('Output directory is: ' + FOutputFile,CHATTY);
+        log('Output directory: ' + FOutputFile,CHATTY);
 
       end
       else
       begin
         OutputIsFile := true;
         OutputIsDir := false;
-        log('Output file is: ' + FOutputFile,CHATTY);
+        log('Output file: ' + FOutputFile,CHATTY);
       end;
 
 
@@ -893,10 +787,12 @@ begin
     else if (id = '-F') or
             (id = '--INPUTFILE') then
     begin
-      FInputFile := value;
+      // Before doing anything else expand file name to remove any relative paths.
+      FInputFile := ExpandFileName(value);
+
       log('Input File is: ' + FInputFile,CHATTY);
 
-        tmppath := ExtractFilePath(FInputFile);
+      tmppath := ExtractFilePath(FInputFile);
 
         // If we are given a filename with no path, get currentdir and add to file.
         if (tmppath = '') then
@@ -1028,6 +924,11 @@ begin
       Ignore_ErrorDocs := True;
       dec(iParam);
     end
+    else if (id = '--PDF-OPENAFTEREXPORT') then
+    begin
+      PDFOpenAfterExport := true;
+      dec(iParam);
+    end
     else if (id = '-R')
          or (id = '--DELETEFILES') then
     begin
@@ -1044,15 +945,18 @@ begin
 
 
     end
-    else if (id = '--BOOKMARKSOURCE') then
+    else if (id = '--BOOKMARKSOURCE') or
+            (id = '--PDF-BOOKMARKSOURCE') then
     begin
          WordConstants := TResourceStrings.Create('WORDCONSTANTS');
-//         WordConstants.Load('WORDCONSTANTS');
-         //Log(WordConstants.Text, Verbose);
+         WordConstants.Append('WORDCONSTANTS_EXTRA');
          if (WordConstants.Exists(value)) then
          begin
            FBookMarkSource := StrToInt( WordConstants.Values[value]);
            log('Set Bookmark To: ' + InttoStr(FBookmarkSource), Verbose);
+         end else
+         begin
+           HaltWithConfigError(205,'Invalid value for --PDF-BOOKMARKSOURCE :' + value);
          end;
 
     end
@@ -1063,13 +967,7 @@ begin
     end
     else if (id = '-V') then
     begin
-      // Prevent Date from Printing.
-      FFirstLogEntry := false;
-
-      // Log versions.
-      log('DocTo Version:' + DOCTO_VERSION);
-      log('OfficeApp Version:' +  OfficeAppVersion(),0);
-      log('Source: https://github.com/tobya/DocTo/');
+      LogVersionInfo();
       halt(2);
 
     end
@@ -1175,6 +1073,7 @@ var
   OutputLog, OutputTimeStamp : Boolean;
 begin
   Outputlog := false;
+ //   Outputlog := true;
   OutputTimeStamp := false;
 
 
@@ -1183,14 +1082,12 @@ begin
   if Level <= FLogLevel then
   begin
     OutputLog := true;
-  END;
+  end;
 
-
-
-    if FFirstLogEntry then
-    begin
+  if FFirstLogEntry then
+  begin
     OutputTimeStamp := true;
-     end;
+  end;
 
   if Level = HELP then
   begin
@@ -1198,22 +1095,23 @@ begin
       OutputTimeStamp := false;
   end;
 
-    if OutputTimeStamp then
-    begin
-      FFirstLogEntry := false;
-      Msg := '[' + FormatDateTime('YYYYMMDD HH:NN:SS -' , now) +  ']: '  +  Msg;
-    end;
+  if OutputTimeStamp then
+  begin
+    FFirstLogEntry := false;
+    Msg := '[' + FormatDateTime('YYYYMMDD HH:NN:SS -' , now) +  ']: '  +  Msg;
+  end;
 
 
-    if OutputLog = true then
-    begin
-      ConsoleLog.Log(self, Msg);
-    end;
-    if FLogtoFile then
-    begin
-      FLogFile.Add(Msg);
-      FLogFile.SaveToFile(FLogFilename);
-    end;
+  if OutputLog = true then
+  begin
+    ConsoleLog.Log(self, Msg);
+  end;
+
+  if FLogtoFile then
+  begin
+    FLogFile.Add(Msg);
+    FLogFile.SaveToFile(FLogFilename);
+  end;
 
 end;
 
@@ -1252,6 +1150,18 @@ begin
       finally
         HelpStrings.Free;
       end;
+end;
+
+procedure TDocumentConverter.LogVersionInfo;
+begin
+      // Prevent Date from Printing.
+      FFirstLogEntry := false;
+
+      // Log versions.
+      log('DocTo Version:' + DOCTO_VERSION);
+      log('OfficeApp Version:' +  OfficeAppVersion(),0);
+      log('Source: https://github.com/tobya/DocTo/');
+
 end;
 
 function TDocumentConverter.NewFileNameFromBase(OldBase, NewBase,
@@ -1394,6 +1304,11 @@ begin
   end;
 end;
 
+procedure TDocumentConverter.SetPDFOpenAfterExport(const Value: Boolean);
+begin
+  FPDFOpenAfterExport := Value;
+end;
+
 procedure TDocumentConverter.SetOutputExt(const Value: string);
 begin
   FOutputExt := Value;
@@ -1439,7 +1354,7 @@ end;
 
 function TDocumentConverter.URLEncode(Param: String): String;
 begin
- result :=  param;
+  Result :=  TIDURI.ParamsEncode(Param);
 end;
 
 function IsNumber(Str: String) : Boolean;
@@ -1496,21 +1411,25 @@ end;
 
 
 
-
-
 function TDocumentConverter.GetUrl(Url: string): String;
 var
-  NetHandle: HINTERNET;
+
   UrlHandle: HINTERNET;
   Buffer: array[0..1023] of byte;
   BytesRead: DWord;
   StrBuffer: UTF8String;
 begin
+
+
   Result := '';
-  NetHandle := InternetOpen('github/tobya/DocTo', INTERNET_OPEN_TYPE_PRECONFIG, nil, nil, 0);
-  if Assigned(NetHandle) then
-    try
-      UrlHandle := InternetOpenUrl(NetHandle, PChar(Url), nil, 0, INTERNET_FLAG_RELOAD, 0);
+  // Intialising Win Internet Connection with InternetOpen only needs to be called once.
+  if not assigned(FNetHandle) then
+  begin
+    FNetHandle := InternetOpen('github/tobya/DocTo', INTERNET_OPEN_TYPE_PRECONFIG, nil, nil, 0);
+  end;
+  if Assigned(FNetHandle) then
+  begin
+      UrlHandle := InternetOpenUrl(FNetHandle, PChar(Url), nil, 0, INTERNET_FLAG_RELOAD, 0);
       if Assigned(UrlHandle) then
         try
           repeat
@@ -1522,12 +1441,14 @@ begin
           InternetCloseHandle(UrlHandle);
         end
       else
-        raise Exception.CreateFmt('Cannot open URL %s', [Url]);
-    finally
-      InternetCloseHandle(NetHandle);
-    end
+      begin
+        raise Exception.CreateFmt('Cannot open URL: %s', [Url]);
+      end;
+  end
   else
+  begin
     raise Exception.Create('Unable to initialize Wininet');
+  end;
 end;
 
 
@@ -1562,5 +1483,112 @@ function TDocumentConverter.AllowFile(FileName, Fullpath: String): Boolean;
 begin
 
 end;
+
+
+
+// Check howlong a document took to convert.  If greater > X then record in ignorelist.
+// This can be used to find error documents as a modal window is displayed and execution does not
+// continue until MANUALLY clicked. Suggested value of -N 5 seconds.
+procedure TDocumentConverter.CheckDocumentTiming(StartTime, EndTime: cardinal; DocumentPath : String);
+var
+  sl : TStringList;
+  ignorecount : integer;
+const
+  ignorelistfilename = 'docto.ignore.txt';
+begin
+  if (List_ErrorDocs) then
+  begin
+
+    // Check if the length of time taken to convert.
+    if ((EndTime - StartTime) /1000) > List_ErrorDocs_Seconds then
+    begin
+
+      sl := TStringList.Create();
+      try
+
+        if  FileExists(ignorelistfilename) then
+        begin
+          sl.LoadFromFile(ignorelistfilename);
+        end else begin
+          sl.Add('[Comments]');
+          sl.Add('COMMENT1=THIS FILE RECORDS ANY WORD DOCUMENTS THAT TOOK LONGER THAN X SECONDS TO COMPLETE.');
+          sl.Add('COMMENT2=THIS SHOULD, OVER TIME ALLOW YOU TO TRACK DOWN ALL FILES CAUSING PROBLEMS');
+          SL.Add('COMMENT3=THESE FILES WILL BE IGNORED ON SUBSEQUENT RUNS AS LONG AS "-NX" IS USED');
+          SL.Add('COMMENT4=----DO NOT DELETE THIS FILE-----------');
+          SL.Add('[FILES TO IGNORE]');
+          SL.Add('IGNORECOUNT=0');
+        end;
+
+        log('Writing filename to Ignore List: ' + DocumentPath , CHATTY);
+
+        ignorecount := StrToInt(sl.Values['IGNORECOUNT']);
+        INC(ignorecount);
+
+        sl.Add('IGNOREFILE' + INTTOSTR(ignorecount) + '=' + DocumentPath);
+        sl.Values['IGNORECOUNT'] := INTTOSTR(ignorecount);
+        sl.SaveToFile('docto.ignore.txt');
+
+      finally
+        sl.free;
+      end;
+
+    end;
+  end;
+end;
+
+
+(*
+  Check if document is to be ignored. Load ignore file and checklist.
+*)
+function TDocumentConverter.CheckShouldIgnore(DocumentPath: String): Boolean;
+var
+ // sl : TStringList;
+  fn : string;
+  ignorecount : integer;
+  I: Integer;
+const
+  ignorelistfilename = 'docto.ignore.txt';
+begin
+  Result := False;
+  if (Ignore_ErrorDocs) then
+  begin
+
+      //Create and Load on first call
+      if FIgnoreErrorDocsFile = nil then
+      begin
+        FIgnoreErrorDocsFile := TStringList.Create();
+
+        if  FileExists(ignorelistfilename) then
+        begin
+          FIgnoreErrorDocsFile.LoadFromFile(ignorelistfilename);
+        end else begin
+          log('No docto.ignore.txt file found.', CHATTY);
+          Result := false;
+          exit;
+        end;
+      end;
+
+
+      if FIgnoreErrorDocsFile.Count > 0 then
+      begin
+        log('Checking Ignore List for filename:' + DocumentPath, VERBOSE);
+        ignorecount := StrToInt(FIgnoreErrorDocsFile.Values['IGNORECOUNT']);
+
+        for I := 1 to ignorecount do
+        BEGIN
+         fn := FIgnoreErrorDocsFile.Values['IGNOREFILE' + INTTOSTR(I)];
+         log('Check Against: ' + fn, VERBOSE);
+         if fn = DocumentPath then
+         begin
+           Result := true;
+           break;
+         end;
+        END;
+      end;
+
+  end;
+
+end;
+
 
 end.

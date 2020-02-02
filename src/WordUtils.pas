@@ -69,12 +69,12 @@ begin
   begin
     CreateOfficeApp();
     WdVersion := Wordapp.Version;
-    log('WordVersion:' + WdVersion,VERBOSE);
+    //log('WordVersion:' + WdVersion,VERBOSE);
 
     //Get Major version as that is all we are interested in and strtofloat causes errors Issue#31
     decimalPos := pos('.',WdVersion);
     FWordVersion  := LeftStr(WdVersion,decimalPos -1);
-    log('WordVersion Major:' + FWordVersion,VERBOSE);
+    //log('WordVersion Major:' + FWordVersion,VERBOSE);
   end;
   result := FWordVersion;
 end;
@@ -144,6 +144,7 @@ begin
             if Wordapp.ActiveDocument.TablesOfContents.count > 0 then
             begin
              log('SKIPPED - Document has TOC: ' + fileToConvert , STANDARD);
+             Result.Successful := false;
              Result.Error := 'SKIPPED - Document has TOC:';
              ExitAction := aClose;
             end;
@@ -156,6 +157,7 @@ begin
           if ContainsStr(E.Message, 'The password is incorrect' ) then
           begin
              log('SKIPPED - Password Protected:' + fileToConvert, STANDARD);
+             Result.Successful := false;
              Result.Error := 'SKIPPED - Password Protected:';
              ExitAction := aExit;
           end
@@ -197,31 +199,33 @@ begin
       aSave:
       begin
 
-        try
-          if OutputfileFormat = wdFormatPDF then
-          begin
-            // Saveas works for pdf but github issue 79 requestes exporting bookmarks
-            // also which requires ExportAsFixedFormat
-            // https://docs.microsoft.com/en-us/office/vba/api/word.document.exportasfixedformat
-            WordApp.ActiveDocument.ExportAsFixedFormat(
-                     OutputFilename,  //   OutputFileName:=
-                     OutputfileFormat, //   ExportFormat:=
-                     true,//   OpenAfterExport:=True,
-                     wdExportOptimizeForPrint,//   OptimizeFor:= _
-                     wdExportAllDocument,//   Range
-                     1,//   From:=1,
-                     1,//   To:=1, _
-                     wdExportDocumentContent,//   Item:=
-                     True,//   IncludeDocProps:=True,
-                     true,//   KeepIRM:=True, _
-                     BookmarkSource,//   CreateBookmarks
-                     true,//   DocStructureTags:=True, _
-                     true,//   BitmapMissingFonts:=True,
-                     False//   UseISO19005_1:=False
-            );
-          end
-          else
-          begin
+
+      try
+        if (OutputFileFormat = wdFormatPDF) or
+            (OutputFileFormat = wdFormatXPS) then
+        begin
+        // Saveas works for PDF but github issue 79 requestes exporting bookmarks
+        // also which requires ExportAsFixedFormat
+        // https://docs.microsoft.com/en-us/office/vba/api/word.document.exportasfixedformat
+        WordApp.ActiveDocument.ExportAsFixedFormat(
+                   OutputFilename,  //   OutputFileName:=
+                   OutputfileFormat, //   ExportFormat:=
+                   PDFOpenAfterExport, // OpenAfterExport
+                   wdExportOptimizeForPrint,//   OptimizeFor:= _
+                   wdExportAllDocument,//   Range
+                   1,//   From:=1,
+                   1,//   To:=1, _
+                   wdExportDocumentContent,//   Item:=
+                   True,//   IncludeDocProps:=True,
+                   true,//   KeepIRM:=True, _
+                   BookmarkSource,//   CreateBookmarks
+                   true,//   DocStructureTags:=True, _
+                   true,//   BitmapMissingFonts:=True,
+                   False//   UseISO19005_1:=False
+         );
+        end else
+        begin
+
               //SaveAs2 was introduced in 2010 V 14 by this list
               //https://stackoverflow.com/a/29077879/6244
               if (strtoint( OfficeAppVersion) < 14) then
@@ -267,11 +271,12 @@ begin
                                               CompatibilityMode  //CompatibilityMode
                                               );
               end;
+
+          end;
               Result.Successful := true;
               Result.OutputFile := OutputFilename;
               Result.Error := '';
               log('FileCreated: ' + OutputFilename, STANDARD);
-          end;
        finally
             // Close the document - do not save changes if doc has changed in any way.
             Wordapp.activedocument.Close(wdDoNotSaveChanges);

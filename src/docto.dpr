@@ -61,13 +61,20 @@ begin
 
       Converter := DocConv.ChooseConverter(ParamList);
 
+      //DocConv.LogVersionInfo;
       if Converter = MSWord then
       begin
-      DocConv.LoadConfig(paramlist);
-            LogResult :=  DocConv.Execute;
-      DocConv.log( LogResult );
+        DocConv.Log('Converter:MS Word' ,CHATTY);
+        DocConv.LoadConfig(paramlist);
+        LogResult :=  DocConv.Execute;
+        DocConv.log( LogResult );
       end
-      else IF Converter = MSEXCEL  then begin
+      else begin
+        // Config Level already set for DocConv but not for XLS.
+        //XLSConv.ConfigLoggingLevel(ParamList);
+
+        XLSConv.ChooseConverter(ParamList);
+        XLSConv.Log('Converter:MS Excel' ,CHATTY);
         XLSConv.LoadConfig(ParamList);
         LogResult :=  XLSConv.Execute;
         XLSConv.log( LogResult );
