@@ -49,7 +49,7 @@ begin
    try
      DocConv := TWordDocConverter.Create;
      XLSConv := TExcelXLSConverter.Create;
-     PPConv := TPowerPointConverter.Create;
+     PPConv :=  TPowerPointConverter.Create;
     try
 
       for i := 1 to ParamCount do
@@ -81,8 +81,8 @@ begin
       ELSE if Converter = MSPOWERPOINT then
       begin
         PPConv.ChooseConverter(ParamList);
-          PPConv.Log('Converter:MS Powerpoint' ,CHATTY);
-          PPConv.LoadConfig(ParamList);
+        PPConv.Log('Converter:MS Powerpoint' ,CHATTY);
+        PPConv.LoadConfig(ParamList);
         LogResult := PPConv.Execute;
         PPConv.Log(LogResult);
       end;
