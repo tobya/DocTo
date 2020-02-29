@@ -28,7 +28,7 @@ Const
   MSEXCEL = 2;
   MSPOWERPOINT = 3;
 
-  DOCTO_VERSION = '1.2.25.47';
+  DOCTO_VERSION = '1.2.25.48.b.pp';
 
 type
 

@@ -69,10 +69,9 @@ begin
         LogResult :=  DocConv.Execute;
         DocConv.log( LogResult );
       end
-      else begin
+      else if Converter = MSEXCEL then
+      begin
         // Config Level already set for DocConv but not for XLS.
-        //XLSConv.ConfigLoggingLevel(ParamList);
-
         XLSConv.ChooseConverter(ParamList);
         XLSConv.Log('Converter:MS Excel' ,CHATTY);
         XLSConv.LoadConfig(ParamList);
@@ -81,7 +80,9 @@ begin
       end
       ELSE if Converter = MSPOWERPOINT then
       begin
-        PPConv.LoadConfig(ParamList);
+        PPConv.ChooseConverter(ParamList);
+          PPConv.Log('Converter:MS Powerpoint' ,CHATTY);
+          PPConv.LoadConfig(ParamList);
         LogResult := PPConv.Execute;
         PPConv.Log(LogResult);
       end;

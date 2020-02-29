@@ -58,15 +58,20 @@ function TPowerPointConverter.ExecuteConversion(
                                 OutputFilename: String;
                                 OutputFileFormat: Integer): TConversionInfo;
 begin
+
         Result.Successful := false;
         Result.InputFile := fileToConvert;
 
+        // Open file
         ppApp.Presentations.Open(fileToConvert);
 
+        // Save as file and close
         PPApp.ActivePresentation.SaveAs(OutputFileName, OutputFileFormat, false);
         PPApp.ActivePresentation.Save;
+        PPApp.ActivePresentation.Close();
         Result.InputFile := fileToConvert;
         Result.Successful := true;
+        Result.OutputFile := OutputFilename;
 
 end;
 
