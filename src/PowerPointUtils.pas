@@ -71,7 +71,6 @@ begin
 
         Result.Successful := false;
         Result.InputFile := fileToConvert;
-
         // Open file
         ppApp.Presentations.Open(fileToConvert);
 
@@ -89,15 +88,26 @@ begin
 end;
 
 function TPowerPointConverter.FormatsExtensions: TStringList;
+var
+  Extensions : TStringList;
+
 begin
-  Result := TStringList.create();
+  Extensions := Tstringlist.Create();
+  LoadStringListFromResource('PPEXTENSIONS',Extensions);
+
+  result := Extensions;
 end;
 
 function TPowerPointConverter.OfficeAppVersion: String;
 begin
-
+  if FPPVersion = '' then
+  begin
+  CreateOfficeApp();
+  FPPVersion := PPApp.Version;
+  end;
+  result := FPPVersion;
 end;
 
 
 
-end.
+end.              
