@@ -12,7 +12,7 @@ Private
     PPApp : OleVariant;
 
 public
-
+             constructor Create();
     function CreateOfficeApp() : boolean;  override;
     function DestroyOfficeApp() : boolean; override;
     function ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): TConversionInfo; override;
@@ -28,10 +28,20 @@ implementation
 
 function TPowerPointConverter.AvailableFormats: TStringList;
 begin
+  Formats := TResourceStrings.Create('PPFORMATS');
+  result := Formats;
 
 end;
 
 
+
+constructor TPowerPointConverter.Create;
+begin
+inherited;
+  //setup defaults
+  InputExtension := '.ppt';
+
+end;
 
 function TPowerPointConverter.CreateOfficeApp: boolean;
 begin
@@ -67,8 +77,11 @@ begin
 
         // Save as file and close
         PPApp.ActivePresentation.SaveAs(OutputFileName, OutputFileFormat, false);
+
         PPApp.ActivePresentation.Save;
-        PPApp.ActivePresentation.Close();
+
+        PPApp.ActivePresentation.Close;
+
         Result.InputFile := fileToConvert;
         Result.Successful := true;
         Result.OutputFile := OutputFilename;
