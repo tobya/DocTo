@@ -72,15 +72,15 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_3_Win32)'!=''">
         <VerInfo_MajorVer>1</VerInfo_MajorVer>
-        <Debugger_RunParams>-PP -f &quot;C:\dev\github\docto\test\inputfilespp\Presentation2.ppt&quot; -o &quot;C:\dev\github\docto\test\GeneratedFiles\pres8.pdf&quot; -t 17 -l 10</Debugger_RunParams>
-        <VerInfo_Build>47</VerInfo_Build>
+        <Debugger_RunParams>-PP -f &quot;..\test\inputfilespp\Presentation2.ppt&quot; -o &quot;..\test\GeneratedFiles\pres8.pdf&quot; -t ppSaveAsBMP -l 10</Debugger_RunParams>
+        <VerInfo_Build>52</VerInfo_Build>
         <VerInfo_PreRelease>false</VerInfo_PreRelease>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <VerInfo_AutoGenVersion>false</VerInfo_AutoGenVersion>
         <VerInfo_Release>24</VerInfo_Release>
         <Icon_MainIcon>docto_Icon2.ico</Icon_MainIcon>
         <VerInfo_MinorVer>0</VerInfo_MinorVer>
-        <VerInfo_Keys>CompanyName=Toflidium Software;FileDescription=DocTo - Convert doc files to any available format;FileVersion=1.0.24.47;InternalName=;LegalCopyright=Toby Allen;LegalTrademarks=;OriginalFilename=docto.exe;ProductName=DocTo;ProductVersion=1.0.19.40;Comments=https://github.com/tobya/DocTo</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Toflidium Software;FileDescription=DocTo - Convert doc files to any available format;FileVersion=1.0.24.52;InternalName=;LegalCopyright=Toby Allen;LegalTrademarks=;OriginalFilename=docto.exe;ProductName=DocTo;ProductVersion=1.0.19.40;Comments=https://github.com/tobya/DocTo</VerInfo_Keys>
         <DCC_ExeOutput>..\exe</DCC_ExeOutput>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
     </PropertyGroup>
@@ -151,7 +151,7 @@
                     <VersionInfo Name="MajorVer">0</VersionInfo>
                     <VersionInfo Name="MinorVer">4</VersionInfo>
                     <VersionInfo Name="Release">4</VersionInfo>
-                    <VersionInfo Name="Build">63</VersionInfo>
+                    <VersionInfo Name="Build">68</VersionInfo>
                     <VersionInfo Name="Debug">True</VersionInfo>
                     <VersionInfo Name="PreRelease">True</VersionInfo>
                     <VersionInfo Name="Special">False</VersionInfo>
@@ -163,7 +163,7 @@
                 <VersionInfoKeys>
                     <VersionInfoKeys Name="CompanyName">Toflidium Software</VersionInfoKeys>
                     <VersionInfoKeys Name="FileDescription"/>
-                    <VersionInfoKeys Name="FileVersion">0.4.4.63</VersionInfoKeys>
+                    <VersionInfoKeys Name="FileVersion">0.4.4.68</VersionInfoKeys>
                     <VersionInfoKeys Name="InternalName"/>
                     <VersionInfoKeys Name="LegalCopyright">Toflidium Software</VersionInfoKeys>
                     <VersionInfoKeys Name="LegalTrademarks"/>
@@ -191,12 +191,12 @@
                         <RemoteName>docto.rsm</RemoteName>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\exe\docto.exe" Configuration="TobyBuild" Class="ProjectOutput">
-                    <Platform Name="Win32"/>
-                </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\osx32\libcgunwind.1.0.dylib" Class="DependencyModule">
                     <Platform Name="OSX32"/>
                     <Platform Name="iOSSimulator"/>
+                </DeployFile>
+                <DeployFile LocalName="..\exe\docto.exe" Configuration="TobyBuild" Class="ProjectOutput">
+                    <Platform Name="Win32"/>
                 </DeployFile>
                 <DeployClass Required="true" Name="DependencyPackage">
                     <Platform Name="iOSDevice">

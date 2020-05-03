@@ -59,7 +59,7 @@ begin
   inherited;
   //setup defaults
   InputExtension := '.xls';
-  FLogFilename := 'XlsTo.Log';
+
 end;
 
 function TExcelXLSConverter.CreateOfficeApp: boolean;
