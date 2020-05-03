@@ -19,12 +19,13 @@
     <Transaction>1899/12/30 00:00:00.000.751,=D:\Development\GitHub\DocTo\src\res\xlsFormatsExt.txt</Transaction>
     <Transaction>1899/12/30 00:00:00.000.443,=D:\Development\GitHub\DocTo\src\Unit1.pas</Transaction>
     <Transaction>1899/12/30 00:00:00.000.286,C:\DEVELOPMENT\Delphi\github\DocTo\src\PowerPointUtils.pas=C:\DEVELOPMENT\Delphi\github\DocTo\src\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00:00:00.000.515,=C:\DEVELOPMENT\Delphi\github\DocTo\src\New1.md</Transaction>
     <Transaction>1899/12/30 00:00:00.000.419,=C:\DEVELOPMENT\Delphi\github\DocTo\src\Unit1.pas</Transaction>
     <Transaction>1899/12/30 00:00:00.000.560,=C:\DEVELOPMENT\Delphi\github\DocTo\src\res\wdConstants.txt</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.515,=C:\DEVELOPMENT\Delphi\github\DocTo\src\New1.md</Transaction>
     <Transaction>1899/12/30 00:00:00.000.644,D:\Development\GitHub\DocTo\src\datamodSSL.pas=D:\Development\GitHub\DocTo\src\Unit1.pas</Transaction>
     <Transaction>1899/12/30 00:00:00.000.891,=D:\Development\GitHub\DocTo\src\xlsFormats.rc</Transaction>
     <Transaction>2020/05/03 09:51:49.020,D:\Development\GitHub\DocTo\src\res\ppFormatsExt.txt=D:\Development\GitHub\DocTo\src\res\ppFormats.txt</Transaction>
+    <Transaction>2020/05/03 10:21:33.698,=D:\Development\GitHub\DocTo\src\res\ppFormats.txt</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="..\..\DocTo"/>
@@ -45,6 +46,7 @@
     <File Path="res\wdFormatsExt.txt"/>
     <File Path="res\xlsFormats.txt"/>
     <File Path="res\xlsFormatsExt.txt"/>
+    <File Path="res\ppFormats.txt"/>
     <File Path="datamodSSL.pas"/>
     <File Path="datamodSSL.dfm"/>
     <File Path="ExcelUtils.pas"/>
