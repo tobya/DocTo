@@ -1,30 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>1899/12/30 00:00:00.000.832,D:\Development\GitHub\DocTo\src\New1.txt=D:\Development\GitHub\DocTo\changes.txt</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.672,D:\Development\GitHub\DocTo\src\New1.txt=D:\Development\GitHub\DocTo\src\res\wdEncoding.txt</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.284,C:\DEVELOPMENT\Delphi\github\DocTo\src\wdFormats.rc=C:\DEVELOPMENT\Delphi\github\DocTo\src\Docto.rc</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.138,=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.850,=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.606,=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.547,D:\Development\GitHub\DocTo\src\res\HelpErrors.txt=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.644,C:\DEVELOPMENT\Delphi\github\DocTo\src\xlsFormats.rc=</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.332,C:\DEVELOPMENT\Delphi\github\DocTo\src\ExtraFiles.rc=C:\DEVELOPMENT\Delphi\github\DocTo\src\Docto.rc</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.100,C:\DEVELOPMENT\Delphi\github\DocTo\changes.md=C:\DEVELOPMENT\Delphi\github\DocTo\src\New1.md</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.676,=C:\dev\github\docto\src\PowerPoint_TLB_Constants.pas</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.670,=C:\DEVELOPMENT\Delphi\github\DocTo\src\New1.txt</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.790,C:\DEVELOPMENT\Delphi\github\DocTo\src\res\ppFormats.txt=C:\DEVELOPMENT\Delphi\github\DocTo\src\New1.txt</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.447,=D:\Development\GitHub\DocTo\src\ExcelUtils.pas</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.645,=D:\Development\GitHub\DocTo\src\res\xlsFormats.txt</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.751,=D:\Development\GitHub\DocTo\src\res\xlsFormatsExt.txt</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.443,=D:\Development\GitHub\DocTo\src\Unit1.pas</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.286,C:\DEVELOPMENT\Delphi\github\DocTo\src\PowerPointUtils.pas=C:\DEVELOPMENT\Delphi\github\DocTo\src\Unit1.pas</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.419,=C:\DEVELOPMENT\Delphi\github\DocTo\src\Unit1.pas</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.560,=C:\DEVELOPMENT\Delphi\github\DocTo\src\res\wdConstants.txt</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.515,=C:\DEVELOPMENT\Delphi\github\DocTo\src\New1.md</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.644,D:\Development\GitHub\DocTo\src\datamodSSL.pas=D:\Development\GitHub\DocTo\src\Unit1.pas</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.891,=D:\Development\GitHub\DocTo\src\xlsFormats.rc</Transaction>
-    <Transaction>2020/05/03 09:51:49.020,D:\Development\GitHub\DocTo\src\res\ppFormatsExt.txt=D:\Development\GitHub\DocTo\src\res\ppFormats.txt</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.672,D:\Development\GitHub\DocTo\src\New1.txt=D:\Development\GitHub\DocTo\src\res\wdEncoding.txt</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.284,C:\DEVELOPMENT\Delphi\github\DocTo\src\wdFormats.rc=C:\DEVELOPMENT\Delphi\github\DocTo\src\Docto.rc</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.832,D:\Development\GitHub\DocTo\src\New1.txt=D:\Development\GitHub\DocTo\changes.txt</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.850,=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.606,=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.100,C:\DEVELOPMENT\Delphi\github\DocTo\changes.md=C:\DEVELOPMENT\Delphi\github\DocTo\src\New1.md</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.644,C:\DEVELOPMENT\Delphi\github\DocTo\src\xlsFormats.rc=</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.332,C:\DEVELOPMENT\Delphi\github\DocTo\src\ExtraFiles.rc=C:\DEVELOPMENT\Delphi\github\DocTo\src\Docto.rc</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.547,D:\Development\GitHub\DocTo\src\res\HelpErrors.txt=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.676,=C:\dev\github\docto\src\PowerPoint_TLB_Constants.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.670,=C:\DEVELOPMENT\Delphi\github\DocTo\src\New1.txt</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.138,=D:\Development\GitHub\DocTo\src\New1.txt</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.790,C:\DEVELOPMENT\Delphi\github\DocTo\src\res\ppFormats.txt=C:\DEVELOPMENT\Delphi\github\DocTo\src\New1.txt</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.447,=D:\Development\GitHub\DocTo\src\ExcelUtils.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.645,=D:\Development\GitHub\DocTo\src\res\xlsFormats.txt</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.751,=D:\Development\GitHub\DocTo\src\res\xlsFormatsExt.txt</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.443,=D:\Development\GitHub\DocTo\src\Unit1.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.286,C:\DEVELOPMENT\Delphi\github\DocTo\src\PowerPointUtils.pas=C:\DEVELOPMENT\Delphi\github\DocTo\src\Unit1.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.419,=C:\DEVELOPMENT\Delphi\github\DocTo\src\Unit1.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.560,=C:\DEVELOPMENT\Delphi\github\DocTo\src\res\wdConstants.txt</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.515,=C:\DEVELOPMENT\Delphi\github\DocTo\src\New1.md</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.644,D:\Development\GitHub\DocTo\src\datamodSSL.pas=D:\Development\GitHub\DocTo\src\Unit1.pas</Transaction>
+    <Transaction>1899 12 30 00:00:00.000.891,=D:\Development\GitHub\DocTo\src\xlsFormats.rc</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="..\..\DocTo"/>
