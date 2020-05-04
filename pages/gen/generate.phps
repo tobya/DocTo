@@ -9,25 +9,25 @@ $smarty->assign('Params',$Explain);
 
 foreach ($Commands as $CommandName => $Command) {
 
+    
+    foreach ($Command['Items'] as $keytag => $Item) {
+        # code...
 
-foreach ($Command['Items'] as $keytag => $Item) {
-    # code...
+    $smarty->assign('Command', $Item);
+        # code...
 
-$smarty->assign('Command', $Item);
-    # code...
+    $MDFile = $smarty->fetch($Command['Template']);
 
-$MDFile = $smarty->fetch($Command['Template']);
+    if (!file_exists('../all/')){
 
-if (!file_exists('../all/')){
+    mkdir('../all/');
+    }
+    $Fn =   $CommandName . @$Item['FileTypeTitleExtra'] . $Item['FileTypeExt'] . '.md' ;
+    $Links[] = $Fn;
+    echo "Create File : $Fn\n";
+    file_put_contents('../all/' . $Fn, $MDFile);
 
-mkdir('../all/');
-}
-$Fn =   $CommandName . @$Item['FileTypeTitleExtra'] . $Item['FileTypeExt'] . '.md' ;
-$Links[] = $Fn;
-echo "Create File : $Fn\n";
-file_put_contents('../all/' . $Fn, $MDFile);
-
-}
+    }
 }
 
 $md = '

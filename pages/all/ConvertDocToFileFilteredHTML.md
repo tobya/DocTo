@@ -2,9 +2,6 @@
     "title" : "How do I Convert a Microsoft Word Doc to a Filtered HTML File? " 
 }
 
-Filtered HTML File 
-==
-
 How do I Convert a Microsoft Word Doc to a Filtered HTML File (HTML)?         
 -
 

@@ -2,9 +2,6 @@
     "title" : "How do I Convert a Microsoft Word Doc to a Latest Microsoft Office Word 365 Version Format ? " 
 }
 
-Latest Microsoft Office Word 365 Version Format  
-==
-
 How do I Convert a Microsoft Word Doc to a Latest Microsoft Office Word 365 Version Format  (DOC)?         
 -
 

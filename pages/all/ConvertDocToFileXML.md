@@ -2,9 +2,6 @@
     "title" : "How do I Convert a Microsoft Word Doc to a XML Document Format? " 
 }
 
-XML Document Format 
-==
-
 How do I Convert a Microsoft Word Doc to a XML Document Format (XML)?         
 -
 

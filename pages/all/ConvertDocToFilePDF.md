@@ -2,9 +2,6 @@
     "title" : "How do I Convert a Microsoft Word Doc to a Adobe Acrobat Portable Document Format? " 
 }
 
-Adobe Acrobat Portable Document Format 
-==
-
 How do I Convert a Microsoft Word Doc to a Adobe Acrobat Portable Document Format (PDF)?         
 -
 

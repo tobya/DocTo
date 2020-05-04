@@ -135,6 +135,59 @@ $Commands = [
             ]
         ],
        "Template" => "ConvertFromXLSToFile.md"
+    ],
+    "ConvertDocToFileWithWebhook" => [ 
+        "Items" => [
+            [
+
+
+                "FileTypeExt" => 'RTF',
+                "FileTypeDescription" => 'Windows Rich Text Format',
+                "FileFormat" => 'wdFormatRTF',
+                "RelatedLinks" => []
+            ],
+
+            [
+                "FileTypeExt" => 'PDF',
+                "FileTypeDescription" => 'Adobe Acrobat Portable Document Format',
+                "FileFormat" => 'wdFormatPDF',
+                "RelatedLinks" => []
+            ],
+            [
+                "FileTypeExt" => 'ODD',
+                "FileTypeDescription" => 'Open Document Text Format',
+                "FileFormat" => 'wdFormatStrictOpenXMLDocument',
+                "RelatedLinks" => []
+            ],
+          
+            [
+                "FileTypeExt" => 'HTML',
+                "FileTypeDescription" => 'HTML File',
+                "FileFormat" => 'wdFormatHTML',
+                "RelatedLinks" => []
+            ],
+            [
+                "FileTypeExt" => 'HTML',
+                "FileTypeTitleExtra" => 'Filtered',
+                "FileTypeDescription" => 'Filtered HTML File',
+                "FileFormat" => 'wdFormatFilteredHTML',
+                "RelatedLinks" => []
+            ],
+
+              [
+                "FileTypeExt" => 'XPS',
+                "FileTypeDescription" => 'Microsoft XPS Format',
+                "FileFormat" => 'wdFormatXPS',
+                "RelatedLinks" => []
+            ],
+              [
+                "FileTypeExt" => 'DOC',
+                "FileTypeDescription" => 'Latest Microsoft Office Word 365 Version Format ',
+                "FileFormat" => 'wdFormatDocumentDefault',
+                "RelatedLinks" => []
+            ],
+        ],
+       "Template" => "ConvertDocToFileWithWebhook.md"
     ]
    
 
@@ -147,7 +200,8 @@ $Explain = [
     "dashf" => ['cmd' => '-f' , 'desc' => "The File or directory to be converted"],
     "dasho" => ['cmd' => '-o' , 'desc' => "The File or Directory where you would like the converted file to be written to."],
     "dashl" => ['cmd' => '-L' , 'desc' => "The log level to be output."],
-    "dasht" => ['cmd' => '-T' , 'desc' => "The file format type that is being converted to"]
+    "dasht" => ['cmd' => '-T' , 'desc' => "The file format type that is being converted to"],
+    "dashw" => ['cmd' => '-W' , 'desc' => "Fire a webhook to the provided URL. See Below for more details"]
 ];
 
 /*

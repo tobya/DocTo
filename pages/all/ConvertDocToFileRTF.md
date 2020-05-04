@@ -2,9 +2,6 @@
     "title" : "How do I Convert a Microsoft Word Doc to a Windows Rich Text Format? " 
 }
 
-Windows Rich Text Format 
-==
-
 How do I Convert a Microsoft Word Doc to a Windows Rich Text Format (RTF)?         
 -
 

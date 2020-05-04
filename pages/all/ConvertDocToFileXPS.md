@@ -2,9 +2,6 @@
     "title" : "How do I Convert a Microsoft Word Doc to a Microsoft XPS Format? " 
 }
 
-Microsoft XPS Format 
-==
-
 How do I Convert a Microsoft Word Doc to a Microsoft XPS Format (XPS)?         
 -
 

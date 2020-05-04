@@ -2,9 +2,6 @@
     "title" : "How do I Convert a Microsoft Word Doc to a Open Document Text Format? " 
 }
 
-Open Document Text Format 
-==
-
 How do I Convert a Microsoft Word Doc to a Open Document Text Format (ODD)?         
 -
 

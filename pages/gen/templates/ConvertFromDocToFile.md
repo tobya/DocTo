@@ -2,9 +2,6 @@
     "title" : "How do I Convert a Microsoft Word Doc to a {[$Command.FileTypeDescription]}? " 
 }
 
-{[$Command.FileTypeDescription]} 
-==
-
 How do I Convert a Microsoft Word Doc to a {[$Command.FileTypeDescription]} ({[$Command.FileTypeExt]})?         
 -
 
