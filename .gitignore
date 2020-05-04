@@ -22,7 +22,7 @@ test/InputFiles3*
 ############
 
 pages/gen/vendor/*
-pages/gen/template_c/*
+pages/gen/templates_c/*
 
 __history/
 *.~*
