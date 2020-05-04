@@ -17,14 +17,16 @@ test/InputFiles/generatedfiles/
 test/Generated*
 test/InputFiles3*
 
-
 ###########
 # github
 #############
 
 pages/gen/vendor*
 pages/all/*
+-pages/all/templates/
+-pages/all/css/
 pages/gen/templates_c/*
+
 ############
 # Delphi
 ############
