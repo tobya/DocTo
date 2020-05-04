@@ -21,6 +21,9 @@ test/InputFiles3*
 # Delphi
 ############
 
+pages/gen/vendor/*
+pages/gen/template_c/*
+
 __history/
 *.~*
 *.dcu
