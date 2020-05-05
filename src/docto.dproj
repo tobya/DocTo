@@ -152,7 +152,9 @@
                     <VersionInfo Name="MajorVer">0</VersionInfo>
                     <VersionInfo Name="MinorVer">4</VersionInfo>
                     <VersionInfo Name="Release">4</VersionInfo>
+
                     <VersionInfo Name="Build">69</VersionInfo>
+
                     <VersionInfo Name="Debug">True</VersionInfo>
                     <VersionInfo Name="PreRelease">True</VersionInfo>
                     <VersionInfo Name="Special">False</VersionInfo>
@@ -164,7 +166,9 @@
                 <VersionInfoKeys>
                     <VersionInfoKeys Name="CompanyName">Toflidium Software</VersionInfoKeys>
                     <VersionInfoKeys Name="FileDescription"/>
+
                     <VersionInfoKeys Name="FileVersion">0.4.4.69</VersionInfoKeys>
+
                     <VersionInfoKeys Name="InternalName"/>
                     <VersionInfoKeys Name="LegalCopyright">Toflidium Software</VersionInfoKeys>
                     <VersionInfoKeys Name="LegalTrademarks"/>
