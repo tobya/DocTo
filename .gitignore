@@ -28,6 +28,9 @@ pages/gen/templates_c/*
 # Delphi
 ############
 
+pages/gen/vendor/*
+pages/gen/templates_c/*
+
 __history/
 *.~*
 *.dcu

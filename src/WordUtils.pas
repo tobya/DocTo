@@ -143,9 +143,9 @@ begin
           begin
             if Wordapp.ActiveDocument.TablesOfContents.count > 0 then
             begin
-             log('SKIPPED - Document has TOC: ' + fileToConvert , STANDARD);
+             log('[SKIPPED] - Document has TOC: ' + fileToConvert , STANDARD);
              Result.Successful := false;
-             Result.Error := 'SKIPPED - Document has TOC:';
+             Result.Error := '[SKIPPED] - Document has TOC:';
              ExitAction := aClose;
             end;
           end;
@@ -156,9 +156,9 @@ begin
           // then it is password protected and should be skipped.
           if ContainsStr(E.Message, 'The password is incorrect' ) then
           begin
-             log('SKIPPED - Password Protected:' + fileToConvert, STANDARD);
+             log('[SKIPPED] - Password Protected:' + fileToConvert, STANDARD);
              Result.Successful := false;
-             Result.Error := 'SKIPPED - Password Protected:';
+             Result.Error := '[SKIPPED] - Password Protected:';
              ExitAction := aExit;
           end
           else
