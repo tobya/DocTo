@@ -38,6 +38,7 @@ Some other interesting commands
 
 You might find some of the following commands also interesting.
 
+- [Convert all Word Document in a folder to a {[$Command.FileTypeExt]} file](ConvertDirDocToFile{[$Command.FileTypeExt]}.md);
 {[foreach from=$Command.RelatedLinks key=LinkTitle item=L]}
  - [{[$LinkTitle]}]({[$L]})
 {[/foreach]}    
