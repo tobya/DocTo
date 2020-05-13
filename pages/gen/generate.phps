@@ -12,32 +12,42 @@ foreach ($Commands as $CommandName => $Command) {
     
     foreach ($Command['Items'] as $keytag => $Item) {
         # code...
+        // for commands that use a single format
+        if (isset($Command['FileFormat']) ){
+            $Item['FileTypeExt'] = $Command['FileFormat']['FileTypeExt'];
+            $Item['FileTypeDescription'] = $Command['FileFormat']['FileTypeDescription'];
+            $Item['FileTypeTitleExtra'] = @$Command['FileFormat']['FileTypeTitleExtra'];
+            $Item['FileFormat'] = $Command['FileFormat']['FileFormat'];
+        }
 
-    $smarty->assign('Command', $Item);
-        # code...
+        $smarty->assign('Command', $Item);
+            # code...
 
-    $MDFile = $smarty->fetch($Command['Template']);
+        $MDFile = $smarty->fetch($Command['Template']);
 
-    if (!file_exists('../all/')){
+        if (!file_exists('../all/')){
+            mkdir('../all/');
+        }
 
-    mkdir('../all/');
-    }
-    $Fn =   $CommandName . @$Item['FileTypeTitleExtra'] . $Item['FileTypeExt'] . '.md' ;
-    $Links[] = $Fn;
-    echo "Create File : $Fn\n";
-    file_put_contents('../all/' . $Fn, $MDFile);
+
+        $Fn =   $CommandName . @$Item['FileTypeTitleExtra'] . $Item['FileTypeExt'] . '.md' ;
+        $Commands[$CommandName]['Items'][$keytag]['fn'] = $Fn;
+        echo "Create File : $Fn\n";
+        file_put_contents('../all/' . $Fn, $MDFile);
+
+
 
     }
 }
 
-$md = '
-List of Files
-==
+//**************
+//  Create index file here
+//**********************
 
-';
-foreach ($Links as $key => $value) {
-    $md .= " - [$value]($value)\n";
-}
-file_put_contents('../all/index.md' , $md);
-echo "\nList index.md";
+$smarty->Assign('Commands',$Commands);
+$Indexmd = $smarty->fetch('index.tpl.md');
+//print_r($Indexmd);
+file_put_contents('../all/index.md', $Indexmd);
+
+
 
