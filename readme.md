@@ -15,11 +15,6 @@ Must have Microsoft Word or Excel installed on host machine.
 Download Release From Github Releases - https://github.com/tobya/DocTo/releases/
 Further Information available at https://tobya.github.io/DocTo/
 
-XLSTo
-=====
-
-XLSTo is now incorporated into DocTo.  Previously XLSTo was a seperate EXE that was used to convert xls files to csv or pdf.  This can now be done with the main `DocTo.exe` by simply adding the -XL flag.
-
 
 ## Features
 
@@ -30,6 +25,8 @@ XLSTo is now incorporated into DocTo.  Previously XLSTo was a seperate EXE that 
   1. [Multiple / Directory File Conversion.](https://github.com/tobya/DocTo/wiki/Converting-a-directory-of-files)
   1. [Delete after conversion](https://github.com/tobya/DocTo/wiki/Delete-%5Cinput-File-after-conversion)
   1. [Fire https Webhook on each conversion.](https://github.com/tobya/DocTo#webhooks)
+  
+More Examples available at [https://docto.toflidium.com/](https://docto.toflidium.com/) and [Wiki](https://github.com/tobya/DocTo/wiki)
 
 ## Installation
 
@@ -213,6 +210,11 @@ https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-u
 Compiling
 --
 The project compiles with Delphi (I use XE4 but it should compile with most versions including 7). The project will not compile on Linux as it uses several Windows only components such as COM and Word and Excel do not have Linux versions anyway so there would be no point.
+
+XLSTo
+--
+
+XLSTo is now incorporated into DocTo.  Previously XLSTo was a seperate EXE that was used to convert xls files to csv or pdf.  This can now be done with the main `DocTo.exe` by simply adding the -XL flag.
 
 
 ## Get Involved.

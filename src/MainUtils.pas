@@ -26,8 +26,9 @@ Const
   // APP
   MSWORD = 1;
   MSEXCEL = 2;
+  MSPOWERPOINT = 3;
 
-  DOCTO_VERSION = '1.2.25.47';
+  DOCTO_VERSION = '1.2.26.49.b.pp';
 
 type
 
@@ -662,7 +663,13 @@ begin
     begin
       Result := MSWORD;
 
+    end
+    else if (id = '-PP') or
+            (id = '--POWERPOINT') then
+    begin
+       Result := MSPOWERPOINT;
     end;
+
 
   end;
 
@@ -723,7 +730,7 @@ begin
     // jump to next id + value
     inc(iParam,2);
 
-    if  (id = '-XL') or
+if  (id = '-XL') or
         (id = '--EXCEL') or
         (id = '-WD') or
         (id = '--WORD') or

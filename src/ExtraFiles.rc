@@ -1,7 +1,9 @@
 WORDFORMATS     TEXT    res\wdFormats.txt
 EXCELFORMATS TEXT    res\xlsFormats.txt
+PPFORMATS TEXT  res\ppFormats.txt
 DOCEXTENSIONS      TEXT    res\wdFormatsExt.txt
 XLSEXTENSIONS TEXT res\xlsFormatsExt.txt
+PPEXTENSIONS TEXT res\ppFormats.txt
 HELP    TEXT    res\HelpLog.txt
 HELPJSON TEXT   res\HelpJSONLog.txt
 HELPWEBHOOK TEXT res\HelpWebHook.txt
