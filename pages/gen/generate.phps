@@ -16,7 +16,7 @@ foreach ($Commands as $CommandName => $Command) {
         if (isset($Command['FileFormat']) ){
             $Item['FileTypeExt'] = $Command['FileFormat']['FileTypeExt'];
             $Item['FileTypeDescription'] = $Command['FileFormat']['FileTypeDescription'];
-            $Item['FileTypeTitleExtra'] = @$Command['FileFormat']['FileTypeTitleExtra'];
+            
             $Item['FileFormat'] = $Command['FileFormat']['FileFormat'];
         }
 

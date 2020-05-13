@@ -21,11 +21,11 @@ Convert Word Document to another file type
 Output Log values while Converting Word Document to PDF
 ==
 
- - [ConvertDocToFileLogPDF.md](ConvertDocToFileLogPDF.md)
- - [ConvertDocToFileLogPDF.md](ConvertDocToFileLogPDF.md)
- - [ConvertDocToFileLogPDF.md](ConvertDocToFileLogPDF.md)
- - [ConvertDocToFileLogPDF.md](ConvertDocToFileLogPDF.md)
- - [ConvertDocToFileLogPDF.md](ConvertDocToFileLogPDF.md)
+ - [ConvertDocToFileLogL1PDF.md](ConvertDocToFileLogL1PDF.md)
+ - [ConvertDocToFileLogL2PDF.md](ConvertDocToFileLogL2PDF.md)
+ - [ConvertDocToFileLogL5PDF.md](ConvertDocToFileLogL5PDF.md)
+ - [ConvertDocToFileLogL9PDF.md](ConvertDocToFileLogL9PDF.md)
+ - [ConvertDocToFileLogL10PDF.md](ConvertDocToFileLogL10PDF.md)
 
 
 Convert all Word Documents in a Directory

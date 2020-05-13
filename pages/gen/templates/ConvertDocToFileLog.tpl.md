@@ -5,7 +5,9 @@
 How do I get log out put when converting a file ?         
 -
 
-When doing a conversion, it is useful to output log info.
+When doing a conversion, it is useful to output log info.     
+
+Here we set the log level to `{[$Command.LogLevel]}` which is  defined as '{[$Command.LogLevelDesc]}' which can be explained as {[$Command.LogLevelExtendedDesc]}
 
 Command Line 
 -

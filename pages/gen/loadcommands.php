@@ -97,22 +97,27 @@ $Commands = [
 
                 "LogLevel" => '1',
                 "LogLevelDesc" => 'Display Errors Only',
+                "LogLevelExtendedDesc" => 'Display Errors only',
+                'FileTypeTitleExtra' => 'L1',
                 "RelatedLinks" => []
             ],
             [
                 "LogLevel" => '2',
                 "LogLevelDesc" => 'Standard Log output',
                 "LogLevelExtendedDesc" => 'If you dont specify a value, this is the value.',
+                'FileTypeTitleExtra' => 'L2',
                 "RelatedLinks" => []
             ],
             [
                 "LogLevel" => '5',
                 "LogLevelDesc" => 'Chatty',
+                'FileTypeTitleExtra' => 'L5',
                 "LogLevelExtendedDesc" => 'Will provide some more information about the process of conversion',
                 "RelatedLinks" => []
             ],
             [
                 "LogLevel" => '9',
+                'FileTypeTitleExtra' => 'L9',
                 "LogLevelDesc" => 'Debug',
                 "LogLevelExtendedDesc" => 'Some extra information above chatty',
                 "RelatedLinks" => []
@@ -120,6 +125,7 @@ $Commands = [
            
             [
                 "LogLevel" => '10',
+                'FileTypeTitleExtra' => 'L10',
                 "LogLevelDesc" => 'Verbose',
                 "LogLevelExtendedDesc" => 'A large amount of information will be output with the conversion.  Useful for debugging and trying to track down an issue.',
                 "RelatedLinks" => []
