@@ -32,7 +32,7 @@ Command Line Explained
 
  - `-XL`   This is a conversion using Microsoft Excel.  
  - `-f`   The File or directory to be converted 
- - `-o`   The File or Directory where you would like the converted file to be written to.
+ - `-o`   The Output File or Directory where you would like the converted file to be written to.
  - `-T`   The file format type that is being converted to
 
 
