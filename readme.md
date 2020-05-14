@@ -14,6 +14,7 @@ Must have Microsoft Word or Excel installed on host machine.
 
 Download Release From Github Releases - https://github.com/tobya/DocTo/releases/
 Further Information available at https://tobya.github.io/DocTo/
+Further Examples available at https://docto.toflidium.com
 
 
 ## Features
