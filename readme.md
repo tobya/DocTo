@@ -26,8 +26,12 @@ Further Examples available at https://docto.toflidium.com
   1. [Multiple / Directory File Conversion.](https://github.com/tobya/DocTo/wiki/Converting-a-directory-of-files)
   1. [Delete after conversion](https://github.com/tobya/DocTo/wiki/Delete-%5Cinput-File-after-conversion)
   1. [Fire https Webhook on each conversion.](https://github.com/tobya/DocTo#webhooks)
-  
-More Examples available at [https://docto.toflidium.com/](https://docto.toflidium.com/), [Github Example](https://github.com/tobya/DocTo/blob/master/pages/all/index.md) and [Wiki](https://github.com/tobya/DocTo/wiki)
+ 
+## Examples
+More Examples available at 
+- [https://docto.toflidium.com/](https://docto.toflidium.com/) 
+- [Github Example](https://github.com/tobya/DocTo/blob/master/pages/all/index.md) 
+- [Wiki](https://github.com/tobya/DocTo/wiki)
 
 ## Installation
 
