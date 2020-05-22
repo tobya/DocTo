@@ -70,7 +70,21 @@ Convert Excel Spreadsheet to another file type
  - [ConvertXLSToFileXPS.md](ConvertXLSToFileXPS.md)
 
 
-Convert Word Document to another file type with Webhook
+Convert Microsoft PowerPoint Presentation to another file type
+==
+
+ - [ConvertPPTToFilePDF.md](ConvertPPTToFilePDF.md)
+ - [ConvertPPTToFileRTF.md](ConvertPPTToFileRTF.md)
+ - [ConvertPPTToFileJPG.md](ConvertPPTToFileJPG.md)
+ - [ConvertPPTToFilepptx.md](ConvertPPTToFilepptx.md)
+ - [ConvertPPTToFilepng.md](ConvertPPTToFilepng.md)
+ - [ConvertPPTToFilegif.md](ConvertPPTToFilegif.md)
+ - [ConvertPPTToFileFilteredHTML.md](ConvertPPTToFileFilteredHTML.md)
+ - [ConvertPPTToFileXPS.md](ConvertPPTToFileXPS.md)
+ - [ConvertPPTToFilePPTX.md](ConvertPPTToFilePPTX.md)
+
+
+Convert Word Document to another file type then fire a Webhook
 ==
 
  - [ConvertDocToFileWithWebhookRTF.md](ConvertDocToFileWithWebhookRTF.md)
@@ -87,3 +101,8 @@ Show Version of DocTo
 
  - [ShowVersionVersion.md](ShowVersionVersion.md)
 
+
+Help Text
+--
+
+DocTo outputs a [help file](HelpLog.md) which provides details of all options. 

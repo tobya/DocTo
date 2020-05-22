@@ -77,6 +77,8 @@ $Commands = [
         ],
     ],
 
+
+
       "ConvertDocToFileLog" => [ 
         "Description" => "Output Log values while Converting Word Document to PDF",
         "Template" => "ConvertDocToFileLog.tpl.md",
@@ -330,8 +332,76 @@ $Commands = [
         ],
        "Template" => "ConvertFromXLSToFile.tpl.md"
     ],
+        "ConvertPPTToFile" => [ 
+        "Description" => "Convert Microsoft PowerPoint Presentation to another file type",
+        "Template" => "ConvertFromPPTToFile.tpl.md",
+        "Blocks" => [
+            [
+                ""
+            ]
+        ],
+        "Items" => [
+  
+
+            [
+                "FileTypeExt" => 'PDF',
+                "FileTypeDescription" => 'Adobe Acrobat Portable Document Format',
+                "FileFormat" => 'ppSaveAsPDF',
+                "RelatedLinks" => []
+            ],            [
+                "FileTypeExt" => 'RTF',
+                "FileTypeDescription" => 'Rich Text Format',
+                "FileFormat" => 'ppSaveAsRTF',
+                "RelatedLinks" => []
+            ],
+            [
+                "FileTypeExt" => 'JPG',
+                "FileTypeDescription" => 'Jpeg Image file',
+                "FileFormat" => 'ppSaveAsJPG',
+                "RelatedLinks" => []
+            ],
+            [
+                "FileTypeExt" => 'pptx',
+                "FileTypeDescription" => 'Open Document Presentation Format',
+                "FileFormat" => 'ppSaveAsOpenXMLPresentation',
+                "RelatedLinks" => []
+            ],
+            [
+                "FileTypeExt" => 'png',
+                "FileTypeDescription" => 'PNG File format',
+                "FileFormat" => 'ppSaveAsPNG',
+                "RelatedLinks" => []
+            ],
+            [
+                "FileTypeExt" => 'gif',
+                "FileTypeDescription" => 'Animated Gif',
+                "FileFormat" => 'ppSaveAsAnimatedGIF',
+                "RelatedLinks" => []
+            ],
+            [
+                "FileTypeExt" => 'HTML',
+                "FileTypeTitleExtra" => 'Filtered',
+                "FileTypeDescription" => 'Filtered HTML File',
+                "FileFormat" => 'wdFormatFilteredHTML',
+                "RelatedLinks" => []
+            ],
+
+              [
+                "FileTypeExt" => 'XPS',
+                "FileTypeDescription" => 'Microsoft XPS Format',
+                "FileFormat" => 'ppSaveAsXPS',
+                "RelatedLinks" => []
+            ],
+              [
+                "FileTypeExt" => 'PPTX',
+                "FileTypeDescription" => 'Latest Microsoft Office PowerPoint 365 Version Format ',
+                "FileFormat" => 'ppSaveAsOpenXMLPresentation',
+                "RelatedLinks" => []
+            ],
+        ],
+    ],
     "ConvertDocToFileWithWebhook" => [ 
-        "Description" => "Convert Word Document to another file type with Webhook",
+        "Description" => "Convert Word Document to another file type then fire a Webhook",
         "Items" => [
             [
 
@@ -408,6 +478,7 @@ $Explain = [
 
     "appwd" => ['cmd' => '-WD' , 'desc' => "This is a conversion using Microsoft Word.  This is not required but makes it easier to read"],
     "appxl" => ['cmd' => '-XL' , 'desc' => "This is a conversion using Microsoft Excel.  "],
+    "apppp" => ['cmd' => '-PP' , 'desc' => "This is a conversion using Microsoft PowerPoint.  "],
     "dashf" => ['cmd' => '-f' , 'desc' => "The File or directory to be converted"],
     "dasho" => ['cmd' => '-o' , 'desc' => "The Output File or Directory where you would like the converted file to be written to."],
     "dashl" => ['cmd' => '-L' , 'desc' => "The log level to be output."],

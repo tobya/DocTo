@@ -48,6 +48,35 @@ $smarty->Assign('Commands',$Commands);
 $Indexmd = $smarty->fetch('index.tpl.md');
 //print_r($Indexmd);
 file_put_contents('../all/index.md', $Indexmd);
+echo "Create File : index.md \n";
+
+$HelpFile = LoadResourceFile('HelpLog.txt');
+
+$HelpFile = "{
+    \"title\" : \"Help Log File\" 
+}
+
+````
+$HelpFile
+````";
+
+file_put_contents('../all/HelpLog.md', $HelpFile);
+echo "Create File : HelpLog.md \n";
 
 
+$AllResourceFiles = LoadResourceFiles();
+
+foreach ($AllResourceFiles as $key => $fileinfo) {
+
+
+
+    $Contents = "
+
+    
+    $fileinfo[contents]
+    
+        ";
+    file_put_contents('../all/' . $fileinfo['filename'] . '.md', $Contents);
+    echo "\nCreate Resource File : " . $fileinfo['filename'] . '.md';
+}
 
