@@ -14,6 +14,7 @@ Must have Microsoft Word or Excel installed on host machine.
 
 Download Release From Github Releases - https://github.com/tobya/DocTo/releases/
 Further Information available at https://tobya.github.io/DocTo/
+Further Examples available at https://docto.toflidium.com
 
 
 ## Features
@@ -25,8 +26,12 @@ Further Information available at https://tobya.github.io/DocTo/
   1. [Multiple / Directory File Conversion.](https://github.com/tobya/DocTo/wiki/Converting-a-directory-of-files)
   1. [Delete after conversion](https://github.com/tobya/DocTo/wiki/Delete-%5Cinput-File-after-conversion)
   1. [Fire https Webhook on each conversion.](https://github.com/tobya/DocTo#webhooks)
-  
-More Examples available at [https://docto.toflidium.com/](https://docto.toflidium.com/) and [Wiki](https://github.com/tobya/DocTo/wiki)
+ 
+## Examples
+More Examples available at 
+- [https://docto.toflidium.com/](https://docto.toflidium.com/) 
+- [Github Example](https://github.com/tobya/DocTo/blob/master/pages/all/index.md) 
+- [Wiki](https://github.com/tobya/DocTo/wiki)
 
 ## Installation
 
@@ -77,7 +82,7 @@ Webhooks
 
 Add a Webhook to fire on each conversion (-W)
 
-    docto -f "C:\Dir with Spaces\FilesToConvert\" -O "C:\DirToOutput" -T wdFormatPDF  -OX .pdf  -W http://toflidium.com/webhooks/docto/webhook_test.php
+    docto -f "C:\Dir with Spaces\FilesToConvert\" -O "C:\DirToOutput" -T wdFormatPDF  -OX .pdf  -W https://toflidium.com/webhooks/docto/webhook_test.php
     
 A Webhook is a url that can be called on each converstion to give you the ability to repond externally whenever a file is converted.  Currently `https` address is experimental so log an [issue](https://github.com/tobya/DocTo/issues/new) if you have any issues.
 
