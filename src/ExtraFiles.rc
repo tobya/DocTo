@@ -12,3 +12,4 @@ HELPERRORS TEXT res\HelpErrors.txt
 WORDCONSTANTS   TEXT    res\WDConst.txt
 WORDCONSTANTS_EXTRA   TEXT    res\WDExtraConst.txt
 XLCONSTANTS TEXT res\XLConst.txt
+PPCONSTANTS TEXT res\PPConst.txt
