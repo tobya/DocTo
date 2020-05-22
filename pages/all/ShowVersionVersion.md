@@ -21,10 +21,11 @@ Output
 
 Example output :
 
-> DocTo Version:1.2.26.49.b.pp
-> OfficeApp Version:16
-> Source: https://github.com/tobya/DocTo/
-
+````
+    DocTo Version:1.2.26.49.b.pp
+    OfficeApp Version:16
+    Source: https://github.com/tobya/DocTo/
+````
 
 Command Line Explained 
 -
