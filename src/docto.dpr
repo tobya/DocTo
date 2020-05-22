@@ -1,4 +1,4 @@
-program docto;
+﻿program docto;
 (*************************************************************
 Copyright © 2012-2016 Toby Allen (https://github.com/tobya)
 
@@ -24,15 +24,15 @@ uses
   SysUtils,
   Classes,
   ActiveX,
-  WordUtils in    'WordUtils.pas',
-  MainUtils in    'MainUtils.pas',
+  WordUtils in 'WordUtils.pas',
+  MainUtils in 'MainUtils.pas',
   ResourceUtils in 'ResourceUtils.pas',
   PathUtils in 'PathUtils.pas',
   datamodSSL in 'datamodSSL.pas' {dmSSL: TDataModule},
   ExcelUtils in 'ExcelUtils.pas',
   PowerPointUtils in 'PowerPointUtils.pas',
-
   Word_TLB_Constants in 'Word_TLB_Constants.pas',
+  Excel_TLB_Constants in 'Excel_TLB_Constants.pas',
   PowerPoint_TLB_Constants in 'PowerPoint_TLB_Constants.pas';
 
 var

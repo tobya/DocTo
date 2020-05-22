@@ -1,7 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-
+    <Transaction>2020/05/21 20:43:19.134,C:\DEVELOPMENT\Delphi\github\DocTo\src\res\PPConst.pas=C:\DEVELOPMENT\Delphi\github\DocTo\src\PowerPoint_TLB_Constants.pas</Transaction>
+    <Transaction>2020/05/21 20:47:13.984,C:\DEVELOPMENT\Delphi\github\DocTo\src\res\PPConst.txt=</Transaction>
+    <Transaction>2020/05/21 20:49:11.399,=C:\DEVELOPMENT\Delphi\github\DocTo\src\Excel_TLB_Constants.pas</Transaction>
+    <Transaction>2020/05/21 20:49:11.420,=C:\DEVELOPMENT\Delphi\github\DocTo\src\PowerPoint_TLB_Constants.pas</Transaction>
+    <Transaction>2020/05/21 20:49:27.734,=C:\DEVELOPMENT\Delphi\github\DocTo\src\res\PPConst.txt</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="..\..\DocTo"/>
@@ -23,6 +27,7 @@
     <File Path="res\xlsFormats.txt"/>
     <File Path="res\xlsFormatsExt.txt"/>
     <File Path="res\ppFormats.txt"/>
+    <File Path="res\PPConst.txt"/>
     <File Path="datamodSSL.pas"/>
     <File Path="datamodSSL.dfm"/>
     <File Path="ExcelUtils.pas"/>
@@ -30,9 +35,10 @@
     <File Path="MainUtils.pas"/>
     <File Path="PathUtils.pas"/>
     <File Path="PowerPointUtils.pas"/>
-    <File Path="PowerPoint_TLB_Constants.pas"/>
     <File Path="ResourceUtils.pas"/>
     <File Path="WordUtils.pas"/>
     <File Path="Word_TLB_Constants.pas"/>
+    <File Path="Excel_TLB_Constants.pas"/>
+    <File Path="PowerPoint_TLB_Constants.pas"/>
   </ProjectSortOrder>
 </BorlandProject>

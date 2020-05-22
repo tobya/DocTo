@@ -490,6 +490,8 @@ begin
 
             if ConversionInfo.Successful then
             begin
+
+              // Check if file needs to be deleted.
               if RemoveFileOnConvert then
               begin
                 // Check file exists and Delete if requested
@@ -501,15 +503,15 @@ begin
               end;
 
 
-            // Make a call to webhook if it existS
-            EventMsg := AfterConversion(FileToConvert, FileToCreate);
+              // Make a call to webhook if it exists
+              EventMsg := AfterConversion(FileToConvert, FileToCreate);
 
 
-          end
-          else    // Conversion not successful
-          begin
-              OnConversionError(ConversionInfo.InputFile, ConversionInfo.OutputFile, ConversionInfo.Error);
-          end;
+            end
+            else    // Conversion not successful
+            begin
+                OnConversionError(ConversionInfo.InputFile, ConversionInfo.OutputFile, ConversionInfo.Error);
+            end;
         except
           on E: EOleSysError do
           begin
