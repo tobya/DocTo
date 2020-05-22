@@ -4,7 +4,7 @@
  
 
   require "vendor/smarty/smarty/libs/Smarty.class.php";
- 
+  require "generation_functions.php";
 
 $smarty =  new Smarty;
 

@@ -13,3 +13,8 @@ Here is a list of examples on how to use DocTo.  You should find details of what
 {[/foreach]}
 
 {[/foreach]}
+
+Help Text
+--
+
+DocTo outputs a [help file](HelpLog.md) which provides details of all options. 
