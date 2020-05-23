@@ -31,7 +31,7 @@ Command Line Explained
  - `{[$Params.dasht.cmd]}` -  {[$Params.dasht.desc]}
 
 
-
+You can see a [list below](#OtherTypes) of other converstion types available.
 
 Some other interesting commands
 -
@@ -41,5 +41,20 @@ You might find some of the following commands also interesting.
 - [Convert all Word Document in a folder to a {[$Command.FileTypeExt]} file](ConvertDirDocToFile{[$Command.FileTypeExt]}.md);
 {[foreach from=$Command.RelatedLinks key=LinkTitle item=L]}
  - [{[$LinkTitle]}]({[$L]})
-{[/foreach]}    
+{[/foreach]}
+
+<a name="OtherTypes">Other File Types Available for Conversion</a>
+-
+
+The following values below can be used to convert a Word Documente to another file type.
+
+
+````
+
+{[$ResourceFiles.wdFormats.contents]}
+
+````
+
+
+    
 

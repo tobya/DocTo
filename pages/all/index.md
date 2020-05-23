@@ -56,6 +56,12 @@ Convert all Word Documents in a Directory and remove after conversion
  - [ConvertDirToFileRemoveDOC.md](ConvertDirToFileRemoveDOC.md)
 
 
+Convert all Word Documents in a Directory with an alternative extension
+==
+
+ - [ConvertDirDocToFile_NewExtDOC.md](ConvertDirDocToFile_NewExtDOC.md)
+
+
 Convert Excel Spreadsheet to another file type
 ==
 

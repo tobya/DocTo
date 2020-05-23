@@ -32,6 +32,16 @@ Command Line Explained
  - `{[$Params.dasht.cmd]}` -  {[$Params.dasht.desc]}
 
 
+Other File Types Available for Conversion
+-
+
+The following values below can be used to convert a Powerpoint presentation file to another file type.
+
+
+````
+{[$ResourceFiles.ppFormats.contents]}
+````
+
 
 
 Some other interesting commands

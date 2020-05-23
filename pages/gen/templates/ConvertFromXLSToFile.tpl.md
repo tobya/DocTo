@@ -45,5 +45,15 @@ You might find some of the following commands also interesting.
 
 {[foreach from=$Command.RelatedLinks key=LinkTitle item=L]}
  - [{[$LinkTitle]}]({[$L]})
-{[/foreach]}    
+{[/foreach]}   
+
+Other File Types Available for Conversion
+-
+
+The following values below can be used to convert a Microsoft Excel Spreadsheet to another file type.
+
+
+````
+{[$ResourceFiles.xlsFormats.contents]}
+```` 
 

@@ -1,7 +1,8 @@
 
 
     
-    wdNoMailSystem=$00000000;
+    GeneratedBy=WORD_TLB_CONStants.pas
+wdNoMailSystem=$00000000;
 wdMAPI=$00000001;
 wdPowerTalk=$00000002;
 wdMAPIandPowerTalk=$00000003;

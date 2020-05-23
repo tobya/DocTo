@@ -265,6 +265,20 @@ $Commands = [
             ],
         ],
     ],
+   "ConvertDirDocToFile_NewExt" => [ 
+        "Description" => "Convert all Word Documents in a Directory with an alternative extension",
+        "Template" => "ConvertDirDocToFile_NewExt.tpl.md",
+        "Items" => [
+
+              [
+                "FileTypeExt" => 'DOC',
+                "FileTypeDescription" => 'Latest Microsoft Office Word 365 Version Format ',
+                "FileFormat" => 'wdFormatDocumentDefault',
+                "FileNewExt" => '.DOCX',
+                "RelatedLinks" => []
+            ],
+        ],
+    ],
    
 
     "ConvertXLSToFile" => [ 
@@ -481,6 +495,7 @@ $Explain = [
     "apppp" => ['cmd' => '-PP' , 'desc' => "This is a conversion using Microsoft PowerPoint.  "],
     "dashf" => ['cmd' => '-f' , 'desc' => "The File or directory to be converted"],
     "dasho" => ['cmd' => '-o' , 'desc' => "The Output File or Directory where you would like the converted file to be written to."],
+    "dashox" => ['cmd' => '-ox' , 'desc' => "The Output extension to be used for converted files"],
     "dashl" => ['cmd' => '-L' , 'desc' => "The log level to be output."],
     "dasht" => ['cmd' => '-T' , 'desc' => "The file format type that is being converted to"],
     "dashw" => ['cmd' => '-W' , 'desc' => "Fire a webhook to the provided URL. See Below for more details"],

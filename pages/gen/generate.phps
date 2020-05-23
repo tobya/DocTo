@@ -7,6 +7,12 @@ require "loadcommands.php";
 
 $smarty->assign('Params',$Explain);
 
+$AllResourceFiles = LoadResourceFiles();
+$smarty->assign('ResourceFiles',$AllResourceFiles);
+
+
+
+
 foreach ($Commands as $CommandName => $Command) {
 
     
@@ -63,9 +69,6 @@ $HelpFile
 file_put_contents('../all/HelpLog.md', $HelpFile);
 echo "Create File : HelpLog.md \n";
 
-
-$AllResourceFiles = LoadResourceFiles();
-
 foreach ($AllResourceFiles as $key => $fileinfo) {
 
 
@@ -76,7 +79,11 @@ foreach ($AllResourceFiles as $key => $fileinfo) {
     $fileinfo[contents]
     
         ";
+    $ResourceFiles[$fileinfo['filename']] = $Contents;
     file_put_contents('../all/' . $fileinfo['filename'] . '.md', $Contents);
     echo "\nCreate Resource File : " . $fileinfo['filename'] . '.md';
 }
+
+
+
 

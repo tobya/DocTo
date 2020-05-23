@@ -31,7 +31,7 @@ Command Line Explained
  - `-T` -  The file format type that is being converted to
 
 
-
+You can see a [list below](#OtherTypes) of other converstion types available.
 
 Some other interesting commands
 -
@@ -39,5 +39,41 @@ Some other interesting commands
 You might find some of the following commands also interesting.
 
 - [Convert all Word Document in a folder to a HTML file](ConvertDirDocToFileHTML.md);
+
+<a name="OtherTypes">Other File Types Available for Conversion</a>
+-
+
+The following values below can be used to convert a Word Documente to another file type.
+
+
+````
+
+wdFormatDOSTextLineBreaks=5
+wdFormatEncodedText=7
+wdFormatFilteredHTML=10
+wdFormatOpenDocumentText=23
+wdFormatHTML=8
+wdFormatRTF=6
+wdFormatStrictOpenXMLDocument=24
+wdFormatTemplate=1
+wdFormatText=2
+wdFormatTextLineBreaks=3
+wdFormatUnicodeText=7
+wdFormatWebArchive=9
+wdFormatXML=11
+wdFormatDocument97=0
+wdFormatDocumentDefault=16
+wdFormatPDF=17
+wdFormatTemplate97=1
+wdFormatXMLDocument=12
+wdFormatXMLDocumentMacroEnabled=13
+wdFormatXMLTemplate=14
+wdFormatXMLTemplateMacroEnabled=15
+wdFormatXPS=18
+
+
+````
+
+
     
 
