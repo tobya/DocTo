@@ -157,7 +157,17 @@ begin
             if OutputFileFormat = xlTypePDF then
             begin
                 ExcelApp.Application.DisplayAlerts := False ;
-                ExcelApp.activeWorkbook.ExportAsFixedFormat(XlFixedFormatType_xlTypePDF, OutputFilename  );
+                ExcelApp.activeWorkbook.ExportAsFixedFormat(XlFixedFormatType_xlTypePDF,
+                                                            OutputFilename,
+                                                            EmptyParam, //Quality
+                                                            EmptyParam, // IncludeDocProperties,
+                                                            False,// IgnorePrintAreas,
+                                                            pdfPrintFromPage, // From,
+                                                           pdfPrintToPage, //  To,
+                                                          pdfOpenAfterExport, //   OpenAfterPublish,  (default false);
+                                                         EmptyParam//    FixedFormatExtClassPtr
+                                                         ) ;
+                                                         Log('Ignoreprintareas=false',VERBOSE);
                 ExcelApp.ActiveWorkBook.save;
 
             end

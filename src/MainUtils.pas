@@ -12,7 +12,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 interface
 uses  classes, Windows, sysutils, ActiveX, ComObj, WinINet, Variants, iduri,
       Types,  ResourceUtils,
-      PathUtils, ShellAPI, datamodssl;
+      PathUtils, ShellAPI, datamodssl, Word_TLB_Constants;
 
 Const
   VERBOSE = 10;
@@ -28,7 +28,7 @@ Const
   MSEXCEL = 2;
   MSPOWERPOINT = 3;
 
-  DOCTO_VERSION = '1.2.26.49.b.pp';
+  DOCTO_VERSION = '1.3.27.50';
 
 type
 
@@ -70,6 +70,11 @@ type
     procedure SetList_ErrorDocs_Seconds(const Value: Integer);
     procedure SetIgnore_ErrorDocs(const Value: Boolean);
     procedure SetPDFOpenAfterExport(const Value: Boolean);
+    function getIsExcel: Boolean;
+    function getIsPP: Boolean;
+    function getIsWord: Boolean;
+    procedure SetpdfExportRange(const Value: Integer);
+
 
   protected
     Formats : TStringlist;
@@ -99,11 +104,15 @@ type
     FEncoding : Integer;
     FPDFOpenAfterExport : boolean;
 
+    FPDFPrintFromPage : integer;
+    FPDFPrintToPage : integer;
+
     FHaltOnWordError: Boolean;
     FRemoveFileOnConvert: boolean;
 
     FIgnoreErrorDocsFile : TStringList;
-
+    FAppID : Integer;
+    FPdfExportRange_Word: Integer;
 
 
 
@@ -147,7 +156,8 @@ type
     property List_ErrorDocs_Seconds : Integer read FList_ErrorDocs_Seconds write SetList_ErrorDocs_Seconds ;
     property Ignore_ErrorDocs : Boolean read FIgnore_ErrorDocs write SetIgnore_ErrorDocs;
     property pdfOpenAfterExport: Boolean read FPDFOpenAfterExport write SetpdfOpenAfterExport;
-
+    property pdfPrintFromPage : integer read FpdfPrintFromPage;
+    property pdfPrintToPage : integer read FpdfPrintToPage;
 
     procedure SetExtension(const Value: String); virtual;
     function GetExtension: String;  virtual;
@@ -209,6 +219,12 @@ type
     property CompatibilityMode : Integer read FCompatibilityMode write SetCompatibilityMode;
     property Encoding : Integer read FEncoding write SetEncoding;
     property BookMarkSource: Integer read FBookMarkSource;
+    property pdfExportRange : Integer read FPdfExportRange_Word write SetPDfExportRange  ;
+
+
+    property IsWord : Boolean read getIsWord;
+    property IsExcel : Boolean read getIsExcel;
+    Property IsPowerPoint : Boolean read getIsPP;
 
   end;
 
@@ -354,6 +370,9 @@ begin
   FFirstLogEntry := true;
   FBookMarkSource := 1; //wdExportCreateHeadingBookmarks
   fPDFOpenAfterExport := false;
+  FPdfExportRange_Word := wdExportAllDocument;
+  FPDFPrintFromPage := 1;
+  FPDFPrintTopage := -1;
 
   FInputFiles := TStringList.Create;
 end;
@@ -672,6 +691,7 @@ begin
        Result := MSPOWERPOINT;
     end;
 
+    FAppID := Result;
 
   end;
 
@@ -928,6 +948,7 @@ if  (id = '-XL') or
     end
     else if (id = '--PDF-OPENAFTEREXPORT') then
     begin
+
       PDFOpenAfterExport := true;
       dec(iParam);
     end
@@ -960,6 +981,30 @@ if  (id = '-XL') or
          begin
            HaltWithConfigError(205,'Invalid value for --PDF-BOOKMARKSOURCE :' + value);
          end;
+
+    end
+    else if (id = '--PDF-FROMPAGE') then
+    begin
+
+
+      try
+       fpdfPrintFromPage := StrToInt(value);
+       FPdfExportRange_Word := wdExportFromTo;
+      except
+            HaltWithConfigError( 202, '--PDF-FROMPAGE must be an integer');
+      end;
+
+
+    end
+    else if (id = '--PDF-TOPAGE') then
+    begin
+      try
+       fpdfPrintToPage := StrToInt(value);
+       FPdfExportRange_Word := wdExportFromTo;
+      except
+            HaltWithConfigError( 202, '--PDF-TOPAGE must be an integer');
+      end;
+
 
     end
     else if (id = '-W') or
@@ -1037,7 +1082,9 @@ if  (id = '-XL') or
     end
     else
     begin
-      HaltWithConfigError(203,'Unknown Switch:' + pstr);
+
+
+      HaltWithConfigError(203,'Unknown Switch or Parameter at index '+inttostr(iParam -1) + ':'  + pstr);
     end;
 
 
@@ -1206,6 +1253,23 @@ end;
 
 
 
+function TDocumentConverter.getIsExcel: Boolean;
+begin
+    Result := MSExcel = FAppID;
+end;
+
+function TDocumentConverter.getIsPP: Boolean;
+begin
+    Result := MSPOWERPOINT = FAppID;
+end;
+
+function TDocumentConverter.getIsWord: Boolean;
+begin
+    Result := MSWord = FAppID;
+end;
+
+
+
 procedure TDocumentConverter.SetEncoding(const Value: Integer);
 begin
   FEncoding := Value;
@@ -1341,6 +1405,11 @@ begin
   FOutputLogFile := Value;
 end;
 
+procedure TDocumentConverter.SetpdfExportRange(const Value: Integer);
+begin
+  FPdfExportRange_Word := Value;
+end;
+
 procedure TDocumentConverter.SetRemoveFileOnConvert(const Value: boolean);
 begin
   FRemoveFileOnConvert := Value;
@@ -1353,6 +1422,8 @@ procedure TDocumentConverter.SetSkipDocsWithTOC(const Value: Boolean);
 begin
   FSkipDocsWithTOC := Value;
 end;
+
+
 
 function TDocumentConverter.URLEncode(Param: String): String;
 begin

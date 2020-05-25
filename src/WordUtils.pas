@@ -113,6 +113,7 @@ function TWordDocConverter.ExecuteConversion(fileToConvert: String; OutputFilena
 var
   wdEncoding : OleVariant;
   NonsensePassword : OleVariant;
+
   ExitAction : TExitAction;
 
 begin
@@ -204,6 +205,9 @@ begin
         if (OutputFileFormat = wdFormatPDF) or
             (OutputFileFormat = wdFormatXPS) then
         begin
+
+
+
         // Saveas works for PDF but github issue 79 requestes exporting bookmarks
         // also which requires ExportAsFixedFormat
         // https://docs.microsoft.com/en-us/office/vba/api/word.document.exportasfixedformat
@@ -212,9 +216,9 @@ begin
                    OutputfileFormat, //   ExportFormat:=
                    PDFOpenAfterExport, // OpenAfterExport
                    wdExportOptimizeForPrint,//   OptimizeFor:= _
-                   wdExportAllDocument,//   Range
-                   1,//   From:=1,
-                   1,//   To:=1, _
+                   pdfExportRange,//   Range
+                   pdfPrintFromPage,//   From:=1,
+                   pdfprintTopage,//   To:=1, _
                    wdExportDocumentContent,//   Item:=
                    True,//   IncludeDocProps:=True,
                    true,//   KeepIRM:=True, _
