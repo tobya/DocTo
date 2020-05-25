@@ -11,7 +11,6 @@ $AllResourceFiles = LoadResourceFiles();
 $smarty->assign('ResourceFiles',$AllResourceFiles);
 
 foreach ($Commands as $CommandName => $CommandBlock) {
-
     
        // $smarty->assign('CommandBlock' , $CommandBlock);
     foreach ($CommandBlock['Items'] as $keytag => $Item) {
@@ -23,6 +22,7 @@ foreach ($Commands as $CommandName => $CommandBlock) {
             
             $Item['FileFormat'] = $CommandBlock['FileFormat']['FileFormat'];
         }        
+
 
 
         if (!file_exists('../all/')){
@@ -94,7 +94,4 @@ foreach ($AllResourceFiles as $key => $fileinfo) {
     file_put_contents('../all/' . $fileinfo['filename'] . '.md', $Contents);
     echo "\nCreate Resource File : " . $fileinfo['filename'] . '.md';
 }
-
-
-
 

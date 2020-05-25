@@ -4,8 +4,6 @@ $Commands = [
 
 
 
-
-
     "ConvertDocToFile" => [ 
         "Description" => "Convert Word Document to another file type",
         "Template" => "ConvertFromDocToFile.tpl.md",
@@ -532,7 +530,7 @@ $Commands = [
         ],
        "Template" => "ConvertDocToPDFBookmarks.tpl.md"
     ]
-   
+
 
 ];
 
@@ -559,3 +557,4 @@ $Explain = [
 
 
 ];
+
