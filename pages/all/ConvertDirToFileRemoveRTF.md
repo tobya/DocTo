@@ -1,8 +1,8 @@
 {
-    "title" : "How do I delete a file after Conversion? " 
+    "title" : "How do I delete a file after Converting it to  RTF?  " 
 }
 
-How do I delete a file after Converting it to a Windows Rich Text Format (RTF)?         
+How do I delete a file after Converting it to  RTF?        
 -
 
 When you carry out a conversion, sometimes you would like to remove the origional file.  This is particuarily useful when converting a directory.       

@@ -7,15 +7,15 @@ Here is a list of examples on how to use DocTo.  You should find details of what
 Convert Word Document to another file type
 ==
 
- - [ConvertDocToFileRTF.md](ConvertDocToFileRTF.md)
- - [ConvertDocToFilePDF.md](ConvertDocToFilePDF.md)
- - [ConvertDocToFileTXT.md](ConvertDocToFileTXT.md)
- - [ConvertDocToFileODD.md](ConvertDocToFileODD.md)
- - [ConvertDocToFileXML.md](ConvertDocToFileXML.md)
- - [ConvertDocToFileHTML.md](ConvertDocToFileHTML.md)
- - [ConvertDocToFileFilteredHTML.md](ConvertDocToFileFilteredHTML.md)
- - [ConvertDocToFileXPS.md](ConvertDocToFileXPS.md)
- - [ConvertDocToFileDOC.md](ConvertDocToFileDOC.md)
+ - [How do I Convert a Microsoft Word Doc to a Windows Rich Text Format?](ConvertDocToFileRTF.md)
+ - [How do I Convert a Microsoft Word Doc to a Adobe Acrobat Portable Document Format?](ConvertDocToFilePDF.md)
+ - [How do I Convert a Microsoft Word Doc to a Text File?](ConvertDocToFileTXT.md)
+ - [How do I Convert a Microsoft Word Doc to a Open Document Text Format?](ConvertDocToFileODD.md)
+ - [How do I Convert a Microsoft Word Doc to a XML Document Format?](ConvertDocToFileXML.md)
+ - [How do I Convert a Microsoft Word Doc to a HTML File?](ConvertDocToFileHTML.md)
+ - [How do I Convert a Microsoft Word Doc to a Filtered HTML File?](ConvertDocToFileFilteredHTML.md)
+ - [How do I Convert a Microsoft Word Doc to a Microsoft XPS Format?](ConvertDocToFileXPS.md)
+ - [How do I Convert a Microsoft Word Doc to a Latest Microsoft Office Word 365 Version Format ?](ConvertDocToFileDOC.md)
 
 
 Output Log values while Converting Word Document to PDF
@@ -31,29 +31,29 @@ Output Log values while Converting Word Document to PDF
 Convert all Word Documents in a Directory
 ==
 
- - [ConvertDirDocToFileRTF.md](ConvertDirDocToFileRTF.md)
- - [ConvertDirDocToFilePDF.md](ConvertDirDocToFilePDF.md)
- - [ConvertDirDocToFileTXT.md](ConvertDirDocToFileTXT.md)
- - [ConvertDirDocToFileODD.md](ConvertDirDocToFileODD.md)
- - [ConvertDirDocToFileXML.md](ConvertDirDocToFileXML.md)
- - [ConvertDirDocToFileHTML.md](ConvertDirDocToFileHTML.md)
- - [ConvertDirDocToFileFilteredHTML.md](ConvertDirDocToFileFilteredHTML.md)
- - [ConvertDirDocToFileXPS.md](ConvertDirDocToFileXPS.md)
- - [ConvertDirDocToFileDOC.md](ConvertDirDocToFileDOC.md)
+ - [How do I Convert a Folder full of Microsoft Word Documents to Windows Rich Text Format? ](ConvertDirDocToFileRTF.md)
+ - [How do I Convert a Folder full of Microsoft Word Documents to Adobe Acrobat Portable Document Format? ](ConvertDirDocToFilePDF.md)
+ - [How do I Convert a Folder full of Microsoft Word Documents to Text File? ](ConvertDirDocToFileTXT.md)
+ - [How do I Convert a Folder full of Microsoft Word Documents to Open Document Text Format? ](ConvertDirDocToFileODD.md)
+ - [How do I Convert a Folder full of Microsoft Word Documents to XML Document Format? ](ConvertDirDocToFileXML.md)
+ - [How do I Convert a Folder full of Microsoft Word Documents to HTML File? ](ConvertDirDocToFileHTML.md)
+ - [How do I Convert a Folder full of Microsoft Word Documents to Filtered HTML File? ](ConvertDirDocToFileFilteredHTML.md)
+ - [How do I Convert a Folder full of Microsoft Word Documents to Microsoft XPS Format? ](ConvertDirDocToFileXPS.md)
+ - [How do I Convert a Folder full of Microsoft Word Documents to Latest Microsoft Office Word 365 Version Format ? ](ConvertDirDocToFileDOC.md)
 
 
 Convert all Word Documents in a Directory and remove after conversion
 ==
 
- - [ConvertDirToFileRemoveRTF.md](ConvertDirToFileRemoveRTF.md)
- - [ConvertDirToFileRemovePDF.md](ConvertDirToFileRemovePDF.md)
- - [ConvertDirToFileRemoveTXT.md](ConvertDirToFileRemoveTXT.md)
- - [ConvertDirToFileRemoveODD.md](ConvertDirToFileRemoveODD.md)
- - [ConvertDirToFileRemoveXML.md](ConvertDirToFileRemoveXML.md)
- - [ConvertDirToFileRemoveHTML.md](ConvertDirToFileRemoveHTML.md)
- - [ConvertDirToFileRemoveFilteredHTML.md](ConvertDirToFileRemoveFilteredHTML.md)
- - [ConvertDirToFileRemoveXPS.md](ConvertDirToFileRemoveXPS.md)
- - [ConvertDirToFileRemoveDOC.md](ConvertDirToFileRemoveDOC.md)
+ - [How do I delete a file after Converting it to  RTF? ](ConvertDirToFileRemoveRTF.md)
+ - [How do I delete a file after Converting it to  PDF? ](ConvertDirToFileRemovePDF.md)
+ - [How do I delete a file after Converting it to  TXT? ](ConvertDirToFileRemoveTXT.md)
+ - [How do I delete a file after Converting it to  ODD? ](ConvertDirToFileRemoveODD.md)
+ - [How do I delete a file after Converting it to  XML? ](ConvertDirToFileRemoveXML.md)
+ - [How do I delete a file after Converting it to  HTML? ](ConvertDirToFileRemoveHTML.md)
+ - [How do I delete a file after Converting it to  HTML? ](ConvertDirToFileRemoveFilteredHTML.md)
+ - [How do I delete a file after Converting it to  XPS? ](ConvertDirToFileRemoveXPS.md)
+ - [How do I delete a file after Converting it to  DOC? ](ConvertDirToFileRemoveDOC.md)
 
 
 Convert all Word Documents in a Directory with an alternative extension
@@ -65,15 +65,15 @@ Convert all Word Documents in a Directory with an alternative extension
 Convert Excel Spreadsheet to another file type
 ==
 
- - [ConvertXLSToFileCSV.md](ConvertXLSToFileCSV.md)
- - [ConvertXLSToFilePDF.md](ConvertXLSToFilePDF.md)
- - [ConvertXLSToFileTXT.md](ConvertXLSToFileTXT.md)
- - [ConvertXLSToFileUnicodeTXT.md](ConvertXLSToFileUnicodeTXT.md)
- - [ConvertXLSToFileODS.md](ConvertXLSToFileODS.md)
- - [ConvertXLSToFileXML.md](ConvertXLSToFileXML.md)
- - [ConvertXLSToFileHTML.md](ConvertXLSToFileHTML.md)
- - [ConvertXLSToFile9795xls.md](ConvertXLSToFile9795xls.md)
- - [ConvertXLSToFileXPS.md](ConvertXLSToFileXPS.md)
+ - [How do I Convert a Microsoft Excel Spreadsheet to a CSV? ](ConvertXLSToFileCSV.md)
+ - [How do I Convert a Microsoft Excel Spreadsheet to a PDF? ](ConvertXLSToFilePDF.md)
+ - [How do I Convert a Microsoft Excel Spreadsheet to a TXT? ](ConvertXLSToFileTXT.md)
+ - [How do I Convert a Microsoft Excel Spreadsheet to a TXT? ](ConvertXLSToFileUnicodeTXT.md)
+ - [How do I Convert a Microsoft Excel Spreadsheet to a ODS? ](ConvertXLSToFileODS.md)
+ - [How do I Convert a Microsoft Excel Spreadsheet to a XML? ](ConvertXLSToFileXML.md)
+ - [How do I Convert a Microsoft Excel Spreadsheet to a HTML? ](ConvertXLSToFileHTML.md)
+ - [How do I Convert a Microsoft Excel Spreadsheet to a xls? ](ConvertXLSToFile9795xls.md)
+ - [How do I Convert a Microsoft Excel Spreadsheet to a XPS? ](ConvertXLSToFileXPS.md)
 
 
 Convert Microsoft PowerPoint Presentation to another file type
@@ -106,6 +106,19 @@ Show Version of DocTo
 ==
 
  - [ShowVersionVersion.md](ShowVersionVersion.md)
+
+
+Convert Word Docs for upload to Onedrive
+==
+
+ - [OneDriveConversionOneDrive.md](OneDriveConversionOneDrive.md)
+
+
+Show boomarks from Word document in PDF
+==
+
+ - [BookmarksFromSourceWordBookmarkspdf.md](BookmarksFromSourceWordBookmarkspdf.md)
+ - [BookmarksFromSourceNonepdf.md](BookmarksFromSourceNonepdf.md)
 
 
 Help Text

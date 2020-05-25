@@ -1,8 +1,8 @@
 {
-    "title" : "How do I delete a file after Conversion? " 
+    "title" : "How do I delete a file after Converting it to  PDF?  " 
 }
 
-How do I delete a file after Converting it to a Adobe Acrobat Portable Document Format (PDF)?         
+How do I delete a file after Converting it to  PDF?        
 -
 
 When you carry out a conversion, sometimes you would like to remove the origional file.  This is particuarily useful when converting a directory.       

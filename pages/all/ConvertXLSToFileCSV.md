@@ -1,8 +1,8 @@
 {
-    "title" : "How do I Convert a Microsoft Word Doc to a Comma Seperated Values file? " 
+    "title" : "How do I Convert a Microsoft Excel Spreadsheet to a CSV?  " 
 }
 
-Comma Seperated Values file 
+How do I Convert a Microsoft Excel Spreadsheet to a CSV? 
 ==
 
 How do I Convert a Microsoft Excel Spreadsheet to a Comma Seperated Values file (CSV)?         

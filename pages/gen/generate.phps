@@ -10,34 +10,45 @@ $smarty->assign('Params',$Explain);
 $AllResourceFiles = LoadResourceFiles();
 $smarty->assign('ResourceFiles',$AllResourceFiles);
 
-
-
-
-foreach ($Commands as $CommandName => $Command) {
+foreach ($Commands as $CommandName => $CommandBlock) {
 
     
-    foreach ($Command['Items'] as $keytag => $Item) {
+       // $smarty->assign('CommandBlock' , $CommandBlock);
+    foreach ($CommandBlock['Items'] as $keytag => $Item) {
         # code...
-        // for commands that use a single format
-        if (isset($Command['FileFormat']) ){
-            $Item['FileTypeExt'] = $Command['FileFormat']['FileTypeExt'];
-            $Item['FileTypeDescription'] = $Command['FileFormat']['FileTypeDescription'];
+        // for CommandBlocks that use a single format
+        if (isset($CommandBlock['FileFormat']) ){
+            $Item['FileTypeExt'] = $CommandBlock['FileFormat']['FileTypeExt'];
+            $Item['FileTypeDescription'] = $CommandBlock['FileFormat']['FileTypeDescription'];
             
-            $Item['FileFormat'] = $Command['FileFormat']['FileFormat'];
-        }
+            $Item['FileFormat'] = $CommandBlock['FileFormat']['FileFormat'];
+        }        
 
-        $smarty->assign('Command', $Item);
-            # code...
-
-        $MDFile = $smarty->fetch($Command['Template']);
 
         if (!file_exists('../all/')){
             mkdir('../all/');
         }
 
-
         $Fn =   $CommandName . @$Item['FileTypeTitleExtra'] . $Item['FileTypeExt'] . '.md' ;
+        
+        $smarty->assignByRef('Command', $Item);
+        if (isset($CommandBlock['Title'])){
+
+            $title = $smarty->fetch('string:'.$CommandBlock['Title']);
+                        
+        } else {
+            $title = $Fn;
+        }
+
+        $Item['Title'] = $title;
+
+        // Store fn for linking to in index page.
         $Commands[$CommandName]['Items'][$keytag]['fn'] = $Fn;
+        $Commands[$CommandName]['Items'][$keytag]['fntitle'] = $title;
+        
+
+        $MDFile = $smarty->fetch($CommandBlock['Template']);
+        
         echo "Create File : $Fn\n";
         file_put_contents('../all/' . $Fn, $MDFile);
 

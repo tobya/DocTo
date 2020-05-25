@@ -1,8 +1,8 @@
 {
-    "title" : "How do I delete a file after Conversion? " 
+    "title" : "How do I delete a file after Converting it to  ODD?  " 
 }
 
-How do I delete a file after Converting it to a Open Document Text Format (ODD)?         
+How do I delete a file after Converting it to  ODD?        
 -
 
 When you carry out a conversion, sometimes you would like to remove the origional file.  This is particuarily useful when converting a directory.       

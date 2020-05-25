@@ -1,8 +1,8 @@
 {
-    "title" : "How do I Convert a Microsoft Word Doc to a Adobe Acrobat Portable Document Format? " 
+    "title" : "How do I Convert a Microsoft Excel Spreadsheet to a PDF?  " 
 }
 
-Adobe Acrobat Portable Document Format 
+How do I Convert a Microsoft Excel Spreadsheet to a PDF? 
 ==
 
 How do I Convert a Microsoft Excel Spreadsheet to a Adobe Acrobat Portable Document Format (PDF)?         

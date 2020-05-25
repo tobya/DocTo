@@ -1,8 +1,8 @@
 {
-    "title" : "How do I Convert a Microsoft Word Doc to a XML Document Format? " 
+    "title" : "How do I Convert a Microsoft Word Doc to a XML Document Format?" 
 }
 
-How do I Convert a Microsoft Word Doc to a XML Document Format (XML)?         
+How do I Convert a Microsoft Word Doc to a XML Document Format?         
 -
 
 It is very simple to convert a Word Document to a XML file  on the command line using [Docto](https://github.com/tobya/docto). You can also do this easily in Microsoft Word, but sometimes it helps to be able to do it from the command line.  

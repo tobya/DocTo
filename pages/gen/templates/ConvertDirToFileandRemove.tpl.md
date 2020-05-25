@@ -1,8 +1,8 @@
 {
-    "title" : "How do I delete a file after Conversion? " 
+    "title" : "{[$Command.Title]} " 
 }
 
-How do I delete a file after Converting it to a {[$Command.FileTypeDescription]} ({[$Command.FileTypeExt]})?         
+{[$Command.Title]}       
 -
 
 When you carry out a conversion, sometimes you would like to remove the origional file.  This is particuarily useful when converting a directory.       

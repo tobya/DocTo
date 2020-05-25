@@ -9,7 +9,7 @@ Here is a list of examples on how to use DocTo.  You should find details of what
 ==
 
 {[foreach from=$CommandType.Items item=C]}
- - [{[$C.fn]}]({[$C.fn]})
+ - [{[$C.fntitle]}]({[$C.fn]})
 {[/foreach]}
 
 {[/foreach]}

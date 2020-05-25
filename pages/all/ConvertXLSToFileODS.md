@@ -1,8 +1,8 @@
 {
-    "title" : "How do I Convert a Microsoft Word Doc to a Open Document Spreadsheet Format? " 
+    "title" : "How do I Convert a Microsoft Excel Spreadsheet to a ODS?  " 
 }
 
-Open Document Spreadsheet Format 
+How do I Convert a Microsoft Excel Spreadsheet to a ODS? 
 ==
 
 How do I Convert a Microsoft Excel Spreadsheet to a Open Document Spreadsheet Format (ODS)?         

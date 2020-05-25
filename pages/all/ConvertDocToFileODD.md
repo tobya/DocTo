@@ -1,8 +1,8 @@
 {
-    "title" : "How do I Convert a Microsoft Word Doc to a Open Document Text Format? " 
+    "title" : "How do I Convert a Microsoft Word Doc to a Open Document Text Format?" 
 }
 
-How do I Convert a Microsoft Word Doc to a Open Document Text Format (ODD)?         
+How do I Convert a Microsoft Word Doc to a Open Document Text Format?         
 -
 
 It is very simple to convert a Word Document to a ODD file  on the command line using [Docto](https://github.com/tobya/docto). You can also do this easily in Microsoft Word, but sometimes it helps to be able to do it from the command line.  

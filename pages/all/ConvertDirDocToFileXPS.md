@@ -1,8 +1,8 @@
 {
-    "title" : "How do I Convert a Folder full of Microsoft Word Documents to a Microsoft XPS Format? " 
+    "title" : "How do I Convert a Folder full of Microsoft Word Documents to Microsoft XPS Format? " 
 }
 
-How do I Convert a Folder full of Microsoft Word Documents to a Microsoft XPS Format?         
+How do I Convert a Folder full of Microsoft Word Documents to Microsoft XPS Format?          
 -
 
 Even though it is easy to convert one [file at a time](ConvertDocToFileXPS.md), Sometimes you need to convert an entire directory of Word Documents to XPSs.  You can do this easily on the command line using [Docto](https://github.com/tobya/docto). 

@@ -1,8 +1,8 @@
 {
-    "title" : "How do I Convert a Folder full of Microsoft Word Documents to a XML Document Format? " 
+    "title" : "How do I Convert a Folder full of Microsoft Word Documents to XML Document Format? " 
 }
 
-How do I Convert a Folder full of Microsoft Word Documents to a XML Document Format?         
+How do I Convert a Folder full of Microsoft Word Documents to XML Document Format?          
 -
 
 Even though it is easy to convert one [file at a time](ConvertDocToFileXML.md), Sometimes you need to convert an entire directory of Word Documents to XMLs.  You can do this easily on the command line using [Docto](https://github.com/tobya/docto). 

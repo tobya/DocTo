@@ -1,8 +1,8 @@
 {
-    "title" : "How do I Convert a Microsoft Word Doc to a Unicode Text File? " 
+    "title" : "How do I Convert a Microsoft Excel Spreadsheet to a TXT?  " 
 }
 
-Unicode Text File 
+How do I Convert a Microsoft Excel Spreadsheet to a TXT? 
 ==
 
 How do I Convert a Microsoft Excel Spreadsheet to a Unicode Text File (TXT)?         

@@ -1,8 +1,8 @@
 {
-    "title" : "How do I delete a file after Conversion? " 
+    "title" : "How do I delete a file after Converting it to  DOC?  " 
 }
 
-How do I delete a file after Converting it to a Latest Microsoft Office Word 365 Version Format  (DOC)?         
+How do I delete a file after Converting it to  DOC?        
 -
 
 When you carry out a conversion, sometimes you would like to remove the origional file.  This is particuarily useful when converting a directory.       

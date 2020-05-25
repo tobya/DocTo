@@ -1,8 +1,8 @@
 {
-    "title" : "How do I Convert a Folder full of Microsoft Word Documents to a Latest Microsoft Office Word 365 Version Format ? " 
+    "title" : "How do I Convert a Folder full of Microsoft Word Documents to Latest Microsoft Office Word 365 Version Format ? " 
 }
 
-How do I Convert a Folder full of Microsoft Word Documents to a Latest Microsoft Office Word 365 Version Format ?         
+How do I Convert a Folder full of Microsoft Word Documents to Latest Microsoft Office Word 365 Version Format ?          
 -
 
 Even though it is easy to convert one [file at a time](ConvertDocToFileDOC.md), Sometimes you need to convert an entire directory of Word Documents to DOCs.  You can do this easily on the command line using [Docto](https://github.com/tobya/docto). 

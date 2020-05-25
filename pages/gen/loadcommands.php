@@ -9,6 +9,7 @@ $Commands = [
     "ConvertDocToFile" => [ 
         "Description" => "Convert Word Document to another file type",
         "Template" => "ConvertFromDocToFile.tpl.md",
+        "Title" => 'How do I Convert a Microsoft Word Doc to a {[$Command.FileTypeDescription]}?'       , 
         "Blocks" => [
             [
                 ""
@@ -138,6 +139,7 @@ $Commands = [
    "ConvertDirDocToFile" => [ 
         "Description" => "Convert all Word Documents in a Directory",
         "Template" => "ConvertDirDocToFile.tpl.md",
+        "Title" => 'How do I Convert a Folder full of Microsoft Word Documents to {[$Command.FileTypeDescription]}? ',
         "Items" => [
             [
 
@@ -203,6 +205,7 @@ $Commands = [
     "ConvertDirToFileRemove" => [ 
         "Description" => "Convert all Word Documents in a Directory and remove after conversion",
         "Template" => "ConvertDirToFileandRemove.tpl.md",
+        'Title' => 'How do I delete a file after Converting it to  {[$Command.FileTypeExt]}? ',
         "Items" => [
             [
 
@@ -283,6 +286,7 @@ $Commands = [
 
     "ConvertXLSToFile" => [ 
         "Description" => "Convert Excel Spreadsheet to another file type",
+        "Title" => 'How do I Convert a Microsoft Excel Spreadsheet to a {[$Command.FileTypeExt]}? ',
         "Items" => [
             [
 
@@ -483,6 +487,50 @@ $Commands = [
            
         ],
        "Template" => "ShowVersion.tpl.md"
+    ],
+
+    "OneDriveConversion" => [
+         "Description" => "Convert Word Docs for upload to Onedrive",
+        "Items" => [
+            [
+                "FileTypeExt" => 'OneDrive',
+                "FileTypeDescription" => "Onedrive"
+             
+
+              
+            ]
+
+           
+        ],
+       "Template" => "ConvertDirDocOneDrive.tpl.md"
+    ],
+
+    "BookmarksFromSource" => [
+         "Description" => "Show boomarks from Word document in PDF",
+        "Items" => [
+            [
+                "FileTypeExt" => 'pdf',
+                "FileTypeDescription" => "pdf",
+                "FileTypeTitleExtra" => "WordBookmarks",
+                "BookmarksSource" => "WordBookmarks",
+                "ContentExtra" => "",
+                 "RelatedLinks" => []
+
+            ],
+            [
+                "FileTypeExt" => 'pdf',
+                "FileTypeDescription" => "pdf",
+                "FileTypeTitleExtra" => "None",
+                "BookmarksSource" => "None",
+                "ContentExtra" => "With this option no bookmarks are present in the output PDF file",
+                 "RelatedLinks" => []
+
+            ],
+              
+
+           
+        ],
+       "Template" => "ConvertDocToPDFBookmarks.tpl.md"
     ]
    
 
@@ -501,9 +549,13 @@ $Explain = [
     "dashw" => ['cmd' => '-W' , 'desc' => "Fire a webhook to the provided URL. See Below for more details"],
     "dashv" => ['cmd' => '-V' , 'desc' => "Show Version details for DocTo and loaded Office Applications"],
     "dashr" => ['cmd' => '-R' , 'desc' => "Delete the converted file after conversion."],
-    "dashl" => ['cmd' => '-L' , 'desc' => "Set Log level for outpu."],
+    "dashl" => ['cmd' => '-L' , 'desc' => "Set Log level for output."],
+    "dashc" => ['cmd' => '-c' , 'desc' => "Compatibility Level with Office Versions"],
 
+    
+    // -- Double Dash
     "dddeletefiles" => ['cmd' => '--deletefiles' , 'desc' => "Delete the converted file after conversion."],
+    "ddbookmarksource" => ['cmd' => '-bookmarksource' , 'desc' => "Where to get Bookmarks from for PDF.  This parameter is only relevant for PDF files."],
 
 
 ];

@@ -1,8 +1,8 @@
 {
-    "title" : "How do I delete a file after Conversion? " 
+    "title" : "How do I delete a file after Converting it to  HTML?  " 
 }
 
-How do I delete a file after Converting it to a HTML File (HTML)?         
+How do I delete a file after Converting it to  HTML?        
 -
 
 When you carry out a conversion, sometimes you would like to remove the origional file.  This is particuarily useful when converting a directory.       

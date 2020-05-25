@@ -1,8 +1,8 @@
 {
-    "title" : "How do I Convert a Microsoft Word Doc to a Text File? " 
+    "title" : "How do I Convert a Microsoft Word Doc to a Text File?" 
 }
 
-How do I Convert a Microsoft Word Doc to a Text File (TXT)?         
+How do I Convert a Microsoft Word Doc to a Text File?         
 -
 
 It is very simple to convert a Word Document to a TXT file  on the command line using [Docto](https://github.com/tobya/docto). You can also do this easily in Microsoft Word, but sometimes it helps to be able to do it from the command line.  

@@ -1,8 +1,8 @@
 {
-    "title" : "How do I Convert a Microsoft Word Doc to a Microsoft XPS Format? " 
+    "title" : "How do I Convert a Microsoft Excel Spreadsheet to a XPS?  " 
 }
 
-Microsoft XPS Format 
+How do I Convert a Microsoft Excel Spreadsheet to a XPS? 
 ==
 
 How do I Convert a Microsoft Excel Spreadsheet to a Microsoft XPS Format (XPS)?         

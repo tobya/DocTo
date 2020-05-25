@@ -1,8 +1,8 @@
 {
-    "title" : "How do I Convert a Microsoft Word Doc to a {[$Command.FileTypeDescription]}? " 
+    "title" : "{[$Command.Title]} " 
 }
 
-{[$Command.FileTypeDescription]} 
+{[$Command.Title]}
 ==
 
 How do I Convert a Microsoft Excel Spreadsheet to a {[$Command.FileTypeDescription]} ({[$Command.FileTypeExt]})?         

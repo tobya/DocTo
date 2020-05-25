@@ -56,6 +56,10 @@ The Webhook URL will be called on the following events with the following parame
 
 Return value is ignored, no errors are logged.  This is a fire and forget Webhook.
 
+The URL will look like this
+
+     https://example.com/webhooks/docto/webhook_test.php?action=convert&type=wdFormatPDF&outputfilename=D:%5CDevelopment%5CGitHub%5CDocTo%5Ctest%5CGeneratedFiles%5Cpie3.pdf&inputfilename=D:%5CDevelopment%5CGitHub%5CDocTo%5Ctest%5CInputfiles%5Cpie3.doc
+
 
 
 Some other interesting commands

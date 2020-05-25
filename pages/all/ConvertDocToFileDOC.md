@@ -1,8 +1,8 @@
 {
-    "title" : "How do I Convert a Microsoft Word Doc to a Latest Microsoft Office Word 365 Version Format ? " 
+    "title" : "How do I Convert a Microsoft Word Doc to a Latest Microsoft Office Word 365 Version Format ?" 
 }
 
-How do I Convert a Microsoft Word Doc to a Latest Microsoft Office Word 365 Version Format  (DOC)?         
+How do I Convert a Microsoft Word Doc to a Latest Microsoft Office Word 365 Version Format ?         
 -
 
 It is very simple to convert a Word Document to a DOC file  on the command line using [Docto](https://github.com/tobya/docto). You can also do this easily in Microsoft Word, but sometimes it helps to be able to do it from the command line.  

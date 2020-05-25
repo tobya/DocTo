@@ -1,8 +1,8 @@
 {
-    "title" : "How do I Convert a Microsoft Word Doc to a Open XML Workbook Format? " 
+    "title" : "How do I Convert a Microsoft Excel Spreadsheet to a XML?  " 
 }
 
-Open XML Workbook Format 
+How do I Convert a Microsoft Excel Spreadsheet to a XML? 
 ==
 
 How do I Convert a Microsoft Excel Spreadsheet to a Open XML Workbook Format (XML)?         

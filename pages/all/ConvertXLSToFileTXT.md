@@ -1,8 +1,8 @@
 {
-    "title" : "How do I Convert a Microsoft Word Doc to a Text File? " 
+    "title" : "How do I Convert a Microsoft Excel Spreadsheet to a TXT?  " 
 }
 
-Text File 
+How do I Convert a Microsoft Excel Spreadsheet to a TXT? 
 ==
 
 How do I Convert a Microsoft Excel Spreadsheet to a Text File (TXT)?         

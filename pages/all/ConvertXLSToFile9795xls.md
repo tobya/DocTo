@@ -1,8 +1,8 @@
 {
-    "title" : "How do I Convert a Microsoft Word Doc to a Excel 97/95 format? " 
+    "title" : "How do I Convert a Microsoft Excel Spreadsheet to a xls?  " 
 }
 
-Excel 97/95 format 
+How do I Convert a Microsoft Excel Spreadsheet to a xls? 
 ==
 
 How do I Convert a Microsoft Excel Spreadsheet to a Excel 97/95 format (xls)?         

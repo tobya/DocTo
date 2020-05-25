@@ -1,8 +1,8 @@
 {
-    "title" : "How do I Convert a Folder full of Microsoft Word Documents to a HTML File? " 
+    "title" : "How do I Convert a Folder full of Microsoft Word Documents to HTML File? " 
 }
 
-How do I Convert a Folder full of Microsoft Word Documents to a HTML File?         
+How do I Convert a Folder full of Microsoft Word Documents to HTML File?          
 -
 
 Even though it is easy to convert one [file at a time](ConvertDocToFileHTML.md), Sometimes you need to convert an entire directory of Word Documents to HTMLs.  You can do this easily on the command line using [Docto](https://github.com/tobya/docto). 

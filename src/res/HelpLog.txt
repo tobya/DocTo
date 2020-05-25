@@ -16,6 +16,8 @@ parameters and values need to be seperated by a ' ' space.
       --word
   -XL Use Excel for Conversion
       --excel
+  -PP Use Powerpoint for Conversion
+      --powerpoint
   -F  Input File or Directory
       --inputfile
   -FX Input Extension to search for if directory.

@@ -30,7 +30,7 @@ Command Line Explained
  - `-f` :  The File or directory to be converted 
  - `-o` :  The Output File or Directory where you would like the converted file to be written to.
  - `-T` :  The file format type that is being converted to
- - `-L` :  Set Log level for outpu.
+ - `-L` :  Set Log level for output.
 
 O
 
