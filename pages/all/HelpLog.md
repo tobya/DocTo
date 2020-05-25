@@ -91,8 +91,7 @@ Long Parameters:
   --PDF-OpenAfterExport
       If you wish for a converted PDF to be opened after creation. No value req.
   --PDF-FromPage
-      Save a range of pages to pdf. Integer. If start page, --PDF-ToPage must also be set.
-      Other values wdExportCurrentPage, wdExportSelection
+      Save a range of pages to pdf. Integer. If start page, --PDF-ToPage must also be set. Other values wdExportCurrentPage, wdExportSelection
   --PDF-ToPage
       Save a range of pages to pdf. Integer. --PDF-FromPage must also be set.
   --DoNotOverwrite

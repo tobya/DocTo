@@ -146,7 +146,7 @@ begin
             begin
              log('[SKIPPED] - Document has TOC: ' + fileToConvert , STANDARD);
              Result.Successful := false;
-             Result.Error := '[SKIPPED] - Document has TOC:';
+             Result.Error := '[SKIPPED] - Document has Table of Contents.';
              ExitAction := aClose;
             end;
           end;

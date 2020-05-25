@@ -56,6 +56,7 @@ type
     FList_ErrorDocs_Seconds : Integer;
     FIgnore_ErrorDocs : boolean;
     FBookMarkSource : integer;
+    FWordConstants : TResourceStrings;
 
     FNetHandle: HINTERNET;
 
@@ -74,6 +75,7 @@ type
     function getIsPP: Boolean;
     function getIsWord: Boolean;
     procedure SetpdfExportRange(const Value: Integer);
+    function getWordConstants: TResourceStrings;
 
 
   protected
@@ -158,6 +160,7 @@ type
     property pdfOpenAfterExport: Boolean read FPDFOpenAfterExport write SetpdfOpenAfterExport;
     property pdfPrintFromPage : integer read FpdfPrintFromPage;
     property pdfPrintToPage : integer read FpdfPrintToPage;
+    property WordConstants : TResourceStrings read getWordConstants;
 
     procedure SetExtension(const Value: String); virtual;
     function GetExtension: String;  virtual;
@@ -701,7 +704,7 @@ procedure TDocumentConverter.LoadConfig(Params: TStrings);
 var  f , iParam, idx: integer;
 pstr : string;
 id, value, tmppath : string;
-HelpStrings, WordConstants : TResourceStrings;
+HelpStrings: TResourceStrings;
 tmpext : String;
 valueBool : Boolean;
   X: Integer;
@@ -971,8 +974,6 @@ if  (id = '-XL') or
     else if (id = '--BOOKMARKSOURCE') or
             (id = '--PDF-BOOKMARKSOURCE') then
     begin
-         WordConstants := TResourceStrings.Create('WORDCONSTANTS');
-         WordConstants.Append('WORDCONSTANTS_EXTRA');
          if (WordConstants.Exists(value)) then
          begin
            FBookMarkSource := StrToInt( WordConstants.Values[value]);
@@ -986,14 +987,26 @@ if  (id = '-XL') or
     else if (id = '--PDF-FROMPAGE') then
     begin
 
-
-      try
-       fpdfPrintFromPage := StrToInt(value);
-       FPdfExportRange_Word := wdExportFromTo;
-      except
-            HaltWithConfigError( 202, '--PDF-FROMPAGE must be an integer');
+      // From value can also set the ExportRange setting.
+      // Otherwise it is an integer that set the from page
+      if (value = 'wdExportCurrentPage')
+      or (value = 'wdExportSelection') then
+      begin
+        if isWord then
+        begin
+            FPdfExportRange_Word := WordConstants.ValueAsInt[value];
+        end else
+        begin HaltWithConfigError(202, value + ' is only valid with Microsoft Word (-WD)'); end;
+      end
+      else  // value must be an integer representing page number.
+      begin
+        try
+         fpdfPrintFromPage := StrToInt(value);
+         FPdfExportRange_Word := wdExportFromTo;
+        except
+              HaltWithConfigError( 202, '--PDF-FROMPAGE must be an integer');
+        end;
       end;
-
 
     end
     else if (id = '--PDF-TOPAGE') then
@@ -1524,6 +1537,17 @@ begin
   end;
 end;
 
+
+function TDocumentConverter.getWordConstants: TResourceStrings;
+begin
+  if FWordConstants = nil then
+  begin
+         fWordConstants := TResourceStrings.Create('WORDCONSTANTS');
+         fWordConstants.Append('WORDCONSTANTS_EXTRA');
+  end;
+  Result := FWordConstants;
+
+end;
 
 function TDocumentConverter.GetSSLUrl(Url: string): String;
 begin
