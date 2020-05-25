@@ -28,7 +28,7 @@ Const
   MSEXCEL = 2;
   MSPOWERPOINT = 3;
 
-  DOCTO_VERSION = '1.2.26.49.b.pp';
+  DOCTO_VERSION = '1.2.28.51';
 
 type
 
@@ -183,7 +183,10 @@ type
     function FormatsExtensions(): TStringList; virtual; abstract;
 
     procedure Log(Msg: String; Level  : Integer = ERRORS); overload;
+
     procedure Log(Msg: String; List:  TStrings; Level: Integer); overload;
+        procedure LogInfo(Msg: String; Level  : Integer = ERRORS);
+        procedure LogDebug(Msg: String; Level  : Integer = ERRORS);
     procedure LogError(Msg: String);
     function ConvertErrorText(Msg: String) : String;
     function CallWebHook(Params: String) : string;
@@ -758,14 +761,14 @@ if  (id = '-XL') or
         OutputIsDir := true;
         OutputIsFile := false;
         ForceDirectories(FOutputFile);
-        log('Output directory: ' + FOutputFile,CHATTY);
+        logInfo('Output directory: ' + FOutputFile,CHATTY);
 
       end
       else
       begin
         OutputIsFile := true;
         OutputIsDir := false;
-        log('Output file: ' + FOutputFile,CHATTY);
+        logInfo('Output file: ' + FOutputFile,CHATTY);
       end;
 
 
@@ -844,7 +847,7 @@ if  (id = '-XL') or
       if isNumber(value) then
       begin
         LogLevel := strtoint(value);
-        Log('Log Level Set To:' + IntToStr(LogLevel),LogLevel);
+        LogInfo('Log Level Set To:' + IntToStr(LogLevel),LogLevel);
       end
     end
     else if (id  = '-Q') or
@@ -890,6 +893,7 @@ if  (id = '-XL') or
     else if (id = '-C') or
             (id = '--COMPATIBILITY') then
     begin
+
       CompatibilityMode := strtoint(value);
     end
     else if (id = '-E') or
@@ -986,6 +990,7 @@ if  (id = '-XL') or
     end
     else if (id = '--DONOTOVERWRITE') then
     begin
+      logInfo('DoNotOverwrite=True',Verbose);
       fSkipDocsExist := true;
       dec(iParam);
     end
@@ -1124,11 +1129,17 @@ begin
 
 end;
 
+procedure TDocumentConverter.LogDebug(Msg: String; Level: Integer);
+begin
+  log('[DEBUG] ' + Msg, Level);
+end;
+
 procedure TDocumentConverter.LogError(Msg: String);
 begin
 
   Log('*******************************************', ERRORS);
   Log('Error: ' + Msg, ERRORS);
+  Log('*******************************************', ERRORS);
 end;
 
 procedure TDocumentConverter.HaltWithConfigError(ErrorNo: Integer; Msg: String);
@@ -1152,6 +1163,11 @@ begin
       finally
         HelpStrings.Free;
       end;
+end;
+
+procedure TDocumentConverter.LogInfo(Msg: String; Level: Integer);
+begin
+  log('[INFO] ' + Msg, Level);
 end;
 
 procedure TDocumentConverter.LogVersionInfo;
