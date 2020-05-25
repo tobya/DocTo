@@ -1,8 +1,3 @@
-{
-    "title" : "Help Log File" 
-}
-
-````
 Help
 Docto Version:%s
 Office Version : %s
@@ -121,5 +116,3 @@ wdWord2007 : 12    Word 2010 is put into a mode that is most compatible with
 wdWord2010 : 14    Word 2013 is put into a mode that is most compatible with .
                    Features new to Word 2013 are disabled in this mode.
 wdWord2013 : 15    Default. All Word 2013 features are enabled.
-
-````
