@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-	</Transactions>
+    <Transaction>2020/05/25 15:25:09.399,=D:\Development\GitHub\DocTo\src\res\HelpCompatibilityMode.txt</Transaction>
+    <Transaction>2020/05/25 15:31:23.508,D:\Development\GitHub\DocTo\src\res\WdCompatibilityMode.txt=</Transaction>
+  </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="..\..\DocTo"/>
     <File Path="..\changes.md"/>
@@ -13,7 +15,6 @@
     <File Path="res\HelpLog.txt"/>
     <File Path="res\HelpWebHook.txt"/>
     <File Path="res\ppFormatsExt.txt"/>
-    <File Path="res\WdCompatibilityMode.txt"/>
     <File Path="res\WDConst.txt"/>
     <File Path="res\wdEncoding.txt"/>
     <File Path="res\wdExtraConst.txt"/>
@@ -23,6 +24,7 @@
     <File Path="res\xlsFormatsExt.txt"/>
     <File Path="res\ppFormats.txt"/>
     <File Path="res\PPConst.txt"/>
+    <File Path="res\HelpCompatibilityMode.txt"/>
     <File Path="datamodSSL.pas"/>
     <File Path="datamodSSL.dfm"/>
     <File Path="ExcelUtils.pas"/>
