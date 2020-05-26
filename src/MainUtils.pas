@@ -1001,19 +1001,31 @@ if  (id = '-XL') or
             (id = '-help') then
     begin
 
-      //log(Value, help);
       HelpStrings := TResourceStrings.Create('HELP');
+      try
+      Value := uppercase(Value);
+      if trim(Value) = '' then
+      begin
+      //log(Value, help);
+
       log(format( HelpStrings.Text, [DOCTO_VERSION, OfficeAppVersion]),Help);
-
-
-      if Value > '' then
+            log('');
+      log('FILE FORMATS', Formats, Help);
+      end
+      else if Value = 'XLCONST' then
       begin
         HelpStrings.Load('XLCONSTANTS');
         log(Value + '=' + inttostr(HelpStrings.ValueasInt[Value]),help);
+      end else if (Value = 'COMPATIBILITY')
+      OR (Value = '-C') then
+      BEGIN
+        lOGhELP('HELPCOMPATIBILITY');
+      END;
+      finally
+        HelpStrings.Free;
       end;
-      HelpStrings.Free;
-      log('');
-      log('FILE FORMATS', Formats, Help);
+
+
 
       // Log after TODO done
       //LogHelp('HELPJSON');
