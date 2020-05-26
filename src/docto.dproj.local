@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>2020/05/25 15:25:09.399,=D:\Development\GitHub\DocTo\src\res\HelpCompatibilityMode.txt</Transaction>
-    <Transaction>2020/05/25 15:31:23.508,D:\Development\GitHub\DocTo\src\res\WdCompatibilityMode.txt=</Transaction>
+    <Transaction>2020/05/25 15:25:09.000.399,=D:\Development\GitHub\DocTo\src\res\HelpCompatibilityMode.txt</Transaction>
+    <Transaction>2020/05/25 15:31:23.000.508,D:\Development\GitHub\DocTo\src\res\WdCompatibilityMode.txt=</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="..\..\DocTo"/>

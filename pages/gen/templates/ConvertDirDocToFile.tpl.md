@@ -7,7 +7,7 @@
 
 Even though it is easy to convert one [file at a time](ConvertDocToFile{[$Command.FileTypeExt]}.md), Sometimes you need to convert an entire directory of Word Documents to {[$Command.FileTypeExt]}s.  You can do this easily on the command line using [Docto](https://github.com/tobya/docto). 
 
-The command line below shows how you can convert all the Microsoft Word Documents in a folder to a {[$Command.FileTypeDescription]} file - {[$Command.FileTypeExt]}.
+The command line below shows how you can convert all the Microsoft Word Documents in a folder to a {[$Command.FileTypeDescription]} file - {[$Command.FileTypeExt]}.  If you provide a directory rather than a single file, docto knows to convert all the documents in that directory.
 
 Command Line 
 -
