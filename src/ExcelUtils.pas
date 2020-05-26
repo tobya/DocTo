@@ -117,7 +117,7 @@ begin
           Except on E : Exception do
           begin
 
-                      // if ErroR contains EOleException The password is incorrect.
+                    // if Error contains EOleException The password is incorrect.
                     // then it is password protected and should be skipped.
                     if ContainsStr(E.Message, 'The password you supplied is not correct' ) then
                     begin
@@ -163,11 +163,11 @@ begin
                                                             EmptyParam, // IncludeDocProperties,
                                                             False,// IgnorePrintAreas,
                                                             pdfPrintFromPage, // From,
-                                                           pdfPrintToPage, //  To,
-                                                          pdfOpenAfterExport, //   OpenAfterPublish,  (default false);
-                                                         EmptyParam//    FixedFormatExtClassPtr
-                                                         ) ;
-                                                         Log('Ignoreprintareas=false',VERBOSE);
+                                                            pdfPrintToPage, //  To,
+                                                            pdfOpenAfterExport, //   OpenAfterPublish,  (default false);
+                                                            EmptyParam//    FixedFormatExtClassPtr
+                                                            ) ;
+
                 ExcelApp.ActiveWorkBook.save;
 
             end
@@ -202,11 +202,10 @@ end;
 
 function TExcelXLSConverter.FormatsExtensions: TStringList;
 var
-  Extensions : TStringList;
+  Extensions : TResourceStrings;
 
 begin
-  Extensions := Tstringlist.Create();
-  LoadStringListFromResource('XLSEXTENSIONS',Extensions);
+  Extensions := TResourceStrings.Create('XLSEXTENSIONS');
 
   result := Extensions;
 end;
