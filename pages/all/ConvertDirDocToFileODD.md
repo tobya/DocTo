@@ -7,7 +7,7 @@ How do I Convert a Folder full of Microsoft Word Documents to Open Document Text
 
 Even though it is easy to convert one [file at a time](ConvertDocToFileODD.md), Sometimes you need to convert an entire directory of Word Documents to ODDs.  You can do this easily on the command line using [Docto](https://github.com/tobya/docto). 
 
-The command line below shows how you can convert all the Microsoft Word Documents in a folder to a Open Document Text Format file - ODD.
+The command line below shows how you can convert all the Microsoft Word Documents in a folder to a Open Document Text Format file - ODD.  If you provide a directory rather than a single file, docto knows to convert all the documents in that directory.
 
 Command Line 
 -

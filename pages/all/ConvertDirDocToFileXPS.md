@@ -7,7 +7,7 @@ How do I Convert a Folder full of Microsoft Word Documents to Microsoft XPS Form
 
 Even though it is easy to convert one [file at a time](ConvertDocToFileXPS.md), Sometimes you need to convert an entire directory of Word Documents to XPSs.  You can do this easily on the command line using [Docto](https://github.com/tobya/docto). 
 
-The command line below shows how you can convert all the Microsoft Word Documents in a folder to a Microsoft XPS Format file - XPS.
+The command line below shows how you can convert all the Microsoft Word Documents in a folder to a Microsoft XPS Format file - XPS.  If you provide a directory rather than a single file, docto knows to convert all the documents in that directory.
 
 Command Line 
 -

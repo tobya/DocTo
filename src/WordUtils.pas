@@ -120,7 +120,7 @@ begin
         ExitAction := aSave;
         Result.Successful := false;
         Result.InputFile := fileToConvert;
-        log('ExecuteConversion:' + fileToConvert, Verbose);
+        logInfo('ExecuteConversion:' + fileToConvert, Verbose);
 
         // Check if document has password as per
         // https://wordmvp.com/FAQs/MacrosVBA/CheckIfPWProtectB4Open.htm
@@ -144,7 +144,7 @@ begin
           begin
             if Wordapp.ActiveDocument.TablesOfContents.count > 0 then
             begin
-             log('[SKIPPED] - Document has TOC: ' + fileToConvert , STANDARD);
+             logInfo('[SKIPPED] - Document has TOC: ' + fileToConvert , STANDARD);
              Result.Successful := false;
              Result.Error := '[SKIPPED] - Document has Table of Contents.';
              ExitAction := aClose;
@@ -157,7 +157,7 @@ begin
           // then it is password protected and should be skipped.
           if ContainsStr(E.Message, 'The password is incorrect' ) then
           begin
-             log('[SKIPPED] - Password Protected:' + fileToConvert, STANDARD);
+             logInfo('[SKIPPED] - Password Protected:' + fileToConvert, STANDARD);
              Result.Successful := false;
              Result.Error := '[SKIPPED] - Password Protected:';
              ExitAction := aExit;
@@ -234,7 +234,7 @@ begin
               //https://stackoverflow.com/a/29077879/6244
               if (strtoint( OfficeAppVersion) < 14) then
               begin
-                    log('Version < 14 Using Saveas Function', VERBOSE);
+                    logDebug('Version < 14 Using Saveas Function', VERBOSE);
                     Wordapp.activedocument.Saveas(OutputFilename ,
                                                   OutputFileFormat,
                                                   EmptyParam, //LockComments,
@@ -256,7 +256,7 @@ begin
               end
               else
               begin
-                    log('Version >= 14 Using Saveas2 Function', VERBOSE);
+                    logDebug('Version >= 14 Using Saveas2 Function', VERBOSE);
                     Wordapp.activedocument.Saveas2(OutputFilename ,OutputFileFormat,
                                               EmptyParam,  //LockComments
                                               EmptyParam,  //Password
@@ -280,7 +280,7 @@ begin
               Result.Successful := true;
               Result.OutputFile := OutputFilename;
               Result.Error := '';
-              log('FileCreated: ' + OutputFilename, STANDARD);
+              loginfo('FileCreated: ' + OutputFilename, STANDARD);
        finally
             // Close the document - do not save changes if doc has changed in any way.
             Wordapp.activedocument.Close(wdDoNotSaveChanges);
