@@ -28,7 +28,7 @@ Const
   MSEXCEL = 2;
   MSPOWERPOINT = 3;
 
-  DOCTO_VERSION = '1.2.26.49.b.pp';
+  DOCTO_VERSION = '1.2.28.51';
 
 type
 
@@ -183,7 +183,10 @@ type
     function FormatsExtensions(): TStringList; virtual; abstract;
 
     procedure Log(Msg: String; Level  : Integer = ERRORS); overload;
+
     procedure Log(Msg: String; List:  TStrings; Level: Integer); overload;
+        procedure LogInfo(Msg: String; Level  : Integer = ERRORS);
+        procedure LogDebug(Msg: String; Level  : Integer = ERRORS);
     procedure LogError(Msg: String);
     function ConvertErrorText(Msg: String) : String;
     function CallWebHook(Params: String) : string;
@@ -255,8 +258,8 @@ begin
 
       URLResponse :=  GetURL(url);
 
-      log('Webhook Called:' + url, CHATTY);
-      log('Webhook Response:' + URLResponse, CHATTY);
+      loginfo('Webhook Called:' + url, CHATTY);
+      loginfo('Webhook Response:' + URLResponse, CHATTY);
     end;
   except on E: Exception do
   begin
@@ -311,7 +314,7 @@ While iParam <= Params.Count -1 do
     inc(iParam,1);
   end;
 
-  Log('Log Level Set To:' + IntToStr(FLogLevel),CHATTY);
+  Logdebug('Log Level Set To:' + IntToStr(FLogLevel),CHATTY);
 end;
 
 
@@ -414,7 +417,7 @@ begin
       if OutputExt = '' then
       begin
         OutputExt := '.' + FormatsExtensions.Values[OutputFileFormatString];
-        log('Output Extension is ' + outputExt, CHATTY);
+        loginfo('Output Extension is ' + outputExt, CHATTY);
       end;
 
       OutputFile :=  OutputFile  + ChangeFileExt( ExtractFileName(InputFile),OutputExt);
@@ -436,7 +439,7 @@ begin
       // Check if we should ignore this file as it has previously provided an error.
       if CheckShouldIgnore(FileToConvert) then
       begin
-        log('Skipped: File on ignore list. ' + FileToConvert );
+        loginfo('Skipped: File on ignore list. ' + FileToConvert );
 
         // Jump to end of loop.
         Continue;
@@ -454,7 +457,7 @@ begin
 
 
 
-        log('Current Directory: ' + GetCurrentDir,10);
+        logdebug('Current Directory: ' + GetCurrentDir,10);
 
         // Ensure directory exists
         OutputFilePath := ExtractFilePath( FileToCreate);
@@ -468,10 +471,10 @@ begin
 
 
 
-      log('Ready to Execute' , VERBOSE);
+      logdebug('Ready to Execute' , VERBOSE);
       if FileExists(FileToCreate) and (SkipDocsExist) then //Not working currently as file doesnt include .ext
       begin
-        log('Skipped: FileExists Cannot Create: ' + FileToCreate,Error);
+        loginfo('Skipped: FileExists Cannot Create: ' + FileToCreate,Error);
 
         // Jump to end of loop
         Continue;
@@ -479,7 +482,7 @@ begin
        try
 
             StartTime := GettickCount();
-             log('Executing Conversion ... ',VERBOSE);
+             logdebug('Executing Conversion ... ',VERBOSE);
             ConversionInfo :=  ExecuteConversion(FileToConvert, FileToCreate, OutputFileFormat);
 
             if ConversionInfo.Successful then
@@ -498,7 +501,7 @@ begin
                 if FileExists(FileToCreate) then
                 begin
                   DeleteFile(FileToConvert);
-                  Log('Deleted:' + FileToConvert,STANDARD);
+                  Loginfo('Deleted:' + FileToConvert,STANDARD);
                 end;
               end;
 
@@ -532,16 +535,16 @@ begin
               if (HaltOnWordError) then
               begin
 
-                log('FileToConvert:' + FileToConvert);
-                log('OutputFile:' + FileToCreate);
-                log('Ext' + inttostr(OutputFileFormat));
+                loginfo('FileToConvert:' + FileToConvert);
+                loginfo('OutputFile:' + FileToCreate);
+                loginfo('Ext' + inttostr(OutputFileFormat));
                 HaltWithError(220,E.ClassName + '  ' + ErrorMessage);
               end
               else
               begin
-                log('FileToConvert:' + FileToConvert);
-                log('OutputFile:' + FileToCreate);
-                log('Ext' + inttostr(OutputFileFormat));
+                loginfo('FileToConvert:' + FileToConvert);
+                loginfo('OutputFile:' + FileToCreate);
+                loginfo('Ext' + inttostr(OutputFileFormat));
                 logerror(E.ClassName + '  ' + ErrorMessage);
 
               end;
@@ -699,8 +702,8 @@ begin
 
   HaltOnWordError := true;
 
-  log('Loading Configuration...',VERBOSE);
-  log('Parameter Count is ' + inttostr(params.Count), VERBOSE);
+  loginfo('Loading Configuration...',VERBOSE);
+  logdebug('Parameter Count is ' + inttostr(params.Count), VERBOSE);
 
   if Params.Count = 0 then
   begin
@@ -758,14 +761,14 @@ if  (id = '-XL') or
         OutputIsDir := true;
         OutputIsFile := false;
         ForceDirectories(FOutputFile);
-        log('Output directory: ' + FOutputFile,CHATTY);
+        logInfo('Output directory: ' + FOutputFile,CHATTY);
 
       end
       else
       begin
         OutputIsFile := true;
         OutputIsDir := false;
-        log('Output file: ' + FOutputFile,CHATTY);
+        logInfo('Output file: ' + FOutputFile,CHATTY);
       end;
 
 
@@ -792,7 +795,7 @@ if  (id = '-XL') or
       // Before doing anything else expand file name to remove any relative paths.
       FInputFile := ExpandFileName(value);
 
-      log('Input File is: ' + FInputFile,CHATTY);
+      logdebug('Input File is: ' + FInputFile,CHATTY);
 
       tmppath := ExtractFilePath(FInputFile);
 
@@ -844,7 +847,7 @@ if  (id = '-XL') or
       if isNumber(value) then
       begin
         LogLevel := strtoint(value);
-        Log('Log Level Set To:' + IntToStr(LogLevel),LogLevel);
+        LogInfo('Log Level Set To:' + IntToStr(LogLevel),LogLevel);
       end
     end
     else if (id  = '-Q') or
@@ -884,12 +887,13 @@ if  (id = '-XL') or
 
         end;
       end;
-      log('Type Integer is: ' + inttostr(FOutputFileFormat), VERBOSE);
+      logdebug('Type Integer is: ' + inttostr(FOutputFileFormat), VERBOSE);
 
     end
     else if (id = '-C') or
             (id = '--COMPATIBILITY') then
     begin
+
       CompatibilityMode := strtoint(value);
     end
     else if (id = '-E') or
@@ -955,7 +959,7 @@ if  (id = '-XL') or
          if (WordConstants.Exists(value)) then
          begin
            FBookMarkSource := StrToInt( WordConstants.Values[value]);
-           log('Set Bookmark To: ' + InttoStr(FBookmarkSource), Verbose);
+           logdebug('Set Bookmark To: ' + InttoStr(FBookmarkSource), Verbose);
          end else
          begin
            HaltWithConfigError(205,'Invalid value for --PDF-BOOKMARKSOURCE :' + value);
@@ -986,6 +990,7 @@ if  (id = '-XL') or
     end
     else if (id = '--DONOTOVERWRITE') then
     begin
+      logInfo('DoNotOverwrite=True',Verbose);
       fSkipDocsExist := true;
       dec(iParam);
     end
@@ -1136,11 +1141,17 @@ begin
 
 end;
 
+procedure TDocumentConverter.LogDebug(Msg: String; Level: Integer);
+begin
+  log('[DEBUG]  ' + Msg, Level);
+end;
+
 procedure TDocumentConverter.LogError(Msg: String);
 begin
 
   Log('*******************************************', ERRORS);
   Log('Error: ' + Msg, ERRORS);
+  Log('*******************************************', ERRORS);
 end;
 
 procedure TDocumentConverter.HaltWithConfigError(ErrorNo: Integer; Msg: String);
@@ -1164,6 +1175,11 @@ begin
       finally
         HelpStrings.Free;
       end;
+end;
+
+procedure TDocumentConverter.LogInfo(Msg: String; Level: Integer);
+begin
+  log('[INFO]   ' + Msg, Level);
 end;
 
 procedure TDocumentConverter.LogVersionInfo;

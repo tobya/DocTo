@@ -22,6 +22,7 @@ test/InputFiles3*
 #############
 
 pages/gen/vendor*
+pages/all/*
 pages/gen/templates_c/*
 
 ############

@@ -1,8 +1,3 @@
-{
-    "title" : "Help Log File" 
-}
-
-````
 Help
 Docto Version:%s
 Office Version : %s
@@ -108,4 +103,4 @@ ERROR CODES:
 221 : Word not Installed
 400 : Unknown Error
 
-````
+
