@@ -57,16 +57,21 @@ implementation
 procedure LoadStringListFromResource(const ResName: string;SL : TStringList; Append: Boolean = false);
 var
   RS: TResourceStream;
+  tempSL : TStringList;
 begin
+  tempSL := TStringList.Create();
   RS := TResourceStream.Create(HInstance, ResName, 'Text');
-  if not(Append) then
-  begin
-    SL.Clear;
-  end;
   try
-    SL.LoadFromStream(RS);
+    tempSL.LoadFromStream(RS);
   finally
     RS.Free;
+  end;
+  if Append then
+  begin
+    SL.AddStrings(tempSL);
+  end else
+  begin
+    SL.Text := tempSL.Text;
   end;
 end;
 { TResourceStrings }

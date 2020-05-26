@@ -82,11 +82,18 @@ parameters and values need to be seperated by a ' ' space.
       --halterror
   -V  Show Versions.  DocTo and Word/Excel
 
-Extra Parameters:
-  --bookmarksource     
+Long Parameters:
+  --BookmarkSource
       PDF conversions can take their bookmarks from
       WordBookmarks, WordHeadings (default) or None
-  --donotoverwrite
+  --PDF-OpenAfterExport
+      If you wish for a converted PDF to be opened after creation. No value req.
+  --PDF-FromPage
+      Save a range of pages to pdf. Integer. If start page, --PDF-ToPage must also be set.
+      Other values wdExportCurrentPage, wdExportSelection
+  --PDF-ToPage
+      Save a range of pages to pdf. Integer. --PDF-FromPage must also be set.
+  --DoNotOverwrite
       Existing files are overridden by default, if you do not wish a file to be
       skipped if its output exists, use this.
       

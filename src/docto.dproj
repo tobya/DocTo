@@ -72,8 +72,8 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_3_Win32)'!=''">
         <VerInfo_MajorVer>1</VerInfo_MajorVer>
-        <Debugger_RunParams>-PP -f &quot;..\test\inputfilespp\Presentation2.ppt&quot; -o &quot;..\test\GeneratedFiles\pres8.pdf&quot; -t ppSaveAsBMP -l 10</Debugger_RunParams>
-        <VerInfo_Build>55</VerInfo_Build>
+        <Debugger_RunParams>-wd -f &quot;D:\Development\GitHub\DocTo\test\Inputfiles\Mayonnaise.doc&quot;  -o &quot;D:\Development\GitHub\DocTo\test\GeneratedFiles\&quot;    -T  wdFormatPDF --PDF-FROMPAGE wdExportSelection  --PDF-OpenAfterExport</Debugger_RunParams>
+        <VerInfo_Build>56</VerInfo_Build>
         <VerInfo_PreRelease>false</VerInfo_PreRelease>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <VerInfo_AutoGenVersion>false</VerInfo_AutoGenVersion>

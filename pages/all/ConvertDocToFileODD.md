@@ -31,7 +31,7 @@ Command Line Explained
  - `-T` -  The file format type that is being converted to
 
 
-You can see a [list below](#OtherTypes) of other converstion types available.
+You can see a [list below](#OtherTypes) of other conversion types available.
 
 Some other interesting commands
 -
@@ -43,7 +43,7 @@ You might find some of the following commands also interesting.
 <a name="OtherTypes">Other File Types Available for Conversion</a>
 -
 
-The following values below can be used to convert a Word Documente to another file type.
+The following values below can be used to convert a Word Document to another file type.
 
 
 ````
