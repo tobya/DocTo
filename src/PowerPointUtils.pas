@@ -39,7 +39,7 @@ constructor TPowerPointConverter.Create;
 begin
 inherited;
   //setup defaults
-  InputExtension := '.ppt';
+  InputExtension := '.ppt*';
 
 end;
 

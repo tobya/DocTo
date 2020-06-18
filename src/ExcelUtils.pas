@@ -58,7 +58,7 @@ constructor TExcelXLSConverter.Create;
 begin
   inherited;
   //setup defaults
-  InputExtension := '.xls';
+  InputExtension := '.xls*';
 
 end;
 
