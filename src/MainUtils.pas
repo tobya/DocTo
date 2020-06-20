@@ -208,6 +208,9 @@ type
     procedure LogHelp(HelpResName : String);
     procedure LogVersionInfo();
 
+    procedure LogWordFormats();
+    procedure LogExcelFormats();
+    procedure LogPowerPointFormats();
 
     property OutputLog : Boolean read FOutputLog write SetOutputLog;
     property OutputLogFile : String read FOutputLogFile write SetOutputLogFile;
@@ -1068,7 +1071,13 @@ if  (id = '-XL') or
 
       log(format( HelpStrings.Text, [DOCTO_VERSION, OfficeAppVersion]),Help);
             log('');
-      log('FILE FORMATS', Formats, Help);
+      log('FILE FORMATS');
+      log('--------------');
+      log('To view file formats for Word, Excel and Powerpoint use the commands below');
+      log('docto -h WD');
+            log('docto -h XL');
+                  log('docto -h PP');
+
       end
       else if Value = 'XLCONST' then
       begin
@@ -1078,8 +1087,25 @@ if  (id = '-XL') or
       OR (Value = '-C') then
       BEGIN
         lOGhELP('HELPCOMPATIBILITY');
-      END;
+      END
+      else if (Value = '-XL') or (Value = 'XL') then
+       begin
+        LogExcelFormats;
+       end
+       else if (Value = '-WD') or (Value = 'WD') then
+       begin
+        LogWordFormats;
+       end
+       else if (Value = '-PP') or (Value = 'PP') then
+      begin
+        LogPowerPointFormats;
+      end   else if (value = '-HW') or (value = 'HW') then
+    begin
+    LogHelp('HELPWEBHOOK');
+
+    end;
       finally
+        halt(2);
         HelpStrings.Free;
       end;
 
@@ -1214,6 +1240,33 @@ begin
   Log('*******************************************', ERRORS);
 end;
 
+procedure TDocumentConverter.LogExcelFormats;
+begin
+    log('Format HELP');
+   log('DOCTO');
+    log('Listed below are all Accepted formats that Excel will export to and their associated file extensions:');
+    log('--');
+     loghelp('XLSEXTENSIONS');
+end;
+
+procedure TDocumentConverter.LogPowerPointFormats;
+begin
+    log('Format HELP');
+   log('DOCTO');
+    log('Listed below are all Accepted formats that PowerPoint will export to and their associated file extensions:');
+    log('--');
+     loghelp('PPEXTENSIONS');
+end;
+
+procedure TDocumentConverter.LogWordFormats;
+begin
+    log('Format HELP');
+   log('DOCTO');
+    log('Listed below are all Accepted formats that Word will export to and their associated file extensions:');
+    log('--');
+     loghelp('DOCEXTENSIONS');
+end;
+
 procedure TDocumentConverter.HaltWithConfigError(ErrorNo: Integer; Msg: String);
 begin
 
@@ -1242,6 +1295,8 @@ begin
   log('[INFO]   ' + Msg, Level);
 end;
 
+
+
 procedure TDocumentConverter.LogVersionInfo;
 begin
       // Prevent Date from Printing.
@@ -1253,6 +1308,8 @@ begin
       log('Source: https://github.com/tobya/DocTo/');
 
 end;
+
+
 
 function TDocumentConverter.NewFileNameFromBase(OldBase, NewBase,
   FileName, NewExt : String): String;
