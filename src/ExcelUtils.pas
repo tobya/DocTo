@@ -87,6 +87,7 @@ end;
 function TExcelXLSConverter.ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): TConversionInfo;
 var
     NonsensePassword :OleVariant;
+    FromPage, ToPage : OleVariant;
     ExitAction :TExitAction;
 begin
       //Excel is particuarily sensitive to having \\ at end of filename, eg it won't create file.
@@ -153,17 +154,31 @@ begin
         end;
         aSave: // Go ahead and save
         begin
+
+            logdebug('PrintFromPage: ' + inttostr(pdfPrintFromPage),debug);
+            logdebug('PrintFromPage: ' + inttostr(pdfPrintToPage),debug);
             //Unlike Word, in Excel you must call a different function to save a pdf and XPS.
             if OutputFileFormat = xlTypePDF then
             begin
+
+                if pdfPrintToPage > 0 then
+                begin
+                  FromPage :=  pdfPrintFromPage;
+                  ToPage   :=  pdfPrintToPage;
+                end else
+                begin
+                  FromPage := EmptyParam;
+                  ToPage   := EmptyParam;
+                end ;
+
                 ExcelApp.Application.DisplayAlerts := False ;
                 ExcelApp.activeWorkbook.ExportAsFixedFormat(XlFixedFormatType_xlTypePDF,
                                                             OutputFilename,
                                                             EmptyParam, //Quality
                                                             EmptyParam, // IncludeDocProperties,
                                                             False,// IgnorePrintAreas,
-                                                            pdfPrintFromPage, // From,
-                                                            pdfPrintToPage, //  To,
+                                                            FromPage , // From,
+                                                            ToPage, //  To,
                                                             pdfOpenAfterExport, //   OpenAfterPublish,  (default false);
                                                             EmptyParam//    FixedFormatExtClassPtr
                                                             ) ;
