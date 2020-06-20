@@ -1,7 +1,7 @@
 Help
 Docto Version:%s
 Office Version : %s
-Source: https://github.com/tobya/DocTo/
+Open Source: https://github.com/tobya/DocTo/
 Description: DocTo converts Word Documents and Excel Spreadsheets to other formats.
 
 Command Line Parameters:
@@ -12,11 +12,11 @@ parameters and values need to be seperated by a ' ' space.
 
   -H  This message
       --HELP -?
-  -WD Use Word for Converstion (Default)
+  -WD Use Word for Converstion (Default). Help '-h -wd'
       --word
-  -XL Use Excel for Conversion
+  -XL Use Excel for Conversion. Help '-h -xl'
       --excel
-  -PP Use Powerpoint for Conversion
+  -PP Use Powerpoint for Conversion. help '-h -pp'
       --powerpoint
   -F  Input File or Directory
       --inputfile
@@ -44,7 +44,7 @@ parameters and values need to be seperated by a ' ' space.
   -C  Compatibility Mode Integer. Set to an INTEGER value from
       https://msdn.microsoft.com/en-us/library/office/ff192388.aspx.
       Set the compatibility mode when you want to convert documents to a later
-      version of word. See help for further info.
+      version of word. See help '-h -c' for further info.
       --compatibility
   -E  Encoding Integer: Sets codepage Encoding.  See
       https://msdn.microsoft.com/en-us/library/office/ff860880.aspx
@@ -68,7 +68,7 @@ parameters and values need to be seperated by a ' ' space.
   -R  Remove Files after successful conversion: Default false; To use specify
       value eg -R true
       --deletefiles
-  -W  Webhook: Url to call on events. See '-H -HW' for more details.
+  -W  Webhook: Url to call on events. See help '-H -HW' for more details.
       --webhook
   -X  Halt on COM Error: Default True;  If you have trouble with some files
       not converting, set this to false to ignore errors and continue with
