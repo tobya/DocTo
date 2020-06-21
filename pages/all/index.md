@@ -76,6 +76,16 @@ Convert Excel Spreadsheet to another file type
  - [How do I Convert a Microsoft Excel Spreadsheet to a XPS? ](ConvertXLSToFileXPS.md)
 
 
+Convert Excel Spreadsheet to another file type and save to UNC path
+==
+
+ - [How do I Convert a Microsoft Excel Spreadsheet to a CSV and save it to a UNC network Drive? ](ConvertXLSToFileUNCCSV.md)
+ - [How do I Convert a Microsoft Excel Spreadsheet to a PDF and save it to a UNC network Drive? ](ConvertXLSToFileUNCPDF.md)
+ - [How do I Convert a Microsoft Excel Spreadsheet to a TXT and save it to a UNC network Drive? ](ConvertXLSToFileUNCTXT.md)
+ - [How do I Convert a Microsoft Excel Spreadsheet to a HTML and save it to a UNC network Drive? ](ConvertXLSToFileUNCHTML.md)
+ - [How do I Convert a Microsoft Excel Spreadsheet to a xls and save it to a UNC network Drive? ](ConvertXLSToFileUNC9795xls.md)
+
+
 Convert Microsoft PowerPoint Presentation to another file type
 ==
 

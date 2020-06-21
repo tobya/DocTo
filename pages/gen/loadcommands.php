@@ -348,6 +348,50 @@ $Commands = [
         ],
        "Template" => "ConvertFromXLSToFile.tpl.md"
     ],
+
+    "ConvertXLSToFileUNC" => [ 
+        "Description" => "Convert Excel Spreadsheet to another file type and save to UNC path",
+        "Title" => 'How do I Convert a Microsoft Excel Spreadsheet to a {[$Command.FileTypeExt]} and save it to a UNC network Drive? ',
+        "Items" => [
+            [
+
+
+                "FileTypeExt" => 'CSV',
+                "FileTypeDescription" => 'Comma Seperated Values file',
+                "FileFormat" => 'xlCSV',
+                "RelatedLinks" => []
+            ],
+
+            [
+                "FileTypeExt" => 'PDF',
+                "FileTypeDescription" => 'Adobe Acrobat Portable Document Format',
+                "FileFormat" => 'xlpdf',
+                "RelatedLinks" => []
+            ],
+            [
+                "FileTypeExt" => 'TXT',
+                "FileTypeDescription" => 'Text File',
+                "FileFormat" => 'xlTextWindows',
+                "RelatedLinks" => []
+            ],
+            [
+                "FileTypeExt" => 'HTML',
+                "FileTypeDescription" => 'HTML File',
+                "FileFormat" => 'xlHtml',
+                "RelatedLinks" => []
+            ],
+            [
+                "FileTypeExt" => 'xls',
+                "FileTypeTitleExtra" => '9795',
+                "FileTypeDescription" => 'Excel 97/95 format',
+                "FileFormat" => 'xlExcel9795',
+                "RelatedLinks" => []
+            ]
+
+              
+        ],
+       "Template" => "ConvertFromXLSToFileUNC.tpl.md"
+    ],
         "ConvertPPTToFile" => [ 
         "Description" => "Convert Microsoft PowerPoint Presentation to another file type",
         "Template" => "ConvertFromPPTToFile.tpl.md",
