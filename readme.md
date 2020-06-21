@@ -114,7 +114,7 @@ https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-u
 
       -H  This message
           --HELP -?
-      -WD Use Word for Converstion (Default)
+      -WD Use Word for Conversion (Default)
           --word
       -XL Use Excel for Conversion
           --excel
