@@ -76,6 +76,7 @@ type
     function getIsWord: Boolean;
     procedure SetpdfExportRange(const Value: Integer);
     function getWordConstants: TResourceStrings;
+    procedure LogMainHelp;
 
 
   protected
@@ -205,8 +206,13 @@ type
     function CallWebHook(Params: String) : string;
     FUNCTION AfterConversion(InputFile, OutputFile: String):string;
     Function OnConversionError(InputFile, OutputFile, Error: String):string;
-    procedure LogHelp(HelpResName : String);
+    procedure LogResourceHelp(HelpResName : String);
     procedure LogVersionInfo();
+
+    procedure LogWordFormats();
+    procedure LogExcelFormats();
+    procedure LogPowerPointFormats();
+    procedure ConfigLogHelp(Param, Value: String; AllValues: TStrings);
 
 
     property OutputLog : Boolean read FOutputLog write SetOutputLog;
@@ -336,6 +342,72 @@ While iParam <= Params.Count -1 do
   Logdebug('Log Level Set To:' + IntToStr(FLogLevel),CHATTY);
 end;
 
+
+procedure TDocumentConverter.ConfigLogHelp(Param, Value: String;
+  AllValues: TStrings);
+
+begin
+
+      Value := uppercase(Value);
+      if trim(Value) = '' then
+      begin
+
+      LogMainhelp();
+      end
+      else if (Value = 'COMPATIBILITY')
+      OR (Value = '-C') then
+      BEGIN
+        LogResourceHelp('HELPCOMPATIBILITY');
+      END
+      else if (Value = '-XL') or (Value = 'XL') then
+       begin
+        LogExcelFormats;
+       end
+       else if (Value = '-WD') or (Value = 'WD') then
+       begin
+        LogWordFormats;
+       end
+       else if (Value = '-PP') or (Value = 'PP') then
+      begin
+        LogPowerPointFormats;
+      end
+      else if (value = '-HW') or (value = 'HW') then
+      begin
+        LogResourceHelp('HELPWEBHOOK');
+
+      end else
+      begin
+        LogMainHelp();
+      end;
+
+      halt(2);
+end;
+
+
+procedure TDocumentConverter.LogMainHelp();
+  var
+  HelpStrings : TResourceStrings;
+begin
+      HelpStrings := TResourceStrings.Create('HELP');
+      try
+
+
+      //log(Value, help);
+
+        log(format( HelpStrings.Text, [DOCTO_VERSION, OfficeAppVersion]),Help);
+              log('');
+        log('FILE FORMATS');
+        log('--------------');
+        log('To view application specific help and file formats for ');
+        log('Word, Excel and Powerpoint use the commands below');
+        log('docto -h WD');
+        log('docto -h XL');
+        log('docto -h PP');
+        finally
+
+          HelpStrings.Free;
+        end;
+end;
 
 // ConvertErrorText removed a lone CR which can overwrite 1 error
 // message with another if concatenation see issue #37
@@ -633,7 +705,7 @@ function TDocumentConverter.ChooseConverter(Params: TStrings) : integer;
 var  f , iParam, idx: integer;
 pstr : string;
 id, value, tmppath : string;
-HelpStrings : TResourceStrings;
+
 tmpext : String;
 valueBool : Boolean;
 
@@ -1060,56 +1132,27 @@ if  (id = '-XL') or
             (id = '?') OR
             (id = '-help') then
     begin
-
-      HelpStrings := TResourceStrings.Create('HELP');
-      try
-      Value := uppercase(Value);
-      if trim(Value) = '' then
-      begin
-      //log(Value, help);
-
-      log(format( HelpStrings.Text, [DOCTO_VERSION, OfficeAppVersion]),Help);
-            log('');
-      log('FILE FORMATS', Formats, Help);
-      end
-      else if Value = 'XLCONST' then
-      begin
-        HelpStrings.Load('XLCONSTANTS');
-        log(Value + '=' + inttostr(HelpStrings.ValueasInt[Value]),help);
-      end else if (Value = 'COMPATIBILITY')
-      OR (Value = '-C') then
-      BEGIN
-        lOGhELP('HELPCOMPATIBILITY');
-      END;
-      finally
-        HelpStrings.Free;
-      end;
-
-
-
-      // Log after TODO done
-      //LogHelp('HELPJSON');
-      halt(2);
+      ConfigLogHelp(ID,value,Params);
     end
     else if (id = '--HELP-EXCEL') then
     begin
-      LogHelp('EXCELFORMATS');
+      LogResourceHelp('EXCELFORMATS');
       halt(2);
     end
     else if (id = '-HJ') then
     begin
     log( 'hJ');
-    LogHelp('HELPJSON');
+    LogResourceHelp('HELPJSON');
       halt(2);
     end
     else if (id = '-HW') then
     begin
-    LogHelp('HELPWEBHOOK');
+    LogResourceHelp('HELPWEBHOOK');
   halt(2);
     end
     else if (id = '-HX') then
     begin
-   LogHelp('HELPERRORS');
+   LogResourceHelp('HELPERRORS');
       halt(2);
     end
     else
@@ -1219,6 +1262,33 @@ begin
   Log('*******************************************', ERRORS);
 end;
 
+procedure TDocumentConverter.LogExcelFormats;
+begin
+    log('Format HELP');
+   log('DOCTO');
+    log('Listed below are all Accepted formats that Excel will export to and their associated file extensions:');
+    log('--');
+     LogResourceHelp('XLSEXTENSIONS');
+end;
+
+procedure TDocumentConverter.LogPowerPointFormats;
+begin
+    log('Format HELP');
+   log('DOCTO');
+    log('Listed below are all Accepted formats that PowerPoint will export to and their associated file extensions:');
+    log('--');
+     LogResourceHelp('PPEXTENSIONS');
+end;
+
+procedure TDocumentConverter.LogWordFormats;
+begin
+    log('Format HELP');
+   log('DOCTO');
+    log('Listed below are all Accepted formats that Word will export to and their associated file extensions:');
+    log('--');
+     LogResourceHelp('DOCEXTENSIONS');
+end;
+
 procedure TDocumentConverter.HaltWithConfigError(ErrorNo: Integer; Msg: String);
 begin
 
@@ -1230,7 +1300,7 @@ begin
   halt(200);
 end;
 
-procedure TDocumentConverter.LogHelp(HelpResName: String);
+procedure TDocumentConverter.LogResourceHelp(HelpResName: String);
 var HelpStrings : TResourceStrings;
 begin
       HelpStrings := TResourceStrings.Create(HelpResName);
@@ -1247,6 +1317,8 @@ begin
   log('[INFO]   ' + Msg, Level);
 end;
 
+
+
 procedure TDocumentConverter.LogVersionInfo;
 begin
       // Prevent Date from Printing.
@@ -1258,6 +1330,8 @@ begin
       log('Source: https://github.com/tobya/DocTo/');
 
 end;
+
+
 
 function TDocumentConverter.NewFileNameFromBase(OldBase, NewBase,
   FileName, NewExt : String): String;
