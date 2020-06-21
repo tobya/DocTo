@@ -76,6 +76,7 @@ type
     function getIsWord: Boolean;
     procedure SetpdfExportRange(const Value: Integer);
     function getWordConstants: TResourceStrings;
+    procedure LogMainHelp;
 
 
   protected
@@ -344,32 +345,14 @@ end;
 
 procedure TDocumentConverter.ConfigLogHelp(Param, Value: String;
   AllValues: TStrings);
-  var
-  HelpStrings : TResourceStrings;
+
 begin
 
       Value := uppercase(Value);
       if trim(Value) = '' then
       begin
 
-      HelpStrings := TResourceStrings.Create('HELP');
-      try
-
-
-      //log(Value, help);
-
-        log(format( HelpStrings.Text, [DOCTO_VERSION, OfficeAppVersion]),Help);
-              log('');
-        log('FILE FORMATS');
-        log('--------------');
-        log('To view file formats for Word, Excel and Powerpoint use the commands below');
-        log('docto -h WD');
-        log('docto -h XL');
-        log('docto -h PP');
-        finally
-
-          HelpStrings.Free;
-        end;
+      LogMainhelp();
       end
       else if (Value = 'COMPATIBILITY')
       OR (Value = '-C') then
@@ -392,9 +375,38 @@ begin
       begin
         LogResourceHelp('HELPWEBHOOK');
 
+      end else
+      begin
+        LogMainHelp();
       end;
 
       halt(2);
+end;
+
+
+procedure TDocumentConverter.LogMainHelp();
+  var
+  HelpStrings : TResourceStrings;
+begin
+      HelpStrings := TResourceStrings.Create('HELP');
+      try
+
+
+      //log(Value, help);
+
+        log(format( HelpStrings.Text, [DOCTO_VERSION, OfficeAppVersion]),Help);
+              log('');
+        log('FILE FORMATS');
+        log('--------------');
+        log('To view application specific help and file formats for '
+        log('Word, Excel and Powerpoint use the commands below');
+        log('docto -h WD');
+        log('docto -h XL');
+        log('docto -h PP');
+        finally
+
+          HelpStrings.Free;
+        end;
 end;
 
 // ConvertErrorText removed a lone CR which can overwrite 1 error
