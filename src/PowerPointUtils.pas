@@ -68,6 +68,7 @@ function TPowerPointConverter.ExecuteConversion(
                                 OutputFilename: String;
                                 OutputFileFormat: Integer): TConversionInfo;
 begin
+        logDebug('Trying to Convert: ' + fileToConvert, Debug);
 
         Result.Successful := false;
         Result.InputFile := fileToConvert;

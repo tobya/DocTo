@@ -280,7 +280,7 @@ begin
               Result.Successful := true;
               Result.OutputFile := OutputFilename;
               Result.Error := '';
-              loginfo('FileCreated: ' + OutputFilename, STANDARD);
+             // loginfo('FileCreated: ' + OutputFilename, STANDARD);
        finally
             // Close the document - do not save changes if doc has changed in any way.
             Wordapp.activedocument.Close(wdDoNotSaveChanges);

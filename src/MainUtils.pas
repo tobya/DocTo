@@ -516,6 +516,8 @@ begin
             if ConversionInfo.Successful then
             begin
 
+              logInfo('File Converted: ' + ConversionInfo.OutputFile);
+
               // Check if file needs to be deleted.
               if RemoveFileOnConvert then
               begin
@@ -1133,8 +1135,11 @@ if  (id = '-XL') or
        DoSubDirs := true;
 
        ListFiles(finputfile, '*' + InputExtension,true,FInputFiles);
-
-       log('File List', FInputFiles,verbose);
+       if FInputFiles.Count = 0 then
+       begin
+         HaltWithError(204, 'No File Matches in Input Directory: ' + finputfile + '*' + InputExtension );
+       end;
+       log('File List', FInputFiles,STANDARD);
     end
     else
     begin
