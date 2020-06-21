@@ -36,7 +36,7 @@ type
   TConsoleLog = class
   public
     procedure Log(Sender: TObject; Log : String);
-    procedure LogError(Log: String);
+
   end;
 
   TConversionInfo =  Record
@@ -1493,14 +1493,10 @@ begin
 end;
 
 procedure TDocumentConverter.SetPDFOpenAfterExport(const Value: Boolean);
-begin
-  FPDFOpenAfterExport := Value;
-end;
+begin   FPDFOpenAfterExport := Value;  end;
 
 procedure TDocumentConverter.SetOutputExt(const Value: string);
-begin
-  FOutputExt := Value;
-end;
+begin    FOutputExt := Value; end;
 
 procedure TDocumentConverter.SetOutputFile(const Value: String);
 begin
@@ -1599,10 +1595,7 @@ if FindFirst(Path + '*.*', faDirectory, Rec) = 0 then
  end;
 end; //procedure FileSearch
 
-procedure TConsoleLog.LogError(Log: String);
-begin
 
-end;
 
 
 
