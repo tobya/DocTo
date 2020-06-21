@@ -75,13 +75,13 @@ html {
 }
 
 body {
-  line-height: 1.85;
+  line-height: 1.15;
 }
 
 p,
 .splendor-p {
   font-size: 1rem;
-  margin-bottom: 1.3rem;
+  
 }
 
 h1,
@@ -92,9 +92,9 @@ h3,
 .splendor-h3,
 h4,
 .splendor-h4 {
-  margin: 1.414rem 0 .5rem;
+  margin: 1.004rem 0 .5rem;
   font-weight: inherit;
-  line-height: 1.42;
+  line-height: 1.12;
 }
 
 h1,
@@ -165,7 +165,7 @@ p,
 *:not(div):not(img):not(body):not(html):not(li):not(blockquote):not(p) {
   margin: 1rem auto 1rem;
   max-width: 46rem;
-  padding: .25rem;
+  padding: .05rem;
 }
 
 div {
@@ -190,7 +190,7 @@ li {
 /* Counteract the specificity of the gross *:not() chain. */
 
 h1 {
-  padding: 4rem 0 !important;
+  
 }
 
 /*  === End gross hack */
