@@ -1229,17 +1229,18 @@ begin
   end;
 
 
+  // Only actually output teh log to console and file if levels match.
   if OutputLog = true then
   begin
     ConsoleLog.Log(self, Msg);
-  end;
 
-  if FLogtoFile then
-  begin
-    FLogFile.Add(Msg);
-    FLogFile.SaveToFile(FLogFilename);
-  end;
+    if FLogtoFile then
+    begin
+      FLogFile.Add(Msg);
+      FLogFile.SaveToFile(FLogFilename);
+    end;
 
+  end;
 end;
 
 procedure TDocumentConverter.Log(Msg: String; List:  TStrings; Level: Integer);
@@ -1481,6 +1482,7 @@ begin
     begin
       flogfile.LoadFromFile(fLogFileName);
     end;
+    logInfo('['+FormatDateTime('YYYYMMDD HH:NN:SS -' , now )+ ']: LogFile Loaded', STANDARD);
   end
   else
   begin
