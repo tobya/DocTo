@@ -398,7 +398,7 @@ begin
               log('');
         log('FILE FORMATS');
         log('--------------');
-        log('To view application specific help and file formats for '
+        log('To view application specific help and file formats for ');
         log('Word, Excel and Powerpoint use the commands below');
         log('docto -h WD');
         log('docto -h XL');
