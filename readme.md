@@ -43,6 +43,10 @@ Package Manager
 Also Available for [installation via Chocolatey ](https://chocolatey.org/packages/docto)
 
 > choco install docto
+
+A Node Wrapper has been created by @KerimG
+
+https://www.npmjs.com/package/node-docto
   
 ## Bugs and Features
 
