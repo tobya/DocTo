@@ -43,6 +43,10 @@ Package Manager
 Also Available for [installation via Chocolatey ](https://chocolatey.org/packages/docto)
 
 > choco install docto
+
+A Node Wrapper has been created by @KerimG
+
+https://www.npmjs.com/package/node-docto
   
 ## Bugs and Features
 
@@ -53,15 +57,15 @@ Please log an [issue](https://github.com/tobya/DocTo/issues) for any bugs, featu
 
 ### Single
 
-Convert Microsoft Word Document to text
+Convert **Microsoft Word Document** to text
 
     docto -f C:\Directory\MyFile.doc -O "C:\Output Directory\MyTextFile.txt" -T wdFormatText
 
-Convert Microsoft Excel Document to csv text
+Convert **Microsoft Excel Document** to csv text
 
     docto -XL -f C:\Directory\MyFile.xls -O "C:\Output Directory\MyTextFile.csv" -T xlCSV    
 
-Convert Microsoft Word Document to PDF (requires version of Microsoft Word that supports this).
+Convert **Microsoft Word Document** to PDF (requires version of Microsoft Word that supports this).
 
      docto -f C:\Directory\MyFile.doc -O "C:\Output Directory\MyTextFile.pdf" -T wdFormatPDF
 
