@@ -235,6 +235,14 @@ begin
               if (strtoint( OfficeAppVersion) < 14) then
               begin
                     logDebug('Version < 14 Using Saveas Function', VERBOSE);
+
+
+                    if ( OutputFileFormat = wdFormatPDF )then
+                    begin
+                      LogInfo('This version of Word does not appear to support saving as PDF.  You will need to install a later version.  Word 2010 is the first to support Native saving as PDF.');
+                    end;
+
+
                     Wordapp.activedocument.Saveas(OutputFilename ,
                                                   OutputFileFormat,
                                                   EmptyParam, //LockComments,
