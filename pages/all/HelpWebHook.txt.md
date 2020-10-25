@@ -18,7 +18,7 @@ The Webhook URL will be called on the following events with the following parame
     - inputfilename=File being converted.
     - error=Error Message
 
-Return value is ignored, no errors are logged.  This is a fire and forget Webhook.
+Return value is logged in DocTo Log
 
 
     

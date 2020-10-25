@@ -12,6 +12,7 @@ HELPWEBHOOK TEXT res\HelpWebHook.txt
 HELPERRORS TEXT res\HelpErrors.txt
 HELPCOMPATIBILITY TEXT res\HelpCompatibilityMode.txt
 
+
 WORDCONSTANTS   TEXT    res\WDConst.txt
 WORDCONSTANTS_EXTRA   TEXT    res\WDExtraConst.txt
 XLCONSTANTS TEXT res\XLConst.txt

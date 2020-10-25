@@ -4,7 +4,7 @@
     Help
 Docto Version:%s
 Office Version : %s
-Source: https://github.com/tobya/DocTo/
+Open Source: https://github.com/tobya/DocTo/
 Description: DocTo converts Word Documents and Excel Spreadsheets to other formats.
 
 Command Line Parameters:
@@ -15,11 +15,11 @@ parameters and values need to be seperated by a ' ' space.
 
   -H  This message
       --HELP -?
-  -WD Use Word for Converstion (Default)
+  -WD Use Word for Converstion (Default). Help '-h -wd'
       --word
-  -XL Use Excel for Conversion
+  -XL Use Excel for Conversion. Help '-h -xl'
       --excel
-  -PP Use Powerpoint for Conversion
+  -PP Use Powerpoint for Conversion. help '-h -pp'
       --powerpoint
   -F  Input File or Directory
       --inputfile
@@ -40,16 +40,14 @@ parameters and values need to be seperated by a ' ' space.
   -TF Force Format. -T value if an integer, is checked against current list
       compiled in. It is not passed if unavailable.  -TF will pass through value
       without checking. Word will return an "EOleException  Value out of range"
-      error if invalid.
-      Use instead of -T.
+      error if invalid. Use instead of -T.
       --forceformat
-  -L  Log Level Integer: 1 ERRORS Only, 2 STANDARD, 5 CHATTY, 9 DEBUG,
-      10 VERBOSE.  Default: 2=STANDARD
+  -L  Log Level Integer: 1 ERRORS 2 STANDARD 5 CHATTY 9 DEBUG 10 VERBOSE. Default: 2=STANDARD
       --loglevel
   -C  Compatibility Mode Integer. Set to an INTEGER value from
       https://msdn.microsoft.com/en-us/library/office/ff192388.aspx.
       Set the compatibility mode when you want to convert documents to a later
-      version of word. See help for further info.
+      version of word. See help '-h -c' for further info.
       --compatibility
   -E  Encoding Integer: Sets codepage Encoding.  See
       https://msdn.microsoft.com/en-us/library/office/ff860880.aspx
@@ -73,14 +71,13 @@ parameters and values need to be seperated by a ' ' space.
   -R  Remove Files after successful conversion: Default false; To use specify
       value eg -R true
       --deletefiles
-  -W  Webhook: Url to call on events. See -HW for more details.
+  -W  Webhook: Url to call on events. See help '-H -HW' for more details.
       --webhook
-  -HW Webhook Help.
   -X  Halt on COM Error: Default True;  If you have trouble with some files
       not converting, set this to false to ignore errors and continue with
       batch job.
       --halterror
-  -V  Show Versions.  DocTo and Word/Excel
+  -V  Show Versions.  DocTo and Word/Excel/Powerpoint
 
 Long Parameters:
   --BookmarkSource
@@ -89,7 +86,7 @@ Long Parameters:
   --PDF-OpenAfterExport
       If you wish for a converted PDF to be opened after creation. No value req.
   --PDF-FromPage
-      Save a range of pages to pdf. Integer. If start page, --PDF-ToPage must also be set.
+      Save a range of pages to pdf. Integer/String. If integer --PDF-ToPage must also be set.
       Other values wdExportCurrentPage, wdExportSelection
   --PDF-ToPage
       Save a range of pages to pdf. Integer. --PDF-FromPage must also be set.
