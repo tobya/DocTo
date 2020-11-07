@@ -5,9 +5,6 @@
 {[$Command.Title]}
 ==
 
-How do I Convert a Microsoft Excel Spreadsheet to a {[$Command.FileTypeDescription]} ({[$Command.FileTypeExt]})?         
--
-
 It is very simple to convert a Microsoft Excel Spreadsheet to a {[$Command.FileTypeExt]} file  on the command line using [Docto](https://github.com/tobya/docto). You can also do this easily in Microsoft Excel, but sometimes it helps to be able to do it from the command line.  
 
 The command line below shows how you can convert a Microsoft Excel Spreadsheet Document to a {[$Command.FileTypeDescription]} file - {[$Command.FileTypeExt]}.

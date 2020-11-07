@@ -5,12 +5,9 @@
 How do I Convert a Microsoft Excel Spreadsheet to a PDF? 
 ==
 
-How do I Convert a Microsoft Excel Spreadsheet to a Adobe Acrobat Portable Document Format (PDF)?         
--
-
 It is very simple to convert a Microsoft Excel Spreadsheet to a PDF file  on the command line using [Docto](https://github.com/tobya/docto). You can also do this easily in Microsoft Excel, but sometimes it helps to be able to do it from the command line.  
 
-The command line below shows how you can convert a Microsoft Excel Spreadsheet Document to a Adobe Acrobat Portable Document Format file - PDF.
+The command line below shows how you can convert a Microsoft Excel Spreadsheet Document to a Adobe PDF Format file - PDF.
 
 Command Line 
 -

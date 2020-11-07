@@ -8,38 +8,38 @@ Convert Word Document to another file type
 ==
 
  - [How do I Convert a Microsoft Word Doc to a Windows Rich Text Format?](ConvertDocToFileRTF.md)
- - [How do I Convert a Microsoft Word Doc to a Adobe Acrobat Portable Document Format?](ConvertDocToFilePDF.md)
+ - [How do I Convert a Microsoft Word Doc to a Adobe PDF Format?](ConvertDocToFilePDF.md)
  - [How do I Convert a Microsoft Word Doc to a Text File?](ConvertDocToFileTXT.md)
  - [How do I Convert a Microsoft Word Doc to a Open Document Text Format?](ConvertDocToFileODD.md)
  - [How do I Convert a Microsoft Word Doc to a XML Document Format?](ConvertDocToFileXML.md)
  - [How do I Convert a Microsoft Word Doc to a HTML File?](ConvertDocToFileHTML.md)
- - [How do I Convert a Microsoft Word Doc to a Filtered HTML File?](ConvertDocToFileFilteredHTML.md)
  - [How do I Convert a Microsoft Word Doc to a Microsoft XPS Format?](ConvertDocToFileXPS.md)
  - [How do I Convert a Microsoft Word Doc to a Latest Microsoft Office Word 365 Version Format ?](ConvertDocToFileDOC.md)
-
-
-Output Log values while Converting Word Document to PDF
-==
-
- - [ConvertDocToFileLogL1PDF.md](ConvertDocToFileLogL1PDF.md)
- - [ConvertDocToFileLogL2PDF.md](ConvertDocToFileLogL2PDF.md)
- - [ConvertDocToFileLogL5PDF.md](ConvertDocToFileLogL5PDF.md)
- - [ConvertDocToFileLogL9PDF.md](ConvertDocToFileLogL9PDF.md)
- - [ConvertDocToFileLogL10PDF.md](ConvertDocToFileLogL10PDF.md)
 
 
 Convert all Word Documents in a Directory
 ==
 
  - [How do I Convert a Folder full of Microsoft Word Documents to Windows Rich Text Format? ](ConvertDirDocToFileRTF.md)
- - [How do I Convert a Folder full of Microsoft Word Documents to Adobe Acrobat Portable Document Format? ](ConvertDirDocToFilePDF.md)
- - [How do I Convert a Folder full of Microsoft Word Documents to Text File? ](ConvertDirDocToFileTXT.md)
- - [How do I Convert a Folder full of Microsoft Word Documents to Open Document Text Format? ](ConvertDirDocToFileODD.md)
- - [How do I Convert a Folder full of Microsoft Word Documents to XML Document Format? ](ConvertDirDocToFileXML.md)
+ - [How do I Convert a Folder full of Microsoft Word Documents to Adobe PDF Format? ](ConvertDirDocToFilePDF.md)
  - [How do I Convert a Folder full of Microsoft Word Documents to HTML File? ](ConvertDirDocToFileHTML.md)
- - [How do I Convert a Folder full of Microsoft Word Documents to Filtered HTML File? ](ConvertDirDocToFileFilteredHTML.md)
- - [How do I Convert a Folder full of Microsoft Word Documents to Microsoft XPS Format? ](ConvertDirDocToFileXPS.md)
  - [How do I Convert a Folder full of Microsoft Word Documents to Latest Microsoft Office Word 365 Version Format ? ](ConvertDirDocToFileDOC.md)
+
+
+Convert all RTF Documents in a Directory
+==
+
+ - [How do I Convert a Folder full of RTF (Rich Text) documents to Microsoft Word Document? ](ConvertDirRTFToFileDoc.md)
+ - [How do I Convert a Folder full of RTF (Rich Text) documents to Adobe PDF Format? ](ConvertDirRTFToFilePDF.md)
+ - [How do I Convert a Folder full of RTF (Rich Text) documents to Text File? ](ConvertDirRTFToFileTXT.md)
+ - [How do I Convert a Folder full of RTF (Rich Text) documents to HTML File? ](ConvertDirRTFToFileHTML.md)
+
+
+Convert all Text Files in a Directory
+==
+
+ - [How do I Convert a Folder full of text files to Microsoft Word Document? ](ConvertDirTXTToFileDoc.md)
+ - [How do I Convert a Folder full of text files to Adobe PDF Format? ](ConvertDirTXTToFilePDF.md)
 
 
 Convert all Word Documents in a Directory and remove after conversion
@@ -56,7 +56,7 @@ Convert all Word Documents in a Directory and remove after conversion
  - [How do I delete a file after Converting it to  DOC? ](ConvertDirToFileRemoveDOC.md)
 
 
-Convert all Word Documents in a Directory with an alternative extension
+Convert all Word Documents in a Directory and save with differnt extension
 ==
 
  - [ConvertDirDocToFile_NewExtDOC.md](ConvertDirDocToFile_NewExtDOC.md)
@@ -98,6 +98,16 @@ Convert Microsoft PowerPoint Presentation to another file type
  - [ConvertPPTToFileFilteredHTML.md](ConvertPPTToFileFilteredHTML.md)
  - [ConvertPPTToFileXPS.md](ConvertPPTToFileXPS.md)
  - [ConvertPPTToFilePPTX.md](ConvertPPTToFilePPTX.md)
+
+
+Output Log values while Converting Word Document to PDF
+==
+
+ - [ConvertDocToFileLogL1PDF.md](ConvertDocToFileLogL1PDF.md)
+ - [ConvertDocToFileLogL2PDF.md](ConvertDocToFileLogL2PDF.md)
+ - [ConvertDocToFileLogL5PDF.md](ConvertDocToFileLogL5PDF.md)
+ - [ConvertDocToFileLogL9PDF.md](ConvertDocToFileLogL9PDF.md)
+ - [ConvertDocToFileLogL10PDF.md](ConvertDocToFileLogL10PDF.md)
 
 
 Convert Word Document to another file type then fire a Webhook

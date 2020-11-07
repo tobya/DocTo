@@ -1,5 +1,5 @@
 {
-    "title" : "How do I Convert a Folder full of Microsoft Word Documents to a {[$Command.FileTypeDescription]}? " 
+    "title" : "How do I Convert a Folder full of Microsoft Word Documents to a {[$Command.FileTypeDescription]}? with differnt extension " 
 }
 
 How do I Convert a Folder full of Microsoft Word Documents to a {[$Command.FileTypeDescription]} with a specific Extension?         

@@ -25,7 +25,7 @@ $Commands = [
 
             [
                 "FileTypeExt" => 'PDF',
-                "FileTypeDescription" => 'Adobe Acrobat Portable Document Format',
+                "FileTypeDescription" => 'Adobe PDF Format',
                 "FileFormat" => 'wdFormatPDF',
                 "RelatedLinks" => []
             ],
@@ -53,14 +53,7 @@ $Commands = [
                 "FileFormat" => 'wdFormatHTML',
                 "RelatedLinks" => []
             ],
-            [
-                "FileTypeExt" => 'HTML',
-                "FileTypeTitleExtra" => 'Filtered',
-                "FileTypeDescription" => 'Filtered HTML File',
-                "FileFormat" => 'wdFormatFilteredHTML',
-                "RelatedLinks" => []
-            ],
-
+           
               [
                 "FileTypeExt" => 'XPS',
                 "FileTypeDescription" => 'Microsoft XPS Format',
@@ -78,62 +71,6 @@ $Commands = [
 
 
 
-      "ConvertDocToFileLog" => [ 
-        "Description" => "Output Log values while Converting Word Document to PDF",
-        "Template" => "ConvertDocToFileLog.tpl.md",
-        "Blocks" => [
-            [
-                ""
-            ]
-        ],
-        "FileFormat" => [
-                "FileTypeExt" => 'PDF',
-                "FileTypeDescription" => 'Adobe Acrobat Portable Document Format',
-                "FileFormat" => 'wdFormatPDF',
-        ],
-        "Items" => [
-
-
-            [
-
-                "LogLevel" => '1',
-                "LogLevelDesc" => 'Display Errors Only',
-                "LogLevelExtendedDesc" => 'Display Errors only',
-                'FileTypeTitleExtra' => 'L1',
-                "RelatedLinks" => []
-            ],
-            [
-                "LogLevel" => '2',
-                "LogLevelDesc" => 'Standard Log output',
-                "LogLevelExtendedDesc" => 'If you dont specify a value, this is the value.',
-                'FileTypeTitleExtra' => 'L2',
-                "RelatedLinks" => []
-            ],
-            [
-                "LogLevel" => '5',
-                "LogLevelDesc" => 'Chatty',
-                'FileTypeTitleExtra' => 'L5',
-                "LogLevelExtendedDesc" => 'Will provide some more information about the process of conversion',
-                "RelatedLinks" => []
-            ],
-            [
-                "LogLevel" => '9',
-                'FileTypeTitleExtra' => 'L9',
-                "LogLevelDesc" => 'Debug',
-                "LogLevelExtendedDesc" => 'Some extra information above chatty',
-                "RelatedLinks" => []
-            ],
-           
-            [
-                "LogLevel" => '10',
-                'FileTypeTitleExtra' => 'L10',
-                "LogLevelDesc" => 'Verbose',
-                "LogLevelExtendedDesc" => 'A large amount of information will be output with the conversion.  Useful for debugging and trying to track down an issue.',
-                "RelatedLinks" => []
-            ],
-           
-        ],
-    ],
    "ConvertDirDocToFile" => [ 
         "Description" => "Convert all Word Documents in a Directory",
         "Template" => "ConvertDirDocToFile.tpl.md",
@@ -150,7 +87,44 @@ $Commands = [
 
             [
                 "FileTypeExt" => 'PDF',
-                "FileTypeDescription" => 'Adobe Acrobat Portable Document Format',
+                "FileTypeDescription" => 'Adobe PDF Format',
+                "FileFormat" => 'wdFormatPDF',
+                "RelatedLinks" => []
+            ],
+           
+            [
+                "FileTypeExt" => 'HTML',
+                "FileTypeDescription" => 'HTML File',
+                "FileFormat" => 'wdFormatHTML',
+                "RelatedLinks" => []
+            ],
+           
+              [
+                "FileTypeExt" => 'DOC',
+                "FileTypeDescription" => 'Latest Microsoft Office Word 365 Version Format ',
+                "FileFormat" => 'wdFormatDocumentDefault',
+                "RelatedLinks" => []
+            ],
+        ],
+    ],
+
+   "ConvertDirRTFToFile" => [ 
+        "Description" => "Convert all RTF Documents in a Directory",
+        "Template" => "ConvertDirRTFToFile.tpl.md",
+        "Title" => 'How do I Convert a Folder full of RTF (Rich Text) documents to {[$Command.FileTypeDescription]}? ',
+        "Items" => [
+            [
+
+
+                "FileTypeExt" => 'Doc',
+                "FileTypeDescription" => 'Microsoft Word Document',
+                "FileFormat" => 'wdFormatDocumentDefault',
+                "RelatedLinks" => []
+            ],
+
+            [
+                "FileTypeExt" => 'PDF',
+                "FileTypeDescription" => 'Adobe PDF Format',
                 "FileFormat" => 'wdFormatPDF',
                 "RelatedLinks" => []
             ],
@@ -160,44 +134,39 @@ $Commands = [
                 "FileFormat" => 'wdFormatText',
                 "RelatedLinks" => []
             ],
-            [
-                "FileTypeExt" => 'ODD',
-                "FileTypeDescription" => 'Open Document Text Format',
-                "FileFormat" => 'wdFormatStrictOpenXMLDocument',
-                "RelatedLinks" => []
-            ],
-            [
-                "FileTypeExt" => 'XML',
-                "FileTypeDescription" => 'XML Document Format',
-                "FileFormat" => 'wdFormatXMLDocument',
-                "RelatedLinks" => []
-            ],
+            
+           
             [
                 "FileTypeExt" => 'HTML',
                 "FileTypeDescription" => 'HTML File',
                 "FileFormat" => 'wdFormatHTML',
                 "RelatedLinks" => []
             ],
+           
+        ],
+    ],
+   "ConvertDirTXTToFile" => [ 
+        "Description" => "Convert all Text Files in a Directory",
+        "Template" => "ConvertDirTXTToFile.tpl.md",
+        "Title" => 'How do I Convert a Folder full of text files to {[$Command.FileTypeDescription]}? ',
+        "Items" => [
             [
-                "FileTypeExt" => 'HTML',
-                "FileTypeTitleExtra" => 'Filtered',
-                "FileTypeDescription" => 'Filtered HTML File',
-                "FileFormat" => 'wdFormatFilteredHTML',
-                "RelatedLinks" => []
-            ],
 
-              [
-                "FileTypeExt" => 'XPS',
-                "FileTypeDescription" => 'Microsoft XPS Format',
-                "FileFormat" => 'wdFormatXPS',
-                "RelatedLinks" => []
-            ],
-              [
-                "FileTypeExt" => 'DOC',
-                "FileTypeDescription" => 'Latest Microsoft Office Word 365 Version Format ',
+
+                "FileTypeExt" => 'Doc',
+                "FileTypeDescription" => 'Microsoft Word Document',
                 "FileFormat" => 'wdFormatDocumentDefault',
                 "RelatedLinks" => []
             ],
+
+            [
+                "FileTypeExt" => 'PDF',
+                "FileTypeDescription" => 'Adobe PDF Format',
+                "FileFormat" => 'wdFormatPDF',
+                "RelatedLinks" => []
+            ],
+            
+           
         ],
     ],
     "ConvertDirToFileRemove" => [ 
@@ -216,7 +185,7 @@ $Commands = [
 
             [
                 "FileTypeExt" => 'PDF',
-                "FileTypeDescription" => 'Adobe Acrobat Portable Document Format',
+                "FileTypeDescription" => 'Adobe PDF Format',
                 "FileFormat" => 'wdFormatPDF',
                 "RelatedLinks" => []
             ],
@@ -267,7 +236,7 @@ $Commands = [
         ],
     ],
    "ConvertDirDocToFile_NewExt" => [ 
-        "Description" => "Convert all Word Documents in a Directory with an alternative extension",
+        "Description" => "Convert all Word Documents in a Directory and save with differnt extension",
         "Template" => "ConvertDirDocToFile_NewExt.tpl.md",
         "Items" => [
 
@@ -285,6 +254,7 @@ $Commands = [
     "ConvertXLSToFile" => [ 
         "Description" => "Convert Excel Spreadsheet to another file type",
         "Title" => 'How do I Convert a Microsoft Excel Spreadsheet to a {[$Command.FileTypeExt]}? ',
+       "Template" => "ConvertFromXLSToFile.tpl.md",
         "Items" => [
             [
 
@@ -297,7 +267,7 @@ $Commands = [
 
             [
                 "FileTypeExt" => 'PDF',
-                "FileTypeDescription" => 'Adobe Acrobat Portable Document Format',
+                "FileTypeDescription" => 'Adobe PDF Format',
                 "FileFormat" => 'xlpdf',
                 "RelatedLinks" => []
             ],
@@ -346,7 +316,6 @@ $Commands = [
                 "RelatedLinks" => []
             ]
         ],
-       "Template" => "ConvertFromXLSToFile.tpl.md"
     ],
 
     "ConvertXLSToFileUNC" => [ 
@@ -364,7 +333,7 @@ $Commands = [
 
             [
                 "FileTypeExt" => 'PDF',
-                "FileTypeDescription" => 'Adobe Acrobat Portable Document Format',
+                "FileTypeDescription" => 'Adobe PDF Format',
                 "FileFormat" => 'xlpdf',
                 "RelatedLinks" => []
             ],
@@ -405,7 +374,7 @@ $Commands = [
 
             [
                 "FileTypeExt" => 'PDF',
-                "FileTypeDescription" => 'Adobe Acrobat Portable Document Format',
+                "FileTypeDescription" => 'Adobe PDF Format',
                 "FileFormat" => 'ppSaveAsPDF',
                 "RelatedLinks" => []
             ],            [
@@ -460,6 +429,65 @@ $Commands = [
             ],
         ],
     ],
+
+      "ConvertDocToFileLog" => [ 
+        "Description" => "Output Log values while Converting Word Document to PDF",
+        "Template" => "ConvertDocToFileLog.tpl.md",
+        "Blocks" => [
+            [
+                ""
+            ]
+        ],
+        "FileFormat" => [
+                "FileTypeExt" => 'PDF',
+                "FileTypeDescription" => 'Adobe PDF Format',
+                "FileFormat" => 'wdFormatPDF',
+        ],
+        "Items" => [
+
+
+            [
+
+                "LogLevel" => '1',
+                "LogLevelDesc" => 'Display Errors Only',
+                "LogLevelExtendedDesc" => 'Display Errors only',
+                'FileTypeTitleExtra' => 'L1',
+                "RelatedLinks" => []
+            ],
+            [
+                "LogLevel" => '2',
+                "LogLevelDesc" => 'Standard Log output',
+                "LogLevelExtendedDesc" => 'If you dont specify a value, this is the value.',
+                'FileTypeTitleExtra' => 'L2',
+                "RelatedLinks" => []
+            ],
+            [
+                "LogLevel" => '5',
+                "LogLevelDesc" => 'Chatty',
+                'FileTypeTitleExtra' => 'L5',
+                "LogLevelExtendedDesc" => 'Will provide some more information about the process of conversion',
+                "RelatedLinks" => []
+            ],
+            [
+                "LogLevel" => '9',
+                'FileTypeTitleExtra' => 'L9',
+                "LogLevelDesc" => 'Debug',
+                "LogLevelExtendedDesc" => 'Some extra information above chatty',
+                "RelatedLinks" => []
+            ],
+           
+            [
+                "LogLevel" => '10',
+                'FileTypeTitleExtra' => 'L10',
+                "LogLevelDesc" => 'Verbose',
+                "LogLevelExtendedDesc" => 'A large amount of information will be output with the conversion.  Useful for debugging and trying to track down an issue.',
+                "RelatedLinks" => []
+            ],
+           
+        ],
+    ],
+
+
     "ConvertDocToFileWithWebhook" => [ 
         "Description" => "Convert Word Document to another file type then fire a Webhook",
         "Items" => [
@@ -474,7 +502,7 @@ $Commands = [
 
             [
                 "FileTypeExt" => 'PDF',
-                "FileTypeDescription" => 'Adobe Acrobat Portable Document Format',
+                "FileTypeDescription" => 'Adobe PDF Format',
                 "FileFormat" => 'wdFormatPDF',
                 "RelatedLinks" => []
             ],
@@ -584,6 +612,7 @@ $Explain = [
     "appxl" => ['cmd' => '-XL' , 'desc' => "This is a conversion using Microsoft Excel.  "],
     "apppp" => ['cmd' => '-PP' , 'desc' => "This is a conversion using Microsoft PowerPoint.  "],
     "dashf" => ['cmd' => '-f' , 'desc' => "The File or directory to be converted"],
+    "dashfx" => ['cmd' => '-fx' , 'desc' => "File with this extension should be matched."],
     "dasho" => ['cmd' => '-o' , 'desc' => "The Output File or Directory where you would like the converted file to be written to."],
     "dashox" => ['cmd' => '-ox' , 'desc' => "The Output extension to be used for converted files"],
     "dashl" => ['cmd' => '-L' , 'desc' => "The log level to be output."],

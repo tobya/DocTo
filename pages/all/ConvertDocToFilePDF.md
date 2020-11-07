@@ -1,13 +1,13 @@
 {
-    "title" : "How do I Convert a Microsoft Word Doc to a Adobe Acrobat Portable Document Format?" 
+    "title" : "How do I Convert a Microsoft Word Doc to a Adobe PDF Format?" 
 }
 
-How do I Convert a Microsoft Word Doc to a Adobe Acrobat Portable Document Format?         
+How do I Convert a Microsoft Word Doc to a Adobe PDF Format?         
 -
 
 It is very simple to convert a Word Document to a PDF file  on the command line using [Docto](https://github.com/tobya/docto). You can also do this easily in Microsoft Word, but sometimes it helps to be able to do it from the command line.  
 
-The command line below shows how you can convert a Microsoft Word Document to a Adobe Acrobat Portable Document Format file - PDF.
+The command line below shows how you can convert a Microsoft Word Document to a Adobe PDF Format file - PDF.
 
 Command Line 
 -

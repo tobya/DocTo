@@ -9,7 +9,7 @@ When you carry out a conversion, sometimes you would like to remove the origiona
 
 Sometimes you need to convert an entire directory of Word Documents to PDFs and remove the files that have been converted.  You can do this easily on the command line using [Docto](https://github.com/tobya/docto). 
 
-The command line below shows how you can convert all the Microsoft Word Documents in a folder to a Adobe Acrobat Portable Document Format (PDF) file and then remove the file.
+The command line below shows how you can convert all the Microsoft Word Documents in a folder to a Adobe PDF Format (PDF) file and then remove the file.
 
 Command Line 
 -

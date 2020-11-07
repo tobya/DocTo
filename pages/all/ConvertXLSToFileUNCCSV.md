@@ -18,14 +18,14 @@ Command Line
 -
 
  ````
- docto -XL -f '\\MyServer\path\Spreadsheet.xls' -o '\\\\myserverpath\Output\Spreadsheet.CSV' -t xlCSV
+ docto -XL -f '\\MyServer\path\Spreadsheet.xls' -o '\\\\myserver\path\Output\Spreadsheet.CSV' -t xlCSV
  ````
 
  or easier to read
 
   ````
  docto -XL  -f '\\MyServer\path\Spreadsheet.xls' 
-            -o '\\\\myserverpath\Output\Spreadsheet.CSV'
+            -o '\\\\myserver\path\Output\Spreadsheet.CSV'
             -t xlCSV
  ````
 
