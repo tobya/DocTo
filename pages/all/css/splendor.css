@@ -62,7 +62,7 @@ html {
   font-size: 12px;
 }
 
-@media screen and (min-width: 32rem) and (max-width: 48rem) {
+@media screen and (min-width: 32rem) and (max-width: 68rem) {
   html {
     font-size: 15px;
   }
@@ -185,6 +185,7 @@ blockquote p {
 
 li {
   margin-left: 2rem;
+  padding-top: 10px
 }
 
 /* Counteract the specificity of the gross *:not() chain. */

@@ -28,7 +28,7 @@ Const
   MSEXCEL = 2;
   MSPOWERPOINT = 3;
 
-  DOCTO_VERSION = '1.03.30.54';
+  DOCTO_VERSION = '1.03.31.54';
 
 type
 
@@ -1183,6 +1183,7 @@ if  (id = '-XL') or
          HaltWithError(204, 'No File Matches in Input Directory: ' + finputfile + '*' + InputExtension );
        end;
        log('File List', FInputFiles,STANDARD);
+       logInfo('Beginning to convert files....',STANDARD);
     end
     else
     begin

@@ -5,27 +5,27 @@
 How do I Convert a Microsoft Excel Spreadsheet to a PDF and save it to a UNC network Drive? 
 ==
 
-How do I Convert a Microsoft Excel Spreadsheet to a Adobe Acrobat Portable Document Format (PDF) and write it to a UNC Path?         
+How do I Convert a Microsoft Excel Spreadsheet to a Adobe PDF Format (PDF) and write it to a UNC Path?         
 -
 
 It is very simple to convert a Microsoft Excel Spreadsheet to a PDF file  on the command line using [Docto](https://github.com/tobya/docto). You can also do this easily in Microsoft Excel, but sometimes it helps to be able to do it from the command line.  
 
 If you want to save your output to a UNC `\\Server` path, there is one extra trick you need to do.  You need to double up the slashes (\\) for the output file or Directory.  At the begining of the file path there is usually 2 slashes, you need to put 4. 
 
-The command line below shows how you can convert a Microsoft Excel Spreadsheet Document to a Adobe Acrobat Portable Document Format file - PDF and save it to a UNC path.
+The command line below shows how you can convert a Microsoft Excel Spreadsheet Document to a Adobe PDF Format file - PDF and save it to a UNC path.
 
 Command Line 
 -
 
  ````
- docto -XL -f '\\MyServer\path\Spreadsheet.xls' -o '\\\\myserverpath\Output\Spreadsheet.PDF' -t xlpdf
+ docto -XL -f '\\MyServer\path\Spreadsheet.xls' -o '\\\\myserver\path\Output\Spreadsheet.PDF' -t xlpdf
  ````
 
  or easier to read
 
   ````
  docto -XL  -f '\\MyServer\path\Spreadsheet.xls' 
-            -o '\\\\myserverpath\Output\Spreadsheet.PDF'
+            -o '\\\\myserver\path\Output\Spreadsheet.PDF'
             -t xlpdf
  ````
 

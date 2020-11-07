@@ -69,6 +69,8 @@ echo "Create File : index.md \n";
 
 $HelpFile = LoadResourceFile('HelpLog.txt');
 
+
+// Wrap helpfile in ```` to ensure formatting.
 $HelpFile = "{
     \"title\" : \"Help Log File\" 
 }

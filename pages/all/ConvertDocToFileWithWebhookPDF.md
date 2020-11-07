@@ -1,16 +1,16 @@
 {
-    "title" : "How do I Convert a Microsoft Word Doc to a Adobe Acrobat Portable Document Format and fire a webhook on conversion? " 
+    "title" : "How do I Convert a Microsoft Word Doc to a Adobe PDF Format and fire a webhook on conversion? " 
 }
 
-Adobe Acrobat Portable Document Format 
+Adobe PDF Format 
 ==
 
-How do I Convert a Microsoft Word Doc to a Adobe Acrobat Portable Document Format (PDF) and fire a webhook on conversion?         
+How do I Convert a Microsoft Word Doc to a Adobe PDF Format (PDF) and fire a webhook on conversion?         
 -
 
 It is very simple to convert a Word Document to a PDF file  on the command line using [Docto](https://github.com/tobya/docto). You can also do this easily in Microsoft Word, but sometimes it helps to be able to do it from the command line.  And its really simple to fire a webhook that you can recieve at any website.  Just use the `-W` parameter.   
 
-The command line below shows how you can convert a Microsoft Word Document to a Adobe Acrobat Portable Document Format file - PDF and fire a webhook.
+The command line below shows how you can convert a Microsoft Word Document to a Adobe PDF Format file - PDF and fire a webhook.
 
 Command Line 
 -
