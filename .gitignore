@@ -23,7 +23,7 @@ test/InputFiles3*
 
 pages/gen/vendor*
 # Useful to comment out when adding new pages files
-pages/all/*
+#pages/all/*
 pages/gen/templates_c/*
 
 ############
