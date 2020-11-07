@@ -145,3 +145,5 @@ Help Text
 --
 
 DocTo outputs a [help file](HelpLog.md) which provides details of all options. 
+
+Generated 16:52:39 20201107

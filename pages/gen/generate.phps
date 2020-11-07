@@ -61,6 +61,7 @@ foreach ($Commands as $CommandName => $CommandBlock) {
 //  Create index file here
 //**********************
 
+$smarty->assign('GeneratedTime', date('H:i:s Ymd'));
 $smarty->Assign('Commands',$Commands);
 $Indexmd = $smarty->fetch('index.tpl.md');
 //print_r($Indexmd);

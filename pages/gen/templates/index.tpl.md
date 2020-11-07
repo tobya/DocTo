@@ -18,3 +18,5 @@ Help Text
 --
 
 DocTo outputs a [help file](HelpLog.md) which provides details of all options. 
+
+Generated {[$GeneratedTime]}
