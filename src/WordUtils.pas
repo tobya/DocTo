@@ -30,7 +30,7 @@ public
     function AvailableFormats() : TStringList; override;
     function FormatsExtensions(): TStringList; override;
     function WordConstants: TStringList;
-    function OfficeAppVersion() : String; override;
+    function OfficeAppVersion(ForceReload:Boolean) : String; override;
 End;
 
 
@@ -60,7 +60,7 @@ end;
 
 
 
-function TWordDocConverter.OfficeAppVersion: String;
+function TWordDocConverter.OfficeAppVersion(ForceReload:Boolean = false): String;
 var
   WdVersion: String;
   decimalPos : integer;
