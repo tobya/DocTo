@@ -165,7 +165,7 @@ type
 
     procedure SetExtension(const Value: String); virtual;
     function GetExtension: String;  virtual;
-    function OfficeAppVersion() : String; virtual; abstract;
+    function OfficeAppVersion(ForceReload:Boolean = false) : String; virtual; abstract;
 
     //Check files and folders
     function AllowDirectory(DirName : String; FullPath : String) : Boolean;
@@ -1155,6 +1155,21 @@ if  (id = '-XL') or
    LogResourceHelp('HELPERRORS');
       halt(2);
     end
+    else if (length(pstr) > 3) then
+    begin
+      // Check if long param without --
+      if pos(pstr , '--') = 0 then
+      begin
+
+        if pstr[1] = '-' then
+        begin
+
+            HaltWithConfigError(203,'Unknown Switch or Parameter at index '+inttostr(iParam -1) + ':'  + pstr + '. ' +  'perhaps long param without --');
+        end;
+
+      end;
+
+    end
     else
     begin
 
@@ -1230,7 +1245,7 @@ begin
   end;
 
 
-  // Only actually output teh log to console and file if levels match.
+  // Only actually output the log to console and file if levels match.
   if OutputLog = true then
   begin
     ConsoleLog.Log(self, Msg);
