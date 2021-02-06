@@ -207,7 +207,7 @@ type
     FUNCTION AfterConversion(InputFile, OutputFile: String):string;
     Function OnConversionError(InputFile, OutputFile, Error: String):string;
     procedure LogResourceHelp(HelpResName : String);
-    procedure LogVersionInfo();
+    procedure LogVersionInfo(ForceReload : boolean = true);
 
     procedure LogWordFormats();
     procedure LogExcelFormats();
@@ -391,10 +391,7 @@ begin
       HelpStrings := TResourceStrings.Create('HELP');
       try
 
-
-      //log(Value, help);
-
-        log(format( HelpStrings.Text, [DOCTO_VERSION, OfficeAppVersion]),Help);
+        log(format( HelpStrings.Text, [DOCTO_VERSION, OfficeAppVersion()]),Help);
               log('');
         log('FILE FORMATS');
         log('--------------');
@@ -1336,14 +1333,14 @@ end;
 
 
 
-procedure TDocumentConverter.LogVersionInfo;
+procedure TDocumentConverter.LogVersionInfo(ForceReload: Boolean = true);
 begin
       // Prevent Date from Printing.
       FFirstLogEntry := false;
 
       // Log versions.
       log('DocTo Version:' + DOCTO_VERSION);
-      log('OfficeApp Version:' +  OfficeAppVersion(),0);
+      log('OfficeApp Version:' +  OfficeAppVersion(ForceReload),0);
       log('Source: https://github.com/tobya/DocTo/');
 
 end;
