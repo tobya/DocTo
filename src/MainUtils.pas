@@ -335,6 +335,7 @@ While iParam <= Params.Count -1 do
     end
     else if id  = '-Q' then
     begin
+      FLogLevel := 0;
       OutputLog := false;
     end ;
 
