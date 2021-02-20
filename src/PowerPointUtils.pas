@@ -18,7 +18,7 @@ public
     function ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): TConversionInfo; override;
     function AvailableFormats() : TStringList; override;
     function FormatsExtensions(): TStringList; override;
-    function OfficeAppVersion() : String; override;
+    function OfficeAppVersion(ForceReload:Boolean = false) : String; override;
 End;
 
 
@@ -99,7 +99,7 @@ begin
   result := Extensions;
 end;
 
-function TPowerPointConverter.OfficeAppVersion: String;
+function TPowerPointConverter.OfficeAppVersion(ForceReload:Boolean = false): String;
 begin
   if FPPVersion = '' then
   begin

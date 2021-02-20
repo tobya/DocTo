@@ -30,7 +30,7 @@ public
     function ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): TConversionInfo; override;
     function AvailableFormats() : TStringList; override;
     function FormatsExtensions(): TStringList; override;
-    function OfficeAppVersion() : String; override;
+    function OfficeAppVersion(ForceReload:Boolean = false) : String; override;
 End;
 
 const
@@ -225,7 +225,7 @@ begin
   result := Extensions;
 end;
 
-function TExcelXLSConverter.OfficeAppVersion: String;
+function TExcelXLSConverter.OfficeAppVersion(ForceReload:Boolean = false): String;
 begin
   if FExcelVersion = '' then
   begin

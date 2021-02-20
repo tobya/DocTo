@@ -30,7 +30,7 @@ public
     function AvailableFormats() : TStringList; override;
     function FormatsExtensions(): TStringList; override;
     function WordConstants: TStringList;
-    function OfficeAppVersion(ForceReload:Boolean) : String; override;
+    function OfficeAppVersion(ForceReload:Boolean = false) : String; override;
 End;
 
 
