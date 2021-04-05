@@ -49,9 +49,11 @@ Also Available for [installation via Chocolatey ](https://chocolatey.org/package
 
 ### Node
 
-A Node Wrapper has been created by @KerimG
+Node Wrappers has been created by @KerimG & @brrd
 
 https://www.npmjs.com/package/node-docto
+
+https://github.com/brrd/msoconvert
   
 ## Bugs and Features
 
