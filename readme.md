@@ -37,12 +37,17 @@ More Examples available at
 
 Download .exe from Release https://github.com/tobya/docTo/releases
 
-Package Manager
+Package Managers
 --
+
+### Choco
+
 
 Also Available for [installation via Chocolatey ](https://chocolatey.org/packages/docto)
 
 > choco install docto
+
+###Node
 
 A Node Wrapper has been created by @KerimG
 
