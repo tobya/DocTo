@@ -211,6 +211,8 @@ https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-u
       --skipdocswithtoc
           EXPERIMENTAL.  Will skip any docs that contain a TOC to prevent hanging.
           Currently matches some false positives.  Default False.
+      --stdout
+          Send file to Stdout after conversion. ( Does not work correctly for binary files)          
 
     ERROR CODES:
     200 : Invalid File Format specified
@@ -226,7 +228,7 @@ https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-u
 
 Compiling
 --
-The project compiles with Delphi (I use XE4 but it should compile with most versions including 7). The project will not compile on Linux as it uses several Windows only components such as COM and Word and Excel do not have Linux versions anyway so there would be no point.
+The project compiles with Delphi (I use 10.3 but it should compile with most versions including XE4 & 7). The project will not compile on Linux as it uses several Windows only components such as COM and Word and Excel do not have Linux versions anyway so there would be no point.
 
 XLSTo
 --
@@ -240,9 +242,3 @@ XLSTo is now incorporated into DocTo.  Previously XLSTo was a seperate EXE that 
 
  The main branch name in the repo is `DocTo`
 
-## Updates     
-
-0.7     Added support for saveas2 function (with compatibility mode) added by microsoft in Word 2010.  Additional Switches. Added support for long parameters.
-
-0.5.5   Changes made to logging.  -Q and -L 0 now work correctly ensuring nothing is output to console.  Must specify -G or -GL to get access to logs and errors.
-                                Also -L 10 now outputs extra as logging param is loaded first.
