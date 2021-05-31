@@ -1,0 +1,1 @@
+"../exe/docto.exe"    -o "%~d0%~p0GeneratedFiles\Pie3.txt"    -T  wdFormatText -f "%~d0%~p0Inputfiles\pie3.doc" --stdout -G -Q

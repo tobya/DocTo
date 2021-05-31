@@ -59,6 +59,7 @@ type
     FWordConstants : TResourceStrings;
 
     FNetHandle: HINTERNET;
+    FOutputIsStdOut: Boolean;
 
 
     procedure SetCompatibilityMode(const Value: Integer);
@@ -77,6 +78,7 @@ type
     procedure SetpdfExportRange(const Value: Integer);
     function getWordConstants: TResourceStrings;
     procedure LogMainHelp;
+    procedure SetOutputIsStdOut(const Value: Boolean);
 
 
   protected
@@ -150,6 +152,7 @@ type
     property InputIsDir : Boolean read FInputIsDir write SetIsDirInput;
     property OutputIsFile : Boolean read FOutputIsFile write SetIsFileOutput;
     property OutputIsDir : Boolean read FOutputIsDir write SetIsDirOutput;
+    property OutputIsStdOut : Boolean read FOutputIsStdOut write SetOutputIsStdOut;
     property DoSubDirs : Boolean read FDoSubDirs write SetDoSubDirs;
     property OutputExt : string read FOutputExt write SetOutputExt;
     property LogLevel : integer read FLogLevel write SetLogLevel;
@@ -492,6 +495,9 @@ var
   ErrorMessage, EventMsg : String;
   ConversionInfo : TConversionInfo;
   StartTime , EndTime : cardinal;
+  FileStream ,OutStream : TStream;
+
+
 
 begin
 
@@ -602,6 +608,18 @@ begin
 
               // Make a call to webhook if it exists
               EventMsg := AfterConversion(FileToConvert, FileToCreate);
+
+              // This is experimental.  Does not seem to work correctly for anything other than plain text
+              // files.  Any binary info seems to be corrupted.  Might be a good project for someone.
+              if OutputIsStdOut then
+              begin
+
+                FileStream := TFileStream.Create(FileToCreate,fmOpenRead); // This creates the input stream
+                OutStream := THandleStream.Create(GetStdHandle(STD_OUTPUT_HANDLE)); // Here goes the output stream
+                OutStream.CopyFrom(FileStream, FileStream.Size); // And the copy operation
+
+              end;
+
 
 
             end
@@ -931,6 +949,10 @@ if  (id = '-XL') or
       end;
 
     end
+    else if (id = '--STDOUT') then
+    BEGIN
+      OutPutIsStdOut := true;
+    END
     else if (id = '-FX') or
             (id = '--INPUTFILEEXTENSION') then
     begin
@@ -1525,6 +1547,11 @@ end;
 procedure TDocumentConverter.SetOutputFileFormatString(const Value: String);
 begin
   FOutputFileFormatString := Value;
+end;
+
+procedure TDocumentConverter.SetOutputIsStdOut(const Value: Boolean);
+begin
+  FOutputIsStdOut := Value;
 end;
 
 procedure TDocumentConverter.SetOutputLog(const Value: Boolean);
