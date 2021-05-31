@@ -182,6 +182,16 @@ begin
         end
         else
         begin
+           if (OutputFileFormat = wdFormatHTML)
+           or (OutputFileFormat = wdFormatFilteredHTML)
+            or (OutputFileFormat = wdFormatWebArchive)
+           then
+           begin
+             LogDebug('Setting WebOptions.Encoding ');
+             WordApp.ActiveDocument.WebOptions.Encoding := Encoding;
+
+           end;
+
            wdEncoding := Encoding;
         end;
 
