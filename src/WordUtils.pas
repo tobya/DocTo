@@ -187,7 +187,7 @@ begin
             or (OutputFileFormat = wdFormatWebArchive)
            then
            begin
-             LogDebug('Setting WebOptions.Encoding ');
+             LogDebug('Setting WebOptions.Encoding ',Verbose);
              WordApp.ActiveDocument.WebOptions.Encoding := Encoding;
 
            end;

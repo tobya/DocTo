@@ -97,7 +97,7 @@ Experimental:
       EXPERIMENTAL.  Will skip any docs that contain a TOC to prevent hanging.
       Currently matches some false positives.  Default False.
   --stdout
-      Send file to Stdout after conversion.  Currently corrupts binary files.
+      Send file to Stdout after conversion. ( Does not work correctly for binary files)
 
 ERROR CODES:
 200 : Invalid File Format specified
