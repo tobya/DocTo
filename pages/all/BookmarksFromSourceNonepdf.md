@@ -37,7 +37,7 @@ Command Line Explained
  - `-f` :  The File or directory to be converted 
  - `-o` :  The Output File or Directory where you would like the converted file to be written to.
  - `-T` :  The file format type that is being converted to
- - `-bookmarksource` :  Where to get Bookmarks from for PDF.  This parameter is only relevant for PDF files.
+ - `--bookmarksource` :  Where to get Bookmarks from for PDF.  This parameter is only relevant for PDF files.
 
 
 
