@@ -618,7 +618,7 @@ $Commands = [
             [
                 "FileTypeExt" => 'pdf',
                 "FileTypeDescription" => "pdf",
-                "FileTypeTitleExtra" => "None",
+                "FileTypeTitleExtra" => "NoComments",
                 "ExportComments" => "wdExportDocumentContent",
                 "ContentExtra" => "With this option no comments are present in the output PDF file",
                  "RelatedLinks" => []
