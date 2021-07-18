@@ -28,7 +28,7 @@ Const
   MSEXCEL = 2;
   MSPOWERPOINT = 3;
 
-  DOCTO_VERSION = '1.04.32';
+  DOCTO_VERSION = '1.05.33';
 
 type
 
@@ -60,6 +60,7 @@ type
 
     FNetHandle: HINTERNET;
     FOutputIsStdOut: Boolean;
+    fExportMarkup: integer;
 
 
     procedure SetCompatibilityMode(const Value: Integer);
@@ -164,7 +165,9 @@ type
     property pdfOpenAfterExport: Boolean read FPDFOpenAfterExport write SetpdfOpenAfterExport;
     property pdfPrintFromPage : integer read FpdfPrintFromPage;
     property pdfPrintToPage : integer read FpdfPrintToPage;
+    property ExportMarkup : integer read fExportMarkup;
     property WordConstants : TResourceStrings read getWordConstants;
+
 
     procedure SetExtension(const Value: String); virtual;
     function GetExtension: String;  virtual;
@@ -1117,6 +1120,17 @@ if  (id = '-XL') or
       end;
 
 
+    end
+    else if (id = '--EXPORTMARKUP') then
+    begin
+         if (WordConstants.Exists(value)) then
+         begin
+           fExportMarkup := StrToInt( WordConstants.Values[value]);
+           logdebug('Set fExportMarkup To: ' + InttoStr(fExportMarkup), Verbose);
+         end else
+         begin
+           HaltWithConfigError(205,'Invalid value for --EXPORTMARKUP :' + value);
+         end;
     end
     else if (id = '-W') or
             (id = '--WEBHOOK') then

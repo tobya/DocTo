@@ -90,6 +90,8 @@ Long Parameters:
   --DoNotOverwrite
       Existing files are overridden by default, if you do not wish a file to be
       skipped if its output exists, use this.
+  --ExportMarkup Value for wdExportItem - default wdExportDocumentContent.
+      use    wdExportDocumentWithMarkup to export all word comments with pdf
 
 
 Experimental:
