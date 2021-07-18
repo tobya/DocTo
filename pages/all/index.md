@@ -141,9 +141,16 @@ Show boomarks from Word document in PDF
  - [BookmarksFromSourceNonepdf.md](BookmarksFromSourceNonepdf.md)
 
 
+Show comments from Word document in PDF
+==
+
+ - [CommentsFromWordWordCommentspdf.md](CommentsFromWordWordCommentspdf.md)
+ - [CommentsFromWordNonepdf.md](CommentsFromWordNonepdf.md)
+
+
 Help Text
 --
 
 DocTo outputs a [help file](HelpLog.md) which provides details of all options. 
 
-Generated 16:52:39 20201107
+Generated 08:05:00 20210718
