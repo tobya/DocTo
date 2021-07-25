@@ -95,11 +95,16 @@ Long Parameters:
   --DoNotOverwrite
       Existing files are overridden by default, if you do not wish a file to be
       skipped if its output exists, use this.
-      
-Experimental:      
+  --ExportMarkup Value for wdExportItem - default wdExportDocumentContent.
+      use    wdExportDocumentWithMarkup to export all word comments with pdf
+
+
+Experimental:
   --skipdocswithtoc
       EXPERIMENTAL.  Will skip any docs that contain a TOC to prevent hanging.
       Currently matches some false positives.  Default False.
+  --stdout
+      Send file to Stdout after conversion. ( Does not work correctly for binary files)
 
 ERROR CODES:
 200 : Invalid File Format specified

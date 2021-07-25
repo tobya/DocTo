@@ -601,6 +601,34 @@ $Commands = [
            
         ],
        "Template" => "ConvertDocToPDFBookmarks.tpl.md"
+    ],
+
+     "CommentsFromWord" => [
+         "Description" => "Show comments from Word document in PDF",
+        "Items" => [
+            [
+                "FileTypeExt" => 'pdf',
+                "FileTypeDescription" => "pdf",
+                "FileTypeTitleExtra" => "WordComments",
+                "ExportComments" => "wdExportDocumentWithMarkup",
+                "ContentExtra" => "With this option comments are present in the output PDF file",
+                 "RelatedLinks" => []
+
+            ],
+            [
+                "FileTypeExt" => 'pdf',
+                "FileTypeDescription" => "pdf",
+                "FileTypeTitleExtra" => "NoComments",
+                "ExportComments" => "wdExportDocumentContent",
+                "ContentExtra" => "With this option no comments are present in the output PDF file",
+                 "RelatedLinks" => []
+
+            ],
+              
+
+           
+        ],
+       "Template" => "ConvertDocToPDFComments.tpl.md"
     ]
 
 
@@ -626,7 +654,8 @@ $Explain = [
     
     // -- Double Dash
     "dddeletefiles" => ['cmd' => '--deletefiles' , 'desc' => "Delete the converted file after conversion."],
-    "ddbookmarksource" => ['cmd' => '-bookmarksource' , 'desc' => "Where to get Bookmarks from for PDF.  This parameter is only relevant for PDF files."],
+    "ddbookmarksource" => ['cmd' => '--bookmarksource' , 'desc' => "Where to get Bookmarks from for PDF.  This parameter is only relevant for PDF files."],
+    "ddexportmarkup" => ['cmd' => '--ExportMarkup', 'desc' => "Export Comments and other markup from Word Document to PDF"],
 
 
 ];

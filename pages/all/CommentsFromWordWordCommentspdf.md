@@ -2,24 +2,27 @@
     "title" : "How do I change where bookmarks come from in a converted PDF ? " 
 }
 
-How do I change where bookmarks come from in a converted PDF ?      
+How do I ensure any comments I have made on my Word Document are included in the converted PDF ?      
 -
 
-When converting to a PDF by Default Word Headings are used for the bookmarks in the PDF. You can if you wish use other options
+When converting to a PDF by Default Word will not show comments you have added to the document.  You can ask Word to include these using docto.  
 
-  - WordHeadings (default) 
-  - WordBookmarks
-  - None      
+  
 
-This is the command line to change the bookmark source to None
+This is the command line to include Word Comments in your PDF With this option comments are present in the output PDF file
 
-With this option no bookmarks are present in the output PDF file
+wdExportDocumentWithMarkup
+
+all options available are
+
+- wdExportDocumentContent
+- wdExportDocumentWithMarkup
 
 Command Line 
 -
 
  ````
- docto -WD -f 'c:\path\Document.doc' -o 'c:\path\Document.pdf' -t wdFormatPDF --bookmarksource None
+ docto -WD -f 'c:\path\Document.doc' -o 'c:\path\Document.pdf' -t wdFormatPDF --ExportMarkup wdExportDocumentWithMarkup
  ````
  or easier to read
  ````
@@ -27,7 +30,7 @@ Command Line
         -f 'c:\path\Document.doc' 
         -o 'c:\path\Document.pdf' 
         -t wdFormatPDF 
-        --bookmarksource None
+        --ExportMarkup wdExportDocumentWithMarkup
  ````
 
 Command Line Explained 
@@ -37,7 +40,7 @@ Command Line Explained
  - `-f` :  The File or directory to be converted 
  - `-o` :  The Output File or Directory where you would like the converted file to be written to.
  - `-T` :  The file format type that is being converted to
- - `--bookmarksource` :  Where to get Bookmarks from for PDF.  This parameter is only relevant for PDF files.
+ - `--ExportMarkup` :  Export Comments and other markup from Word Document to PDF
 
 
 

@@ -229,7 +229,7 @@ begin
                    pdfExportRange,//   Range
                    pdfPrintFromPage,//   From:=1,
                    pdfprintTopage,//   To:=1, _
-                   wdExportDocumentContent,//   Item:=
+                   ExportMarkup,//   Item:=
                    True,//   IncludeDocProps:=True,
                    true,//   KeepIRM:=True, _
                    BookmarkSource,//   CreateBookmarks
