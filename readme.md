@@ -47,6 +47,10 @@ Also Available for [installation via Chocolatey ](https://chocolatey.org/package
 
 > choco install docto
 
+to upgrade to latest version before generally available (replace with current version)
+
+> choco upgrade docto --version=1.5
+
 ### Node
 
 Node Wrappers has been created by @KerimG & @brrd
