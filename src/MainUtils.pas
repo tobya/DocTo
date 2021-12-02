@@ -879,7 +879,7 @@ if  (id = '-XL') or
       // tell file with no ext from dir.
       if (tmpext = '') then
       begin
-        FOutputFile := IncludeTrailingBackslash(value);
+        FOutputFile := IncludeTrailingBackslash(FOutputfile);
         OutputIsDir := true;
         OutputIsFile := false;
         ForceDirectories(FOutputFile);

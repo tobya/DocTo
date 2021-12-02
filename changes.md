@@ -1,5 +1,9 @@
 Changes
 
+27.7.21
+
+Ensure that relative output directories work correctly.
+
 25.7.21
 
 Add use of

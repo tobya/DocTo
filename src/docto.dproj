@@ -243,8 +243,8 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_3_Win32)'!=''">
         <VerInfo_MajorVer>1</VerInfo_MajorVer>
-        <Debugger_RunParams>-wd -f &quot;D:\Development\GitHub\DocTo\test\Inputfiles\pie3.doc&quot;  -o &quot;D:\Development\GitHub\DocTo\test\GeneratedFiles\Pie3.txt&quot;    -T  wdFormatText --Stdout -Q</Debugger_RunParams>
-        <VerInfo_Build>58</VerInfo_Build>
+        <Debugger_RunParams>-f &quot;.\Inputfiles\&quot;  -o &quot;..\newdir2&quot;    -T  wdFormatRTF -l 10</Debugger_RunParams>
+        <VerInfo_Build>59</VerInfo_Build>
         <VerInfo_PreRelease>false</VerInfo_PreRelease>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <VerInfo_AutoGenVersion>false</VerInfo_AutoGenVersion>
