@@ -28,7 +28,7 @@ Const
   MSEXCEL = 2;
   MSPOWERPOINT = 3;
 
-  DOCTO_VERSION = '1.5.34';  // dont us 05 - choco needs incrementing versions.
+  DOCTO_VERSION = '1.6.34';  // dont use 0x - choco needs incrementing versions.
 
 type
 
