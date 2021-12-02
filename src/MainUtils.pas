@@ -28,7 +28,7 @@ Const
   MSEXCEL = 2;
   MSPOWERPOINT = 3;
 
-  DOCTO_VERSION = '1.5.34';  // dont us 05 - choco needs incrementing versions.
+  DOCTO_VERSION = '1.6.41';  // dont us 0x - choco needs incrementing versions.
 
 type
 
@@ -873,7 +873,7 @@ if  (id = '-XL') or
       // tell file with no ext from dir.
       if (tmpext = '') then
       begin
-        FOutputFile := IncludeTrailingBackslash(value);
+        FOutputFile := IncludeTrailingBackslash(FOutputfile);
         OutputIsDir := true;
         OutputIsFile := false;
         ForceDirectories(FOutputFile);

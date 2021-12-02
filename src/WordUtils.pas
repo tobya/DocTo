@@ -154,7 +154,7 @@ begin
         except
         on E: Exception do
         begin
-          // if ErroR contains EOleException The password is incorrect.
+          // if Error contains EOleException The password is incorrect.
           // then it is password protected and should be skipped.
           if ContainsStr(E.Message, 'The password is incorrect' ) then
           begin
@@ -214,7 +214,8 @@ begin
 
 
       // If  Word Options->Trust Center->Privacy Options-> "Warn before printing, saving or sending a file that contains tracked changes or comments"
-      // is checked it will pop up a dialog on conversion.  So we turn if off but reset it to origional value after.
+      // is checked it will pop up a dialog on conversion.  Makes not sense for a commandline util to have this set to true
+      // So we turn if off but reset it to origional value after.
       WarnBeforeSavingPrintingSendingMarkup_Origional := WordApp.Options.WarnBeforeSavingPrintingSendingMarkup;
 
       if WarnBeforeSavingPrintingSendingMarkup_Origional then
@@ -314,7 +315,7 @@ begin
              // loginfo('FileCreated: ' + OutputFilename, STANDARD);
        finally
 
-        // Reset it to origional value after.
+
         if WarnBeforeSavingPrintingSendingMarkup_Origional then
         begin
           WordApp.Options.WarnBeforeSavingPrintingSendingMarkup := true;
