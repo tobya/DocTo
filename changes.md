@@ -9,6 +9,8 @@ Add use of
           use wdExportDocumentWithMarkup to export all word comments with pdf
 ````
 
+-----------
+
 Allow exporting of comments to a pdf.
 
 Add Powerpoint as a converter in PR #92

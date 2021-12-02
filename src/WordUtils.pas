@@ -115,6 +115,7 @@ var
   NonsensePassword : OleVariant;
 
   ExitAction : TExitAction;
+  WarnBeforeSavingPrintingSendingMarkup_Origional : Boolean;
 
 begin
         ExitAction := aSave;
@@ -176,6 +177,7 @@ begin
 
         end;
 
+
         if Encoding = -1 then
         begin
            wdEncoding := EmptyParam;
@@ -209,6 +211,17 @@ begin
       end;
       aSave:
       begin
+
+
+      // If  Word Options->Trust Center->Privacy Options-> "Warn before printing, saving or sending a file that contains tracked changes or comments"
+      // is checked it will pop up a dialog on conversion.  So we turn if off but reset it to origional value after.
+      WarnBeforeSavingPrintingSendingMarkup_Origional := WordApp.Options.WarnBeforeSavingPrintingSendingMarkup;
+
+      if WarnBeforeSavingPrintingSendingMarkup_Origional then
+      begin
+        WordApp.Options.WarnBeforeSavingPrintingSendingMarkup := false;
+        LogDebug('[SETTING] Setting WordApp.Options.WarnBeforeSavingPrintingSendingMarkup = false');
+      end;
 
 
       try
@@ -300,6 +313,14 @@ begin
               Result.Error := '';
              // loginfo('FileCreated: ' + OutputFilename, STANDARD);
        finally
+
+        // Reset it to origional value after.
+        if WarnBeforeSavingPrintingSendingMarkup_Origional then
+        begin
+          WordApp.Options.WarnBeforeSavingPrintingSendingMarkup := true;
+          LogDebug('[SETTING] Setting WordApp.Options.WarnBeforeSavingPrintingSendingMarkup = true');
+        end;
+
             // Close the document - do not save changes if doc has changed in any way.
             Wordapp.activedocument.Close(wdDoNotSaveChanges);
        end;
