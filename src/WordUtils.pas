@@ -21,6 +21,7 @@ TWordDocConverter = Class(TDocumentConverter)
 Private
     FWordVersion : String;
     WordApp : OleVariant;
+    WarnBeforeSavingPrintingSendingMarkup_Origional : Boolean;
 
 public
     Constructor Create();
@@ -31,10 +32,14 @@ public
     function FormatsExtensions(): TStringList; override;
     function WordConstants: TStringList;
     function OfficeAppVersion(ForceReload:Boolean = false) : String; override;
+    procedure BeforeListConvert(); override;
+    Procedure AfterListConvert(); override;
 End;
 
 
 implementation
+
+
 
 function TWordDocConverter.AvailableFormats() : TStringList;
 begin
@@ -81,6 +86,33 @@ end;
 
 { TWordDocConverter }
 
+procedure TWordDocConverter.BeforeListConvert;
+begin
+  inherited;
+      // If  Word Options->Trust Center->Privacy Options-> "Warn before printing, saving or sending a file that contains tracked changes or comments"
+      // is checked it will pop up a dialog on conversion.  Makes not sense for a commandline util to have this set to true
+      // So we turn if off but reset it to origional value after.
+      WarnBeforeSavingPrintingSendingMarkup_Origional := WordApp.Options.WarnBeforeSavingPrintingSendingMarkup;
+
+      if WarnBeforeSavingPrintingSendingMarkup_Origional then
+      begin
+        WordApp.Options.WarnBeforeSavingPrintingSendingMarkup := false;
+        LogDebug('[SETTING] Setting WordApp.Options.WarnBeforeSavingPrintingSendingMarkup = false', VERBOSE);
+      end;
+end;
+
+procedure TWordDocConverter.AfterListConvert;
+begin
+  inherited;
+
+  // set back to originoal value if required.
+  if WarnBeforeSavingPrintingSendingMarkup_Origional then
+  begin
+    WordApp.Options.WarnBeforeSavingPrintingSendingMarkup := true;
+    LogDebug('[SETTING] Restoring WordApp.Options.WarnBeforeSavingPrintingSendingMarkup = true', VERBOSE);
+  end;
+end;
+
 constructor TWordDocConverter.Create;
 begin
   inherited;
@@ -115,7 +147,7 @@ var
   NonsensePassword : OleVariant;
 
   ExitAction : TExitAction;
-  WarnBeforeSavingPrintingSendingMarkup_Origional : Boolean;
+
 
 begin
         ExitAction := aSave;
@@ -131,7 +163,7 @@ begin
 
         try
           // Open doc and save in requested format.
-          Wordapp.documents.Open( FileToConvert,  // FileName
+          Wordapp.documents.OpenNoRepairDialog( FileToConvert,  // FileName
                                 false,          // ConfirmConversions
                                 true,            // ReadOnly
                                 EmptyParam,    // AddToRecentFiles,
@@ -213,16 +245,7 @@ begin
       begin
 
 
-      // If  Word Options->Trust Center->Privacy Options-> "Warn before printing, saving or sending a file that contains tracked changes or comments"
-      // is checked it will pop up a dialog on conversion.  Makes not sense for a commandline util to have this set to true
-      // So we turn if off but reset it to origional value after.
-      WarnBeforeSavingPrintingSendingMarkup_Origional := WordApp.Options.WarnBeforeSavingPrintingSendingMarkup;
 
-      if WarnBeforeSavingPrintingSendingMarkup_Origional then
-      begin
-        WordApp.Options.WarnBeforeSavingPrintingSendingMarkup := false;
-        LogDebug('[SETTING] Setting WordApp.Options.WarnBeforeSavingPrintingSendingMarkup = false');
-      end;
 
 
       try
@@ -316,11 +339,7 @@ begin
        finally
 
 
-        if WarnBeforeSavingPrintingSendingMarkup_Origional then
-        begin
-          WordApp.Options.WarnBeforeSavingPrintingSendingMarkup := true;
-          LogDebug('[SETTING] Setting WordApp.Options.WarnBeforeSavingPrintingSendingMarkup = true');
-        end;
+
 
             // Close the document - do not save changes if doc has changed in any way.
             Wordapp.activedocument.Close(wdDoNotSaveChanges);
