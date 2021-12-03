@@ -28,7 +28,8 @@ Const
   MSEXCEL = 2;
   MSPOWERPOINT = 3;
 
-  DOCTO_VERSION = '1.6.41';  // dont us 0x - choco needs incrementing versions.
+  
+  DOCTO_VERSION = '1.6.41';  // dont use 0x - choco needs incrementing versions.
 
 type
 
@@ -168,6 +169,10 @@ type
     property ExportMarkup : integer read fExportMarkup;
     property WordConstants : TResourceStrings read getWordConstants;
 
+
+    // Events
+    procedure BeforeListConvert(); virtual;
+    Procedure AfterListConvert(); virtual;
 
     procedure SetExtension(const Value: String); virtual;
     function GetExtension: String;  virtual;
@@ -534,6 +539,8 @@ begin
    try
     CreateOfficeApp();
 
+    BeforeListConvert();
+
     for i := 0 to FInputFiles.Count -1 do
     begin
       FileToConvert := FInputFiles[i];
@@ -685,7 +692,7 @@ begin
     end;
 
     finally
-
+      AfterListConvert();
       DestroyOfficeApp();
     end;
 
@@ -1729,6 +1736,11 @@ begin
   Result := CallWebHook(UrlToCall);
 end;
 
+procedure TDocumentConverter.AfterListConvert;
+begin
+
+end;
+
 function TDocumentConverter.AllowDirectory(DirName, FullPath: String): Boolean;
 begin
     Result := true;
@@ -1745,6 +1757,11 @@ begin
 end;
 
 
+
+procedure TDocumentConverter.BeforeListConvert;
+begin
+
+end;
 
 // Check howlong a document took to convert.  If greater > X then record in ignorelist.
 // This can be used to find error documents as a modal window is displayed and execution does not
