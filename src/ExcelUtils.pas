@@ -59,7 +59,7 @@ begin
   inherited;
   //setup defaults
   InputExtension := '.xls*';
-
+   OfficeAppName := 'Excel';
 end;
 
 function TExcelXLSConverter.CreateOfficeApp: boolean;

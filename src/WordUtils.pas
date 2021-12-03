@@ -23,6 +23,7 @@ Private
     WordApp : OleVariant;
     WarnBeforeSavingPrintingSendingMarkup_Origional : Boolean;
 
+
 public
     Constructor Create();
     function CreateOfficeApp() : boolean;  override;
@@ -117,6 +118,7 @@ begin
   inherited;
   InputExtension := '.doc*';
   LogFilename := 'DocTo.Log';
+  OfficeAppName := 'Word';
 end;
 
 function TWordDocConverter.CreateOfficeApp: boolean;

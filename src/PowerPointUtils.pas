@@ -40,7 +40,7 @@ begin
 inherited;
   //setup defaults
   InputExtension := '.ppt*';
-
+  OfficeAppName := 'Powerpoint';
 end;
 
 function TPowerPointConverter.CreateOfficeApp: boolean;

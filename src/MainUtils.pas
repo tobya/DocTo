@@ -29,7 +29,7 @@ Const
   MSPOWERPOINT = 3;
 
   
-  DOCTO_VERSION = '1.6.41';  // dont use 0x - choco needs incrementing versions.
+  DOCTO_VERSION = '1.6.42';  // dont use 0x - choco needs incrementing versions.
 
 type
 
@@ -62,6 +62,7 @@ type
     FNetHandle: HINTERNET;
     FOutputIsStdOut: Boolean;
     fExportMarkup: integer;
+    FOfficeAppName: String;
 
 
     procedure SetCompatibilityMode(const Value: Integer);
@@ -123,6 +124,7 @@ type
 
 
 
+
     FOutputIsFile: Boolean;
     FOutputIsDir: Boolean;
     procedure SetInputFile(const Value: String);
@@ -168,6 +170,7 @@ type
     property pdfPrintToPage : integer read FpdfPrintToPage;
     property ExportMarkup : integer read fExportMarkup;
     property WordConstants : TResourceStrings read getWordConstants;
+    property OfficeAppName : String read FOfficeAppName write FOfficeAppName;
 
 
     // Events
@@ -187,6 +190,7 @@ type
 
     // Check Should Ignore
     function CheckShouldIgnore(DocumentPath : String): Boolean;
+
 
   public
 
@@ -217,8 +221,12 @@ type
     function CallWebHook(Params: String) : string;
     FUNCTION AfterConversion(InputFile, OutputFile: String):string;
     Function OnConversionError(InputFile, OutputFile, Error: String):string;
+
+
     procedure LogResourceHelp(HelpResName : String);
     procedure LogVersionInfo(ForceReload : boolean = true);
+
+
 
     procedure LogWordFormats();
     procedure LogExcelFormats();
@@ -859,6 +867,8 @@ begin
     // jump to next id + value
     inc(iParam,2);
 
+
+
 if  (id = '-XL') or
         (id = '--EXCEL') or
         (id = '-WD') or
@@ -1018,7 +1028,7 @@ if  (id = '-XL') or
         end
         else if idx = -1 then
         begin
-          HaltWithConfigError(200,'File Format ' + OutputFileFormatString + ' is invalid, please see help. -h');
+          HaltWithConfigError(200,'File Format ' + OutputFileFormatString + ' is an invalid ' + OfficeAppName +  ' file extension , please see help. -h');
 
         end;
       end;
@@ -1421,6 +1431,7 @@ begin
   CallWebHook(url_end);
 
 end;
+
 
 procedure TDocumentConverter.SetCompatibilityMode(const Value: Integer);
 begin
