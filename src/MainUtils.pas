@@ -1222,8 +1222,7 @@ if  (id = '-XL') or
 
         if pstr[1] = '-' then
         begin
-
-            HaltWithConfigError(203,'Unknown Switch or Parameter at index '+inttostr(iParam -1) + ':'  + pstr + '. ' +  'perhaps long param without --');
+            HaltWithConfigError(203,'Unknown Switch or Parameter :'''  + pstr + '''. ' +  ' Did you mean to provide the long param  ''-' + pstr + '''');
         end;
 
       end;
@@ -1231,8 +1230,6 @@ if  (id = '-XL') or
     end
     else
     begin
-
-
       HaltWithConfigError(203,'Unknown Switch or Parameter at index '+inttostr(iParam -1) + ':'  + pstr);
     end;
 
