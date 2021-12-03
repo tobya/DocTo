@@ -953,7 +953,9 @@ if  (id = '-XL') or
       end;
 
     end
-    else if (id = '--NO-RECURSE') then
+    else if (id = '--NO-RECURSE') or
+            (id = '--NO-SUBDIR') or
+            (id = '--NO-SUBDIRS') then
     begin
         FDoSubDirs := false;
         LogInfo('Loading files from directory but not subdirectories',CHATTY);
