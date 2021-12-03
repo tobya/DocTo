@@ -29,7 +29,7 @@ Const
   MSPOWERPOINT = 3;
 
   
-  DOCTO_VERSION = '1.6.42';  // dont use 0x - choco needs incrementing versions.
+  DOCTO_VERSION = '1.6.34';  // dont use 0x - choco needs incrementing versions.
 
 type
 
