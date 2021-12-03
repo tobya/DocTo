@@ -1,0 +1,2 @@
+REM Test WordBookmarkss
+"../exe/docto.exe"   -f "%~d0%~p0Inputfiles\Bookmarks+Chocolate+and+Hazelnut+Tart.doc"  -o "%~d0%~p0GeneratedFiles\Bookmarks+Chocolate+and+Hazelnut+Tart.pdf"  -L 10   -T  wdFormatPDF  --pdf-BookmarkSource WordBookmarks 		

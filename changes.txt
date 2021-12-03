@@ -1,0 +1,6 @@
+Changes to DocTo
+
+4.12.19
+
+Sarting to move XLSTo into DocTo
+Also from now on all -- params

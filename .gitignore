@@ -14,10 +14,26 @@ test/privatetest/
 exe/
 test/InputFiles/ignore/
 test/InputFiles/generatedfiles/
+test/Generated*
+test/InputFiles3*
+test/test1/*
+newdir2/
+
+###########
+# github
+#############
+
+pages/gen/vendor*
+# Useful to comment out when adding new pages files
+#pages/all/*
+pages/gen/templates_c/*
 
 ############
 # Delphi
 ############
+
+pages/gen/vendor/*
+pages/gen/templates_c/*
 
 __history/
 *.~*
@@ -25,6 +41,7 @@ __history/
 *.identcache
 *.orig
 *.local
+*.res
 
 #################
 ## Eclipse

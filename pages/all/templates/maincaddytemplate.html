@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{.Doc.title}}</title>
+        <meta charset="utf-8">
+        {{range $key, $val := .Meta}}
+        <meta name="{{$key}}" content="{{$val}}">
+        {{end}}
+        {{- range .Styles}}
+        <link rel="stylesheet" href="{{.}}">
+        {{- end}}
+        {{- range .Scripts}}
+        <script src="{{.}}"></script>
+        {{- end}}
+    </head>
+    <body>
+      
+         <h1> <img src="/templates/doctologo.jpg" alt="" width=32px height=32px>    DocTo</h1> 
+       
+                   
+         <p>        
+         <a href="index.md"> List of Articles</a>
+         </p>
+
+         
+         <p>Examples of how to use DocTo</p>  
+      
+        
+        
+        {{.Doc.body}}
+
+        <p>
+            <a href="https://github.com/tobya/docto">DocTo source on Github</a>| <a href="index.md">Index of Examples</a> | <a href="https://github.com/tobya/DocTo/releases">Download Latest Release</a>
+        </p>
+    </body>
+</html>

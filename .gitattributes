@@ -20,3 +20,12 @@
 *.PDF	 diff=astextplain
 *.rtf	 diff=astextplain
 *.RTF	 diff=astextplain
+
+# ignore markdown files for language analysis
+*.md linguist-detectable=false
+*.doc linguist-detectable=false
+*.docx linguist-detectable=false
+*.xls linguist-detectable=false
+*.xlsx linguist-detectable=false
+*.rtf linguist-detectable=false
+
