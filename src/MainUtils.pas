@@ -1189,7 +1189,7 @@ if  (id = '-XL') or
     else if (id = '-H') or
             (id = '-?') or
             (id = '?') OR
-            (id = '--help') then
+            (id = '--HELP') then
     begin
       ConfigLogHelp(ID,value,Params);
     end
