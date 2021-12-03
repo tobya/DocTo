@@ -23,7 +23,7 @@ FOR /F "eol=; tokens=1,2* delims=, " %%i in (doctoFormatList.txt) do "../exe/doc
 
 
 REM ---------------------------------
-REM Convert All files in Input Directory to PDF 
+REM Convert All files in Input Directory to PDF
 REM ---------------------------------
 
 "../exe/docto.exe"  -f "%~d0%~p0Inputfiles\"  -o "%~d0%~p0GeneratedFiles"    -T  wdFormatPDF -OX pdf

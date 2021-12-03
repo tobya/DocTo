@@ -135,7 +135,7 @@ type
     procedure HaltWithError(ErrorNo:Integer; Msg : String);
     procedure SetLogToFile(const Value: Boolean);
     procedure SetLogFilename(const Value: String);
-    procedure ListFiles(const PathName, FileName: string; const InDir: boolean; outFiles: TStrings);
+    procedure ListFiles(const PathName, FileName: string; const SubDir: boolean; outFiles: TStrings);
     procedure SetDoSubDirs(const Value: Boolean);
     procedure SetIsDirInput(const Value: Boolean);
     procedure SetIsFileInput(const Value: Boolean);
@@ -446,6 +446,7 @@ begin
   FOutputIsDir := false;
   FCompatibilityMode := 0;
   FEncoding := -1;
+  FDoSubDirs := true;
   FIgnore_MACOSX := true;
   fSkipDocsWithTOC := false;
   fSkipDocsExist :=  false;
@@ -952,6 +953,11 @@ if  (id = '-XL') or
       end;
 
     end
+    else if (id = '--NO-RECURSE') then
+    begin
+        FDoSubDirs := false;
+        LogInfo('Loading files from directory but not subdirectories',CHATTY);
+    end
     else if (id = '--STDOUT') then
     BEGIN
       OutPutIsStdOut := true;
@@ -1224,9 +1230,9 @@ if  (id = '-XL') or
     if DirectoryExists(InputFile) then
     begin
        InputIsDir := true;
-       DoSubDirs := true;
 
-       ListFiles(finputfile, '*' + InputExtension,true,FInputFiles);
+
+       ListFiles(finputfile, '*' + InputExtension,DoSubDirs,FInputFiles);
        if FInputFiles.Count = 0 then
        begin
          HaltWithError(204, 'No File Matches in Input Directory: ' + finputfile + '*' + InputExtension );
@@ -1616,7 +1622,7 @@ begin
   end;
 end;
 
-procedure TDocumentConverter.ListFiles(const PathName, FileName : string; const InDir : boolean; outFiles: TStrings);
+procedure TDocumentConverter.ListFiles(const PathName, FileName : string; const SubDir : boolean; outFiles: TStrings);
 var Rec  : TSearchRec;
     Path : string;
 begin
@@ -1630,7 +1636,7 @@ if FindFirst(Path + FileName, faAnyFile - faDirectory, Rec) = 0 then
    FindClose(Rec);
  end;
 
-If not InDir then Exit;
+If not SubDir then Exit;
 
 if FindFirst(Path + '*.*', faDirectory, Rec) = 0 then
  try
