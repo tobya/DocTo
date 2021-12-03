@@ -10,11 +10,11 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMA
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ****************************************************************)
 interface
-uses classes, Windows, sysutils, ActiveX, ComObj, WinINet, Variants,  Types,  ResourceUtils,    strutils,
-     PathUtils, ShellAPI, datamodssl;
-uses  classes, Windows, sysutils, ActiveX, ComObj, WinINet, Variants, iduri,
-      Types,  ResourceUtils,
-      PathUtils, ShellAPI, datamodssl, Word_TLB_Constants;
+uses classes, Windows, sysutils, ActiveX,
+      ComObj, WinINet, Variants, iduri,
+      Types,  ResourceUtils,    strutils,
+     PathUtils, ShellAPI, datamodssl, Word_TLB_Constants;
+
 
 Const
   VERBOSE = 10;
