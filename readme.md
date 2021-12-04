@@ -117,11 +117,7 @@ https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-u
 ## Command Line Help
 
     Help
-    Docto Version:%s
-    Office Version : %s
-    Open Source: https://github.com/tobya/DocTo/
-    Description: DocTo converts Word Documents and Excel Spreadsheets to other formats.
-    
+       
     Command Line Parameters:
     Each Parameter should be followed by its value eg
             -f "c:\Docs\MyDoc.doc"
