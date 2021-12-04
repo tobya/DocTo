@@ -121,7 +121,7 @@ type
     FIgnoreErrorDocsFile : TStringList;
     FAppID : Integer;
     FPdfExportRange_Word: Integer;
-
+    FuseISO190051 : Boolean;
 
 
 
@@ -168,6 +168,7 @@ type
     property pdfOpenAfterExport: Boolean read FPDFOpenAfterExport write SetpdfOpenAfterExport;
     property pdfPrintFromPage : integer read FpdfPrintFromPage;
     property pdfPrintToPage : integer read FpdfPrintToPage;
+    property useISO190051 : boolean read FuseISO190051;
     property ExportMarkup : integer read fExportMarkup;
     property WordConstants : TResourceStrings read getWordConstants;
     property OfficeAppName : String read FOfficeAppName write FOfficeAppName;
@@ -469,6 +470,7 @@ begin
   FPdfExportRange_Word := wdExportAllDocument;
   FPDFPrintFromPage := 1;
   FPDFPrintTopage := -1;
+  FuseISO190051 := false;
 
   FInputFiles := TStringList.Create;
 end;
@@ -1080,6 +1082,10 @@ if  (id = '-XL') or
 
       PDFOpenAfterExport := true;
       dec(iParam);
+    end
+    else if (id = '--USE-ISO190051') then
+    begin
+       FuseISO190051 := true;
     end
     else if (id = '-R')
          or (id = '--DELETEFILES') then

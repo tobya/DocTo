@@ -94,7 +94,7 @@ Long Parameters:
       Other values wdExportCurrentPage, wdExportSelection
   --PDF-ToPage
       Save a range of pages to pdf. Integer. --PDF-FromPage must also be set.
-
+  --use-ISO190051 Create PDF to the ISO 19005-1 standard.
 
 
 

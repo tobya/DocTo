@@ -171,6 +171,7 @@ begin
                                 NonsensePassword    // PasswordDocument,
                                 );
 
+
           // For some reason if the document contains a TableofContents, it hangs Word.  In older
           // versions it popped up a dialog.  Until someone can find a work around, the docs will be skipped.
           // Issue  #40  - experimental as it gets some false positives.
@@ -273,7 +274,7 @@ begin
                    BookmarkSource,//   CreateBookmarks
                    true,//   DocStructureTags:=True, _
                    true,//   BitmapMissingFonts:=True,
-                   False//   UseISO19005_1:=False
+                   useISO190051 //   UseISO19005_1:=False
          );
         end else
         begin
