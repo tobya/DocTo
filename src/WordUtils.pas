@@ -32,7 +32,7 @@ public
     function AvailableFormats() : TStringList; override;
     function FormatsExtensions(): TStringList; override;
     function WordConstants: TStringList;
-    function OfficeAppVersion(ForceReload:Boolean = false) : String; override;
+    function OfficeAppVersion() : String; override;
     procedure BeforeListConvert(); override;
     Procedure AfterListConvert(); override;
 End;
@@ -66,11 +66,14 @@ end;
 
 
 
-function TWordDocConverter.OfficeAppVersion(ForceReload:Boolean = false): String;
+function TWordDocConverter.OfficeAppVersion(): String;
 var
   WdVersion: String;
   decimalPos : integer;
 begin
+
+  FWordVersion := ReadOfficeAppVersion();
+
   if FWordVersion = '' then
   begin
     CreateOfficeApp();
@@ -79,6 +82,7 @@ begin
     //Get Major version as that is all we are interested in and strtofloat causes errors Issue#31
     decimalPos := pos('.',WdVersion);
     FWordVersion  := LeftStr(WdVersion,decimalPos -1);
+    WriteOfficeAppVersion(FWordVersion);
 
   end;
   result := FWordVersion;

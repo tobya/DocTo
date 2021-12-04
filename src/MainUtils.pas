@@ -180,7 +180,7 @@ type
 
     procedure SetExtension(const Value: String); virtual;
     function GetExtension: String;  virtual;
-    function OfficeAppVersion(ForceReload:Boolean = false) : String; virtual; abstract;
+    function OfficeAppVersion() : String; virtual; abstract;
 
     //Check files and folders
     function AllowDirectory(DirName : String; FullPath : String) : Boolean;
@@ -188,6 +188,9 @@ type
 
     // Timing
     procedure CheckDocumentTiming(StartTime, EndTime : cardinal; DocumentPath : String);
+
+    procedure WriteOfficeAppVersion(Version : String);
+    function  ReadOfficeAppVersion(): String;
 
     // Check Should Ignore
     function CheckShouldIgnore(DocumentPath : String): Boolean;
@@ -234,6 +237,7 @@ type
     procedure LogPowerPointFormats();
     procedure ConfigLogHelp(Param, Value: String; AllValues: TStrings);
 
+    function ConfigFileName : String;
 
     property OutputLog : Boolean read FOutputLog write SetOutputLog;
     property OutputLogFile : String read FOutputLogFile write SetOutputLogFile;
@@ -314,6 +318,17 @@ begin
   end;
 end;
 
+
+function TDocumentConverter.ConfigFileName: String;
+var
+ TempDir, ConfigFn, fullfn, value: String;
+begin
+  ConfigFn := 'docto.config';
+
+  TempDir := GetEnvironmentVariable('TEMP');
+  fullfn := TempDir  + '\' + configfn;
+  result := fullfn;
+end;
 
 procedure TDocumentConverter.ConfigLoggingLevel(Params: TStrings);
 var
@@ -1171,7 +1186,7 @@ if  (id = '-XL') or
     end
     else if (id = '-V') then
     begin
-      LogVersionInfo();
+      LogVersionInfo(true);
       halt(2);
 
     end
@@ -1402,12 +1417,19 @@ end;
 
 procedure TDocumentConverter.LogVersionInfo(ForceReload: Boolean = true);
 begin
+
+      // Version is cached in temp file.  Delete file to force check.
+      if ForceReload then
+      begin
+        DeleteFile(ConfigFileName);
+      end;
+
       // Prevent Date from Printing.
       FFirstLogEntry := false;
 
       // Log versions.
       log('DocTo Version:' + DOCTO_VERSION);
-      log('OfficeApp Version:' +  OfficeAppVersion(ForceReload),0);
+      log('OfficeApp Version:' +  OfficeAppVersion(),0);
       log('Source: https://github.com/tobya/DocTo/');
 
 end;
@@ -1437,6 +1459,41 @@ begin
 
 end;
 
+
+function TDocumentConverter.ReadOfficeAppVersion: String;
+var
+  ConfigFile : TStringlist;
+  value, fullfn: String;
+begin
+
+  ConfigFile := TStringList.Create();
+  fullfn := ConfigFileName;
+  if FileExists(fullfn) then
+  begin
+    ConfigFile.LoadFromFile(fullfn);
+
+    value := ConfigFile.Values[    OfficeAppName + '_' + FormatDateTime('yyyymmdd',now)];
+    result := value;
+  end
+  else
+  begin
+  result := '';
+  end;
+
+
+
+end;
+
+procedure TDocumentConverter.WriteOfficeAppVersion(Version: String);
+var
+  ConfigFile : TStringlist;
+  TempDir, ConfigFn, fullfn, value: String;
+begin
+  ConfigFile := TStringList.Create();
+  ConfigFile.Add( OfficeAppName + '_' + FormatDateTime('yyyymmdd',now) + '=' + Version);
+  ConfigFile.SaveToFile(ConfigFileName);
+  LogDebug('Writing Version to File:' + ConfigFileName,VERBOSE);
+end;
 
 procedure TDocumentConverter.SetCompatibilityMode(const Value: Integer);
 begin
@@ -1633,6 +1690,8 @@ function TDocumentConverter.URLEncode(Param: String): String;
 begin
   Result :=  TIDURI.ParamsEncode(Param);
 end;
+
+
 
 function IsNumber(Str: String) : Boolean;
 var
