@@ -1179,7 +1179,8 @@ if  (id = '-XL') or
       fSkipDocsWithTOC := true;
       dec(iParam);
     end
-    else if (id = '--DONOTOVERWRITE') then
+    else if (id = '--DONOTOVERWRITE') or
+            (id = '--NO-OVERWRITE')  then
     begin
       logInfo('DoNotOverwrite=True',Verbose);
       fSkipDocsExist := true;

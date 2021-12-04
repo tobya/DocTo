@@ -81,8 +81,9 @@ Long Parameters:
       PDF conversions can take their bookmarks from
       WordBookmarks, WordHeadings (default) or None
   --DoNotOverwrite
+  --no-overwrite
       Existing files are overridden by default, if you do not wish a file to be
-      skipped if its output exists, use this.
+      over written use this option.
   --no-subdirs Only convert specified directory. Do not recurse sub directories
   --ExportMarkup Value for wdExportItem - default wdExportDocumentContent.
       use    wdExportDocumentWithMarkup to export all word comments with pdf
