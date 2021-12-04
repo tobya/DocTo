@@ -29,8 +29,8 @@ Further Examples available at https://docto.toflidium.com
  
 ## Examples
 More Examples available at 
+- [View Examples](https://github.com/tobya/DocTo/blob/master/pages/all/index.md) 
 - [https://docto.toflidium.com/](https://docto.toflidium.com/) 
-- [Github Example](https://github.com/tobya/DocTo/blob/master/pages/all/index.md) 
 - [Wiki](https://github.com/tobya/DocTo/wiki)
 
 ## Installation
