@@ -49,7 +49,7 @@ Also Available for [installation via Chocolatey ](https://chocolatey.org/package
 
 to upgrade to latest version before generally available (replace with current version)
 
-> choco upgrade docto --version=1.5
+> choco upgrade docto --version=1.6
 
 ### Node
 
@@ -117,28 +117,28 @@ https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-u
 ## Command Line Help
 
     Help
-    Version:
-    Source: https://github.com/tobya/DocTo/
+    Docto Version:%s
+    Office Version : %s
+    Open Source: https://github.com/tobya/DocTo/
     Description: DocTo converts Word Documents and Excel Spreadsheets to other formats.
-
+    
     Command Line Parameters:
     Each Parameter should be followed by its value eg
-            -f "c:\Docs\MyDoc.doc" -O "C:\MyDir\MyFile"
-    Parameters markers are case insensitive. Short and Long can be used mixed. All
-    parameters and values need to be seperated by a ' ' space.
-
+            -f "c:\Docs\MyDoc.doc"
+    Parameters markers are case insensitive.
+    
       -H  This message
           --HELP -?
-      -WD Use Word for Conversion (Default)
+      -WD Use Word for Converstion (Default). Help '-h -wd'
           --word
-      -XL Use Excel for Conversion
+      -XL Use Excel for Conversion. Help '-h -xl'
           --excel
-      -PP Use Powerpoint for Conversion
+      -PP Use Powerpoint for Conversion. help '-h -pp'
           --powerpoint
       -F  Input File or Directory
           --inputfile
-      -FX Input Extension to search for if directory.
-          Default "*.doc*" (will find ".docx" also)
+      -FX Input Extension to search for if directory. (.rtf .txt etc)
+          Default ".doc*" (will find ".docx" also)
           --inputextension
       -O  Output File or Directory to place converted Docs
           --outputfile
@@ -154,16 +154,14 @@ https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-u
       -TF Force Format. -T value if an integer, is checked against current list
           compiled in. It is not passed if unavailable.  -TF will pass through value
           without checking. Word will return an "EOleException  Value out of range"
-          error if invalid.
-          Use instead of -T.
+          error if invalid. Use instead of -T.
           --forceformat
-      -L  Log Level Integer: 1 ERRORS Only, 2 STANDARD, 5 CHATTY, 9 DEBUG,
-          10 VERBOSE.  Default: 2=STANDARD
+      -L  Log Level Integer: 1 ERRORS 2 STANDARD 5 CHATTY 9 DEBUG 10 VERBOSE. Default: 2=STANDARD
           --loglevel
       -C  Compatibility Mode Integer. Set to an INTEGER value from
           https://msdn.microsoft.com/en-us/library/office/ff192388.aspx.
           Set the compatibility mode when you want to convert documents to a later
-          version of word. See help for further info.
+          version of word. See help '-h -c' for further info.
           --compatibility
       -E  Encoding Integer: Sets codepage Encoding.  See
           https://msdn.microsoft.com/en-us/library/office/ff860880.aspx
@@ -187,19 +185,26 @@ https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-u
       -R  Remove Files after successful conversion: Default false; To use specify
           value eg -R true
           --deletefiles
-      -W  Webhook: Url to call on events. See -HW for more details.
+      -W  Webhook: Url to call on events. See help '-H -HW' for more details.
           --webhook
-      -HW Webhook Help.
       -X  Halt on COM Error: Default True;  If you have trouble with some files
           not converting, set this to false to ignore errors and continue with
           batch job.
           --halterror
-      -V  Show Versions.  DocTo and Word/Excel
-
+      -V  Show Versions.  DocTo and Word/Excel/Powerpoint
+    
     Long Parameters:
+    
       --BookmarkSource
           PDF conversions can take their bookmarks from
           WordBookmarks, WordHeadings (default) or None
+      --DoNotOverwrite
+      --no-overwrite
+          Existing files are overridden by default, if you do not wish a file to be
+          over written use this option.
+      --no-subdirs Only convert specified directory. Do not recurse sub directories
+      --ExportMarkup Value for wdExportItem - default wdExportDocumentContent.
+          use    wdExportDocumentWithMarkup to export all word comments with pdf
       --PDF-OpenAfterExport
           If you wish for a converted PDF to be opened after creation. No value req.
       --PDF-FromPage
@@ -207,19 +212,18 @@ https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-u
           Other values wdExportCurrentPage, wdExportSelection
       --PDF-ToPage
           Save a range of pages to pdf. Integer. --PDF-FromPage must also be set.
-      --DoNotOverwrite
-          Existing files are overridden by default, if you do not wish a file to be
-          skipped if its output exists, use this.
-      --ExportMarkup Value for wdExportItem - default wdExportDocumentContent.
-          use wdExportDocumentWithMarkup to export all word comments with pdf
-          
-    Experimental:      
+      --use-ISO190051 Create PDF to the ISO 19005-1 standard.
+    
+    
+    
+    
+    Experimental:
       --skipdocswithtoc
           EXPERIMENTAL.  Will skip any docs that contain a TOC to prevent hanging.
           Currently matches some false positives.  Default False.
       --stdout
-          Send file to Stdout after conversion. ( Does not work correctly for binary files)          
-
+          Send file to Stdout after conversion. ( Does not work correctly for binary files)
+    
     ERROR CODES:
     200 : Invalid File Format specified
     201 : Insufficient Inputs.  Minimum of Input File, Output File & Type
@@ -230,7 +234,7 @@ https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-u
     220 : Word or COM Error
     221 : Word not Installed
     400 : Unknown Error
-  
+    
 
 Compiling
 --
