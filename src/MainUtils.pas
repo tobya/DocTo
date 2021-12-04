@@ -1083,7 +1083,7 @@ if  (id = '-XL') or
       PDFOpenAfterExport := true;
       dec(iParam);
     end
-    else if (id = '--USE-ISO190051')
+    else if (id = '--USE-ISO190051') or
             (id = '--USE-ISO19005-1') then
     begin
        FuseISO190051 := true;
