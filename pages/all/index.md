@@ -145,7 +145,13 @@ Show comments from Word document in PDF
 ==
 
  - [CommentsFromWordWordCommentspdf.md](CommentsFromWordWordCommentspdf.md)
- - [CommentsFromWordNonepdf.md](CommentsFromWordNonepdf.md)
+ - [CommentsFromWordNoCommentspdf.md](CommentsFromWordNoCommentspdf.md)
+
+
+Do not recurse SubDirs
+==
+
+ - [ConvertWithoutSubdirspdf.md](ConvertWithoutSubdirspdf.md)
 
 
 Help Text
@@ -153,4 +159,4 @@ Help Text
 
 DocTo outputs a [help file](HelpLog.md) which provides details of all options. 
 
-Generated 08:05:00 20210718
+Generated 11:03:31 20211204

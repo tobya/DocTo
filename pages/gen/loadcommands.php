@@ -89,7 +89,9 @@ $Commands = [
                 "FileTypeExt" => 'PDF',
                 "FileTypeDescription" => 'Adobe PDF Format',
                 "FileFormat" => 'wdFormatPDF',
-                "RelatedLinks" => []
+                "RelatedLinks" => [
+                    'Convert all files in directory without converting subdirectories.' => 'ConvertWithoutSubdirspdf.md',
+                ]
             ],
            
             [
@@ -629,7 +631,27 @@ $Commands = [
            
         ],
        "Template" => "ConvertDocToPDFComments.tpl.md"
-    ]
+    ],
+
+     "ConvertWithoutSubdirs" => [
+         "Description" => "Do not recurse SubDirs",
+        "Items" => [
+            [
+                "FileTypeExt" => 'pdf',
+                "FileTypeDescription" => "pdf",
+                "FileTypeTitleExtra" => "",
+                
+                "ContentExtra" => "With this option sub dirs will not be searched for files to convert",
+                 "RelatedLinks" => []
+
+            ],
+
+              
+
+           
+        ],
+       "Template" => "ConvertDirDocNoRecurse.tpl.md"
+    ],
 
 
 ];
@@ -642,13 +664,12 @@ $Explain = [
     "dashf" => ['cmd' => '-f' , 'desc' => "The File or directory to be converted"],
     "dashfx" => ['cmd' => '-fx' , 'desc' => "File with this extension should be matched."],
     "dasho" => ['cmd' => '-o' , 'desc' => "The Output File or Directory where you would like the converted file to be written to."],
-    "dashox" => ['cmd' => '-ox' , 'desc' => "The Output extension to be used for converted files"],
-    "dashl" => ['cmd' => '-L' , 'desc' => "The log level to be output."],
+    "dashox" => ['cmd' => '-ox' , 'desc' => "The Output extension to be used for converted files"],    
     "dasht" => ['cmd' => '-T' , 'desc' => "The file format type that is being converted to"],
     "dashw" => ['cmd' => '-W' , 'desc' => "Fire a webhook to the provided URL. See Below for more details"],
     "dashv" => ['cmd' => '-V' , 'desc' => "Show Version details for DocTo and loaded Office Applications"],
     "dashr" => ['cmd' => '-R' , 'desc' => "Delete the converted file after conversion."],
-    "dashl" => ['cmd' => '-L' , 'desc' => "Set Log level for output."],
+    "dashl" => ['cmd' => '-L' , 'desc' => "Set output Log level."],
     "dashc" => ['cmd' => '-c' , 'desc' => "Compatibility Level with Office Versions"],
 
     
@@ -656,6 +677,7 @@ $Explain = [
     "dddeletefiles" => ['cmd' => '--deletefiles' , 'desc' => "Delete the converted file after conversion."],
     "ddbookmarksource" => ['cmd' => '--bookmarksource' , 'desc' => "Where to get Bookmarks from for PDF.  This parameter is only relevant for PDF files."],
     "ddexportmarkup" => ['cmd' => '--ExportMarkup', 'desc' => "Export Comments and other markup from Word Document to PDF"],
+    "ddnosubdirs" => ['cmd' => '--no-subdirs', 'desc' => 'Don\'t rescurse subdirs.  Only convert files in requested dir. '],
 
 
 ];

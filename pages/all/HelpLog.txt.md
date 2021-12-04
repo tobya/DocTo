@@ -9,9 +9,8 @@ Description: DocTo converts Word Documents and Excel Spreadsheets to other forma
 
 Command Line Parameters:
 Each Parameter should be followed by its value eg
-        -f "c:\Docs\MyDoc.doc" -O "C:\MyDir\MyFile"
-Parameters markers are case insensitive. Short and Long can be used mixed. All
-parameters and values need to be seperated by a ' ' space.
+        -f "c:\Docs\MyDoc.doc"
+Parameters markers are case insensitive.
 
   -H  This message
       --HELP -?
@@ -80,9 +79,17 @@ parameters and values need to be seperated by a ' ' space.
   -V  Show Versions.  DocTo and Word/Excel/Powerpoint
 
 Long Parameters:
+
   --BookmarkSource
       PDF conversions can take their bookmarks from
       WordBookmarks, WordHeadings (default) or None
+  --DoNotOverwrite
+  --no-overwrite
+      Existing files are overridden by default, if you do not wish a file to be
+      over written use this option.
+  --no-subdirs Only convert specified directory. Do not recurse sub directories
+  --ExportMarkup Value for wdExportItem - default wdExportDocumentContent.
+      use    wdExportDocumentWithMarkup to export all word comments with pdf
   --PDF-OpenAfterExport
       If you wish for a converted PDF to be opened after creation. No value req.
   --PDF-FromPage
@@ -90,11 +97,9 @@ Long Parameters:
       Other values wdExportCurrentPage, wdExportSelection
   --PDF-ToPage
       Save a range of pages to pdf. Integer. --PDF-FromPage must also be set.
-  --DoNotOverwrite
-      Existing files are overridden by default, if you do not wish a file to be
-      skipped if its output exists, use this.
-  --ExportMarkup Value for wdExportItem - default wdExportDocumentContent.
-      use    wdExportDocumentWithMarkup to export all word comments with pdf
+  --use-ISO190051 Create PDF to the ISO 19005-1 standard.
+
+
 
 
 Experimental:
