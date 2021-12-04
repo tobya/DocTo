@@ -29,7 +29,7 @@ Const
   MSPOWERPOINT = 3;
 
   
-  DOCTO_VERSION = '1.6.35';  // dont use 0x - choco needs incrementing versions.
+  DOCTO_VERSION = '1.7.36';  // dont use 0x - choco needs incrementing versions.
 
 type
 
@@ -993,10 +993,12 @@ if  (id = '-XL') or
     begin
         FDoSubDirs := false;
         LogInfo('Loading files from directory but not subdirectories',CHATTY);
+        dec(iparam);
     end
     else if (id = '--STDOUT') then
     BEGIN
       OutPutIsStdOut := true;
+      dec(iparam);
     END
     else if (id = '-FX') or
             (id = '--INPUTFILEEXTENSION') then
@@ -1102,6 +1104,7 @@ if  (id = '-XL') or
             (id = '--USE-ISO19005-1') then
     begin
        FuseISO190051 := true;
+       dec(iparam);
     end
     else if (id = '-R')
          or (id = '--DELETEFILES') then
