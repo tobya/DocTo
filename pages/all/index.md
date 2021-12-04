@@ -154,9 +154,15 @@ Do not recurse SubDirs
  - [ConvertWithoutSubdirspdf.md](ConvertWithoutSubdirspdf.md)
 
 
+Convert Word Document to PDF Files at <a href='https://www.iso.org/standard/38920.html'>ISO 19005-1</a> standard (PDF/A) format.
+==
+
+ - [ConvertToPDFArchiveiso19005-1pdf.md](ConvertToPDFArchiveiso19005-1pdf.md)
+
+
 Help Text
 --
 
 DocTo outputs a [help file](HelpLog.md) which provides details of all options. 
 
-Generated 11:03:31 20211204
+Generated 11:18:00 20211204
