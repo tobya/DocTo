@@ -33,7 +33,9 @@ uses
   PowerPointUtils in 'PowerPointUtils.pas',
   Word_TLB_Constants in 'Word_TLB_Constants.pas',
   Excel_TLB_Constants in 'Excel_TLB_Constants.pas',
-  PowerPoint_TLB_Constants in 'PowerPoint_TLB_Constants.pas';
+  PowerPoint_TLB_Constants in 'PowerPoint_TLB_Constants.pas',
+  baseConfig in 'baseConfig.pas',
+  configInput in 'configInput.pas';
 
 var
   i, Converter : integer;
