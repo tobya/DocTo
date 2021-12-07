@@ -35,7 +35,8 @@ uses
   Excel_TLB_Constants in 'Excel_TLB_Constants.pas',
   PowerPoint_TLB_Constants in 'PowerPoint_TLB_Constants.pas',
   baseConfig in 'baseConfig.pas',
-  configInput in 'configInput.pas';
+  configInput in 'configInput.pas',
+  configOutput in 'configOutput.pas';
 
 var
   i, Converter : integer;

@@ -10,7 +10,7 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMA
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ****************************************************************)
 interface
-uses  classes, Windows, sysutils, ActiveX, ComObj, WinINet, Variants, iduri,
+uses  system.classes, Windows, sysutils, ActiveX, ComObj, WinINet, Variants, iduri,
       Types,  ResourceUtils,
       PathUtils, ShellAPI, datamodssl, Word_TLB_Constants;
 
@@ -82,6 +82,7 @@ type
     function getWordConstants: TResourceStrings;
     procedure LogMainHelp;
     procedure SetOutputIsStdOut(const Value: Boolean);
+    function GetHandlers: TStrings;
 
 
   protected
@@ -259,6 +260,7 @@ type
     property ExportMarkup : integer read fExportMarkup;
     property WordConstants : TResourceStrings read getWordConstants;
     property OfficeAppName : String read FOfficeAppName write FOfficeAppName;
+    property Handlers : TStrings read GetHandlers;
 
     property IsWord : Boolean read getIsWord;
     property IsExcel : Boolean read getIsExcel;
@@ -273,6 +275,7 @@ type
 
 implementation
 
+uses baseConfig, ConfigOutput, ConfigInput;
 
 { TConsoleLog }
 
@@ -838,9 +841,11 @@ id, value, tmppath : string;
 HelpStrings: TResourceStrings;
 tmpext : String;
 valueBool : Boolean;
-  X: Integer;
-  Sval : String;
-
+  X, O: Integer;
+  Sval : string;
+  ParamHandlerClass : TClass;
+    PHandlers : TStrings;
+    ParamHandler : TParamLoader;
 begin
   // Initialise
   iParam := 0;
@@ -862,7 +867,7 @@ begin
       halt(1);
   end ;
 
-
+  PHandlers := Self.Handlers;
 
   While iParam <= Params.Count -1 do
   begin
@@ -886,9 +891,21 @@ begin
     // jump to next id + value
     inc(iParam,2);
 
+     logdebug(PHandlers.Values[id],errors);
+    if PHandlers.Values[id] <> '' then
+    begin
 
 
-if  (id = '-XL') or
+      O := PHandlers.IndexOfName(id);
+      LogDebug(inttostr(O),ERRORS);
+      ParamHandlerClass := TCLASS
+      (PHandlers.Objects[O]);
+      LogDebug(ParamHandlerClass.ClassName,ERRORS);
+      ParamHandler :=  TParamLoader(ParamHandlerClass.Create());
+      LogDebug(ParamHandler.ClassName,ERRORS);
+      ParamHandler.Load(Self,id,Value);
+    end
+    else if  (id = '-XL') or
         (id = '--EXCEL') or
         (id = '-WD') or
         (id = '--WORD') or
@@ -1516,6 +1533,17 @@ begin
 end;
 
 
+
+function TDocumentConverter.GetHandlers: TStrings;
+begin
+  Result := TStringList.Create;
+
+  Result.AddPair('-F',TParamInput.Classname, TObject(TParamInput));
+  Result.AddPair('--INPUTFILE',TParamInput.Classname, TObject(TParamInput));
+
+  Result.AddPair('-OX',TParamOutputExtension.Classname, TObject(TParamOutputExtension));
+  Result.AddPair('--OUTPUTEXTENSION',TParamOutputExtension.Classname, TObject(TParamOutputExtension));
+end;
 
 function TDocumentConverter.getIsExcel: Boolean;
 begin
