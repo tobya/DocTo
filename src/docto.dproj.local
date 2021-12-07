@@ -5,6 +5,11 @@
     <Transaction>2020/05/25 15:31:23.000.508,D:\Development\GitHub\DocTo\src\res\WdCompatibilityMode.txt=</Transaction>
     <Transaction>2021/12/02 22:25:13.000.761,=D:\Development\GitHub\DocTo\src\New1.bat</Transaction>
     <Transaction>2021/12/02 22:25:32.000.527,D:\Development\GitHub\DocTo\src\New1.bat=D:\Development\GitHub\DocTo\test\TestDocTo_Quiet.bat</Transaction>
+    <Transaction>2021/12/07 21:39:10.109,=D:\Development\GitHub\DocTo\src\Unit1.pas</Transaction>
+    <Transaction>2021/12/07 21:39:29.085,D:\Development\GitHub\DocTo\src\baseConfig.pas=D:\Development\GitHub\DocTo\src\Unit1.pas</Transaction>
+    <Transaction>2021/12/07 21:48:20.599,=D:\Development\GitHub\DocTo\src\Unit1.pas</Transaction>
+    <Transaction>2021/12/07 21:48:32.095,D:\Development\GitHub\DocTo\src\configOutput.pas=D:\Development\GitHub\DocTo\src\Unit1.pas</Transaction>
+    <Transaction>2021/12/07 22:10:27.592,D:\Development\GitHub\DocTo\src\configInput.pas=D:\Development\GitHub\DocTo\src\configOutput.pas</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="..\..\DocTo"/>
@@ -12,10 +17,13 @@
     <File Path="..\changes.txt"/>
     <File Path="..\readme.md"/>
     <File Path="res"/>
+    <File Path="res\HelpCompatibilityMode.txt"/>
     <File Path="res\HelpErrors.txt"/>
     <File Path="res\HelpJSONLog.txt"/>
     <File Path="res\HelpLog.txt"/>
     <File Path="res\HelpWebHook.txt"/>
+    <File Path="res\PPConst.txt"/>
+    <File Path="res\ppFormats.txt"/>
     <File Path="res\ppFormatsExt.txt"/>
     <File Path="res\WDConst.txt"/>
     <File Path="res\wdEncoding.txt"/>
@@ -24,9 +32,6 @@
     <File Path="res\wdFormatsExt.txt"/>
     <File Path="res\xlsFormats.txt"/>
     <File Path="res\xlsFormatsExt.txt"/>
-    <File Path="res\ppFormats.txt"/>
-    <File Path="res\PPConst.txt"/>
-    <File Path="res\HelpCompatibilityMode.txt"/>
     <File Path="datamodSSL.pas"/>
     <File Path="datamodSSL.dfm"/>
     <File Path="ExcelUtils.pas"/>
@@ -39,5 +44,7 @@
     <File Path="Word_TLB_Constants.pas"/>
     <File Path="Excel_TLB_Constants.pas"/>
     <File Path="PowerPoint_TLB_Constants.pas"/>
+    <File Path="baseConfig.pas"/>
+    <File Path="configInput.pas"/>
   </ProjectSortOrder>
 </BorlandProject>
