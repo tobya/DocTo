@@ -8,7 +8,7 @@ uses Classes,System.Contnrs,
 
 type
 
-TParamLoader = class
+TParamLoader = class  abstract
   private
     fParamID : string;
   protected

@@ -6,11 +6,11 @@ uses classes, MainUtils,System.Contnrs,
  baseConfig;
 
 type
-TParamOutput = class(TParamLoader)
+TParamOutputExtension = class(TParamLoader)
 public
-  procedure RegisterParams(List : TStrings);
-  procedure Load(Converter : TDocumentConverter; Param, Value : String);
-  function  ShouldDec : Boolean;
+  procedure RegisterParams(List : TStrings);   override;
+  procedure Load(Converter : TDocumentConverter; Param, Value : String);   override;
+  function  ShouldDec : Boolean;   override;
 
 end;
 
@@ -18,7 +18,7 @@ implementation
 
 { TParamOutput }
 
-procedure TParamOutput.Load(Converter: TDocumentConverter; Param,
+procedure TParamOutputExtension.Load(Converter: TDocumentConverter; Param,
   Value: String);
 begin
 
@@ -35,13 +35,13 @@ begin
 
 end;
 
-procedure TParamOutput.RegisterParams(List: TStrings);
+procedure TParamOutputExtension.RegisterParams(List: TStrings);
 begin
   List.Values['-OX'] := Self.ClassName;
     List.Values['--OUTPUTEXTENSION'] := Self.ClassName;
 end;
 
-function TParamOutput.ShouldDec: Boolean;
+function TParamOutputExtension.ShouldDec: Boolean;
 begin
     Result := false;
 end;

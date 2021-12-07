@@ -8,9 +8,9 @@ uses classes, MainUtils,System.Contnrs, Sysutils,
 type
 TParamInput = class(TParamLoader)
 public
-  procedure RegisterParams(List : TStrings);
-  procedure Load(Converter : TDocumentConverter; Param, Value : String);
-  function  ShouldDec : Boolean;
+  procedure RegisterParams(List : TStrings);  override;
+  procedure Load(Converter : TDocumentConverter; Param, Value : String); override;
+  function  ShouldDec : Boolean; override;
 
 end;
 
@@ -26,7 +26,7 @@ begin
       // Before doing anything else expand file name to remove any relative paths.
       Converter.InputFile := ExpandFileName(Value);
 
-      Converter.logdebug('Input File is: ' + Converter.InputFile,CHATTY);
+      Converter.logdebug('[TPARAMINput]Input File is: ' + Converter.InputFile,CHATTY);
 
       tmppath := ExtractFilePath(Converter.InputFile);
 
