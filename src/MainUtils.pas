@@ -135,7 +135,7 @@ type
     procedure SetOutputLogFile(const Value: String);
     function IsValidFormat(FormatID : Integer): Boolean;
 
-    procedure HaltWithError(ErrorNo:Integer; Msg : String);
+
     procedure SetLogToFile(const Value: Boolean);
     procedure SetLogFilename(const Value: String);
     procedure ListFiles(const PathName, FileName: string; const SubDir: boolean; outFiles: TStrings);
@@ -152,26 +152,8 @@ type
     procedure SetIsDirOutput(const Value: Boolean);
     procedure SetIsFileOutput(const Value: Boolean);
     procedure SetLogLevel(const Value: integer);
-    property InputIsFile : Boolean read FInputIsFile write SetIsFileInput;
-    property InputIsDir : Boolean read FInputIsDir write SetIsDirInput;
-    property OutputIsFile : Boolean read FOutputIsFile write SetIsFileOutput;
-    property OutputIsDir : Boolean read FOutputIsDir write SetIsDirOutput;
-    property OutputIsStdOut : Boolean read FOutputIsStdOut write SetOutputIsStdOut;
-    property DoSubDirs : Boolean read FDoSubDirs write SetDoSubDirs;
-    property OutputExt : string read FOutputExt write SetOutputExt;
-    property LogLevel : integer read FLogLevel write SetLogLevel;
-    property RemoveFileOnConvert: boolean read FRemoveFileOnConvert write SetRemoveFileOnConvert;
-    property Ignore_MACOSX : boolean   read FIgnore_MACOSX write SetIgnore_MACOSX;
-    property List_ErrorDocs : Boolean read FList_ErrorDocs write SetList_ErrorDocs ;
-    property List_ErrorDocs_Seconds : Integer read FList_ErrorDocs_Seconds write SetList_ErrorDocs_Seconds ;
-    property Ignore_ErrorDocs : Boolean read FIgnore_ErrorDocs write SetIgnore_ErrorDocs;
-    property pdfOpenAfterExport: Boolean read FPDFOpenAfterExport write SetpdfOpenAfterExport;
-    property pdfPrintFromPage : integer read FpdfPrintFromPage;
-    property pdfPrintToPage : integer read FpdfPrintToPage;
-    property useISO190051 : boolean read FuseISO190051;
-    property ExportMarkup : integer read fExportMarkup;
-    property WordConstants : TResourceStrings read getWordConstants;
-    property OfficeAppName : String read FOfficeAppName write FOfficeAppName;
+
+
 
 
     // Events
@@ -230,7 +212,7 @@ type
     procedure LogResourceHelp(HelpResName : String);
     procedure LogVersionInfo(ForceReload : boolean = true);
 
-
+    procedure HaltWithError(ErrorNo:Integer; Msg : String);
 
     procedure LogWordFormats();
     procedure LogExcelFormats();
@@ -257,6 +239,26 @@ type
     property BookMarkSource: Integer read FBookMarkSource;
     property pdfExportRange : Integer read FPdfExportRange_Word write SetPDfExportRange  ;
 
+    property InputIsFile : Boolean read FInputIsFile write SetIsFileInput;
+    property InputIsDir : Boolean read FInputIsDir write SetIsDirInput;
+    property OutputIsFile : Boolean read FOutputIsFile write SetIsFileOutput;
+    property OutputIsDir : Boolean read FOutputIsDir write SetIsDirOutput;
+    property OutputIsStdOut : Boolean read FOutputIsStdOut write SetOutputIsStdOut;
+    property DoSubDirs : Boolean read FDoSubDirs write SetDoSubDirs;
+    property OutputExt : string read FOutputExt write SetOutputExt;
+    property LogLevel : integer read FLogLevel write SetLogLevel;
+    property RemoveFileOnConvert: boolean read FRemoveFileOnConvert write SetRemoveFileOnConvert;
+    property Ignore_MACOSX : boolean   read FIgnore_MACOSX write SetIgnore_MACOSX;
+    property List_ErrorDocs : Boolean read FList_ErrorDocs write SetList_ErrorDocs ;
+    property List_ErrorDocs_Seconds : Integer read FList_ErrorDocs_Seconds write SetList_ErrorDocs_Seconds ;
+    property Ignore_ErrorDocs : Boolean read FIgnore_ErrorDocs write SetIgnore_ErrorDocs;
+    property pdfOpenAfterExport: Boolean read FPDFOpenAfterExport write SetpdfOpenAfterExport;
+    property pdfPrintFromPage : integer read FpdfPrintFromPage;
+    property pdfPrintToPage : integer read FpdfPrintToPage;
+    property useISO190051 : boolean read FuseISO190051;
+    property ExportMarkup : integer read fExportMarkup;
+    property WordConstants : TResourceStrings read getWordConstants;
+    property OfficeAppName : String read FOfficeAppName write FOfficeAppName;
 
     property IsWord : Boolean read getIsWord;
     property IsExcel : Boolean read getIsExcel;
