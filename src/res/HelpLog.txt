@@ -17,6 +17,8 @@ Parameters markers are case insensitive.
       --excel
   -PP Use Powerpoint for Conversion. help '-h -pp'
       --powerpoint
+  -VS Use Visio for Conversion. 
+      --visio
   -F  Input File or Directory
       --inputfile
   -FX Input Extension to search for if directory. (.rtf .txt etc)

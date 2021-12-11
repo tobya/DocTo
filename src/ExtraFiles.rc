@@ -19,3 +19,4 @@ WORDCONSTANTS   TEXT    res\WDConst.txt
 WORDCONSTANTS_EXTRA   TEXT    res\WDExtraConst.txt
 XLCONSTANTS TEXT res\XLConst.txt
 PPCONSTANTS TEXT res\PPConst.txt
+VSCONSTANTS TEXT res\VSConst.txt

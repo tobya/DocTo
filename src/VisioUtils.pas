@@ -3,6 +3,8 @@ unit VisioUtils;
 interface
 
 uses Classes,Variants,ActiveX, ComObj,
+
+    Visio_TLB,
       ResourceUtils, MainUtils;
 type
 
@@ -65,6 +67,7 @@ function TVisioConverter.ExecuteConversion(
                           OutputFileFormat: Integer): TConversionInfo;
 var
 ActiveVisioDoc : OleVariant;
+Format: integer;
 begin
         Result.Successful := false;
         Result.InputFile := fileToConvert;
@@ -72,16 +75,27 @@ begin
         ActiveVisioDoc := VisioApp.Documents.Open(fileToConvert);
 
         // Save as file and close
-        if OutputFileFormat = 5000 then
+        if OutputFileFormat = 50000 then
         begin
-              ActiveVisioDoc.ExportAsFixedFormat(1,OutputFileName,0,0);
-        end else if OutputFileFormat = 5001 then
+              Format := visFixedFormatPDF;
+        end else if OutputFileFormat = 50001 then
         begin
-              ActiveVisioDoc.ExportAsFixedFormat(2,OutputFileName,0,0);
+              Format := visFixedFormatXPS;
         end;
 
-//               ActiveVisioDoc.SaveAs(OutputFileName, OutputFileFormat, false);
-  //      ActiveVisioDoc.Save;
+
+        ActiveVisioDoc.ExportAsFixedFormat(Format, //FixedFormat
+                                           OutputFilename, //OutputFileName
+                                           visDocExIntentPrint,  //Intent
+                                           visPrintAll, //PrintRange
+                                           emptyParam, //FromPage
+                                           emptyParam, //ToPage
+                                           emptyParam, //ColorAsBlack
+                                           emptyParam, //IncludeBackground
+                                           emptyParam, //IncludeDocumentProperties
+                                           emptyParam, //IncludeStructureTags
+                                           Self.useISO190051); //UseISO19005_1
+                                            //FixedFormatExtClass //
 
         ActiveVisioDoc.Close;
 
@@ -92,7 +106,8 @@ end;
 
 function TVisioConverter.FormatsExtensions: TStringList;
 begin
-
+  fFormatsExtensions := TResourceStrings.Create('VSEXTENSIONS');
+  result := fFormatsExtensions;
 end;
 
 function TVisioConverter.OfficeAppVersion: String;
