@@ -160,9 +160,16 @@ Convert Word Document to PDF Files at <a href='https://www.iso.org/standard/3892
  - [ConvertToPDFArchiveiso19005-1pdf.md](ConvertToPDFArchiveiso19005-1pdf.md)
 
 
+Convert Visio Document to another file type
+==
+
+ - [How do I Convert a Microsoft Visio Document to a Adobe PDF Format?](ConvertVSDToFilePDF.md)
+ - [How do I Convert a Microsoft Visio Document to a Microsoft XPS Format?](ConvertVSDToFileXPS.md)
+
+
 Help Text
 --
 
 DocTo outputs a [help file](HelpLog.md) which provides details of all options. 
 
-Generated 11:18:00 20211204
+Generated 20:09:45 20211211
