@@ -61,6 +61,8 @@ begin
   Result := true;
 end;
 
+
+
 function TVisioConverter.ExecuteConversion(
                           fileToConvert,
                           OutputFilename: String;
@@ -109,6 +111,7 @@ begin
   fFormatsExtensions := TResourceStrings.Create('VSEXTENSIONS');
   result := fFormatsExtensions;
 end;
+
 
 function TVisioConverter.OfficeAppVersion: String;
 begin
