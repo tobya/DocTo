@@ -43,7 +43,17 @@ You might find some of the following commands also interesting.
  - [{[$LinkTitle]}]({[$L]})
 {[/foreach]}
 
+<a name="OtherTypes">Other File Types Available for Conversion</a>
+-
 
+The following values below can be used to convert a Word Document to another file type.
+
+
+````
+
+{[$ResourceFiles.vsFormats.contents]}
+
+````
 
 
     
