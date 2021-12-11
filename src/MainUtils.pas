@@ -27,6 +27,7 @@ Const
   MSWORD = 1;
   MSEXCEL = 2;
   MSPOWERPOINT = 3;
+  MSVISIO = 4;
 
   
   DOCTO_VERSION = '1.7.36';  // dont use 0x - choco needs incrementing versions.
@@ -821,6 +822,11 @@ begin
             (id = '--POWERPOINT') then
     begin
        Result := MSPOWERPOINT;
+    end
+    else if (id = '-VS') or
+            (id = '--VISIO') then
+    begin
+       Result := MSVISIO;
     end;
 
     FAppID := Result;
@@ -891,7 +897,10 @@ if  (id = '-XL') or
         (id = '-WD') or
         (id = '--WORD') or
         (id = '-PP') or
-        (id = '--POWERPOINT')    then
+        (id = '--POWERPOINT')   or
+        (id = '-VS') or
+        (id = '--VISIO') then
+
     begin
       // ignore here as these are checked in ChooseConverter
       dec(iparam);

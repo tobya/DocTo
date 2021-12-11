@@ -1,0 +1,2 @@
+vsPDF=pdf
+vsXPS=xps
