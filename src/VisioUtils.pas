@@ -61,6 +61,8 @@ begin
   Result := true;
 end;
 
+
+
 function TVisioConverter.ExecuteConversion(
                           fileToConvert,
                           OutputFilename: String;
