@@ -672,15 +672,45 @@ $Commands = [
         ],
        "Template" => "ConvertDoctoPDFA.tpl.md"
     ],
+    
+    "ConvertVSDToFile" => [ 
+        "Description" => "Convert Visio Document to another file type",
+        "Template" => "ConvertFromVsdToFile.tpl.md",
+        "Title" => 'How do I Convert a Microsoft Visio Document to a {[$Command.FileTypeDescription]}?'       , 
+        "Blocks" => [
+            [
+                ""
+            ]
+        ],
+        "Items" => [
+
+
+            [
+                "FileTypeExt" => 'PDF',
+                "FileTypeDescription" => 'Adobe PDF Format',
+                "FileFormat" => 'visFixedFormatPDF',
+                "RelatedLinks" => []
+            ],
+           
+              [
+                "FileTypeExt" => 'XPS',
+                "FileTypeDescription" => 'Microsoft XPS Format',
+                "FileFormat" => 'visFixedFormatXPS',
+                "RelatedLinks" => []
+            ],
+
+        ],
+    ],
 
 
 ];
 
 $Explain = [
 
-    "appwd" => ['cmd' => '-WD' , 'desc' => "This is a conversion using Microsoft Word.  This is not required but makes it easier to read"],
+    "appwd" => ['cmd' => '-WD' , 'desc' => "This is a conversion using Microsoft Word. "],
     "appxl" => ['cmd' => '-XL' , 'desc' => "This is a conversion using Microsoft Excel.  "],
     "apppp" => ['cmd' => '-PP' , 'desc' => "This is a conversion using Microsoft PowerPoint.  "],
+    "appvs" => ['cmd' => '-VS' , 'desc' => "This is a conversion using Microsoft Visio.  "],
     "dashf" => ['cmd' => '-f' , 'desc' => "The File or directory to be converted"],
     "dashfx" => ['cmd' => '-fx' , 'desc' => "File with this extension should be matched."],
     "dasho" => ['cmd' => '-o' , 'desc' => "The Output File or Directory where you would like the converted file to be written to."],

@@ -27,9 +27,10 @@ Const
   MSWORD = 1;
   MSEXCEL = 2;
   MSPOWERPOINT = 3;
+  MSVISIO = 4;
 
   
-  DOCTO_VERSION = '1.7.36';  // dont use 0x - choco needs incrementing versions.
+  DOCTO_VERSION = '1.7.37';  // dont use 0x - choco needs incrementing versions.
 
 type
 
@@ -82,6 +83,7 @@ type
     function getWordConstants: TResourceStrings;
     procedure LogMainHelp;
     procedure SetOutputIsStdOut(const Value: Boolean);
+    function getIsVisio: Boolean;
 
 
   protected
@@ -261,7 +263,7 @@ type
     property IsWord : Boolean read getIsWord;
     property IsExcel : Boolean read getIsExcel;
     Property IsPowerPoint : Boolean read getIsPP;
-
+    Property IsVisio : Boolean read getIsVisio;
   end;
 
 
@@ -821,6 +823,11 @@ begin
             (id = '--POWERPOINT') then
     begin
        Result := MSPOWERPOINT;
+    end
+    else if (id = '-VS') or
+            (id = '--VISIO') then
+    begin
+       Result := MSVISIO;
     end;
 
     FAppID := Result;
@@ -891,7 +898,10 @@ if  (id = '-XL') or
         (id = '-WD') or
         (id = '--WORD') or
         (id = '-PP') or
-        (id = '--POWERPOINT')    then
+        (id = '--POWERPOINT')   or
+        (id = '-VS') or
+        (id = '--VISIO') then
+
     begin
       // ignore here as these are checked in ChooseConverter
       dec(iparam);
@@ -1035,7 +1045,7 @@ if  (id = '-XL') or
           HaltWithConfigError(200, 'File Format ' + value + ' is invalid, please see help. -h.  To force use, use -TF');
         end;
       end
-      else
+      else  // string format such as 'XLcsv'
       begin
         FOutputFileFormatString := value;
 
@@ -1523,6 +1533,11 @@ end;
 function TDocumentConverter.getIsPP: Boolean;
 begin
     Result := MSPOWERPOINT = FAppID;
+end;
+
+function TDocumentConverter.getIsVisio: Boolean;
+begin
+  Result := MSVISIO = FAppID;
 end;
 
 function TDocumentConverter.getIsWord: Boolean;

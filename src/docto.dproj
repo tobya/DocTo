@@ -243,7 +243,7 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_3_Win32)'!=''">
         <VerInfo_MajorVer>1</VerInfo_MajorVer>
-        <Debugger_RunParams>-f &quot;.\Inputfiles\&quot;  -o &quot;..\newdir2&quot;    -T  wdFormatRTF -l 10</Debugger_RunParams>
+        <Debugger_RunParams>-VS -f &quot;..\test\inputfilesvs/payslips.vsdx&quot; -o &quot;..\test\generatedfiles\&quot; -t vsPDF -l 10</Debugger_RunParams>
         <VerInfo_Build>60</VerInfo_Build>
         <VerInfo_PreRelease>false</VerInfo_PreRelease>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
@@ -276,6 +276,8 @@
         <DCCReference Include="Word_TLB_Constants.pas"/>
         <DCCReference Include="Excel_TLB_Constants.pas"/>
         <DCCReference Include="PowerPoint_TLB_Constants.pas"/>
+        <DCCReference Include="VisioUtils.pas"/>
+        <DCCReference Include="Visio_TLB.pas"/>
         <None Include="..\readme.md"/>
         <None Include="res\wdFormats.txt"/>
         <None Include="res\HelpLog.txt"/>
@@ -285,7 +287,7 @@
         <None Include="res\HelpErrors.txt"/>
         <None Include="res\wdEncoding.txt"/>
         <None Include="..\changes.txt"/>
-        <None Include="res\xlsFormats.txt"/>
+        <None Include="res\vsFormats.txt"/>
         <None Include="res\xlsFormatsExt.txt"/>
         <None Include="..\changes.md"/>
         <None Include="res\ppFormatsExt.txt"/>
@@ -294,6 +296,8 @@
         <None Include="res\ppFormats.txt"/>
         <None Include="res\PPConst.txt"/>
         <None Include="res\HelpCompatibilityMode.txt"/>
+        <None Include="res\vsFormatsExt.txt"/>
+        <None Include="res\vsConst.txt"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -364,8 +368,39 @@
                 <Platform value="Win64">True</Platform>
             </Platforms>
             <Deployment Version="3">
-                <DeployFile LocalName="$(BDS)\Redist\osx32\libcgunwind.1.0.dylib" Class="DependencyModule">
-                    <Platform Name="OSX32">
+                <DeployFile LocalName="res\HelpErrors.txt" Configuration="TobyBuild" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="New1.txt" Configuration="TobyBuild" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="res\wdEncoding.txt" Configuration="TobyBuild" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="res\xlsFormatsExt.txt" Configuration="TobyBuild" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="res\wdExtraConst.txt" Configuration="TobyBuild" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="res\PPConst.txt" Configuration="TobyBuild" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -380,7 +415,95 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\exe\docto.rsm" Configuration="TobyBuild" Class="DebugSymbols"/>
+                <DeployFile LocalName="..\exe\docto.exe" Configuration="TobyBuild" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>docto.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="res\wdFormats.txt" Configuration="TobyBuild" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="res\vsFormats.txt" Configuration="TobyBuild" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="res\ppFormats.txt" Configuration="TobyBuild" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="res\WDConst.txt" Configuration="TobyBuild" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="$(BDS)\Redist\osx32\libcgunwind.1.0.dylib" Class="DependencyModule">
+                    <Platform Name="OSX32">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\readme.md" Configuration="TobyBuild" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="res\wdFormatsExt.txt" Configuration="TobyBuild" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\changes.txt" Configuration="TobyBuild" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="res\HelpCompatibilityMode.txt" Configuration="TobyBuild" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\changes.md" Configuration="TobyBuild" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="res\HelpLog.txt" Configuration="TobyBuild" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="res\HelpWebHook.txt" Configuration="TobyBuild" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="res\HelpJSONLog.txt" Configuration="TobyBuild" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="res\ppFormatsExt.txt" Configuration="TobyBuild" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployClass Name="AdditionalDebugSymbols">
                     <Platform Name="OSX32">
                         <Operation>1</Operation>

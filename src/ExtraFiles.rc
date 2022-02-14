@@ -1,9 +1,11 @@
 WORDFORMATS     TEXT    res\wdFormats.txt
 EXCELFORMATS TEXT    res\xlsFormats.txt
 PPFORMATS TEXT  res\ppFormats.txt
+VSFORMATS TEXT  res\vsFormats.txt
 DOCEXTENSIONS      TEXT    res\wdFormatsExt.txt
 XLSEXTENSIONS TEXT res\xlsFormatsExt.txt
 PPEXTENSIONS TEXT res\ppFormats.txt
+VSEXTENSIONS TEXT res\vsFormatsExt.txt
 
 
 HELP    TEXT    res\HelpLog.txt
@@ -17,3 +19,4 @@ WORDCONSTANTS   TEXT    res\WDConst.txt
 WORDCONSTANTS_EXTRA   TEXT    res\WDExtraConst.txt
 XLCONSTANTS TEXT res\XLConst.txt
 PPCONSTANTS TEXT res\PPConst.txt
+VSCONSTANTS TEXT res\VSConst.txt
