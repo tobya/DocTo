@@ -241,10 +241,11 @@ type
 
     function ConfigFileName : String;
 
-    property OutputLog : Boolean read FOutputLog write SetOutputLog;
+
+    property OutputLog : Boolean    read FOutputLog write SetOutputLog;
     property OutputLogFile : String read FOutputLogFile write SetOutputLogFile;
-    Property InputFile : String read FInputFile write SetInputFile;
-    Property OutputFile : String read FOutputFile write SetOutputFile;
+    Property InputFile : String     read FInputFile write SetInputFile;
+    Property OutputFile : String    read FOutputFile write SetOutputFile;
     Property OutputFileFormat : Integer read FOutputFileFormat write SetOutputFileFormat;
     Property OutputFileFormatString : String read FOutputFileFormatString write SetOutputFileFormatString;
     Property LogToFile : Boolean read FLogToFile write SetLogToFile;
@@ -420,6 +421,8 @@ begin
 
       halt(2);
 end;
+
+
 
 
 procedure TDocumentConverter.LogMainHelp();

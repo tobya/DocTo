@@ -4,7 +4,7 @@
     <Transaction>2020/05/25 15:25:09.000.399,=D:\Development\GitHub\DocTo\src\res\HelpCompatibilityMode.txt</Transaction>
     <Transaction>2020/05/25 15:31:23.000.508,D:\Development\GitHub\DocTo\src\res\WdCompatibilityMode.txt=</Transaction>
     <Transaction>2021/12/02 22:25:13.000.761,=D:\Development\GitHub\DocTo\src\New1.bat</Transaction>
-    <Transaction>2021/12/02 22:25:32.000.527,D:\Development\GitHub\DocTo\test\TestDocTo_Quiet.bat=D:\Development\GitHub\DocTo\src\New1.bat</Transaction>
+    <Transaction>2021/12/02 22:25:32.000.527,D:\Development\GitHub\DocTo\src\New1.bat=D:\Development\GitHub\DocTo\test\TestDocTo_Quiet.bat</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="..\..\DocTo"/>
@@ -22,11 +22,13 @@
     <File Path="res\wdExtraConst.txt"/>
     <File Path="res\wdFormats.txt"/>
     <File Path="res\wdFormatsExt.txt"/>
-    <File Path="res\xlsFormats.txt"/>
     <File Path="res\xlsFormatsExt.txt"/>
     <File Path="res\ppFormats.txt"/>
     <File Path="res\PPConst.txt"/>
     <File Path="res\HelpCompatibilityMode.txt"/>
+    <File Path="res\vsConst.txt"/>
+    <File Path="res\vsFormats.txt"/>
+    <File Path="res\vsFormatsExt.txt"/>
     <File Path="datamodSSL.pas"/>
     <File Path="datamodSSL.dfm"/>
     <File Path="ExcelUtils.pas"/>
@@ -39,5 +41,7 @@
     <File Path="Word_TLB_Constants.pas"/>
     <File Path="Excel_TLB_Constants.pas"/>
     <File Path="PowerPoint_TLB_Constants.pas"/>
+    <File Path="VisioUtils.pas"/>
+    <File Path="Visio_TLB.pas"/>
   </ProjectSortOrder>
 </BorlandProject>
