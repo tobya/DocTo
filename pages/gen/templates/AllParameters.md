@@ -80,7 +80,59 @@ If -T is an integer if it is a value that wasnt available when DocTo was compile
 If you use -TF it will pass the integer value of -T to the Office Application without checking.
 
 ### Logging
-> -
+> -L --loglevel
+
+Set level of log output.  -l 10 is useful for debugging. Use -l 0 or -Q to surpress logging.
+
+####Levels
+- 10 VERBOSE
+- 9 CHATTY
+- 5 STANDARD
+- 1 ERRORS (default)
+- 0 SILENT
+
+### Document Compatibility
+> -C --compatibility
+
+Compatibility Mode Integer. Set to an INTEGER value from [msdn list](https://msdn.microsoft.com/en-us/library/office/ff192388.aspx) .
+
+Set the compatibility mode of the version of word the document is to be compatible with.  Particuarily
+useful when wishing to convert older documents to current version. Can be used to convert old 
+word documents to be compatible with [onedrive](https://github.com/tobya/DocTo/wiki/OneDrive-Conversion).
+
+### Document Encoding
+> -E --encoding
+
+Sets codepage Encoding.  See [MSDN](https://msdn.microsoft.com/en-us/library/office/ff860880.aspx)
+ for more details and values.
+
+### List Long running Files
+> -N --ListLongRunning
+
+Some files when being converted can cause a dialog box to pop up.  This can only be fixed by 
+manual intervention.  By setting this parameter you can at least record the documents that are 
+causing difficulty (to a file called `docto.ignore.txt`) and if you set `-NX` these documents will be skipped on subsequent executions.
+
+### Skip Files in docto.ignore.txt file
+> -NX --IgnoreLongRunningList
+
+When set any files listed in `docto.ignore.txt` in the same directory as DocTo.exe will be skipped.
+This allows troublesome documents in a directory structure to be ignored.
+
+
+
+### Special Case Parameters
+
+### Do not ignore __MACOSX Directory
+> -M --ignoreMACOS
+
+By default DocTo ignores any files in a hidden `__MACOSX` directory that MACOS creates.  This directory is oftern 
+present on an external disk that is shared between systesm.  If you wish to check this dir 
+set this value. You must specify value eg `-M false`.
+
+
+
+
 
 
 
