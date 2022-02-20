@@ -273,7 +273,7 @@ begin
                    pdfPrintFromPage,//   From:=1,
                    pdfprintTopage,//   To:=1, _
                    ExportMarkup,//   Item:=
-                   True,//   IncludeDocProps:=True,
+                   IncludeDocProps,//   IncludeDocProps:=True,
                    true,//   KeepIRM:=True, _
                    BookmarkSource,//   CreateBookmarks
                    true,//   DocStructureTags:=True, _

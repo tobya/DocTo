@@ -89,6 +89,9 @@ Long Parameters:
   --no-subdirs Only convert specified directory. Do not recurse sub directories
   --ExportMarkup Value for wdExportItem - default wdExportDocumentContent.
       use    wdExportDocumentWithMarkup to export all word comments with pdf
+  --no-IncludeDocProperties 
+  --no-DocProp
+      Do not include Document Properties in the exported file.      
   --PDF-OpenAfterExport
       If you wish for a converted PDF to be opened after creation. No value req.
   --PDF-FromPage
