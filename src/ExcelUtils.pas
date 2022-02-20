@@ -175,7 +175,7 @@ begin
                 ExcelApp.activeWorkbook.ExportAsFixedFormat(XlFixedFormatType_xlTypePDF,
                                                             OutputFilename,
                                                             EmptyParam, //Quality
-                                                            EmptyParam, // IncludeDocProperties,
+                                                            IncludeDocProps, // IncludeDocProperties,
                                                             False,// IgnorePrintAreas,
                                                             FromPage , // From,
                                                             ToPage, //  To,

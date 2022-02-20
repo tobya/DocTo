@@ -94,8 +94,8 @@ begin
                                            emptyParam, //ToPage
                                            emptyParam, //ColorAsBlack
                                            emptyParam, //IncludeBackground
-                                           emptyParam, //IncludeDocumentProperties
-                                           emptyParam, //IncludeStructureTags
+                                           IncludeDocProps, //IncludeDocumentProperties
+                                           DocStructureTags, //IncludeStructureTags
                                            Self.useISO190051); //UseISO19005_1
                                             //FixedFormatExtClass //
 
