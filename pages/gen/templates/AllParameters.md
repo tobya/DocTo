@@ -114,10 +114,32 @@ manual intervention.  By setting this parameter you can at least record the docu
 causing difficulty (to a file called `docto.ignore.txt`) and if you set `-NX` these documents will be skipped on subsequent executions.
 
 ### Skip Files in docto.ignore.txt file
-> -NX --IgnoreLongRunningList
+> -NX --IgnoreLongRunningList {no-value-required}
 
 When set any files listed in `docto.ignore.txt` in the same directory as DocTo.exe will be skipped.
 This allows troublesome documents in a directory structure to be ignored.
+
+### Logging
+
+### Write to Log File
+> -G --writelogfile {no-value-required}
+
+Write the log to a file as well as stdout. `docto.log` by default.  
+
+### Log File
+> -GL --logfilename  {filename}
+
+Specify the filename that you wish the logfile to be written to.
+
+### Quiet Mode
+> -Q --quiet
+
+No output to stdout.  Everything including errors are surpressed.  Use in conjunction with `-G`
+to ensure you get errors.
+
+### Delete Input Files
+> -R --deletefiles
+
 
 
 
