@@ -277,7 +277,7 @@ begin
                    KeepIRM,//   KeepIRM:=True, _
                    BookmarkSource,//   CreateBookmarks
                    DocStructureTags,//   DocStructureTags:=True, _
-                   true,//   BitmapMissingFonts:=True,
+                   BitmapMissingFonts,//   BitmapMissingFonts:=True,
                    useISO190051 //   UseISO19005_1:=False
          );
         end else

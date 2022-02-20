@@ -67,6 +67,7 @@ type
     FIncludeDocProps: boolean;
     FKeepIRM: boolean;
     FDocStructureTags: boolean;
+    FBitmapMissingFonts: boolean;
 
 
     procedure SetCompatibilityMode(const Value: Integer);
@@ -90,6 +91,7 @@ type
     procedure SetIncludeDocProps(const Value: boolean);
     procedure SetKeepIRM(const Value: boolean);
     procedure SetDocStructureTags(const Value: boolean);
+    procedure SetBitmapMissingFonts(const Value: boolean);
 
 
   protected
@@ -185,6 +187,8 @@ type
     property IncludeDocProps : boolean read FIncludeDocProps write SetIncludeDocProps;
     property KeepIRM : boolean read FKeepIRM write SetKeepIRM; //  XPS-no-IRM
     property DocStructureTags : boolean read FDocStructureTags write SetDocStructureTags;
+    property BitmapMissingFonts : boolean read FBitmapMissingFonts write SetBitmapMissingFonts;
+
 
     property WordConstants : TResourceStrings read getWordConstants;
     property OfficeAppName : String read FOfficeAppName write FOfficeAppName;
@@ -509,6 +513,7 @@ begin
   FIncludeDocProps := true;
   FKeepIRM := true;
   FDocStructureTags := true;
+  FBitmapMissingFonts := true;
   FInputFiles := TStringList.Create;
 end;
 
@@ -1241,6 +1246,11 @@ if  (id = '-XL') or
       FKeepIRM := false;
       dec(iParam);
     end
+    else if (id = '--PDF-NO-BITMAPMISSINGFONTS') then
+    begin
+      FBitmapMissingFonts := false;
+      dec(iParam);
+    end
     else if (id = '-W') or
             (id = '--WEBHOOK') then
     begin
@@ -1555,6 +1565,11 @@ begin
   ConfigFile.Add( OfficeAppName + '_' + FormatDateTime('yyyymmdd',now) + '=' + Version);
   ConfigFile.SaveToFile(ConfigFileName);
   LogDebug('Writing Version to File:' + ConfigFileName,VERBOSE);
+end;
+
+procedure TDocumentConverter.SetBitmapMissingFonts(const Value: boolean);
+begin
+  FBitmapMissingFonts := Value;
 end;
 
 procedure TDocumentConverter.SetCompatibilityMode(const Value: Integer);
