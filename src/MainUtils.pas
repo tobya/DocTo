@@ -64,6 +64,7 @@ type
     FOutputIsStdOut: Boolean;
     fExportMarkup: integer;
     FOfficeAppName: String;
+    FIncludeDocProps: boolean;
 
 
     procedure SetCompatibilityMode(const Value: Integer);
@@ -84,6 +85,7 @@ type
     procedure LogMainHelp;
     procedure SetOutputIsStdOut(const Value: Boolean);
     function getIsVisio: Boolean;
+    procedure SetIncludeDocProps(const Value: boolean);
 
 
   protected
@@ -175,6 +177,7 @@ type
     property useISO190051 : boolean read FuseISO190051;
     property pdfOptimizeFor : integer read fpdfOptimizeFor write fpdfOptimizeFor;
     property ExportMarkup : integer read fExportMarkup;
+    property IncludeDocProps : boolean read FIncludeDocProps write SetIncludeDocProps;
     property WordConstants : TResourceStrings read getWordConstants;
     property OfficeAppName : String read FOfficeAppName write FOfficeAppName;
 
@@ -495,6 +498,7 @@ begin
   FPDFPrintFromPage := 1;
   FPDFPrintTopage := -1;
   FuseISO190051 := false;
+  FIncludeDocProps := true;
 
   FInputFiles := TStringList.Create;
 end;
@@ -1212,6 +1216,12 @@ if  (id = '-XL') or
            HaltWithConfigError(205,'Invalid value for --EXPORTMARKUP :' + value);
          end;
     end
+    else if (id = '--NO-INCLUDEDOCPROPERTIES')
+         OR (id = '--NO-DOCPROP') then
+    begin
+      FIncludeDocProps := false;
+      dec(iParam);
+    end
     else if (id = '-W') or
             (id = '--WEBHOOK') then
     begin
@@ -1600,6 +1610,11 @@ end;
 procedure TDocumentConverter.SetList_ErrorDocs_Seconds(const Value: Integer);
 begin
   FList_ErrorDocs_Seconds := Value;
+end;
+
+procedure TDocumentConverter.SetIncludeDocProps(const Value: boolean);
+begin
+  FIncludeDocProps := Value;
 end;
 
 procedure TDocumentConverter.SetInputFile(const Value: String);
