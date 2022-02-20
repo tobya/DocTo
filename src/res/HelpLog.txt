@@ -105,8 +105,11 @@ Long Parameters:
   --XPS-no-IRM
       Do not copy IRM permissions to exported XPS document.
   --PDF-No-DocStructureTags
-      Do not include DocStructureTags to help screen readers.   
-  --use-ISO190051 Create PDF to the ISO 19005-1 standard.
+      Do not include DocStructureTags to help screen readers.
+  --PDF-no-BitmapMissingFonts
+      Do not bitmap missing fonts, fonts will be substituted.   
+  --use-ISO190051 
+      Create PDF to the ISO 19005-1 standard.
 
 
 
