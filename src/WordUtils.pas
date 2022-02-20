@@ -274,7 +274,7 @@ begin
                    pdfprintTopage,//   To:=1, _
                    ExportMarkup,//   Item:=
                    IncludeDocProps,//   IncludeDocProps:=True,
-                   true,//   KeepIRM:=True, _
+                   KeepIRM,//   KeepIRM:=True, _
                    BookmarkSource,//   CreateBookmarks
                    true,//   DocStructureTags:=True, _
                    true,//   BitmapMissingFonts:=True,
