@@ -66,6 +66,7 @@ type
     FOfficeAppName: String;
     FIncludeDocProps: boolean;
     FKeepIRM: boolean;
+    FDocStructureTags: boolean;
 
 
     procedure SetCompatibilityMode(const Value: Integer);
@@ -88,6 +89,7 @@ type
     function getIsVisio: Boolean;
     procedure SetIncludeDocProps(const Value: boolean);
     procedure SetKeepIRM(const Value: boolean);
+    procedure SetDocStructureTags(const Value: boolean);
 
 
   protected
@@ -182,7 +184,7 @@ type
     property ExportMarkup : integer read fExportMarkup;
     property IncludeDocProps : boolean read FIncludeDocProps write SetIncludeDocProps;
     property KeepIRM : boolean read FKeepIRM write SetKeepIRM; //  XPS-no-IRM
-
+    property DocStructureTags : boolean read FDocStructureTags write SetDocStructureTags;
 
     property WordConstants : TResourceStrings read getWordConstants;
     property OfficeAppName : String read FOfficeAppName write FOfficeAppName;
@@ -506,6 +508,7 @@ begin
   FuseISO190051 := false;
   FIncludeDocProps := true;
   FKeepIRM := true;
+  FDocStructureTags := true;
   FInputFiles := TStringList.Create;
 end;
 
@@ -1228,6 +1231,11 @@ if  (id = '-XL') or
       FIncludeDocProps := false;
       dec(iParam);
     end
+    else if (id = '--PDF-NO-DOCSTRUCTURETAGS') then
+    begin
+      FDocStructureTags := false;
+      dec(iParam);
+    end
     else if (id = '--XPS-NO-IRM') then
     begin
       FKeepIRM := false;
@@ -1552,6 +1560,11 @@ end;
 procedure TDocumentConverter.SetCompatibilityMode(const Value: Integer);
 begin
   FCompatibilityMode := Value;
+end;
+
+procedure TDocumentConverter.SetDocStructureTags(const Value: boolean);
+begin
+  FDocStructureTags := Value;
 end;
 
 procedure TDocumentConverter.SetDoSubDirs(const Value: Boolean);

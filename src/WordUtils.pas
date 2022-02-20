@@ -276,7 +276,7 @@ begin
                    IncludeDocProps,//   IncludeDocProps:=True,
                    KeepIRM,//   KeepIRM:=True, _
                    BookmarkSource,//   CreateBookmarks
-                   true,//   DocStructureTags:=True, _
+                   DocStructureTags,//   DocStructureTags:=True, _
                    true,//   BitmapMissingFonts:=True,
                    useISO190051 //   UseISO19005_1:=False
          );
