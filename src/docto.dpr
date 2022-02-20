@@ -54,7 +54,7 @@ begin
      DocConv := TWordDocConverter.Create;
      XLSConv := TExcelXLSConverter.Create;
      PPConv :=  TPowerPointConverter.Create;
-     VSConv := TVisioConverter.Create;
+     VSConv :=  TVisioConverter.Create;
     try
 
       for i := 1 to ParamCount do

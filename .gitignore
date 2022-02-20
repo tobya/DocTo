@@ -42,6 +42,7 @@ __history/
 *.orig
 *.local
 *.res
+.idea/
 
 #################
 ## Eclipse
