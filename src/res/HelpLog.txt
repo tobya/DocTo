@@ -96,6 +96,9 @@ Long Parameters:
       Other values wdExportCurrentPage, wdExportSelection
   --PDF-ToPage
       Save a range of pages to pdf. Integer. --PDF-FromPage must also be set.
+  --PDF-OptimizeFor
+      Set the pdf/xps to be optimized for print or screen.
+      Default  ForPrint | ForOnScreen
   --use-ISO190051 Create PDF to the ISO 19005-1 standard.
 
 

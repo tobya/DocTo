@@ -268,7 +268,7 @@ begin
                    OutputFilename,  //   OutputFileName:=
                    OutputfileFormat, //   ExportFormat:=
                    PDFOpenAfterExport, // OpenAfterExport
-                   wdExportOptimizeForPrint,//   OptimizeFor:= _
+                   pdfOptimizeFor ,//   OptimizeFor:= _wdExportOptimizeForPrint
                    pdfExportRange,//   Range
                    pdfPrintFromPage,//   From:=1,
                    pdfprintTopage,//   To:=1, _
