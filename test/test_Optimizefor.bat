@@ -1,6 +1,6 @@
-REM Try on Directory
- "../exe/docto.exe"  -f "%~d0%~p0Inputfiles\"  -o "%~d0%~p0GeneratedFiles"     -T  wdFormatPDF -OX .pdf   -M true
+REM Try optimize options on large file.
+ "../exe/docto.exe"  -f ".\Inputfiles\GEOCADx (1).docx"  -o ".\GeneratedFiles\GEOCADx_OptimizedforPrint.pdf"   -T  wdFormatPDF --PDF-OptimizeFor forPrint    -l 10
+ "../exe/docto.exe"  -f ".\Inputfiles\GEOCADx (1).docx"  -o ".\GeneratedFiles\GEOCADx_OptimizedforScreen.pdf"   -T  wdFormatPDF -l 10 --PDF-OptimizeFor forOnScreen
 
-
-REM Try on Directory no recurse
-"../exe/docto.exe"  -f "%~d0%~p0Inputfiles\"  -o "%~d0%~p0GeneratedFiles"     -T  wdFormatPDF -OX .pdf   -M true --no-subdirs
+REM Check works with differnt cases
+"../exe/docto.exe"  -f ".\Inputfiles\GEOCADx (1).docx"  -o ".\GeneratedFiles\GEOCADx_OptimizedforScreen2.pdf"   -T  wdFormatPDF -l 10 --PDF-OptimizeFor foronscreen
