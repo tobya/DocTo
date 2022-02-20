@@ -103,7 +103,9 @@ Long Parameters:
       Set the pdf/xps to be optimized for print or screen.
       Default  ForPrint | ForOnScreen
   --XPS-no-IRM
-      Do not copy IRM permissions to exported XPS document. 
+      Do not copy IRM permissions to exported XPS document.
+  --PDF-No-DocStructureTags
+      Do not include DocStructureTags to help screen readers.   
   --use-ISO190051 Create PDF to the ISO 19005-1 standard.
 
 
