@@ -117,6 +117,8 @@ type
     FPDFPrintFromPage : integer;
     FPDFPrintToPage : integer;
 
+    fpdfOptimizeFor : integer;
+
     FHaltOnWordError: Boolean;
     FRemoveFileOnConvert: boolean;
 
@@ -171,6 +173,7 @@ type
     property pdfPrintFromPage : integer read FpdfPrintFromPage;
     property pdfPrintToPage : integer read FpdfPrintToPage;
     property useISO190051 : boolean read FuseISO190051;
+    property pdfOptimizeFor : integer read fpdfOptimizeFor write fpdfOptimizeFor;
     property ExportMarkup : integer read fExportMarkup;
     property WordConstants : TResourceStrings read getWordConstants;
     property OfficeAppName : String read FOfficeAppName write FOfficeAppName;
@@ -486,6 +489,7 @@ begin
   fSkipDocsExist :=  false;
   FFirstLogEntry := true;
   FBookMarkSource := 1; //wdExportCreateHeadingBookmarks
+  fpdfOptimizeFor := 0; // wdExportOptimizeForPrint
   fPDFOpenAfterExport := false;
   FPdfExportRange_Word := wdExportAllDocument;
   FPDFPrintFromPage := 1;
@@ -1184,6 +1188,19 @@ if  (id = '-XL') or
 
 
     end
+    else if (id = '--PDF-OPTIMIZEFOR') or
+            (id = '--PDF-OPTIMISEFOR') then
+    BEGIN
+
+         if (WordConstants.Exists(value)) then
+         begin
+           pdfOptimizeFor := StrToInt( WordConstants.Values[value]);
+           logdebug('Set pdfOptimizeFor To: '  + value + ':' + InttoStr(pdfOptimizeFor), Verbose);
+         end else
+         begin
+           HaltWithConfigError(205,'Invalid value for --PDF-OPTIMIZEFOR :' + value);
+         end;
+    END
     else if (id = '--EXPORTMARKUP') then
     begin
          if (WordConstants.Exists(value)) then
