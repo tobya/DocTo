@@ -30,8 +30,8 @@ Const
   MSVISIO = 4;
 
   
-  DOCTO_VERSION = '1.7.37';  // dont use 0x - choco needs incrementing versions.
-
+  DOCTO_VERSION = '1.7.38';  // dont use 0x - choco needs incrementing versions.
+  DOCTO_VERSION_NOTE = ' (Debug version fix #177)';
 type
 
 
@@ -1461,7 +1461,7 @@ begin
       FFirstLogEntry := false;
 
       // Log versions.
-      log('DocTo Version:' + DOCTO_VERSION);
+      log('DocTo Version:' + DOCTO_VERSION + DOCTO_VERSION_NOTE);
       log('OfficeApp Version:' +  OfficeAppVersion(),0);
       log('Source: https://github.com/tobya/DocTo/');
 
