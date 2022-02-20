@@ -65,6 +65,7 @@ type
     fExportMarkup: integer;
     FOfficeAppName: String;
     FIncludeDocProps: boolean;
+    FKeepIRM: boolean;
 
 
     procedure SetCompatibilityMode(const Value: Integer);
@@ -86,6 +87,7 @@ type
     procedure SetOutputIsStdOut(const Value: Boolean);
     function getIsVisio: Boolean;
     procedure SetIncludeDocProps(const Value: boolean);
+    procedure SetKeepIRM(const Value: boolean);
 
 
   protected
@@ -176,8 +178,12 @@ type
     property pdfPrintToPage : integer read FpdfPrintToPage;
     property useISO190051 : boolean read FuseISO190051;
     property pdfOptimizeFor : integer read fpdfOptimizeFor write fpdfOptimizeFor;
+
     property ExportMarkup : integer read fExportMarkup;
     property IncludeDocProps : boolean read FIncludeDocProps write SetIncludeDocProps;
+    property KeepIRM : boolean read FKeepIRM write SetKeepIRM; //  XPS-no-IRM
+
+
     property WordConstants : TResourceStrings read getWordConstants;
     property OfficeAppName : String read FOfficeAppName write FOfficeAppName;
 
@@ -499,7 +505,7 @@ begin
   FPDFPrintTopage := -1;
   FuseISO190051 := false;
   FIncludeDocProps := true;
-
+  FKeepIRM := true;
   FInputFiles := TStringList.Create;
 end;
 
@@ -1222,6 +1228,11 @@ if  (id = '-XL') or
       FIncludeDocProps := false;
       dec(iParam);
     end
+    else if (id = '--XPS-NO-IRM') then
+    begin
+      FKeepIRM := false;
+      dec(iParam);
+    end
     else if (id = '-W') or
             (id = '--WEBHOOK') then
     begin
@@ -1640,6 +1651,11 @@ end;
 procedure TDocumentConverter.SetIsFileOutput(const Value: Boolean);
 begin
   FOutputIsFile := Value;
+end;
+
+procedure TDocumentConverter.SetKeepIRM(const Value: boolean);
+begin
+  FKeepIRM := Value;
 end;
 
 procedure TDocumentConverter.SetLogFilename(const Value: String);
