@@ -115,9 +115,12 @@ See this StackExchange question
 https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-use
 
 ## Command Line Help
-
     Help
-       
+    Docto Version:%s
+    Office Version : %s
+    Open Source: https://github.com/tobya/DocTo/
+    Description: DocTo converts Word Documents and Excel Spreadsheets to other formats.
+    
     Command Line Parameters:
     Each Parameter should be followed by its value eg
             -f "c:\Docs\MyDoc.doc"
@@ -131,6 +134,8 @@ https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-u
           --excel
       -PP Use Powerpoint for Conversion. help '-h -pp'
           --powerpoint
+      -VS Use Visio for Conversion. 
+          --visio
       -F  Input File or Directory
           --inputfile
       -FX Input Extension to search for if directory. (.rtf .txt etc)
@@ -201,6 +206,9 @@ https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-u
       --no-subdirs Only convert specified directory. Do not recurse sub directories
       --ExportMarkup Value for wdExportItem - default wdExportDocumentContent.
           use    wdExportDocumentWithMarkup to export all word comments with pdf
+      --no-IncludeDocProperties 
+      --no-DocProp
+          Do not include Document Properties in the exported pdf file.      
       --PDF-OpenAfterExport
           If you wish for a converted PDF to be opened after creation. No value req.
       --PDF-FromPage
@@ -208,7 +216,17 @@ https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-u
           Other values wdExportCurrentPage, wdExportSelection
       --PDF-ToPage
           Save a range of pages to pdf. Integer. --PDF-FromPage must also be set.
-      --use-ISO190051 Create PDF to the ISO 19005-1 standard.
+      --PDF-OptimizeFor
+          Set the pdf/xps to be optimized for print or screen.
+          Default  ForPrint | ForOnScreen
+      --XPS-no-IRM
+          Do not copy IRM permissions to exported XPS document.
+      --PDF-No-DocStructureTags
+          Do not include DocStructureTags to help screen readers.
+      --PDF-no-BitmapMissingFonts
+          Do not bitmap missing fonts, fonts will be substituted.   
+      --use-ISO190051 
+          Create PDF to the ISO 19005-1 standard.
     
     
     
@@ -230,8 +248,7 @@ https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-u
     220 : Word or COM Error
     221 : Word not Installed
     400 : Unknown Error
-    
-
+        
 # Parameter Overview
 
 ## Usage
@@ -385,17 +402,6 @@ to ensure you get errors.
 By default DocTo ignores any files in a hidden `__MACOSX` directory that MACOS creates.  This directory is oftern 
 present on an external disk that is shared between systesm.  If you wish to check this dir 
 set this value. You must specify value eg `-M false`.
-
-
-
-
-
-
-
-
-
-
-
 
 
 
