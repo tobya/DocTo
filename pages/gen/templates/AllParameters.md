@@ -8,7 +8,7 @@
 - -T Type to be converted to.
 
 Parameters that take a value have a space seperating them from the value.  Some parameters do
-not require a value.
+not require a value.  All parameters are case insensitive.
 
 ### Input File or Directory
 > -F --inputfile
@@ -38,6 +38,13 @@ View possible [Word Formats](https://docs.microsoft.com/en-us/dotnet/api/microso
 > -H , --Help
 
 Display the help text listing all parameters and versions of docto and office applications
+
+### Version
+> -V --version
+
+Display the version string of both DocTo and Microsoft Office.
+
+
 
 ### Application Selection
 > -WD -XL -PP -VS
@@ -122,7 +129,7 @@ This allows troublesome documents in a directory structure to be ignored.
 ### Logging
 
 ### Write to Log File
-> -G --writelogfile {no-value-required}
+> -G --writelogfile [no value required]
 
 Write the log to a file as well as stdout. `docto.log` by default.  
 
@@ -132,21 +139,90 @@ Write the log to a file as well as stdout. `docto.log` by default.
 Specify the filename that you wish the logfile to be written to.
 
 ### Quiet Mode
-> -Q --quiet
+> -Q --quiet [no value required]
 
 No output to stdout.  Everything including errors are surpressed.  Use in conjunction with `-G`
 to ensure you get errors.
 
 ### Delete Input Files
-> -R --deletefiles
+> -R --deletefiles {true|false}
 
+If you would like for the inputfile to be deleted after conversion you can set this to true.
 
+### Fire a Webhook
+> -W --webhook
+
+If you wish you can call a web url after each conversion or error.
+The Webhook URL will be called on the following events with the following parameters
+
+  - File Conversion
+    - action=convert
+    - type=wdFormatType (or int if no matching format type)
+    - ouputfilename=File being written to.
+    - inputfilename=File being converted.
+
+  - Error
+    - action=error
+    - type=wdFormatType (or int if no matching format type)
+    - ouputfilename=File being written to.
+    - inputfilename=File being converted.
+    - error=Error Message
+
+Return value is logged in DocTo Log
+
+### Halt on Errors
+> -X --halterror {true|false}
+
+Docto will halt when a COM error is raised.  If you wish to ignore the error and continue set this value
+to true.
+
+### Bookmark Source
+> --BookmarkSource {source}
+
+PDF conversions can take their bookmarks from WordBookmarks, WordHeadings (default) or None
+
+### Overwrite Files
+> --DoNotOverwrite  --no-overwrite  [no value required]
+      
+Existing files are overridden by default, if you do not wish a file to be over written 
+use this option.
+
+### Recurse SubDirectories
+> --no-subdirs 
+
+By default sub directories are converted. Use to only convert specified directory. Do not recurse sub directories
+
+### Export Markup
+>   --ExportMarkup 
+
+Specifies 
+- wdExportDocumentContent	Exports the document without markup.
+- wdExportDocumentWithMarkup Exports the document with markup.
+
+use  wdExportDocumentWithMarkup to export all word comments with pdf
+
+### Open after Export
+>   --PDF-OpenAfterExport
+
+If you wish for the converted PDF to be opened after creation. No value req.
+
+### Convert Specific Pages
+> --PDF-FromPage
+
+> --PDF-ToPage
+
+Only convert certain pages in the document.
+
+### Use ISO19005-1 
+> --use-ISO190051 
+
+Create PDF to the ISO 19005-1 standard, also know as PDF-A or PDF Archive.
 
 
 ### Special Case Parameters
 
 ### Do not ignore __MACOSX Directory
-> -M --ignoreMACOS
+> -M --ignoreMACOS {true|false}
 
 By default DocTo ignores any files in a hidden `__MACOSX` directory that MACOS creates.  This directory is oftern 
 present on an external disk that is shared between systesm.  If you wish to check this dir 
