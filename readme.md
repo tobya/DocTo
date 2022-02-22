@@ -32,6 +32,7 @@ More Examples available at
 - [View Examples](https://github.com/tobya/DocTo/blob/master/pages/all/index.md) 
 - [https://docto.toflidium.com/](https://docto.toflidium.com/) 
 - [Wiki](https://github.com/tobya/DocTo/wiki)
+- [All Parameters Explained](/pages/gen/templates/AllParameters.md)
 
 ## Installation
 
