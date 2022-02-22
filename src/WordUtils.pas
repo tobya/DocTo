@@ -148,7 +148,7 @@ end;
 function TWordDocConverter.ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): TConversionInfo;
 
 var
-  wdEncoding : OleVariant;
+  EncodingValue : OleVariant;
   NonsensePassword : OleVariant;
 
   ExitAction : TExitAction;
@@ -216,9 +216,11 @@ begin
         end;
 
 
+        // Encoding can be set.  If a HTML type, then additional values
+        // need to be set for Weboptions.encoding
         if Encoding = -1 then
         begin
-           wdEncoding := EmptyParam;
+           EncodingValue := EmptyParam;
         end
         else
         begin
@@ -232,7 +234,7 @@ begin
 
            end;
 
-           wdEncoding := Encoding;
+           EncodingValue := Encoding;
         end;
 
       case ExitAction of
@@ -307,7 +309,7 @@ begin
                                                   EmptyParam, //SaveNativePictureFormat,
                                                   EmptyParam, //SaveFormsData,
                                                   EmptyParam, //SaveAsAOCELetter,
-                                                  wdEncoding, //Encoding,
+                                                  EncodingValue, //Encoding,
                                                   EmptyParam, //InsertLineBreaks,
                                                   EmptyParam, //AllowSubstitutions,
                                                   EmptyParam, //LineEnding,
@@ -328,7 +330,7 @@ begin
                                               EmptyParam,  //SaveNativePictureFo
                                               EmptyParam,  //SaveFormsData
                                               EmptyParam,  //SaveAsAOCELetter
-                                              wdEncoding,  //Encoding
+                                              EncodingValue,  //Encoding
                                               EmptyParam,  //InsertLineBreaks
                                               EmptyParam,  //AllowSubstitutions
                                               EmptyParam,  //LineEnding
