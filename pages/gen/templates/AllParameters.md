@@ -182,22 +182,22 @@ to true.
 PDF conversions can take their bookmarks from WordBookmarks, WordHeadings (default) or None
 
 ### Overwrite Files
-> --DoNotOverwrite  --no-overwrite  [no value required]
+> --DoNotOverwrite | --no-overwrite  [no value required]
       
 Existing files are overridden by default, if you do not wish a file to be over written 
 use this option.
 
 ### Recurse SubDirectories
-> --no-subdirs 
+> --no-subdirs [no value required]
 
 By default sub directories are converted. Use to only convert specified directory. Do not recurse sub directories
 
 ### Export Markup
->   --ExportMarkup 
+>   --ExportMarkup {exportvalue}
 
 Specifies 
-- wdExportDocumentContent	Exports the document without markup.
-- wdExportDocumentWithMarkup Exports the document with markup.
+- `wdExportDocumentContent`	Exports the document without markup. (default)
+- `wdExportDocumentWithMarkup` Exports the document with markup.
 
 use  wdExportDocumentWithMarkup to export all word comments with pdf
 
@@ -213,6 +213,34 @@ If you wish for the converted PDF to be opened after creation. No value req.
 
 Only convert certain pages in the document.
 
+### Document Properties
+> --no-IncludeDocProperties  --no-DocProp [no value required]
+
+Do not include Document Properties in the exported pdf file.     
+
+### Optomize PDF for on Screen display
+> --PDF-OptimizeFor {for}
+
+Set the pdf/xps to be optimized for print or screen.
+  
+- ForPrint (default) 
+- ForOnScreen
+
+### Keep IRM
+> --XPS-no-IRM
+  
+Do not copy IRM permissions to exported XPS document.  By default these permissions are copied to the XPS file.
+
+### Document Structure Tags
+> --PDF-No-DocStructureTags
+
+Do not include DocStructureTags to help screen readers.  By default these are included in the document.
+
+### Bitmap Missing Fonts
+> --PDF-no-BitmapMissingFonts
+      
+Do not bitmap missing fonts, fonts will be substituted. 
+
 ### Use ISO19005-1 
 > --use-ISO190051 
 
@@ -227,6 +255,20 @@ Create PDF to the ISO 19005-1 standard, also know as PDF-A or PDF Archive.
 By default DocTo ignores any files in a hidden `__MACOSX` directory that MACOS creates.  This directory is oftern 
 present on an external disk that is shared between systesm.  If you wish to check this dir 
 set this value. You must specify value eg `-M false`.
+
+### Experimental
+
+### Skip Table of Contents
+> --skipdocswithtoc
+
+EXPERIMENTAL.  Will skip any docs that contain a TOC to prevent hanging. Currently matches some false positives.  Default False.
+
+### Output to stdout
+> --stdout
+  
+Send file to Stdout after conversion. ( Does not work correctly for binary files)  Works ok with text based
+files such as .txt, .rtf, .html
+
 
 
 
