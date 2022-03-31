@@ -151,6 +151,7 @@ https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-u
           Available from
           https://docs.microsoft.com/en-us/dotnet/api/microsoft.office.interop.word.wdsaveformat
           or https://docs.microsoft.com/en-us/dotnet/api/microsoft.office.interop.excel.xlfileformat
+          or https://docs.microsoft.com/en-us/office/vba/api/powerpoint.presentation.saveas
           See current List Below.
           --format
       -TF Force Format. -T value if an integer, is checked against current list
