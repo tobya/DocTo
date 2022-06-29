@@ -477,9 +477,8 @@ Create PDF to the ISO 19005-1 standard, also know as PDF-A or PDF Archive.
 ### Do not ignore __MACOSX Directory
 > -M --ignoreMACOS {true|false}
 
-By default DocTo ignores any files in a hidden `__MACOSX` directory that MACOS creates.  This directory is oftern 
-present on an external disk that is shared between systesm.  If you wish to check this dir 
-set this value. You must specify value eg `-M false`.
+By default DocTo ignores any files in a hidden `__MACOSX` directory that MACOS creates.  This directory is often 
+present on an external disk that is shared between systems.  If you wish to check this dir set this value. You must specify value eg `-M false`.
 
 
 Compiling
