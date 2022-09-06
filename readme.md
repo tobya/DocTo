@@ -50,7 +50,7 @@ Also Available for [installation via Chocolatey ](https://chocolatey.org/package
 
 to upgrade to latest version before generally available (replace with current version)
 
-> choco upgrade docto --version=1.6
+> choco upgrade docto --version=1.8
 
 ### Node
 
