@@ -30,8 +30,8 @@ Const
   MSVISIO = 4;
 
   
-  DOCTO_VERSION = '1.8.39';  // dont use 0x - choco needs incrementing versions.
-  DOCTO_VERSION_NOTE = ' (Test version )';
+  DOCTO_VERSION = '1.8.40';  // dont use 0x - choco needs incrementing versions.
+  DOCTO_VERSION_NOTE =  ' (Fix #200)';
 type
 
 
