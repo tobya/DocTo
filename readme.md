@@ -139,7 +139,7 @@ https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-u
           --visio
       -F  Input File or Directory
           --inputfile
-      -FX Input Extension to search for if directory. (.rtf .txt etc)
+      -FX Input file search for if -f is directory. Can use .rtf test*.txt etc
           Default ".doc*" (will find ".docx" also)
           --inputextension
       -O  Output File or Directory to place converted Docs
