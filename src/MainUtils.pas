@@ -30,8 +30,8 @@ Const
   MSVISIO = 4;
 
   
-  DOCTO_VERSION = '1.8.39';  // dont use 0x - choco needs incrementing versions.
-  DOCTO_VERSION_NOTE = ' (Test version )';
+  DOCTO_VERSION = '1.8.40';  // dont use 0x - choco needs incrementing versions.
+  DOCTO_VERSION_NOTE =  ' (Fix #200)';
 type
 
 
@@ -1036,7 +1036,9 @@ if  (id = '-XL') or
       dec(iparam);
     END
     else if (id = '-FX') or
-            (id = '--INPUTFILEEXTENSION') then
+            (id = '--INPUTFILEEXTENSION') or
+            (id = '--INPUTFILTER')
+            then
     begin
       InputExtension := value;
     end
