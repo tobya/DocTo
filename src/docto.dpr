@@ -51,6 +51,7 @@ begin
 
   try
    try
+     // Due to the way config is loaded I must create all of them.
      DocConv := TWordDocConverter.Create;
      XLSConv := TExcelXLSConverter.Create;
      PPConv :=  TPowerPointConverter.Create;
