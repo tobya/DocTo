@@ -122,6 +122,7 @@ ERROR CODES:
 205 : Invalid Parameter Value
 220 : Word or COM Error
 221 : Word not Installed
+301 : Not Implemented
 400 : Unknown Error
 
 ````

@@ -134,8 +134,7 @@ type
     FAppID : Integer;
     FPdfExportRange_Word: Integer;
     FuseISO190051 : Boolean;
-
-
+    fDisableMacros : Boolean;
 
     FOutputIsFile: Boolean;
     FOutputIsDir: Boolean;
@@ -515,6 +514,9 @@ begin
   FDocStructureTags := true;
   FBitmapMissingFonts := true;
   FInputFiles := TStringList.Create;
+  fDisableMacros := true;
+
+
 end;
 
 destructor TDocumentConverter.Destroy;
@@ -1260,6 +1262,16 @@ if  (id = '-XL') or
     begin
       LogVersionInfo(true);
       halt(2);
+
+    end
+    else if (id = '--ENABLE-MACROAUTORUN') then
+    begin
+      fDisableMacros := false;
+      if (OfficeAppName <> 'Word')then
+      begin
+      // Excel   Application.EnableEvents = False
+      //  HaltWithError(301,'Parameter '  + id + ' not Implemented for ' + OfficeAppName );
+      end;
 
     end
     else if (id = '-X') or
