@@ -1041,7 +1041,9 @@ if  (id = '-XL') or
       dec(iparam);
     END
     else if (id = '-FX') or
-            (id = '--INPUTFILEEXTENSION') then
+            (id = '--INPUTFILEEXTENSION') or
+            (id = '--INPUTFILTER')
+            then
     begin
       InputExtension := value;
     end

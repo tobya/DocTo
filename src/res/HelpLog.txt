@@ -24,6 +24,9 @@ Parameters markers are case insensitive.
   -FX Input Extension to search for if directory. (.rtf .txt etc)
       Default ".doc*" (will find ".docx" also)
       --inputextension
+  --inputfilter
+      Filter Files to input. Property*.doc will match Property1.doc,
+      Property2.doc etc
   -O  Output File or Directory to place converted Docs
       --outputfile
   -OX Output Extension if -F is Directory. Please include '.' eg. '.pdf' .
