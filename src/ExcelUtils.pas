@@ -88,7 +88,9 @@ function TExcelXLSConverter.ExecuteConversion(fileToConvert: String; OutputFilen
 var
     NonsensePassword :OleVariant;
     FromPage, ToPage : OleVariant;
+    activeSheet : OleVariant;
     ExitAction :TExitAction;
+    Sheet : integer;
 begin
       //Excel is particuarily sensitive to having \\ at end of filename, eg it won't create file.
       //so we remove any double \\
@@ -196,7 +198,24 @@ begin
              begin
               //CSV pops up alert. must be hidden for automation
                 ExcelApp.Application.DisplayAlerts := False ;
-                ExcelApp.activeWorkbook.SaveAs( OutputFilename, OutputFileFormat);
+
+
+(*
+	For Each xWs In Application.ActiveWorkbook.Worksheets
+		xWs.Copy
+		xcsvFile = CurDir & "\" & xWs.Name & ".csv"
+		Application.ActiveWorkbook.SaveAs Filename: = xcsvFile, _
+		FileFormat: = xlCSV, CreateBackup: = False
+		Application.ActiveWorkbook.Saved = True
+		Application.ActiveWorkbook.Close
+	Next*)
+                for Sheet := 0 to ExcelApp.Application.ActiveWorkbook.WorkSheets.Count() -1 do
+                begin
+                 activeSheet := ExcelApp.Application.ActiveWorkbook.WorkSheets[Sheet];
+                 activeSheet.SaveAs( OutputFilename + inttostr(Sheet), OutputFileFormat);
+                end;
+
+
                 ExcelApp.ActiveWorkBook.save;
              end
             else
