@@ -89,6 +89,7 @@ var
     NonsensePassword :OleVariant;
     FromPage, ToPage : OleVariant;
     activeSheet : OleVariant;
+    dynamicoutputDir, dynamicoutputFile, dynamicoutputExt, dynamicOutputFileName, dynamicSheetName : String;
     ExitAction :TExitAction;
     Sheet : integer;
 begin
@@ -209,10 +210,20 @@ begin
 		Application.ActiveWorkbook.Saved = True
 		Application.ActiveWorkbook.Close
 	Next*)
-                for Sheet := 0 to ExcelApp.Application.ActiveWorkbook.WorkSheets.Count() -1 do
+                   dynamicoutputDir := ExtractFilePath(OutputFilename); // includes last \
+                 dynamicoutputFile :=  ChangefileExt ( ExtractFileName(OutputFilename),'');
+                 dynamicoutputExt  := ExtractFileExt(OutputFilename);
+
+                for Sheet := 1 to ExcelApp.ActiveWorkbook.WorkSheets.Count do
                 begin
-                 activeSheet := ExcelApp.Application.ActiveWorkbook.WorkSheets[Sheet];
-                 activeSheet.SaveAs( OutputFilename + inttostr(Sheet), OutputFileFormat);
+                activeSheet := ExcelApp.ActiveWorkbook.Sheets[Sheet];
+                 dynamicSheetName := activeSheet.Name;
+                 LogDebug(dynamicSheetName);
+                 dynamicSheetName := SafeFileName(dynamicSheetName);
+                 dynamicOutputFilename := dynamicoutputDir + dynamicoutputFile + '_(' + inttostr(Sheet) + dynamicSheetName +  ')' + dynamicoutputExt;
+                 LogDebug(dynamicOutputFileName);
+
+                 activeSheet.SaveAs( dynamicoutputFilename, OutputFileFormat);
                 end;
 
 

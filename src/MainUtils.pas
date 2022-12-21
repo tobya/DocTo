@@ -217,6 +217,7 @@ type
     // Check Should Ignore
     function CheckShouldIgnore(DocumentPath : String): Boolean;
 
+    function SafeFileName(FileName: String ) : String;
 
   public
 
@@ -648,7 +649,8 @@ begin
        try
 
             StartTime := GettickCount();
-             logdebug('Executing Conversion ... ',VERBOSE);
+            logdebug('Executing Conversion ... ',VERBOSE);
+
             ConversionInfo :=  ExecuteConversion(FileToConvert, FileToCreate, OutputFileFormat);
 
             if ConversionInfo.Successful then
@@ -1582,6 +1584,14 @@ begin
   ConfigFile.Add( OfficeAppName + '_' + FormatDateTime('yyyymmdd',now) + '=' + Version);
   ConfigFile.SaveToFile(ConfigFileName);
   LogDebug('Writing Version to File:' + ConfigFileName,VERBOSE);
+end;
+
+function TDocumentConverter.SafeFileName(FileName: String): String;
+begin
+  Filename :=  StringReplace(Filename,'&','_',[rfReplaceAll,rfIgnoreCase]);
+    Filename :=  StringReplace(Filename,'/','_',[rfReplaceAll,rfIgnoreCase]);
+    Filename :=  StringReplace(Filename,'\\','_',[rfReplaceAll,rfIgnoreCase]);
+    result := Filename;
 end;
 
 procedure TDocumentConverter.SetBitmapMissingFonts(const Value: boolean);
