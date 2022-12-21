@@ -160,6 +160,12 @@ begin
         Result.InputFile := fileToConvert;
         logInfo('ExecuteConversion:' + fileToConvert, Verbose);
 
+        // disable auto macro
+        if (fDisableMacros) then
+        begin
+          WordApp.WordBasic.DisableAutoMacros ;
+        end;
+
         // Check if document has password as per
         // https://wordmvp.com/FAQs/MacrosVBA/CheckIfPWProtectB4Open.htm
         // Always open with password, if none it will be ignored,
@@ -214,6 +220,7 @@ begin
 
 
         end;
+
 
 
         // Encoding can be set.  If a HTML type, then additional values
@@ -345,9 +352,6 @@ begin
               Result.Error := '';
              // loginfo('FileCreated: ' + OutputFilename, STANDARD);
        finally
-
-
-
 
             // Close the document - do not save changes if doc has changed in any way.
             Wordapp.activedocument.Close(wdDoNotSaveChanges);

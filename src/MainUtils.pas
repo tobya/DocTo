@@ -8,6 +8,9 @@ The above copyright notice, and every other copyright notice found in this softw
 THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Intereting article
+https://support.microsoft.com/en-gb/topic/considerations-for-server-side-automation-of-office-48bcfe93-8a89-47f1-0bce-017433ad79e2
 ****************************************************************)
 interface
 uses  classes, Windows, sysutils, ActiveX, ComObj, WinINet, Variants, iduri,
@@ -30,8 +33,8 @@ Const
   MSVISIO = 4;
 
   
-  DOCTO_VERSION = '1.8.40';  // dont use 0x - choco needs incrementing versions.
-  DOCTO_VERSION_NOTE =  ' (Fix #200)';
+  DOCTO_VERSION = '1.9.40';  // dont use 0x - choco needs incrementing versions.
+  DOCTO_VERSION_NOTE = ' (Test Version) ';
 type
 
 
@@ -134,8 +137,7 @@ type
     FAppID : Integer;
     FPdfExportRange_Word: Integer;
     FuseISO190051 : Boolean;
-
-
+    fDisableMacros : Boolean;
 
     FOutputIsFile: Boolean;
     FOutputIsDir: Boolean;
@@ -515,6 +517,9 @@ begin
   FDocStructureTags := true;
   FBitmapMissingFonts := true;
   FInputFiles := TStringList.Create;
+  fDisableMacros := true;
+
+
 end;
 
 destructor TDocumentConverter.Destroy;
@@ -1262,6 +1267,16 @@ if  (id = '-XL') or
     begin
       LogVersionInfo(true);
       halt(2);
+
+    end
+    else if (id = '--ENABLE-MACROAUTORUN') then
+    begin
+      fDisableMacros := false;
+      if (OfficeAppName <> 'Word')then
+      begin
+      // Excel   Application.EnableEvents = False
+      //  HaltWithError(301,'Parameter '  + id + ' not Implemented for ' + OfficeAppName );
+      end;
 
     end
     else if (id = '-X') or

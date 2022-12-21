@@ -112,8 +112,9 @@ Long Parameters:
   --PDF-no-BitmapMissingFonts
       Do not bitmap missing fonts, fonts will be substituted.   
   --use-ISO190051 
-      Create PDF to the ISO 19005-1 standard.
-
+      Create PDF to the ISO 19005-1 standard.  
+  --enable-macroautorun
+      By Default any autorun Macros will not run, use this parameter if you wish Macros to Autorun. Word Only.  
 
 
 
@@ -133,4 +134,5 @@ ERROR CODES:
 205 : Invalid Parameter Value
 220 : Word or COM Error
 221 : Word not Installed
+301 : Not Implemented
 400 : Unknown Error
