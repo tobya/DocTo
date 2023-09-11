@@ -155,16 +155,19 @@ begin
         aSave: // Go ahead and save
         begin
 
-            logdebug('PrintFromPage: ' + inttostr(pdfPrintFromPage),debug);
-            logdebug('PrintFromPage: ' + inttostr(pdfPrintToPage),debug);
+
             //Unlike Word, in Excel you must call a different function to save a pdf and XPS.
             if OutputFileFormat = xlTypePDF then
             begin
 
                 if pdfPrintToPage > 0 then
                 begin
+                  logdebug('PrintFromPage: ' + inttostr(pdfPrintFromPage),debug);
+                  logdebug('PrintToPage: ' + inttostr(pdfPrintToPage),debug);
+
                   FromPage :=  pdfPrintFromPage;
                   ToPage   :=  pdfPrintToPage;
+
                 end else
                 begin
                   FromPage := EmptyParam;
