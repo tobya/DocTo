@@ -183,7 +183,8 @@ begin
                                                             EmptyParam//    FixedFormatExtClassPtr
                                                             ) ;
 
-                ExcelApp.ActiveWorkBook.save;
+                 ExcelApp.ActiveWorkBook.Saved := True
+
 
             end
             else if OutputFileFormat = xlTypeXPS then
@@ -197,20 +198,23 @@ begin
               //CSV pops up alert. must be hidden for automation
                 ExcelApp.Application.DisplayAlerts := False ;
                 ExcelApp.activeWorkbook.SaveAs( OutputFilename, OutputFileFormat);
-                ExcelApp.ActiveWorkBook.save;
+                ExcelApp.ActiveWorkBook.saved := true;
              end
             else
             begin
               //Excel has a tendency to popup alerts so we don't want that.
               ExcelApp.Application.DisplayAlerts := False ;
               ExcelApp.activeWorkbook.SaveAs( OutputFilename, OutputFileFormat);
-              ExcelApp.ActiveWorkBook.Save;
+              ExcelApp.ActiveWorkBook.Saved := true;
 
             end;
+
+            // Close Excel Sheet.
             Result.Successful := true;
             Result.OutputFile := OutputFilename;
             ExcelApp.ActiveWorkbook.Close();
-            end;
+
+        end;
     end;
 end;
 
