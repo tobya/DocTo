@@ -155,16 +155,19 @@ begin
         aSave: // Go ahead and save
         begin
 
-            logdebug('PrintFromPage: ' + inttostr(pdfPrintFromPage),debug);
-            logdebug('PrintFromPage: ' + inttostr(pdfPrintToPage),debug);
+
             //Unlike Word, in Excel you must call a different function to save a pdf and XPS.
             if OutputFileFormat = xlTypePDF then
             begin
 
                 if pdfPrintToPage > 0 then
                 begin
+                  logdebug('PrintFromPage: ' + inttostr(pdfPrintFromPage),debug);
+                  logdebug('PrintToPage: ' + inttostr(pdfPrintToPage),debug);
+
                   FromPage :=  pdfPrintFromPage;
                   ToPage   :=  pdfPrintToPage;
+
                 end else
                 begin
                   FromPage := EmptyParam;
@@ -183,7 +186,8 @@ begin
                                                             EmptyParam//    FixedFormatExtClassPtr
                                                             ) ;
 
-                ExcelApp.ActiveWorkBook.save;
+                 ExcelApp.ActiveWorkBook.Saved := True
+
 
             end
             else if OutputFileFormat = xlTypeXPS then
@@ -197,20 +201,23 @@ begin
               //CSV pops up alert. must be hidden for automation
                 ExcelApp.Application.DisplayAlerts := False ;
                 ExcelApp.activeWorkbook.SaveAs( OutputFilename, OutputFileFormat);
-                ExcelApp.ActiveWorkBook.save;
+                ExcelApp.ActiveWorkBook.saved := true;
              end
             else
             begin
               //Excel has a tendency to popup alerts so we don't want that.
               ExcelApp.Application.DisplayAlerts := False ;
               ExcelApp.activeWorkbook.SaveAs( OutputFilename, OutputFileFormat);
-              ExcelApp.ActiveWorkBook.Save;
+              ExcelApp.ActiveWorkBook.Saved := true;
 
             end;
+
+            // Close Excel Sheet.
             Result.Successful := true;
             Result.OutputFile := OutputFilename;
             ExcelApp.ActiveWorkbook.Close();
-            end;
+
+        end;
     end;
 end;
 
