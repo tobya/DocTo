@@ -8,7 +8,7 @@
         <FrameworkType>None</FrameworkType>
         <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
         <ProjectVersion>18.8</ProjectVersion>
-        <Platform Condition="'$(Platform)'==''">Win32</Platform>
+        <Platform Condition="'$(Platform)'==''">Win64</Platform>
         <TargetedPlatforms>3</TargetedPlatforms>
         <Platform>Win32</Platform>
     </PropertyGroup>
@@ -88,6 +88,12 @@
     </PropertyGroup>
     <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_3)'=='true') or '$(Cfg_3_Win32)'!=''">
         <Cfg_3_Win32>true</Cfg_3_Win32>
+        <CfgParent>Cfg_3</CfgParent>
+        <Cfg_3>true</Cfg_3>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win64' and '$(Cfg_3)'=='true') or '$(Cfg_3_Win64)'!=''">
+        <Cfg_3_Win64>true</Cfg_3_Win64>
         <CfgParent>Cfg_3</CfgParent>
         <Cfg_3>true</Cfg_3>
         <Base>true</Base>
@@ -220,6 +226,14 @@
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <VerInfo_MinorVer>9</VerInfo_MinorVer>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_3_Win64)'!=''">
+        <VerInfo_MajorVer>1</VerInfo_MajorVer>
+        <VerInfo_MinorVer>11</VerInfo_MinorVer>
+        <VerInfo_Release>46</VerInfo_Release>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.11.46.15;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <Manifest_File>(None)</Manifest_File>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -412,6 +426,12 @@
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="res\ppFormatsExt.txt" Configuration="TobyBuild" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="New1.txt" Configuration="TobyBuild" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
