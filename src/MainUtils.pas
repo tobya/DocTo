@@ -137,7 +137,7 @@ type
     FAppID : Integer;
     FPdfExportRange_Word: Integer;
     FuseISO190051 : Boolean;
-    fDisableMacros : Boolean;
+    fDontUseAutoVBA : Boolean;
 
     FOutputIsFile: Boolean;
     FOutputIsDir: Boolean;
@@ -517,7 +517,7 @@ begin
   FDocStructureTags := true;
   FBitmapMissingFonts := true;
   FInputFiles := TStringList.Create;
-  fDisableMacros := true;
+  fDontUseAutoVBA := true;
 
 
 end;
@@ -1271,7 +1271,7 @@ if  (id = '-XL') or
     end
     else if (id = '--ENABLE-MACROAUTORUN') then
     begin
-      fDisableMacros := false;
+      fDontUseAutoVBA := false;
       if (OfficeAppName <> 'Word')then
       begin
       // Excel   Application.EnableEvents = False
