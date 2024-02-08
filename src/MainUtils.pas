@@ -576,11 +576,11 @@ begin
     if not DoExecute  then HaltWithError(201, 'Input File, Output File and FileFormat must all be specified');
 
     // Set Output Filename if Dir Provided.
-    if (InputIsFile and OutputIsDir) then
+    if ( OutputIsDir) then
     begin
       if OutputExt = '' then
       begin
-        OutputExt := '.' + FormatsExtensions.Values[OutputFileFormatString];
+        OutputExt := '.' +  FormatsExtensions.Values[OutputFileFormatString];
         loginfo('Output Extension is ' + outputExt, CHATTY);
       end;
 
@@ -649,6 +649,7 @@ begin
 
             StartTime := GettickCount();
              logdebug('Executing Conversion ... ',VERBOSE);
+                          logdebug('Executing Conversion ... ' + FileToCreate,VERBOSE);
             ConversionInfo :=  ExecuteConversion(FileToConvert, FileToCreate, OutputFileFormat);
 
             if ConversionInfo.Successful then
@@ -665,11 +666,14 @@ begin
               // Check if file needs to be deleted.
               if RemoveFileOnConvert then
               begin
-                // Check file exists and Delete if requested
-                if FileExists(FileToCreate) then
+                // Check file has been converted and Delete if requested
+                if FileExists(ConversionInfo.OutputFile) then
                 begin
-                  DeleteFile(FileToConvert);
-                  Loginfo('Deleted:' + FileToConvert,STANDARD);
+                  if FileExists(ConversionInfo.InputFile) then
+                  begin
+                     DeleteFile(ConversionInfo.InputFile);
+                     Loginfo('Deleted:' + ConversionInfo.InputFile,STANDARD);
+                  end;
                 end;
               end;
 
