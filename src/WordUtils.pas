@@ -348,7 +348,7 @@ begin
 
           end;
               Result.Successful := true;
-              Result.OutputFile := OutputFilename;
+              Result.OutputFile := OutputFilename + '.' + FormatsExtensions.Values[OutputFileFormatString];
               Result.Error := '';
              // loginfo('FileCreated: ' + OutputFilename, STANDARD);
        finally
