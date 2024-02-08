@@ -5,7 +5,7 @@
     <Transaction>2020/05/25 15:31:23.000.508,D:\Development\GitHub\DocTo\src\res\WdCompatibilityMode.txt=</Transaction>
     <Transaction>2021/12/02 22:25:13.000.761,=D:\Development\GitHub\DocTo\src\New1.bat</Transaction>
     <Transaction>2021/12/02 22:25:32.000.527,D:\Development\GitHub\DocTo\test\TestDocTo_Quiet.bat=D:\Development\GitHub\DocTo\src\New1.bat</Transaction>
-    <Transaction>2023/09/11 17:39:20.384,=C:\Development\github\docto\src\res\xlsFormats.txt</Transaction>
+    <Transaction>2023/09/11 17:39:20.000.384,=C:\Development\github\docto\src\res\xlsFormats.txt</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="..\..\docto"/>
