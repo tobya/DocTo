@@ -113,8 +113,8 @@ Long Parameters:
       Do not bitmap missing fonts, fonts will be substituted.   
   --use-ISO190051 
       Create PDF to the ISO 19005-1 standard.  
-  --enable-macroautorun
-      By Default any autorun Macros will not run, use this parameter if you wish Macros to Autorun. Word Only.  
+  --enable-wordvbaauto
+      By Default any autorun Macros will not run, use this parameter if you wish vba to Autorun. Word Only.
 
 
 
