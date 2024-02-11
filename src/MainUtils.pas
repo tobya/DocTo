@@ -1273,7 +1273,9 @@ if  (id = '-XL') or
       halt(2);
 
     end
-    else if (id = '--ENABLE-MACROAUTORUN') then
+    else if (id = '--ENABLE-MACROAUTORUN') or
+            (id = '--ENABLE-WORDVBAAUTO')
+    then
     begin
       fDontUseAutoVBA := false;
       if (OfficeAppName <> 'Word')then
