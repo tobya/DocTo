@@ -19,6 +19,7 @@ test/InputFiles3*
 test/test1/*
 newdir2/
 /companion
+/releases
 
 ###########
 # github
