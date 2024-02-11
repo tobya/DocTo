@@ -114,7 +114,7 @@ Long Parameters:
   --use-ISO190051 
       Create PDF to the ISO 19005-1 standard.  
   --enable-wordvbaauto
-      By Default any autorun Macros will not run, use this parameter if you wish vba to Autorun. Word Only.
+      By Default any autorun vba will not run, use this parameter if you wish vba to Autorun. Word Only.
 
 
 
