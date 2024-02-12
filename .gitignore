@@ -18,6 +18,8 @@ test/Generated*
 test/InputFiles3*
 test/test1/*
 newdir2/
+src/docto.exe
+*.rsm
 
 ###########
 # github
