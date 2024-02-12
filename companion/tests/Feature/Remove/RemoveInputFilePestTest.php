@@ -5,16 +5,22 @@
 
         \Illuminate\Support\Facades\Storage::deleteDirectory('inputfilestemp');
         }
+
+
+
        $testinputfilesdir = \Illuminate\Support\Facades\Storage::path('inputfiles');
        $testinputfilesdir_temp = \Illuminate\Support\Facades\Storage::path('inputfilestemp');
-$dirfiles = \Illuminate\Support\Facades\Storage::listContents('inputfilestemp');
+$dirfiles = collect(\Illuminate\Support\Facades\Storage::listContents('inputfilestemp'));
 
+  print_r($dirfiles->toArray());
   $docfiles = $dirfiles->filter(function ($item){
     return str($item)->endsWith('.doc');
 });
   print_r($docfiles->toArray());
 $docfilecount = count($docfiles->toArray());
-$dirfilescount = count(\Illuminate\Support\Facades\Storage::listContents('inputfilestemp')->toArray());
+  echo "\n $docfilecount";
+
+$dirfilescount = $dirfiles->count();
        $testoutputdir_temp = \Illuminate\Support\Facades\Storage::path('outputtemp2');
        \Illuminate\Support\Facades\Storage::createDirectory('outputtemp2');
        $cmd = "xcopy \"$testinputfilesdir\" \"$testinputfilesdir_temp\\\"  ";
@@ -23,11 +29,11 @@ $dirfilescount = count(\Illuminate\Support\Facades\Storage::listContents('inputf
        echo $result->output();
         echo "\n $dirfilescount $docfilecount";
        $doctocmd = <<<CMD
-..\\exe\\docto.exe -WD -f $testinputfilesdir_temp -fx .doc -o $testoutputdir_temp -t wdFormatPDF -R true
+..\\src\\docto.exe -WD -f $testinputfilesdir_temp -fx .doc -o $testoutputdir_temp -t wdFormatPDF -R true
 CMD;
        echo $doctocmd;
        $output = \Illuminate\Support\Facades\Process::run($doctocmd);
        echo $output->output();
-       expect(count(\Illuminate\Support\Facades\Storage::listContents('inputfilestemp')->toArray()))->tobe($dirfilescount - $docfilecount);
+       expect(collect(\Illuminate\Support\Facades\Storage::listContents('inputfilestemp'))->count())->tobe($dirfilescount - $docfilecount);
 
     });
