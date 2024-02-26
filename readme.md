@@ -48,7 +48,7 @@ Also Available for [installation via Chocolatey ](https://chocolatey.org/package
 
 > choco install docto
 
-to upgrade to latest version before generally available (replace with current version)
+to upgrade to latest version
 
 > choco upgrade docto 
 
