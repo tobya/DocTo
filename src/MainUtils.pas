@@ -584,7 +584,12 @@ begin
         loginfo('Output Extension is ' + outputExt, CHATTY);
       end;
 
-      OutputFile :=  OutputFile  + ChangeFileExt( ExtractFileName(InputFile),OutputExt);
+      if InputIsFile then
+      begin
+        OutputFile :=  OutputFile  + ChangeFileExt( ExtractFileName(InputFile),OutputExt);
+      end;
+
+
     end;
 
     // Add file to InputFiles List if only one.
