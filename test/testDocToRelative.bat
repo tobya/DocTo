@@ -9,7 +9,7 @@ REM Remove all generated files from output directory that may exist.
 
 
 REM Output Help Text
-"../exe/docto.exe" -h
+"../exe/32/docto.exe" -h
 
 
 REM ---------------------------------
@@ -19,4 +19,4 @@ REM test file to each format.
 REM Use a relative path
 REM ---------------------------------
 
-FOR /F "eol=; tokens=1,2* delims=, " %%i in (doctoFormatList.txt) do "../exe/docto.exe"  -f "Inputfiles\pie3.doc"  -o "GeneratedFiles\pie3out_%%i.%%j"  -T  %%i
+FOR /F "eol=; tokens=1,2* delims=, " %%i in (doctoFormatList.txt) do "../exe/32/docto.exe"  -f "Inputfiles\pie3.doc"  -o "GeneratedFiles\pie3out_%%i.%%j"  -T  %%i

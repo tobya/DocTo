@@ -33,8 +33,8 @@ Const
   MSVISIO = 4;
 
   
-  DOCTO_VERSION = '1.14.44';  // dont use 0x - choco needs incrementing versions.
-  DOCTO_VERSION_NOTE = ' x64 Release ';
+  DOCTO_VERSION = '1.15.45';  // dont use 0x - choco needs incrementing versions.
+  DOCTO_VERSION_NOTE = ' x32 Release ABC';
 type
 
 
@@ -240,14 +240,14 @@ type
     procedure Log(Msg: String; Level  : Integer = ERRORS); overload;
 
     procedure Log(Msg: String; List:  TStrings; Level: Integer); overload;
-        procedure LogInfo(Msg: String; Level  : Integer = ERRORS);
-        procedure LogDebug(Msg: String; Level  : Integer = ERRORS);
+    procedure LogInfo(Msg: String; Level  : Integer = ERRORS);
+    procedure LogDebug(Msg: String; Level  : Integer = ERRORS);
     procedure LogError(Msg: String);
     function ConvertErrorText(Msg: String) : String;
     function CallWebHook(Params: String) : string;
     FUNCTION AfterConversion(InputFile, OutputFile: String):string;
     Function OnConversionError(InputFile, OutputFile, Error: String):string;
-
+    Procedure LoadFileList();
 
     procedure LogResourceHelp(HelpResName : String);
     procedure LogVersionInfo(ForceReload : boolean = true);
@@ -1363,7 +1363,17 @@ if  (id = '-XL') or
 
   // Code to run when all parameters have been loaded.
   // Get Files
+     LoadFileList;
 
+
+
+end;
+
+
+
+procedure TDocumentConverter.LoadFileList;
+var f : integer;
+begin
    // IsFileInput := true;
     // If input is Dir rather than file, enumerate files.
     if DirectoryExists(InputFile) then
@@ -1378,17 +1388,20 @@ if  (id = '-XL') or
        end;
        log('File List', FInputFiles,STANDARD);
        logInfo('Beginning to convert files....',STANDARD);
+
+       // remove temp files
+       for f := 0 to FInputFiles.Count -1 do
+       begin
+           HaltWithError(204, 'No File Matches in Input Directory: ' + finputfile + '*' + InputExtension );
+
+       end;
+
     end
     else
     begin
       InputIsFile := true;
     end;
-
-
-
 end;
-
-
 
 procedure TDocumentConverter.Log(Msg: String; Level : Integer = ERRORS );
 var
