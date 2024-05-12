@@ -34,7 +34,7 @@ Const
 
   
   DOCTO_VERSION = '1.15.45';  // dont use 0x - choco needs incrementing versions.
-  DOCTO_VERSION_NOTE = ' x32 Release ABCDE';
+  DOCTO_VERSION_NOTE = ' x64 Release ';
 type
 
 
@@ -1371,7 +1371,7 @@ end;
 
 
 
-procedure TDocumentConverter.LoadFileList;
+procedure TDocumentConverter.LoadFileList();
 var f : integer;
 found :boolean;
 afile :string;
@@ -1390,8 +1390,7 @@ begin
        begin
          HaltWithError(204, 'No File Matches in Input Directory: ' + finputfile + '*' + InputExtension );
        end;
-       log('File List', FInputFiles,STANDARD);
-       logInfo('Beginning to convert files....',STANDARD);
+
 
        // remove temp files
        // do in reverse order to allow deleting of items
@@ -1424,6 +1423,10 @@ begin
     begin
       InputIsFile := true;
     end;
+
+       log('File List', FInputFiles,STANDARD);
+       logInfo('Beginning to convert files....',STANDARD);
+
 end;
 
 procedure TDocumentConverter.Log(Msg: String; Level : Integer = ERRORS );
