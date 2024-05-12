@@ -14,7 +14,7 @@ https://support.microsoft.com/en-gb/topic/considerations-for-server-side-automat
 ****************************************************************)
 interface
 uses  classes, Windows, sysutils, ActiveX, ComObj, WinINet, Variants, iduri,
-      Types,  ResourceUtils,
+      Types,  ResourceUtils,           StrUtils,
       PathUtils, ShellAPI, datamodssl, Word_TLB_Constants;
 
 Const
@@ -34,7 +34,7 @@ Const
 
   
   DOCTO_VERSION = '1.15.45';  // dont use 0x - choco needs incrementing versions.
-  DOCTO_VERSION_NOTE = ' x32 Release ABC';
+  DOCTO_VERSION_NOTE = ' x32 Release ABCDE';
 type
 
 
@@ -1373,7 +1373,11 @@ end;
 
 procedure TDocumentConverter.LoadFileList;
 var f : integer;
+found :boolean;
+afile :string;
 begin
+
+
    // IsFileInput := true;
     // If input is Dir rather than file, enumerate files.
     if DirectoryExists(InputFile) then
@@ -1390,9 +1394,28 @@ begin
        logInfo('Beginning to convert files....',STANDARD);
 
        // remove temp files
-       for f := 0 to FInputFiles.Count -1 do
+       // do in reverse order to allow deleting of items
+       for f :=  FInputFiles.Count -1 downto 0 do
        begin
-           HaltWithError(204, 'No File Matches in Input Directory: ' + finputfile + '*' + InputExtension );
+         found := false;
+         afile := FInputFiles[f];
+       // check for start of dir then filename check.
+         if Pos('\.~' ,afile) > 0 then
+         begin
+           Found := true;
+         end;
+
+         if Pos('\~$',afile) > 0 then
+         begin
+           found := true;
+         end;
+
+         if found then
+         begin
+          Log('Removing temp file: ' + afile , VERBOSE );
+           FInputFiles.Delete(f);
+         end;
+
 
        end;
 
