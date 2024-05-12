@@ -14,6 +14,10 @@ return [
     |
     */
 
+    'docto' => [
+      'path' => env('DOCTO_PATH','..\\exe\\32\\docto.exe'),
+    ],
+
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),

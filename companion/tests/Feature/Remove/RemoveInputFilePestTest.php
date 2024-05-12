@@ -2,9 +2,6 @@
 
 it('test deletes files from directory', function (){
         // setup
-        if (\Illuminate\Support\Facades\Storage::exists('inputfilestemp')){
-            \Illuminate\Support\Facades\Storage::deleteDirectory('inputfilestemp');
-        }
       // $testinputfilesdir = \Illuminate\Support\Facades\Storage::path('inputfiles\\plain');
        $testinputfilesdir_temp = \Illuminate\Support\Facades\Storage::path('inputfilestemp');
 
@@ -29,9 +26,8 @@ it('test deletes files from directory', function (){
 
         $dirfilescount = $dirfiles->count();
         // do conversion
-       $doctocmd = <<<CMD
-..\\src\\docto.exe -WD -f $testinputfilesdir_temp -fx .doc -o $testoutputdir_temp -t wdFormatPDF -R true
-CMD;
+        $docto = config('services.docto.path');
+       $doctocmd = "$docto -WD -f $testinputfilesdir_temp -fx .doc -o $testoutputdir_temp -t wdFormatPDF -R true";
       // echo $doctocmd;
        $output = \Illuminate\Support\Facades\Process::run($doctocmd);
      //  echo $output->output();
