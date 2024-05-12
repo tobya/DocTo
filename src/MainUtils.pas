@@ -33,7 +33,7 @@ Const
   MSVISIO = 4;
 
   
-  DOCTO_VERSION = '1.9.41';  // dont use 0x - choco needs incrementing versions.
+  DOCTO_VERSION = '1.14.44';  // dont use 0x - choco needs incrementing versions.
   DOCTO_VERSION_NOTE = ' x64 Release ';
 type
 
@@ -1278,7 +1278,9 @@ if  (id = '-XL') or
       halt(2);
 
     end
-    else if (id = '--ENABLE-MACROAUTORUN') then
+    else if (id = '--ENABLE-MACROAUTORUN') or
+            (id = '--ENABLE-WORDVBAAUTO')
+    then
     begin
       fDontUseAutoVBA := false;
       if (OfficeAppName <> 'Word')then
