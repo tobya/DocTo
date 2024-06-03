@@ -2,10 +2,7 @@
 
 it('test deletes files from directory', function (){
         // setup
-        if (\Illuminate\Support\Facades\Storage::exists('inputfilestemp')){
-            \Illuminate\Support\Facades\Storage::deleteDirectory('inputfilestemp');
-        }
-       $testinputfilesdir = \Illuminate\Support\Facades\Storage::path('inputfiles\\plain');
+      // $testinputfilesdir = \Illuminate\Support\Facades\Storage::path('inputfiles\\plain');
        $testinputfilesdir_temp = \Illuminate\Support\Facades\Storage::path('inputfilestemp');
 
 
@@ -13,12 +10,13 @@ it('test deletes files from directory', function (){
        $testoutputdir_temp = \Illuminate\Support\Facades\Storage::path('outputtemp2');
       // echo "\n". $testoutputdir_temp;
        \Illuminate\Support\Facades\Storage::createDirectory('outputtemp2');
-       $cmd = "xcopy \"$testinputfilesdir\" \"$testinputfilesdir_temp\\\"  ";
+     //  $cmd = "xcopy \"$testinputfilesdir\" \"$testinputfilesdir_temp\\\"  ";
       // echo "\n". $cmd;
-       $result =  \Illuminate\Support\Facades\Process::run( $cmd );
+    //   $result =  \Illuminate\Support\Facades\Process::run( $cmd );
 
             //echo "\n" . $result->output() . "\n";
-           $dirfiles = collect(\Illuminate\Support\Facades\Storage::listContents('inputfilestemp'));
+         //  $dirfiles = collect(\Illuminate\Support\Facades\Storage::listContents('inputfilestemp'));
+    $dirfiles = \App\Services\FileGatherService::GatherFiles(collect(['plain']),'inputfilestemp');
           $docfiles = $dirfiles->filter(function ($item){
             return str($item->path())->endsWith('.doc');
         });
@@ -28,9 +26,8 @@ it('test deletes files from directory', function (){
 
         $dirfilescount = $dirfiles->count();
         // do conversion
-       $doctocmd = <<<CMD
-..\\src\\docto.exe -WD -f $testinputfilesdir_temp -fx .doc -o $testoutputdir_temp -t wdFormatPDF -R true
-CMD;
+        $docto = config('services.docto.path');
+       $doctocmd = "$docto -WD -f $testinputfilesdir_temp -fx .doc -o $testoutputdir_temp -t wdFormatPDF -R true";
       // echo $doctocmd;
        $output = \Illuminate\Support\Facades\Process::run($doctocmd);
      //  echo $output->output();
