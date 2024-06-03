@@ -497,3 +497,7 @@ XLSTo is now incorporated into DocTo.  Previously XLSTo was a seperate EXE that 
 
  The main branch name in the repo is `DocTo`
 
+ ### Tests
+
+ I have started to write functional tests in PHP to check if the application is manipulating documents correctly.  If you are familiar with PHP Laravel and Pest I would love some extra tests.
+
