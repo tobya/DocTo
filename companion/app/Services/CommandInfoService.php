@@ -14,7 +14,7 @@
               "ConvertDocToFile" => [
                   "Description" => "Convert Word Document to another file type",
                   "Template" => "ConvertFromDocToFile.tpl.md",
-                  "Title" => 'How do I Convert a Microsoft Word Doc to a {[$Command.FileTypeDescription]}?',
+                  "Title" => 'How do I Convert a Microsoft Word Doc to a {{$Command.FileTypeDescription}}?',
                   "Blocks" => [
                       [
                           ""
@@ -80,7 +80,7 @@
               "ConvertDirDocToFile" => [
                   "Description" => "Convert all Word Documents in a Directory",
                   "Template" => "ConvertDirDocToFile.tpl.md",
-                  "Title" => 'How do I Convert a Folder full of Microsoft Word Documents to {[$Command.FileTypeDescription]}? ',
+                  "Title" => 'How do I Convert a Folder full of Microsoft Word Documents to {{$Command.FileTypeDescription}}? ',
                   "Items" => [
                       [
 
@@ -119,7 +119,7 @@
               "ConvertDirRTFToFile" => [
                   "Description" => "Convert all RTF Documents in a Directory",
                   "Template" => "ConvertDirRTFToFile.tpl.md",
-                  "Title" => 'How do I Convert a Folder full of RTF (Rich Text) documents to {[$Command.FileTypeDescription]}? ',
+                  "Title" => 'How do I Convert a Folder full of RTF (Rich Text) documents to {{$Command.FileTypeDescription}}? ',
                   "Items" => [
                       [
 
@@ -156,7 +156,7 @@
               "ConvertDirTXTToFile" => [
                   "Description" => "Convert all Text Files in a Directory",
                   "Template" => "ConvertDirTXTToFile.tpl.md",
-                  "Title" => 'How do I Convert a Folder full of text files to {[$Command.FileTypeDescription]}? ',
+                  "Title" => 'How do I Convert a Folder full of text files to {{$Command.FileTypeDescription}}? ',
                   "Items" => [
                       [
 
@@ -180,7 +180,7 @@
               "ConvertDirToFileRemove" => [
                   "Description" => "Convert all Word Documents in a Directory and remove after conversion",
                   "Template" => "ConvertDirToFileandRemove.tpl.md",
-                  'Title' => 'How do I delete a file after Converting it to  {[$Command.FileTypeExt]}? ',
+                  'Title' => 'How do I delete a file after Converting it to  {{$Command.FileTypeExt}}? ',
                   "Items" => [
                       [
 
@@ -261,7 +261,7 @@
 
               "ConvertXLSToFile" => [
                   "Description" => "Convert Excel Spreadsheet to another file type",
-                  "Title" => 'How do I Convert a Microsoft Excel Spreadsheet to a {[$Command.FileTypeExt]}? ',
+                  "Title" => 'How do I Convert a Microsoft Excel Spreadsheet to a {{$Command.FileTypeExt}}? ',
                   "Template" => "ConvertFromXLSToFile.tpl.md",
                   "Items" => [
                       [
@@ -328,7 +328,7 @@
 
               "ConvertXLSToFileUNC" => [
                   "Description" => "Convert Excel Spreadsheet to another file type and save to UNC path",
-                  "Title" => 'How do I Convert a Microsoft Excel Spreadsheet to a {[$Command.FileTypeExt]} and save it to a UNC network Drive? ',
+                  "Title" => 'How do I Convert a Microsoft Excel Spreadsheet to a {{$Command.FileTypeExt}} and save it to a UNC network Drive? ',
                   "Items" => [
                       [
 
@@ -674,7 +674,7 @@
               "ConvertVSDToFile" => [
                   "Description" => "Convert Visio Document to another file type",
                   "Template" => "ConvertFromVsdToFile.tpl.md",
-                  "Title" => 'How do I Convert a Microsoft Visio Document to a {[$Command.FileTypeDescription]}?',
+                  "Title" => 'How do I Convert a Microsoft Visio Document to a {{$Command.FileTypeDescription}}?',
                   "Blocks" => [
                       [
                           ""
