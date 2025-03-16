@@ -1,7 +1,4 @@
-
-
-
-            Help
+Help
 DocTo Version: %s
 Office Version: %s
 Open Source: https://github.com/tobya/DocTo/
@@ -139,6 +136,3 @@ ERROR CODES:
 221 : Word not Installed
 301 : Not Implemented
 400 : Unknown Error
-
-
-                

@@ -1,7 +1,4 @@
-
-
-
-            wdNoMailSystem=$00000000
+wdNoMailSystem=$00000000
 wdMAPI=$00000001
 wdPowerTalk=$00000002
 wdMAPIandPowerTalk=$00000003
@@ -3754,6 +3751,3 @@ xlGradientStopPositionTypePercent=$00000002
 wdVertical=$00000001
 wdSideToSide=$00000002
 
-
-
-                

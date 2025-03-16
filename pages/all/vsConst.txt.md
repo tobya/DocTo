@@ -1,7 +1,4 @@
-
-
-
-            visNumber=$00000020
+visNumber=$00000020
 visPercent=$00000021
 visAcre=$00000024
 visHectare=$00000025
@@ -3730,6 +3727,3 @@ visFilterMouseMoveDragOver=$00000003
 visFilterMouseMoveDragLeave=$00000004
 visFilterMouseMoveDragDrop=$00000005
 
-
-
-                
