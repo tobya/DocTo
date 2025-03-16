@@ -30,12 +30,8 @@ class GenerateDocumentationPages extends Command
     {
 
 
-
         $Commands = CommandInfoService::Commands();
         $Params = CommandInfoService::Explanations();
-
-
-
 
         $AllResourceFiles = ResourceFileService::LoadResourceFiles();
 
@@ -66,13 +62,13 @@ class GenerateDocumentationPages extends Command
                  // print_r($CommandBlock);
                  // print_r($Item);
                  // echo "\n";
-                    $title = 'updaet soon';
-                 //   $title = Blade::render($CommandBlock['Title'],[
-                 //       'Params' => $Params,
-                 //       'ResourceFiles' => $AllResourceFiles,
-                 //       'Command' => (object) $Item,
-                 //       'CommandBlock' => (object) $CommandBlock,
-                 //   ]);
+
+                    $title = Blade::render($CommandBlock['Title'],[
+                        'Params' => json_decode(json_encode($Params)),
+                        'ResourceFiles' => $AllResourceFiles,
+                        'Command' => json_decode(json_encode( $Item)),
+                        'CommandBlock' => json_decode(json_encode($CommandBlock)),
+                    ]);
                   //  echo "\n Title : $title";
                 } else {
                     $title = $Fn;

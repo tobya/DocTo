@@ -727,8 +727,8 @@
               "dddeletefiles" => ['cmd' => '--deletefiles', 'desc' => "Delete the converted file after conversion."],
               "ddbookmarksource" => ['cmd' => '--bookmarksource', 'desc' => "Where to get Bookmarks from for PDF.  This parameter is only relevant for PDF files."],
               "ddexportmarkup" => ['cmd' => '--ExportMarkup', 'desc' => "Export Comments and other markup from Word Document to PDF"],
-              "ddnosubdirs" => ['cmd' => '--no-subdirs', 'desc' => 'Don\'t rescurse subdirs.  Only convert files in requested dir. '],
-              "dduseISO190051" => ['cmd' => '--use-iso19005-1', 'desc' => 'Output PDFs from Word as ISO standard 19005-1 for self contained PDFS. Sometimes also refered to as <a href="https://en.wikipedia.org/wiki/PDF/A">PDF/A</a> '],
+              "ddnosubdirs" => ['cmd' => '--no-subdirs', 'desc' => "Don't rescurse subdirs.  Only convert files in requested dir. "],
+              "dduseISO190051" => ['cmd' => '--use-iso19005-1', 'desc' => 'Output PDFs from Word as ISO standard 19005-1 for self contained PDFS. Sometimes also refered to as (PDF/A)[https://en.wikipedia.org/wiki/PDF/A]'],
 
 
           ];
