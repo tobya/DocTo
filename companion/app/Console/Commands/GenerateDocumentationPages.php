@@ -119,7 +119,7 @@ class GenerateDocumentationPages extends Command
         $HelpFile
         ````";
 
-        file_put_contents('../all/HelpLog.md', $HelpFile);
+        file_put_contents(docto_path('/pages/all/HelpLog.md'), $HelpFile);
         echo "Create File : HelpLog.md \n";
 
         foreach ($AllResourceFiles as $key => $fileinfo) {
