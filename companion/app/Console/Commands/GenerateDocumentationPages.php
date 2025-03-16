@@ -49,11 +49,6 @@ class GenerateDocumentationPages extends Command
                 }
 
 
-
-                if (!file_exists('../all/')){
-                    mkdir('../all/');
-                }
-
                 $Fn =   $CommandName . @$Item['FileTypeTitleExtra'] . $Item['FileTypeExt'] . '.md' ;
 
                 if (isset($CommandBlock['Title'])){
@@ -65,7 +60,7 @@ class GenerateDocumentationPages extends Command
                         'Command' => json_decode(json_encode( $Item)),
                         'CommandBlock' => json_decode(json_encode($CommandBlock)),
                     ]);
-                  //  echo "\n Title : $title";
+
                 } else {
                     $title = $Fn;
                 }
@@ -126,12 +121,8 @@ class GenerateDocumentationPages extends Command
 
 
 
-            $Contents = "
+            $Contents = $fileinfo['contents'];
 
-
-            $fileinfo[contents]
-
-                ";
             $ResourceFiles[$fileinfo['filename']] = $Contents;
             file_put_contents(docto_path('/pages/all/' . $fileinfo['filename'] . '.md'), $Contents);
             echo "\nCreate Resource File : " . $fileinfo['filename'] . '.md';
