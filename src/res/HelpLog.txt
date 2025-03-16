@@ -1,6 +1,6 @@
 Help
-Docto Version:%s
-Office Version : %s
+DocTo Version: %s
+Office Version: %s
 Open Source: https://github.com/tobya/DocTo/
 Description: DocTo converts Word Documents and Excel Spreadsheets to other formats.
 
@@ -11,7 +11,7 @@ Parameters markers are case insensitive.
 
   -H  This message
       --HELP -?
-  -WD Use Word for Converstion (Default). Help '-h -wd'
+  -WD Use Word for Conversion (Default). Help '-h -wd'
       --word
   -XL Use Excel for Conversion. Help '-h -xl'
       --excel

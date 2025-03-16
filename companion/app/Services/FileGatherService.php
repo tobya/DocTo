@@ -9,7 +9,6 @@
   {
         public static function GatherFiles(Collection $list, $tempDirName)
         {
-
             // remove exisitn files
             if (\Illuminate\Support\Facades\Storage::exists($tempDirName)){
                 \Illuminate\Support\Facades\Storage::deleteDirectory($tempDirName);

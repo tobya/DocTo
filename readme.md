@@ -1,5 +1,9 @@
 # DocTo
 
+Contributers
+====
+I am actively looking for contributers so if you are a Delphi (or VBA) programmer and interested in helping out, please send me a message or comment.
+
 Document Converter
 ====
 
@@ -14,7 +18,7 @@ Must have Microsoft Word, Excel or Powerpoint installed on host machine.
 
 Download Release From Github Releases - https://github.com/tobya/DocTo/releases/
 Further Information available at https://tobya.github.io/DocTo/
-Further Examples available at https://docto.toflidium.com
+
 
 
 ## Features
@@ -496,4 +500,8 @@ XLSTo is now incorporated into DocTo.  Previously XLSTo was a seperate EXE that 
  I am happy to accept any PR anyone might like to submit.  If a large amount of work involved, please open an issue first to ensure the effort wont be wasted.
 
  The main branch name in the repo is `DocTo`
+
+ ### Tests
+
+ I have started to write functional tests in PHP to check if the application is manipulating documents correctly.  If you are familiar with PHP Laravel and Pest I would love some extra tests.
 
