@@ -5,14 +5,13 @@
   class ResourceFileService
   {
     public static function LoadResourceFile($fn) {
-        $fullfn = __DIR__ . '\\..\\..\\src\\res\\' . $fn;
-
+        $fullfn = docto_path('\\src\\res\\' . $fn);
         return file_get_contents($fullfn);
 
     }
 
    public static  function LoadResourceFiles(){
-        $allfiles = scandir(__DIR__ . '\\..\\..\\src\\res\\');
+        $allfiles = scandir(docto_path('\\src\\res\\'));
 
         foreach ($allfiles as $key => $fn) {
 
@@ -21,7 +20,7 @@
                 if (strpos( $fn , '__history') !== false){continue;}
                 $info = pathinfo($fn);
 
-                $AllContent[$info['filename']] = ['filename'=> $fn, 'contents' => LoadResourceFile($fn)];
+                $AllContent[$info['filename']] = ['filename'=> $fn, 'contents' => static::LoadResourceFile($fn)];
             }
 
         }
