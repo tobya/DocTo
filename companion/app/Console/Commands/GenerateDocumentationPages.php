@@ -37,8 +37,7 @@ class GenerateDocumentationPages extends Command
 
         foreach ($Commands as $CommandName => $CommandBlock) {
 
-                print_r($CommandBlock);
-               // $smarty->assign('CommandBlock' , $CommandBlock);
+
             foreach ($CommandBlock['Items'] as $keytag => $Item) {
                 # code...
                 // for CommandBlocks that use a single format
@@ -58,10 +57,7 @@ class GenerateDocumentationPages extends Command
                 $Fn =   $CommandName . @$Item['FileTypeTitleExtra'] . $Item['FileTypeExt'] . '.md' ;
 
                 if (isset($CommandBlock['Title'])){
-                 // echo "\n Title : $CommandBlock[Title] \n";
-                 // print_r($CommandBlock);
-                 // print_r($Item);
-                 // echo "\n";
+
 
                     $title = Blade::render($CommandBlock['Title'],[
                         'Params' => json_decode(json_encode($Params)),
@@ -79,9 +75,7 @@ class GenerateDocumentationPages extends Command
                 // Store fn for linking to in index page.
                 $Commands[$CommandName]['Items'][$keytag]['fn'] = $Fn;
                 $Commands[$CommandName]['Items'][$keytag]['fntitle'] = $title;
-                echo "\n -----";
-                print_r( $CommandBlock['Template']);
-                echo " -----\n";
+
 
                 $MDFile = Blade::render(file_get_contents(base_path('\\resources\\generator_templates\\' .  $CommandBlock['Template'])),[
                         'Params' => json_decode(json_encode($Params)),
@@ -97,14 +91,10 @@ class GenerateDocumentationPages extends Command
             }
         }
 
-     //   die('done to here');
         //**************
         //  Create index file here
         //**********************
 
-      //  $smarty->assign('GeneratedTime', date('H:i:s Ymd'));
-     //   $smarty->Assign('Commands',$Commands);
-       // $Indexmd = $smarty->fetch('index.tpl.md');
         $Indexmd =  Blade::render(file_get_contents(base_path('\\resources\\generator_templates\\index.tpl.md')),[
                         'Params' => json_decode(json_encode($Params)),
                         'ResourceFiles' => $AllResourceFiles,
@@ -112,7 +102,7 @@ class GenerateDocumentationPages extends Command
 
                         'CommandBlock' =>   json_decode(json_encode($CommandBlock)),
                     ]);
-        //print_r($Indexmd);
+
         file_put_contents(docto_path('/pages/all/index.md'), $Indexmd);
 
         echo "Create File : index.md \n";
