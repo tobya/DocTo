@@ -6,10 +6,12 @@ it('test deletes files from directory', function (){
        $testinputfilesdir_temp = \Illuminate\Support\Facades\Storage::path('inputfilestemp');
 
 
+       $testinputfilesdir_temp = \Illuminate\Support\Facades\Storage::path('inputfilestemp');
 
        $testoutputdir_temp = \Illuminate\Support\Facades\Storage::path('outputtemp2');
-      // echo "\n". $testoutputdir_temp;
+
        \Illuminate\Support\Facades\Storage::createDirectory('outputtemp2');
+
      //  $cmd = "xcopy \"$testinputfilesdir\" \"$testinputfilesdir_temp\\\"  ";
       // echo "\n". $cmd;
     //   $result =  \Illuminate\Support\Facades\Process::run( $cmd );
@@ -30,7 +32,7 @@ it('test deletes files from directory', function (){
        $doctocmd = "$docto -WD -f $testinputfilesdir_temp -fx .doc -o $testoutputdir_temp -t wdFormatPDF -R true";
       // echo $doctocmd;
        $output = \Illuminate\Support\Facades\Process::run($doctocmd);
-     //  echo $output->output();
+
 
     // check files have been converted and originoals have been created.
        expect(collect(\Illuminate\Support\Facades\Storage::listContents('inputfilestemp'))->count())->tobe($dirfilescount - $docfilecount);

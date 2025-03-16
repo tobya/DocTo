@@ -653,9 +653,16 @@ begin
        try
 
             StartTime := GettickCount();
-             logdebug('Executing Conversion ... ',VERBOSE);
-                          logdebug('Executing Conversion ... ' + FileToCreate,VERBOSE);
+
+            // Provide debug info
+            logdebug('Executing Conversion ... ',VERBOSE);
+            logdebug('Executing Conversion ... ' + FileToCreate,VERBOSE);
+
+            // *************************
+            // Execute Conversion
+            // *************************
             ConversionInfo :=  ExecuteConversion(FileToConvert, FileToCreate, OutputFileFormat);
+
 
             if ConversionInfo.Successful then
             begin
@@ -663,6 +670,7 @@ begin
               CheckDocumentTiming(StartTime, EndTime, FileToConvert);
             end;
 
+            // After conversion
             if ConversionInfo.Successful then
             begin
 

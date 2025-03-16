@@ -19,6 +19,7 @@
                 $inputfilesdir = \Illuminate\Support\Facades\Storage::path('inputfiles\\' . $dir );
                 $cmd = "xcopy \"$inputfilesdir\" \"$tempDirPath\\\"  ";
                 $result =  \Illuminate\Support\Facades\Process::run( $cmd );
+                echo "\n $cmd \n";
                 echo "\n" . $result->output() . "\n";
             });
             return collect(Storage::listContents($tempDirName));
