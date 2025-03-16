@@ -22,7 +22,7 @@ Output
 Example output :
 
 ````
-    DocTo Version:1.2.26.49.b.pp
+    DocTo Version:1.10.26
     OfficeApp Version:16
     Source: https://github.com/tobya/DocTo/
 ````
@@ -30,7 +30,7 @@ Example output :
 Command Line Explained 
 -
 
- - `{[$Params.dashv.cmd]}` -  {[$Params.dashv.desc]} 
+ - `{{$Params.dashv.cmd}}` -  {{$Params.dashv.desc}} 
 
    
 
