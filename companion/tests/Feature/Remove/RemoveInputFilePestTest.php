@@ -1,6 +1,10 @@
 <?php
 
 it('test deletes files from directory', function (){
+        // setup
+      // $testinputfilesdir = \Illuminate\Support\Facades\Storage::path('inputfiles\\plain');
+       $testinputfilesdir_temp = \Illuminate\Support\Facades\Storage::path('inputfilestemp');
+
 
        $testinputfilesdir_temp = \Illuminate\Support\Facades\Storage::path('inputfilestemp');
 
@@ -8,6 +12,12 @@ it('test deletes files from directory', function (){
 
        \Illuminate\Support\Facades\Storage::createDirectory('outputtemp2');
 
+     //  $cmd = "xcopy \"$testinputfilesdir\" \"$testinputfilesdir_temp\\\"  ";
+      // echo "\n". $cmd;
+    //   $result =  \Illuminate\Support\Facades\Process::run( $cmd );
+
+            //echo "\n" . $result->output() . "\n";
+         //  $dirfiles = collect(\Illuminate\Support\Facades\Storage::listContents('inputfilestemp'));
     $dirfiles = \App\Services\FileGatherService::GatherFiles(collect(['plain']),'inputfilestemp');
           $docfiles = $dirfiles->filter(function ($item){
             return str($item->path())->endsWith('.doc');

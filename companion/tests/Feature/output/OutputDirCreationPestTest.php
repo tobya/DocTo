@@ -8,9 +8,9 @@
     $files = \App\Services\FileGatherService::GatherFiles(collect(['single']),$gatherdir);
     $docto = config('services.docto.path');
     $inputdir = \Illuminate\Support\Facades\Storage::path($gatherdir);
-    $fulloutputdir = \Illuminate\Support\Facades\Storage::path($outputdir);
-    $cmd = "$docto -WD -f $inputdir -o $fulloutputdir -t wdFormatHTML";
-  // echo $cmd, $fulloutputdir;
+    $outputdir = \Illuminate\Support\Facades\Storage::path($outputdir);
+    $cmd = "$docto -WD -f $inputdir -o $outputdir -t wdFormatHTML";
+   echo $cmd;
    $output = Process::run($cmd);
     expect(\Illuminate\Support\Facades\Storage::exists($outputdir))->toBeTrue();
 
