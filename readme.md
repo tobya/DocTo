@@ -56,6 +56,7 @@ to upgrade to latest version
 
 > choco upgrade docto 
 
+## DocTo in other applications
 ### Node
 
 Node Wrappers has been created by @KerimG & @brrd
@@ -63,6 +64,12 @@ Node Wrappers has been created by @KerimG & @brrd
 https://www.npmjs.com/package/node-docto
 
 https://github.com/brrd/msoconvert
+
+[@opendevise/antora-office-to-pdf-extension](https://www.npmjs.com/package/@opendevise/antora-office-to-pdf-extension)
+
+### Other Integrations
+
+- [https://gitlab.com/antora/antora](https://antora.org/)
   
 ## Bugs and Features
 
