@@ -31,11 +31,11 @@ Command Line
 Command Line Explained 
 -
 
- - `{{$Params.appwd.cmd}}` :  {{$Params.appwd.desc}}
- - `{{$Params.dashf.cmd}}` :  {{$Params.dashf.desc}} 
- - `{{$Params.dasho.cmd}}` :  {{$Params.dasho.desc}}
- - `{{$Params.dasht.cmd}}` :  {{$Params.dasht.desc}}
- - `{{$Params.dduseISO190051.cmd}}` :  {{$Params.dduseISO190051.desc}}
+ - `{{$Params->appwd->cmd}}` :  {{$Params->appwd->desc}}
+ - `{{$Params->dashf->cmd}}` :  {{$Params->dashf->desc}} 
+ - `{{$Params->dasho->cmd}}` :  {{$Params->dasho->desc}}
+ - `{{$Params->dasht->cmd}}` :  {{$Params->dasht->desc}}
+ - `{{$Params->dduseISO190051->cmd}}` :  {{$Params->dduseISO190051->desc}}
 
 
 
@@ -46,7 +46,5 @@ Some other interesting commands
 You might find some of the following commands also interesting.
 
 - [Convert all Word Document in a folder to a pdf file](ConvertDirDocToFilepdf.md);
-{{foreach from=$Command.RelatedLinks key=LinkTitle item=L}}
- - [{{$LinkTitle}}]({{$L}})
-{{/foreach}}    
+@include('RelatedLinks')   
 

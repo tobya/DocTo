@@ -1,39 +1,39 @@
 {
-    "title" : "How do I Convert a Microsoft Word Doc to a {{$Command.FileTypeDescription}} and fire a webhook on conversion? " 
+    "title" : "How do I Convert a Microsoft Word Doc to a {{$Command->FileTypeDescription}} and fire a webhook on conversion? " 
 }
 
-{{$Command.FileTypeDescription}} 
+{{$Command->FileTypeDescription}} 
 ==
 
-How do I Convert a Microsoft Word Doc to a {{$Command.FileTypeDescription}} ({{$Command.FileTypeExt}}) and fire a webhook on conversion?         
+How do I Convert a Microsoft Word Doc to a {{$Command->FileTypeDescription}} ({{$Command->FileTypeExt}}) and fire a webhook on conversion?         
 -
 
-It is very simple to convert a Word Document to a {{$Command.FileTypeExt}} file  on the command line using [Docto](https://github.com/tobya/docto). You can also do this easily in Microsoft Word, but sometimes it helps to be able to do it from the command line.  And its really simple to fire a webhook that you can recieve at any website.  Just use the `-W` parameter.   
+It is very simple to convert a Word Document to a {{$Command->FileTypeExt}} file  on the command line using [Docto](https://github.com/tobya/docto). You can also do this easily in Microsoft Word, but sometimes it helps to be able to do it from the command line.  And its really simple to fire a webhook that you can recieve at any website.  Just use the `-W` parameter.   
 
-The command line below shows how you can convert a Microsoft Word Document to a {{$Command.FileTypeDescription}} file - {{$Command.FileTypeExt}} and fire a webhook.
+The command line below shows how you can convert a Microsoft Word Document to a {{$Command->FileTypeDescription}} file - {{$Command->FileTypeExt}} and fire a webhook.
 
 Command Line 
 -
 
  ````
- docto -WD -f 'c:\path\Document.doc' -o 'c:\path\Document.{{$Command.FileTypeExt}}' -t {{$Command.FileFormat}} -W 'https://example.com/mywebhook.php'
+ docto -WD -f 'c:\path\Document.doc' -o 'c:\path\Document.{{$Command->FileTypeExt}}' -t {{$Command->FileFormat}} -W 'https://example.com/mywebhook.php'
  ````
  or easier to read
  ````
  docto -WD  -f 'c:\path\Document.doc' 
-            -o 'c:\path\Document.{{$Command.FileTypeExt}}' 
-            -t {{$Command.FileFormat}}
+            -o 'c:\path\Document.{{$Command->FileTypeExt}}' 
+            -t {{$Command->FileFormat}}
             -W 'https://example.com/mywebhook.php'
  ````
 
 Command Line Explained 
 -
 
- - `{{$Params.appwd.cmd}}` -  {{$Params.appwd.desc}}
- - `{{$Params.dashf.cmd}}` -  {{$Params.dashf.desc}} 
- - `{{$Params.dasho.cmd}}` -  {{$Params.dasho.desc}}
- - `{{$Params.dasht.cmd}}` -  {{$Params.dasht.desc}}
- - `{{$Params.dashw.cmd}}` -  {{$Params.dashw.desc}}
+ - `{{$Params->appwd->cmd}}` -  {{$Params->appwd->desc}}
+ - `{{$Params->dashf->cmd}}` -  {{$Params->dashf->desc}} 
+ - `{{$Params->dasho->cmd}}` -  {{$Params->dasho->desc}}
+ - `{{$Params->dasht->cmd}}` -  {{$Params->dasht->desc}}
+ - `{{$Params->dashw->cmd}}` -  {{$Params->dashw->desc}}
 
 
 Web Hook Help
@@ -67,7 +67,5 @@ Some other interesting commands
 
 You might find some of the following commands also interesting.
 
-{{foreach from=$Command.RelatedLinks key=LinkTitle item=L}}
- - [{{$LinkTitle}}]({{$L}})
-{{/foreach}}    
+@include('RelatedLinks')   
 

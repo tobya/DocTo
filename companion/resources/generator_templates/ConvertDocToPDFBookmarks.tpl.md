@@ -11,33 +11,33 @@ When converting to a PDF by Default Word Headings are used for the bookmarks in 
   - WordBookmarks
   - None      
 
-This is the command line to change the bookmark source to {{$Command.BookmarksSource}}
+This is the command line to change the bookmark source to {{$Command->BookmarksSource}}
 
-{{$Command.ContentExtra}}
+{{$Command->ContentExtra}}
 
 Command Line 
 -
 
  ````
- docto -WD -f 'c:\path\Document.doc' -o 'c:\path\Document.{{$Command.FileTypeExt}}' -t wdFormatPDF --bookmarksource {{$Command.BookmarksSource}}
+ docto -WD -f 'c:\path\Document.doc' -o 'c:\path\Document.{{$Command->FileTypeExt}}' -t wdFormatPDF --bookmarksource {{$Command->BookmarksSource}}
  ````
  or easier to read
  ````
  docto  -WD 
         -f 'c:\path\Document.doc' 
-        -o 'c:\path\Document.{{$Command.FileTypeExt}}' 
+        -o 'c:\path\Document.{{$Command->FileTypeExt}}' 
         -t wdFormatPDF 
-        --bookmarksource {{$Command.BookmarksSource}}
+        --bookmarksource {{$Command->BookmarksSource}}
  ````
 
 Command Line Explained 
 -
 
- - `{{$Params.appwd.cmd}}` :  {{$Params.appwd.desc}}
- - `{{$Params.dashf.cmd}}` :  {{$Params.dashf.desc}} 
- - `{{$Params.dasho.cmd}}` :  {{$Params.dasho.desc}}
- - `{{$Params.dasht.cmd}}` :  {{$Params.dasht.desc}}
- - `{{$Params.ddbookmarksource.cmd}}` :  {{$Params.ddbookmarksource.desc}}
+ - `{{$Params->appwd->cmd}}` :  {{$Params->appwd->desc}}
+ - `{{$Params->dashf->cmd}}` :  {{$Params->dashf->desc}} 
+ - `{{$Params->dasho->cmd}}` :  {{$Params->dasho->desc}}
+ - `{{$Params->dasht->cmd}}` :  {{$Params->dasht->desc}}
+ - `{{$Params->ddbookmarksource->cmd}}` :  {{$Params->ddbookmarksource->desc}}
 
 
 
@@ -48,7 +48,5 @@ Some other interesting commands
 You might find some of the following commands also interesting.
 
 - [Convert all Word Document in a folder to a pdf file](ConvertDirDocToFilepdf.md);
-{{foreach from=$Command.RelatedLinks key=LinkTitle item=L}}
- - [{{$LinkTitle}}]({{$L}})
-{{/foreach}}    
+@include('RelatedLinks')   
 

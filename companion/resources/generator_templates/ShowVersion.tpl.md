@@ -30,7 +30,7 @@ Example output :
 Command Line Explained 
 -
 
- - `{{$Params.dashv.cmd}}` -  {{$Params.dashv.desc}} 
+ - `{{$Params->dashv->cmd}}` -  {{$Params->dashv->desc}} 
 
    
 
