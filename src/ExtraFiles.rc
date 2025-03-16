@@ -4,7 +4,7 @@ PPFORMATS TEXT  res\ppFormats.txt
 VSFORMATS TEXT  res\vsFormats.txt
 DOCEXTENSIONS      TEXT    res\wdFormatsExt.txt
 XLSEXTENSIONS TEXT res\xlsFormatsExt.txt
-PPEXTENSIONS TEXT res\ppFormats.txt
+PPEXTENSIONS TEXT res\ppFormatsExt.txt
 VSEXTENSIONS TEXT res\vsFormatsExt.txt
 
 
