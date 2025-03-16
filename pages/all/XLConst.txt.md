@@ -1,7 +1,7 @@
 
 
-    
-    xlAll=$FFFFEFF8
+
+            xlAll=$FFFFEFF8
 xlAutomatic=$FFFFEFF7
 xlBoth=$00000001
 xlCenter=$FFFFEFF4
@@ -2317,5 +2317,5 @@ xlLinkedDataTypeStateBrokenLinkedData=$00000003
 xlLinkedDataTypeStateFetchingData=$00000004
 xlReplaceFormula=$00000000
 xlReplaceFormula2=$00000001
-    
-        
+
+                

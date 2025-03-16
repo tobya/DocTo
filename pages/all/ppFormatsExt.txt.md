@@ -1,7 +1,7 @@
 
 
-    
-    ppSaveAsAddIn=ppam
+
+            ppSaveAsAddIn=ppam
 ppSaveAsAnimatedGIF=gif
 ppSaveAsBMP=bmp
 ppSaveAsDefault=pptx
@@ -32,5 +32,5 @@ ppSaveAsTIF=tif
 ppSaveAsWMV=wmv
 ppSaveAsXMLPresentation=pptx
 ppSaveAsXPS=xps
-    
-        
+
+                

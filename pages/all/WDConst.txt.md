@@ -1,7 +1,7 @@
 
 
-    
-    wdNoMailSystem=$00000000
+
+            wdNoMailSystem=$00000000
 wdMAPI=$00000001
 wdPowerTalk=$00000002
 wdMAPIandPowerTalk=$00000003
@@ -3159,6 +3159,8 @@ wdExportFormatPDF=$00000011
 wdExportFormatXPS=$00000012
 wdExportOptimizeForPrint=$00000000
 wdExportOptimizeForOnScreen=$00000001
+ForPrint=$00000000
+ForOnScreen=$00000001
 wdExportCreateNoBookmarks=$00000000
 wdExportCreateHeadingBookmarks=$00000001
 wdExportCreateWordBookmarks=$00000002
@@ -3751,5 +3753,7 @@ xlGradientStopPositionTypeNumber=$00000001
 xlGradientStopPositionTypePercent=$00000002
 wdVertical=$00000001
 wdSideToSide=$00000002
-    
-        
+
+
+
+                

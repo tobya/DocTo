@@ -1,7 +1,7 @@
 
 
-    
-    wdFormatDOSTextLineBreaks=txt
+
+            wdFormatDOSTextLineBreaks=txt
 wdFormatEncodedText=txt
 wdFormatFilteredHTML=html
 wdFormatOpenDocumentText=odt
@@ -24,5 +24,5 @@ wdFormatXMLTemplate=xml
 wdFormatXMLTemplateMacroEnabled=xml
 wdFormatXPS=xps
 
-    
-        
+
+                

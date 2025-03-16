@@ -1,7 +1,7 @@
 
 
-    
-    Help Errors
+
+            Help Errors
 
 Possible Reasons for Errors.
 ===========================
@@ -14,5 +14,5 @@ Open or locked you will get this error.  Use Verbose logging to see if file
 exists before it is written to.
 
 
-    
-        
+
+                
