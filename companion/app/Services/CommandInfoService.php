@@ -8,7 +8,7 @@
 
       public static function Commands ()
       {
-          return [
+          return collect([
 
 
               "ConvertDocToFile" => [
@@ -701,11 +701,11 @@
               ],
 
 
-          ];
+          ])->makeRecursive();
       }
       public static function Explanations()
       {
-         return [
+         return collect( [
 
               "appwd" => ['cmd' => '-WD', 'desc' => "This is a conversion using Microsoft Word. "],
               "appxl" => ['cmd' => '-XL', 'desc' => "This is a conversion using Microsoft Excel.  "],
@@ -731,7 +731,7 @@
               "dduseISO190051" => ['cmd' => '--use-iso19005-1', 'desc' => 'Output PDFs from Word as ISO standard 19005-1 for self contained PDFS. Sometimes also refered to as <a href="https://en.wikipedia.org/wiki/PDF/A">PDF/A</a> '],
 
 
-          ];
+          ])->makeRecursive();
       }
 
   }
