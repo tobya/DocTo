@@ -8,12 +8,12 @@
 
       public static function Commands ()
       {
-          return collect([
+          return [
 
 
               "ConvertDocToFile" => [
                   "Description" => "Convert Word Document to another file type",
-                  "Template" => "ConvertFromDocToFile.tpl.md",
+                  "Template" => "ConvertFromDocToFile.tpl.md.php",
                   "Title" => 'How do I Convert a Microsoft Word Doc to a {{$Command->FileTypeDescription}}?',
                   "Blocks" => [
                       [
@@ -701,11 +701,11 @@
               ],
 
 
-          ])->makeRecursive();
+          ];
       }
       public static function Explanations()
       {
-         return collect( [
+         return  [
 
               "appwd" => ['cmd' => '-WD', 'desc' => "This is a conversion using Microsoft Word. "],
               "appxl" => ['cmd' => '-XL', 'desc' => "This is a conversion using Microsoft Excel.  "],
@@ -731,7 +731,7 @@
               "dduseISO190051" => ['cmd' => '--use-iso19005-1', 'desc' => 'Output PDFs from Word as ISO standard 19005-1 for self contained PDFS. Sometimes also refered to as <a href="https://en.wikipedia.org/wiki/PDF/A">PDF/A</a> '],
 
 
-          ])->makeRecursive();
+          ];
       }
 
   }

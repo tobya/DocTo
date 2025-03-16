@@ -31,8 +31,8 @@ class GenerateDocumentationPages extends Command
 
 
 
-        $Params = CommandInfoService::Commands();
-        $Explain = CommandInfoService::Explanations();
+        $Commands = CommandInfoService::Commands();
+        $Params = CommandInfoService::Explanations();
 
 
 
@@ -41,6 +41,7 @@ class GenerateDocumentationPages extends Command
 
         foreach ($Commands as $CommandName => $CommandBlock) {
 
+                print_r($CommandBlock);
                // $smarty->assign('CommandBlock' , $CommandBlock);
             foreach ($CommandBlock['Items'] as $keytag => $Item) {
                 # code...
@@ -61,13 +62,18 @@ class GenerateDocumentationPages extends Command
                 $Fn =   $CommandName . @$Item['FileTypeTitleExtra'] . $Item['FileTypeExt'] . '.md' ;
 
                 if (isset($CommandBlock['Title'])){
-
-                    $title = $smarty->fetch('string:'.$CommandBlock['Title']);
-                    $title = Blade::render($CommandBlock['Title'],[
-                        'Params' => $Params,
-                        'ResourceFiles' => $AllResourceFiles,
-                        'Command' => $Item,
-                    ]);
+                 // echo "\n Title : $CommandBlock[Title] \n";
+                 // print_r($CommandBlock);
+                 // print_r($Item);
+                 // echo "\n";
+                    $title = 'updaet soon';
+                 //   $title = Blade::render($CommandBlock['Title'],[
+                 //       'Params' => $Params,
+                 //       'ResourceFiles' => $AllResourceFiles,
+                 //       'Command' => (object) $Item,
+                 //       'CommandBlock' => (object) $CommandBlock,
+                 //   ]);
+                  //  echo "\n Title : $title";
                 } else {
                     $title = $Fn;
                 }
@@ -77,16 +83,18 @@ class GenerateDocumentationPages extends Command
                 // Store fn for linking to in index page.
                 $Commands[$CommandName]['Items'][$keytag]['fn'] = $Fn;
                 $Commands[$CommandName]['Items'][$keytag]['fntitle'] = $title;
+                echo "\n -----";
+                print_r( $CommandBlock['Template']);
+                echo " -----\n";
 
-
-                //$MDFile = $smarty->fetch($CommandBlock['Template']);
-                $MDFile = Blade::render($CommandBlock['Template'],[
-                        'Params' => $Params,
+                $MDFile = Blade::render(file_get_contents(base_path('\\resources\\generator_templates\\' .  $CommandBlock['Template'])),[
+                        'Params' => json_decode(json_encode($Params)),
                         'ResourceFiles' => $AllResourceFiles,
-                        'Command' => $Item,
+                        'Command' =>  json_decode(json_encode($Item)),
+                        'CommandBlock' =>   json_decode(json_encode($CommandBlock)),
                     ]);
                 echo "Create File : $Fn\n";
-                file_put_contents('../all/' . $Fn, $MDFile);
+                file_put_contents(base_path('/storage/app/all/' . $Fn), $MDFile);
 
 
 
