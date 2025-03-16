@@ -71,7 +71,6 @@ class GenerateDocumentationPages extends Command
                 $Commands[$CommandName]['Items'][$keytag]['fn'] = $Fn;
                 $Commands[$CommandName]['Items'][$keytag]['fntitle'] = $title;
 
-
                 $MDFile = Blade::render(file_get_contents(base_path('\\resources\\generator_templates\\' .  $CommandBlock['Template'])),[
                         'Params' => json_decode(json_encode($Params)),
                         'ResourceFiles' => $AllResourceFiles,
@@ -80,8 +79,6 @@ class GenerateDocumentationPages extends Command
                     ]);
                 echo "Create File : $Fn\n";
                 file_put_contents(docto_path('/pages/all/' . $Fn), $MDFile);
-
-
 
             }
         }
@@ -118,8 +115,6 @@ class GenerateDocumentationPages extends Command
         echo "Create File : HelpLog.md \n";
 
         foreach ($AllResourceFiles as $key => $fileinfo) {
-
-
 
             $Contents = $fileinfo['contents'];
 
