@@ -1,11 +1,11 @@
 {
-    "title" : "Help Log File" 
-}
+            "title" : "Help Log File"
+        }
 
-````
-Help
-Docto Version:%s
-Office Version : %s
+        ````
+        Help
+DocTo Version: %s
+Office Version: %s
 Open Source: https://github.com/tobya/DocTo/
 Description: DocTo converts Word Documents and Excel Spreadsheets to other formats.
 
@@ -16,7 +16,7 @@ Parameters markers are case insensitive.
 
   -H  This message
       --HELP -?
-  -WD Use Word for Converstion (Default). Help '-h -wd'
+  -WD Use Word for Conversion (Default). Help '-h -wd'
       --word
   -XL Use Excel for Conversion. Help '-h -xl'
       --excel
@@ -29,6 +29,9 @@ Parameters markers are case insensitive.
   -FX Input Extension to search for if directory. (.rtf .txt etc)
       Default ".doc*" (will find ".docx" also)
       --inputextension
+  --inputfilter
+      Filter Files to input. Property*.doc will match Property1.doc,
+      Property2.doc etc
   -O  Output File or Directory to place converted Docs
       --outputfile
   -OX Output Extension if -F is Directory. Please include '.' eg. '.pdf' .
@@ -94,6 +97,9 @@ Long Parameters:
   --no-subdirs Only convert specified directory. Do not recurse sub directories
   --ExportMarkup Value for wdExportItem - default wdExportDocumentContent.
       use    wdExportDocumentWithMarkup to export all word comments with pdf
+  --no-IncludeDocProperties 
+  --no-DocProp
+      Do not include Document Properties in the exported pdf file.      
   --PDF-OpenAfterExport
       If you wish for a converted PDF to be opened after creation. No value req.
   --PDF-FromPage
@@ -101,8 +107,19 @@ Long Parameters:
       Other values wdExportCurrentPage, wdExportSelection
   --PDF-ToPage
       Save a range of pages to pdf. Integer. --PDF-FromPage must also be set.
-  --use-ISO190051 Create PDF to the ISO 19005-1 standard.
-
+  --PDF-OptimizeFor
+      Set the pdf/xps to be optimized for print or screen.
+      Default  ForPrint | ForOnScreen
+  --XPS-no-IRM
+      Do not copy IRM permissions to exported XPS document.
+  --PDF-No-DocStructureTags
+      Do not include DocStructureTags to help screen readers.
+  --PDF-no-BitmapMissingFonts
+      Do not bitmap missing fonts, fonts will be substituted.   
+  --use-ISO190051 
+      Create PDF to the ISO 19005-1 standard.  
+  --enable-wordvbaauto
+      By Default any autorun vba will not run, use this parameter if you wish vba to Autorun. Word Only.
 
 
 
@@ -125,4 +142,4 @@ ERROR CODES:
 301 : Not Implemented
 400 : Unknown Error
 
-````
+        ````
