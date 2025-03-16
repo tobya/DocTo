@@ -27,12 +27,12 @@ these will make your outputted `.docx` files compatible with the latest version 
 Command Line Explained 
 -
 
- - `{[$Params.appwd.cmd]}` :  {[$Params.appwd.desc]}
- - `{[$Params.dashf.cmd]}` :  {[$Params.dashf.desc]} 
- - `{[$Params.dasho.cmd]}` :  {[$Params.dasho.desc]}
- - `{[$Params.dashox.cmd]}` :  {[$Params.dashox.desc]}
- - `{[$Params.dasht.cmd]}` :  {[$Params.dasht.desc]}
- - `{[$Params.dashc.cmd]}` :  {[$Params.dashc.desc]}
+ - `{{$Params.appwd.cmd}}` :  {{$Params.appwd.desc}}
+ - `{{$Params.dashf.cmd}}` :  {{$Params.dashf.desc}} 
+ - `{{$Params.dasho.cmd}}` :  {{$Params.dasho.desc}}
+ - `{{$Params.dashox.cmd}}` :  {{$Params.dashox.desc}}
+ - `{{$Params.dasht.cmd}}` :  {{$Params.dasht.desc}}
+ - `{{$Params.dashc.cmd}}` :  {{$Params.dashc.desc}}
 
 
 The important part is the `-C 65535` which ensures that the output doc is compatible with the latest version of word.
@@ -42,7 +42,7 @@ See [this Stackexchange](http://webapps.stackexchange.com/questions/74859/what-f
 Other Compatibility Values
 
 ````
-{[$ResourceFiles.WdCompatibilityMode.contents]}
+{{$ResourceFiles.WdCompatibilityMode.contents}}
 ````
 
 
