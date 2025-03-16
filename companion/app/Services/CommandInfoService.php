@@ -13,7 +13,7 @@
 
               "ConvertDocToFile" => [
                   "Description" => "Convert Word Document to another file type",
-                  "Template" => "ConvertFromDocToFile.tpl.md.php",
+                  "Template" => "ConvertFromDocToFile.tpl.md",
                   "Title" => 'How do I Convert a Microsoft Word Doc to a {{$Command->FileTypeDescription}}?',
                   "Blocks" => [
                       [

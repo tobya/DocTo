@@ -42,7 +42,7 @@ See [this Stackexchange](http://webapps.stackexchange.com/questions/74859/what-f
 Other Compatibility Values
 
 ````
-{{$ResourceFiles.WdCompatibilityMode.contents}}
+{{$ResourceFiles['WdCompatibilityMode']['contents']}}
 ````
 
 

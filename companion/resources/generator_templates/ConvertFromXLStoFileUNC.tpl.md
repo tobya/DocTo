@@ -54,6 +54,6 @@ The following values below can be used to convert a Microsoft Excel Spreadsheet 
 
 
 ````
-{{$ResourceFiles.xlsFormats.contents}}
+{{$ResourceFiles['xlsFormats']['contents']}}
 ```` 
 

@@ -39,7 +39,7 @@ The following values below can be used to convert a Powerpoint presentation file
 
 
 ````
-{{$ResourceFiles.ppFormats.contents}}
+{{$ResourceFiles['ppFormats']['contents']}}
 ````
 
 
