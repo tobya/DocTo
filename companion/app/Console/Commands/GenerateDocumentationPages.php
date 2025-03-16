@@ -90,14 +90,14 @@ class GenerateDocumentationPages extends Command
                         'CommandBlock' =>   json_decode(json_encode($CommandBlock)),
                     ]);
                 echo "Create File : $Fn\n";
-                file_put_contents(base_path('/storage/app/all/' . $Fn), $MDFile);
+                file_put_contents(docto_path('/pages/all/' . $Fn), $MDFile);
 
 
 
             }
         }
 
-        die('done to here');
+     //   die('done to here');
         //**************
         //  Create index file here
         //**********************
@@ -105,12 +105,19 @@ class GenerateDocumentationPages extends Command
       //  $smarty->assign('GeneratedTime', date('H:i:s Ymd'));
      //   $smarty->Assign('Commands',$Commands);
        // $Indexmd = $smarty->fetch('index.tpl.md');
-        $Indexmd = view('index.tpl.md');
+        $Indexmd =  Blade::render(file_get_contents(base_path('\\resources\\generator_templates\\index.tpl.md')),[
+                        'Params' => json_decode(json_encode($Params)),
+                        'ResourceFiles' => $AllResourceFiles,
+                        'Commands' =>  json_decode(json_encode($Commands)),
+
+                        'CommandBlock' =>   json_decode(json_encode($CommandBlock)),
+                    ]);
         //print_r($Indexmd);
-        file_put_contents('../all/index.md', $Indexmd);
+        file_put_contents(docto_path('/pages/all/index.md'), $Indexmd);
+
         echo "Create File : index.md \n";
 
-        $HelpFile = LoadResourceFile('HelpLog.txt');
+        $HelpFile = ResourceFileService::LoadResourceFile('HelpLog.txt');
 
 
         // Wrap helpfile in ```` to ensure formatting.
@@ -136,7 +143,7 @@ class GenerateDocumentationPages extends Command
 
                 ";
             $ResourceFiles[$fileinfo['filename']] = $Contents;
-            file_put_contents('../all/' . $fileinfo['filename'] . '.md', $Contents);
+            file_put_contents(docto_path('/pages/all/' . $fileinfo['filename'] . '.md'), $Contents);
             echo "\nCreate Resource File : " . $fileinfo['filename'] . '.md';
         }
     }

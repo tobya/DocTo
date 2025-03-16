@@ -654,7 +654,7 @@
               ],
 
               "ConvertToPDFArchive" => [
-                  "Description" => "Convert Word Document to PDF Files at <a href='https://www.iso.org/standard/38920.html'>ISO 19005-1</a> standard (PDF/A) format.",
+                  "Description" => "Convert Word Document to PDF Files at (ISO 19005-1)[https://www.iso.org/standard/38920.html] standard (PDF/A) format.",
                   "Items" => [
                       [
                           "FileTypeExt" => 'pdf',
