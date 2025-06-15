@@ -1,7 +1,4 @@
-
-
-    
-    ppWindowNormal=$00000001;
+ppWindowNormal=$00000001;
 ppWindowMinimized=$00000002;
 ppWindowMaximized=$00000003;
 ppArrangeTiled=$00000001;
@@ -1460,5 +1457,3 @@ xlSeriesColorGradientStyleDiverging=$00000001;
 xlGradientStopPositionTypeExtremeValue=$00000000;
 xlGradientStopPositionTypeNumber=$00000001;
 xlGradientStopPositionTypePercent=$00000002;
-    
-        

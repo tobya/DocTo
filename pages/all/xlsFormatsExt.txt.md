@@ -1,7 +1,4 @@
-
-
-    
-    xlAddIn=xls
+xlAddIn=xls
 xlCSV=csv
 xlCSVMac=csv
 xlCSVMSDOS=csv
@@ -57,5 +54,3 @@ xlTypePDF=pdf
 xlPDF=pdf
 xlTypeXPS=xps
 xlXPS=xps
-    
-        

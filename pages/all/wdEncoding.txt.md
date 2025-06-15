@@ -1,7 +1,4 @@
-
-
-    
-    msoEncodingArabic   =   1256
+msoEncodingArabic   =   1256
 msoEncodingArabicASMO   =   708
 msoEncodingArabicAutoDetect =   51256
 msoEncodingArabicTransparentASMO    =   720
@@ -138,6 +135,3 @@ msoEncodingUTF7 =   65000
 msoEncodingUTF8 =   65001
 msoEncodingVietnamese   =   1258
 msoEncodingWestern  =   1252
-
-    
-        
