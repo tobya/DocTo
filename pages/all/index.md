@@ -172,4 +172,4 @@ Help Text
 
 DocTo outputs a [help file](HelpLog.md) which provides details of all options. 
 
-Generated 2025-03-16 15:46:49
+Generated 2025-06-15 06:58:54
