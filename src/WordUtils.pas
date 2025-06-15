@@ -53,6 +53,7 @@ function TWordDocConverter.FormatsExtensions() : TStringList;
 begin
   fFormatsExtensions := TResourceStrings.Create('DOCEXTENSIONS');
   result := fFormatsExtensions;
+
 end;
 
 function TWordDocConverter.WordConstants() : TStringList;
