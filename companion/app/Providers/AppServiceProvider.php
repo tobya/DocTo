@@ -19,6 +19,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        \Illuminate\Support\Collection::macro('makeRecursive', function () {
+            return $this->map(function ($value) {
+                if (is_array($value) || is_object($value)) {
+                    return collect($value)->makeRecursive();
+                }
+
+                return $value;
+            });
+        });
     }
 }

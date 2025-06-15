@@ -80,5 +80,5 @@ Some other interesting commands
 You might find some of the following commands also interesting.
 
 - [Convert all Powerpoint presentations in a folder to a gif file](ConvertDirPPTToFilegif.md);
-    
+   
 
