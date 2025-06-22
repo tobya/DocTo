@@ -22,6 +22,8 @@ TExcelXLSConverter = Class(TDocumentConverter)
 Private
     ExcelApp : OleVariant;
     FExcelVersion : String;
+    function SingleFileExecuteConversion(fileToConvert, OutputFilename: String;   OutputFileFormat: Integer): TConversionInfo;
+    procedure SaveAsPDF(OutputFilename : string) ;
 
 public
     constructor Create() ;
@@ -101,6 +103,7 @@ begin
       Result.InputFile := fileToConvert;
       Result.Successful := false;
       NonsensePassword := 'tfm554!ghAGWRDD';
+       LogDebug('in conversion file');
         try
           ExcelApp.Workbooks.Open( FileToConvert,   //FileName					,
                                 EmptyParam,    //UpdateLinks					,
@@ -158,38 +161,35 @@ begin
         aSave: // Go ahead and save
         begin
 
+            Result :=    SingleFileExecuteConversion(fileToConvert, OutputFilename, OutputFileFormat);
+        end;
+    end;
+
+
+end;
+
+
+//Useful Links:
+//    https://docs.microsoft.com/en-us/office/vba/api/excel.workbooks.open
+//    https://docs.microsoft.com/en-us/office/vba/api/excel.workbook.exportasfixedformat
+
+function TExcelXLSConverter.SingleFileExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): TConversionInfo;
+var
+    NonsensePassword :OleVariant;
+    FromPage, ToPage : OleVariant;
+    activeSheet : OleVariant;
+    dynamicoutputDir, dynamicoutputFile, dynamicoutputExt, dynamicOutputFileName, dynamicSheetName : String;
+    ExitAction :TExitAction;
+    Sheet : integer;
+begin
+
+             logdebug('SingleFileExecuteConversion',VERBOSE);
 
             //Unlike Word, in Excel you must call a different function to save a pdf and XPS.
             if OutputFileFormat = xlTypePDF then
             begin
 
-                if pdfPrintToPage > 0 then
-                begin
-                  logdebug('PrintFromPage: ' + inttostr(pdfPrintFromPage),debug);
-                  logdebug('PrintToPage: ' + inttostr(pdfPrintToPage),debug);
-
-                  FromPage :=  pdfPrintFromPage;
-                  ToPage   :=  pdfPrintToPage;
-
-                end else
-                begin
-                  FromPage := EmptyParam;
-                  ToPage   := EmptyParam;
-                end ;
-
-                ExcelApp.Application.DisplayAlerts := False ;
-                ExcelApp.activeWorkbook.ExportAsFixedFormat(XlFixedFormatType_xlTypePDF,
-                                                            OutputFilename,
-                                                            EmptyParam, //Quality
-                                                            IncludeDocProps, // IncludeDocProperties,
-                                                            False,// IgnorePrintAreas,
-                                                            FromPage , // From,
-                                                            ToPage, //  To,
-                                                            pdfOpenAfterExport, //   OpenAfterPublish,  (default false);
-                                                            EmptyParam//    FixedFormatExtClassPtr
-                                                            ) ;
-
-                 ExcelApp.ActiveWorkBook.Saved := True
+                SaveAsPDF(OutputFilename);
 
 
             end
@@ -201,6 +201,9 @@ begin
             end
             else if OutputFileFormat = xlCSV then
              begin
+
+              LogDebug('output to csv format');
+
               //CSV pops up alert. must be hidden for automation
                 ExcelApp.Application.DisplayAlerts := False ;
 
@@ -214,17 +217,20 @@ begin
 		Application.ActiveWorkbook.Saved = True
 		Application.ActiveWorkbook.Close
 	Next*)
-                   dynamicoutputDir := ExtractFilePath(OutputFilename); // includes last \
+                 dynamicoutputDir := ExtractFilePath(OutputFilename); // includes last \
                  dynamicoutputFile :=  ChangefileExt ( ExtractFileName(OutputFilename),'');
                  dynamicoutputExt  := ExtractFileExt(OutputFilename);
 
                 for Sheet := 1 to ExcelApp.ActiveWorkbook.WorkSheets.Count do
                 begin
-                activeSheet := ExcelApp.ActiveWorkbook.Sheets[Sheet];
+                 activeSheet := ExcelApp.ActiveWorkbook.Sheets[Sheet];
                  dynamicSheetName := activeSheet.Name;
+
                  LogDebug(dynamicSheetName);
+
                  dynamicSheetName := SafeFileName(dynamicSheetName);
                  dynamicOutputFilename := dynamicoutputDir + dynamicoutputFile + '_(' + inttostr(Sheet) + dynamicSheetName +  ')' + dynamicoutputExt;
+
                  LogDebug(dynamicOutputFileName);
 
                  activeSheet.SaveAs( dynamicoutputFilename, OutputFileFormat);
@@ -234,7 +240,7 @@ begin
                 ExcelApp.ActiveWorkBook.save;
 
              //ExcelApp.activeWorkbook.SaveAs( OutputFilename, OutputFileFormat);
-                //ExcelApp.ActiveWorkBook.saved := true;                
+                //ExcelApp.ActiveWorkBook.saved := true;
              end
             else
             begin
@@ -250,8 +256,6 @@ begin
             Result.OutputFile := OutputFilename;
             ExcelApp.ActiveWorkbook.Close();
 
-        end;
-    end;
 end;
 
 
@@ -275,6 +279,43 @@ begin
   WriteOfficeAppVersion(FExcelVersion);
   end;
   result := FExcelVersion;
+end;
+
+
+procedure TExcelXLSConverter.SaveAsPDF(OutputFilename : string) ;
+var
+
+    FromPage, ToPage : OleVariant;
+
+begin
+
+    if pdfPrintToPage > 0 then
+                begin
+                  logdebug('PrintFromPage: ' + inttostr(pdfPrintFromPage),debug);
+                  logdebug('PrintToPage: ' + inttostr(pdfPrintToPage),debug);
+
+                  FromPage :=  pdfPrintFromPage;
+                  ToPage   :=  pdfPrintToPage;
+
+                end else
+                begin
+                  FromPage := EmptyParam;
+                  ToPage   := EmptyParam;
+                end ;
+
+                ExcelApp.Application.DisplayAlerts := False ;
+                ExcelApp.activeWorkbook.ExportAsFixedFormat(XlFixedFormatType_xlTypePDF,
+                                                            OutputFilename,
+                                                            EmptyParam,         // Quality
+                                                            IncludeDocProps,    // IncludeDocProperties,
+                                                            False,              // IgnorePrintAreas,
+                                                            FromPage ,          // From,
+                                                            ToPage,             // To,
+                                                            pdfOpenAfterExport, // OpenAfterPublish,  (default false);
+                                                            EmptyParam          // FixedFormatExtClassPtr
+                                                            ) ;
+
+                 ExcelApp.ActiveWorkBook.Saved := True
 end;
 
 end.
