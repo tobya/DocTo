@@ -33,8 +33,8 @@ Const
   MSVISIO = 4;
 
   
-  DOCTO_VERSION = '2.0.41';  // dont use 0x - choco needs incrementing versions.
-  DOCTO_VERSION_NOTE = ' (Test Version XLS Multisheet) ';
+  DOCTO_VERSION = '2.0.42';  // dont use 0x - choco needs incrementing versions.
+  DOCTO_VERSION_NOTE = ' (Test Version XLS Multisheet B) ';
 type
 
 
