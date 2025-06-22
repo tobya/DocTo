@@ -24,6 +24,7 @@ Private
     FExcelVersion : String;
     function SingleFileExecuteConversion(fileToConvert, OutputFilename: String;   OutputFileFormat: Integer): TConversionInfo;
     procedure SaveAsPDF(OutputFilename : string) ;
+    procedure SaveAsXPS(OutputFilename: string);
 
 public
     constructor Create() ;
@@ -195,9 +196,7 @@ begin
             end
             else if OutputFileFormat = xlTypeXPS then
             begin
-                ExcelApp.Application.DisplayAlerts := False ;
-                ExcelApp.activeWorkbook.ExportAsFixedFormat(XlFixedFormatType_xlTypeXPS, OutputFilename  );
-                ExcelApp.ActiveWorkBook.save;
+                SaveAsXPS(OutputFilename);
             end
             else if OutputFileFormat = xlCSV then
              begin
@@ -316,6 +315,15 @@ begin
                                                             ) ;
 
                  ExcelApp.ActiveWorkBook.Saved := True
+end;
+
+
+procedure TExcelXLSConverter.SaveAsXPS(OutputFilename : string) ;
+begin
+
+                ExcelApp.Application.DisplayAlerts := False ;
+                ExcelApp.activeWorkbook.ExportAsFixedFormat(XlFixedFormatType_xlTypeXPS, OutputFilename  );
+                ExcelApp.ActiveWorkBook.save;
 end;
 
 end.
