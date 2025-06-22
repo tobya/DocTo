@@ -522,7 +522,7 @@ begin
   FBitmapMissingFonts := true;
   FInputFiles := TStringList.Create;
   fDontUseAutoVBA := true;
-  fSheets := TStringList.Create;
+  fSelectedSheets := TStringList.Create;
 
 
 end;
@@ -544,7 +544,7 @@ begin
 
 
   FInputFiles.Free;
-  fSheets.Free;
+  fSelectedSheets.Free;
 
   if assigned(FNetHandle) then
   begin
@@ -1867,7 +1867,7 @@ end;
 
 procedure TDocumentConverter.Setsheets(const Value: TStrings);
 begin
-  Fsheets := Value;
+  fSelectedSheets := Value;
 end;
 
 procedure TDocumentConverter.SetSkipDocsWithTOC(const Value: Boolean);
