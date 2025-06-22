@@ -19,7 +19,7 @@ uses  classes, Windows, sysutils, ActiveX, ComObj, WinINet, Variants, iduri,
 
 Const
   VERBOSE = 10;
-  DEBUG = 9;
+  DEBUG =      9;
   HELP = 8;
   CHATTY = 5;
   STANDARD = 2;
@@ -33,8 +33,8 @@ Const
   MSVISIO = 4;
 
   
-  DOCTO_VERSION = '1.15.45';  // dont use 0x - choco needs incrementing versions.
-  DOCTO_VERSION_NOTE = ' x64 Release ';
+  DOCTO_VERSION = '2.0.42';  // dont use 0x - choco needs incrementing versions.
+  DOCTO_VERSION_NOTE = ' (Test Version XLS Multisheet B) ';
 type
 
 
@@ -71,6 +71,7 @@ type
     FKeepIRM: boolean;
     FDocStructureTags: boolean;
     FBitmapMissingFonts: boolean;
+    fSelectedSheets: TStrings;
 
 
     procedure SetCompatibilityMode(const Value: Integer);
@@ -95,6 +96,7 @@ type
     procedure SetKeepIRM(const Value: boolean);
     procedure SetDocStructureTags(const Value: boolean);
     procedure SetBitmapMissingFonts(const Value: boolean);
+    procedure Setsheets(const Value: TStrings);
 
 
   protected
@@ -184,6 +186,8 @@ type
     property pdfPrintToPage : integer read FpdfPrintToPage;
     property useISO190051 : boolean read FuseISO190051;
     property pdfOptimizeFor : integer read fpdfOptimizeFor write fpdfOptimizeFor;
+    property SelectedSheets : TStrings read fSelectedSheets write Setsheets;
+
 
     property ExportMarkup : integer read fExportMarkup;
     property IncludeDocProps : boolean read FIncludeDocProps write SetIncludeDocProps;
@@ -217,6 +221,7 @@ type
     // Check Should Ignore
     function CheckShouldIgnore(DocumentPath : String): Boolean;
 
+    function SafeFileName(FileName: String ) : String;
 
   public
 
@@ -518,6 +523,7 @@ begin
   FBitmapMissingFonts := true;
   FInputFiles := TStringList.Create;
   fDontUseAutoVBA := true;
+  fSelectedSheets := TStringList.Create;
 
 
 end;
@@ -539,6 +545,7 @@ begin
 
 
   FInputFiles.Free;
+  fSelectedSheets.Free;
 
   if assigned(FNetHandle) then
   begin
@@ -1642,6 +1649,14 @@ begin
   LogDebug('Writing Version to File:' + ConfigFileName,VERBOSE);
 end;
 
+function TDocumentConverter.SafeFileName(FileName: String): String;
+begin
+  Filename :=  StringReplace(Filename,'&','_',[rfReplaceAll,rfIgnoreCase]);
+    Filename :=  StringReplace(Filename,'/','_',[rfReplaceAll,rfIgnoreCase]);
+    Filename :=  StringReplace(Filename,'\\','_',[rfReplaceAll,rfIgnoreCase]);
+    result := Filename;
+end;
+
 procedure TDocumentConverter.SetBitmapMissingFonts(const Value: boolean);
 begin
   FBitmapMissingFonts := Value;
@@ -1850,6 +1865,11 @@ end;
 
 
 
+
+procedure TDocumentConverter.Setsheets(const Value: TStrings);
+begin
+  fSelectedSheets := Value;
+end;
 
 procedure TDocumentConverter.SetSkipDocsWithTOC(const Value: Boolean);
 begin
