@@ -19,7 +19,7 @@ uses  classes, Windows, sysutils, ActiveX, ComObj, WinINet, Variants, iduri,
 
 Const
   VERBOSE = 10;
-  DEBUG = 9;
+  DEBUG =      9;
   HELP = 8;
   CHATTY = 5;
   STANDARD = 2;
@@ -71,7 +71,7 @@ type
     FKeepIRM: boolean;
     FDocStructureTags: boolean;
     FBitmapMissingFonts: boolean;
-    Fsheets: TStrings;
+    fSelectedSheets: TStrings;
 
 
     procedure SetCompatibilityMode(const Value: Integer);
@@ -186,7 +186,8 @@ type
     property pdfPrintToPage : integer read FpdfPrintToPage;
     property useISO190051 : boolean read FuseISO190051;
     property pdfOptimizeFor : integer read fpdfOptimizeFor write fpdfOptimizeFor;
-    property sheets : TStrings read Fsheets write Setsheets;
+    property SelectedSheets : TStrings read fSelectedSheets write Setsheets;
+
 
     property ExportMarkup : integer read fExportMarkup;
     property IncludeDocProps : boolean read FIncludeDocProps write SetIncludeDocProps;

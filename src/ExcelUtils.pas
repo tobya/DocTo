@@ -14,7 +14,9 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 ****************************************************************)
 interface
 
-uses Classes,Sysutils, MainUtils, ResourceUtils,  ActiveX, ComObj, WinINet, Variants, Excel_TLB_Constants,StrUtils;
+uses Classes,Sysutils, MainUtils, ResourceUtils,  ActiveX, ComObj, WinINet, Variants,
+
+ Excel_TLB_Constants,StrUtils;
 
 type
 
@@ -25,6 +27,7 @@ Private
     function SingleFileExecuteConversion(fileToConvert, OutputFilename: String;   OutputFileFormat: Integer): TConversionInfo;
     procedure SaveAsPDF(OutputFilename : string) ;
     procedure SaveAsXPS(OutputFilename: string);
+    procedure SaveAsCSV(OutputFilename: string);
 
 public
     constructor Create() ;
@@ -254,9 +257,12 @@ end;
 procedure TExcelXLSConverter.SaveAsPDF(OutputFilename : string) ;
 var
 
-    FromPage, ToPage : OleVariant;
+    FromPage, ToPage, SheetList, ExcelSheets : OleVariant;
+    Sheet1,Sheet2,Sheet3 , Workbook , SheetsArray: OleVariant;
+    activeSheet : OleVariant;
 
 begin
+ ExcelApp.Application.DisplayAlerts := False ;
 
       if pdfPrintToPage > 0 then
       begin
@@ -271,9 +277,53 @@ begin
         FromPage := EmptyParam;
         ToPage   := EmptyParam;
       end ;
+(*
+    Sheets(Array("Wednesday Lunch", "Sheet2", "Sheet3")).Select
+    Sheets("Wednesday Lunch").Activate
+    ActiveSheet.ExportAsFixedFormat Type:=xlTypePDF, Filename:= _
+        "C:\Development\github\docto\test\GeneratedTestputFiles\wk1test-MultiShasdfasdfeetmulti635345.pdf" _
+        , Quality:=xlQualityStandard, IncludeDocProperties:=True, IgnorePrintAreas _
+        :=False, OpenAfterPublish:=False
+    ActiveCell.FormulaR1C1 = ""
+    Range("AM13").Select
+End Sub*)
+
+      if SelectedSheets.Count = 0 then
+      begin
+      logDebug('Selecting sheets',VERBOSE);
+    SheetList := VarArrayCreate([0, 2], varVariant); // 3 sheets
+    SheetList[0] := 'Wednesday Lunch';
+    SheetList[1] := 'Sheet2';
+    SheetList[2] := 'Sheet3';
+
+    Workbook := ExcelApp.activeWorkbook;
+        // Get references to the individual sheets
+  //  Sheet1 := Workbook.Worksheets[3];
+  //  Sheet2 := Workbook.Worksheets[2] ;
+   // Sheet3 := Workbook.Worksheets[1];
+
+    // Create a variant array of the sheet COM objects
+    SheetsArray := VarArrayCreate([0, 1], varVariant);
+    SheetsArray[0] := 2;
+    SheetsArray[1] := 3;
+//   SheetsArray[2] := 3;
+
+    // Select the sheets
+//   ExcelApp.activeWorkbook.worksheets(SheetsArray).Select;
+
+//        ExcelApp.activeWorkbook.worksheets.Select(3);
+//ExcelApp.activeWorkbook.Sheets.Item[2].Select;
+
+                   activeSheet :=      ExcelApp.ActiveWorkbook.Sheets[2];
+                 logDebug('SeT sheets',VERBOSE);
+                //  ExcelApp.ActiveWorkBook.save;
+      end ;
+
+
+
 
       ExcelApp.Application.DisplayAlerts := False ;
-      ExcelApp.activeWorkbook.ExportAsFixedFormat(XlFixedFormatType_xlTypePDF,
+      activeSheet.ExportAsFixedFormat(XlFixedFormatType_xlTypePDF,
                                                   OutputFilename,
                                                   EmptyParam,         // Quality
                                                   IncludeDocProps,    // IncludeDocProperties,
@@ -284,7 +334,13 @@ begin
                                                   EmptyParam          // FixedFormatExtClassPtr
                                                   ) ;
 
+
+
+
+
+
        ExcelApp.ActiveWorkBook.Saved := True
+
 end;
 
 
@@ -309,6 +365,7 @@ begin
               //CSV pops up alert. must be hidden for automation
                 ExcelApp.Application.DisplayAlerts := False ;
 
+               // if fSelectedSheets.Count > 0 then
 
 
                  dynamicoutputDir := ExtractFilePath(OutputFilename); // includes last \
