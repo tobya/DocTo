@@ -71,6 +71,7 @@ type
     FKeepIRM: boolean;
     FDocStructureTags: boolean;
     FBitmapMissingFonts: boolean;
+    Fsheets: TStrings;
 
 
     procedure SetCompatibilityMode(const Value: Integer);
@@ -95,6 +96,7 @@ type
     procedure SetKeepIRM(const Value: boolean);
     procedure SetDocStructureTags(const Value: boolean);
     procedure SetBitmapMissingFonts(const Value: boolean);
+    procedure Setsheets(const Value: TStrings);
 
 
   protected
@@ -184,6 +186,7 @@ type
     property pdfPrintToPage : integer read FpdfPrintToPage;
     property useISO190051 : boolean read FuseISO190051;
     property pdfOptimizeFor : integer read fpdfOptimizeFor write fpdfOptimizeFor;
+    property sheets : TStrings read Fsheets write Setsheets;
 
     property ExportMarkup : integer read fExportMarkup;
     property IncludeDocProps : boolean read FIncludeDocProps write SetIncludeDocProps;
@@ -519,6 +522,7 @@ begin
   FBitmapMissingFonts := true;
   FInputFiles := TStringList.Create;
   fDontUseAutoVBA := true;
+  fSheets := TStringList.Create;
 
 
 end;
@@ -540,6 +544,7 @@ begin
 
 
   FInputFiles.Free;
+  fSheets.Free;
 
   if assigned(FNetHandle) then
   begin
@@ -1859,6 +1864,11 @@ end;
 
 
 
+
+procedure TDocumentConverter.Setsheets(const Value: TStrings);
+begin
+  Fsheets := Value;
+end;
 
 procedure TDocumentConverter.SetSkipDocsWithTOC(const Value: Boolean);
 begin
