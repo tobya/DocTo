@@ -201,45 +201,15 @@ begin
             else if OutputFileFormat = xlCSV then
              begin
 
-              LogDebug('output to csv format');
-
-              //CSV pops up alert. must be hidden for automation
-                ExcelApp.Application.DisplayAlerts := False ;
 
 
-(*
-	For Each xWs In Application.ActiveWorkbook.Worksheets
-		xWs.Copy
-		xcsvFile = CurDir & "\" & xWs.Name & ".csv"
-		Application.ActiveWorkbook.SaveAs Filename: = xcsvFile, _
-		FileFormat: = xlCSV, CreateBackup: = False
-		Application.ActiveWorkbook.Saved = True
-		Application.ActiveWorkbook.Close
-	Next*)
-                 dynamicoutputDir := ExtractFilePath(OutputFilename); // includes last \
-                 dynamicoutputFile :=  ChangefileExt ( ExtractFileName(OutputFilename),'');
-                 dynamicoutputExt  := ExtractFileExt(OutputFilename);
-
-                for Sheet := 1 to ExcelApp.ActiveWorkbook.WorkSheets.Count do
-                begin
-                 activeSheet := ExcelApp.ActiveWorkbook.Sheets[Sheet];
-                 dynamicSheetName := activeSheet.Name;
-
-                 LogDebug(dynamicSheetName);
-
-                 dynamicSheetName := SafeFileName(dynamicSheetName);
-                 dynamicOutputFilename := dynamicoutputDir + dynamicoutputFile + '_(' + inttostr(Sheet) + dynamicSheetName +  ')' + dynamicoutputExt;
-
-                 LogDebug(dynamicOutputFileName);
-
-                 activeSheet.SaveAs( dynamicoutputFilename, OutputFileFormat);
-                end;
+                // to get sheets
+                // Sheets(Array("Sheet4", "Sheet5")) or Sheets(3) or Sheets(Array(1,2))
 
 
-                ExcelApp.ActiveWorkBook.save;
 
-             //ExcelApp.activeWorkbook.SaveAs( OutputFilename, OutputFileFormat);
-                //ExcelApp.ActiveWorkBook.saved := true;
+           ExcelApp.activeWorkbook.SaveAs( OutputFilename, OutputFileFormat);
+                ExcelApp.ActiveWorkBook.saved := true;
              end
             else
             begin
@@ -288,33 +258,33 @@ var
 
 begin
 
-    if pdfPrintToPage > 0 then
-                begin
-                  logdebug('PrintFromPage: ' + inttostr(pdfPrintFromPage),debug);
-                  logdebug('PrintToPage: ' + inttostr(pdfPrintToPage),debug);
+      if pdfPrintToPage > 0 then
+      begin
+        logdebug('PrintFromPage: ' + inttostr(pdfPrintFromPage),debug);
+        logdebug('PrintToPage: ' + inttostr(pdfPrintToPage),debug);
 
-                  FromPage :=  pdfPrintFromPage;
-                  ToPage   :=  pdfPrintToPage;
+        FromPage :=  pdfPrintFromPage;
+        ToPage   :=  pdfPrintToPage;
 
-                end else
-                begin
-                  FromPage := EmptyParam;
-                  ToPage   := EmptyParam;
-                end ;
+      end else
+      begin
+        FromPage := EmptyParam;
+        ToPage   := EmptyParam;
+      end ;
 
-                ExcelApp.Application.DisplayAlerts := False ;
-                ExcelApp.activeWorkbook.ExportAsFixedFormat(XlFixedFormatType_xlTypePDF,
-                                                            OutputFilename,
-                                                            EmptyParam,         // Quality
-                                                            IncludeDocProps,    // IncludeDocProperties,
-                                                            False,              // IgnorePrintAreas,
-                                                            FromPage ,          // From,
-                                                            ToPage,             // To,
-                                                            pdfOpenAfterExport, // OpenAfterPublish,  (default false);
-                                                            EmptyParam          // FixedFormatExtClassPtr
-                                                            ) ;
+      ExcelApp.Application.DisplayAlerts := False ;
+      ExcelApp.activeWorkbook.ExportAsFixedFormat(XlFixedFormatType_xlTypePDF,
+                                                  OutputFilename,
+                                                  EmptyParam,         // Quality
+                                                  IncludeDocProps,    // IncludeDocProperties,
+                                                  False,              // IgnorePrintAreas,
+                                                  FromPage ,          // From,
+                                                  ToPage,             // To,
+                                                  pdfOpenAfterExport, // OpenAfterPublish,  (default false);
+                                                  EmptyParam          // FixedFormatExtClassPtr
+                                                  ) ;
 
-                 ExcelApp.ActiveWorkBook.Saved := True
+       ExcelApp.ActiveWorkBook.Saved := True
 end;
 
 
@@ -323,6 +293,44 @@ begin
 
                 ExcelApp.Application.DisplayAlerts := False ;
                 ExcelApp.activeWorkbook.ExportAsFixedFormat(XlFixedFormatType_xlTypeXPS, OutputFilename  );
+                ExcelApp.ActiveWorkBook.save;
+end;
+
+procedure TExcelXLSConverter.SaveAsCSV(OutputFilename: string);
+var
+    FromPage, ToPage : OleVariant;
+    activeSheet : OleVariant;
+    dynamicoutputDir, dynamicoutputFile, dynamicoutputExt, dynamicOutputFileName, dynamicSheetName : String;
+    ExitAction :TExitAction;
+    Sheet : integer;
+begin
+                LogDebug('output to csv format');
+
+              //CSV pops up alert. must be hidden for automation
+                ExcelApp.Application.DisplayAlerts := False ;
+
+
+
+                 dynamicoutputDir := ExtractFilePath(OutputFilename); // includes last \
+                 dynamicoutputFile :=  ChangefileExt ( ExtractFileName(OutputFilename),'');
+                 dynamicoutputExt  := ExtractFileExt(OutputFilename);
+
+                for Sheet := 1 to ExcelApp.ActiveWorkbook.WorkSheets.Count do
+                begin
+                 activeSheet := ExcelApp.ActiveWorkbook.Sheets[Sheet];
+                 dynamicSheetName := activeSheet.Name;
+
+                 LogDebug(dynamicSheetName);
+
+                 dynamicSheetName := SafeFileName(dynamicSheetName);
+                 dynamicOutputFilename := dynamicoutputDir + dynamicoutputFile + '_(' + inttostr(Sheet) + dynamicSheetName +  ')' + dynamicoutputExt;
+
+                 LogDebug(dynamicOutputFileName);
+
+                 activeSheet.SaveAs( dynamicoutputFilename, OutputFileFormat);
+                end;
+
+
                 ExcelApp.ActiveWorkBook.save;
 end;
 
