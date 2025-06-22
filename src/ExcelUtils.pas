@@ -312,11 +312,12 @@ End Sub*)
 //   ExcelApp.activeWorkbook.worksheets(SheetsArray).Select;
 
 //        ExcelApp.activeWorkbook.worksheets.Select(3);
-//ExcelApp.activeWorkbook.Sheets.Item[2].Select;
+//ExcelApp.activeWorkbook.Sheets.Item[2] .Select;
 
-                   activeSheet :=      ExcelApp.ActiveWorkbook.Sheets[2];
+                   activeSheet :=      ExcelApp.ActiveWorkbook.Sheets.Item[3];
+
                  logDebug('SeT sheets',VERBOSE);
-                //  ExcelApp.ActiveWorkBook.save;
+                  ExcelApp.ActiveWorkBook.save;
       end ;
 
 
