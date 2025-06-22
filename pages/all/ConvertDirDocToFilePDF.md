@@ -40,6 +40,6 @@ Some other interesting commands
 You might find some of the following commands also interesting.
 
 - [Convert a Word Document to a PDF file](ConvertDocToFilePDF.md);
- - [Convert all files in directory without converting subdirectories.](ConvertWithoutSubdirspdf.md)
-    
+- [Convert all files in directory without converting subdirectories.](ConvertWithoutSubdirspdf.md)
+ 
 

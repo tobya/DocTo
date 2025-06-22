@@ -1,7 +1,4 @@
-
-
-    
-    ppSaveAsAddIn=8
+ppSaveAsAddIn=8
 ppSaveAsAnimatedGIF=40
 ppSaveAsBMP=19
 ppSaveAsDefault=11
@@ -32,5 +29,3 @@ ppSaveAsTIF=21
 ppSaveAsWMV=37
 ppSaveAsXMLPresentation=34
 ppSaveAsXPS=33
-    
-        

@@ -13,7 +13,7 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMA
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ****************************************************************)
 interface
-uses Classes, MainUtils, ResourceUtils,  ActiveX, ComObj, WinINet, Variants, sysutils, Types, StrUtils,Word_TLB_Constants;
+uses Classes, MainUtils, ResourceUtils,  ActiveX, ComObj, WinINet, Variants, sysutils, Types, StrUtils,Word_TLB_Constants, TypInfo;
 
 type
 
@@ -53,6 +53,7 @@ function TWordDocConverter.FormatsExtensions() : TStringList;
 begin
   fFormatsExtensions := TResourceStrings.Create('DOCEXTENSIONS');
   result := fFormatsExtensions;
+
 end;
 
 function TWordDocConverter.WordConstants() : TStringList;
@@ -152,7 +153,9 @@ var
   NonsensePassword : OleVariant;
 
   ExitAction : TExitAction;
-
+  WordA, WordB, WordC : String;
+  disp : IDispatch;
+  MethodIndex : integer;
 
 begin
         ExitAction := aSave;
@@ -160,10 +163,11 @@ begin
         Result.InputFile := fileToConvert;
         logInfo('ExecuteConversion:' + fileToConvert, Verbose);
 
-        // disable auto macro
-        if (fDisableMacros) then
+        // disable auto running of vba in word
+        if (fDontUseAutoVBA) then
         begin
-          WordApp.WordBasic.DisableAutoMacros ;
+            logInfo('DisableAutoMacros:' + fileToConvert, Verbose);
+            WordApp.WordBasic.DisableAutoMacros;
         end;
 
         // Check if document has password as per

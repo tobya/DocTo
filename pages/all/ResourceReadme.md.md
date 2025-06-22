@@ -1,7 +1,4 @@
-
-
-    
-    Resource File Readme
+Resource File Readme
 ==
 
 There are several resource files present in DocTo.  Some are very straightforward, such as the help resource, which just needs to be kept up to date as items are added to the command line parameters.  Others however need a little bit of explanation.
@@ -23,5 +20,3 @@ Both of these files were extracted from firstly importing the main Word_TLB.pas 
  - Remove all white space between declarations and all white space around `=`
  - Should be nothing but a Key=value file
  - Do the same for Excel.
-    
-        

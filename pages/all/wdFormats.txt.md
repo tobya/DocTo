@@ -1,7 +1,4 @@
-
-
-    
-    wdFormatDOSTextLineBreaks=5
+wdFormatDOSTextLineBreaks=5
 wdFormatEncodedText=7
 wdFormatFilteredHTML=10
 wdFormatOpenDocumentText=23
@@ -23,6 +20,3 @@ wdFormatXMLDocumentMacroEnabled=13
 wdFormatXMLTemplate=14
 wdFormatXMLTemplateMacroEnabled=15
 wdFormatXPS=18
-
-    
-        

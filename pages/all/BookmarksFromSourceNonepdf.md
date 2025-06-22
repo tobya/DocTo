@@ -48,5 +48,5 @@ Some other interesting commands
 You might find some of the following commands also interesting.
 
 - [Convert all Word Document in a folder to a pdf file](ConvertDirDocToFilepdf.md);
-    
+   
 

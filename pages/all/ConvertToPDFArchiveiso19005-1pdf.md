@@ -35,7 +35,7 @@ Command Line Explained
  - `-f` :  The File or directory to be converted 
  - `-o` :  The Output File or Directory where you would like the converted file to be written to.
  - `-T` :  The file format type that is being converted to
- - `--use-iso19005-1` :  Output PDFs from Word as ISO standard 19005-1 for self contained PDFS. Sometimes also refered to as <a href="https://en.wikipedia.org/wiki/PDF/A">PDF/A</a> 
+ - `--use-iso19005-1` :  Output PDFs from Word as ISO standard 19005-1 for self contained PDFS. Sometimes also refered to as (PDF/A)[https://en.wikipedia.org/wiki/PDF/A]
 
 
 
@@ -46,5 +46,5 @@ Some other interesting commands
 You might find some of the following commands also interesting.
 
 - [Convert all Word Document in a folder to a pdf file](ConvertDirDocToFilepdf.md);
-    
+   
 

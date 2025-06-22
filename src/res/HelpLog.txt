@@ -1,6 +1,6 @@
 Help
-Docto Version:%s
-Office Version : %s
+DocTo Version: %s
+Office Version: %s
 Open Source: https://github.com/tobya/DocTo/
 Description: DocTo converts Word Documents and Excel Spreadsheets to other formats.
 
@@ -11,7 +11,7 @@ Parameters markers are case insensitive.
 
   -H  This message
       --HELP -?
-  -WD Use Word for Converstion (Default). Help '-h -wd'
+  -WD Use Word for Conversion (Default). Help '-h -wd'
       --word
   -XL Use Excel for Conversion. Help '-h -xl'
       --excel
@@ -113,8 +113,8 @@ Long Parameters:
       Do not bitmap missing fonts, fonts will be substituted.   
   --use-ISO190051 
       Create PDF to the ISO 19005-1 standard.  
-  --enable-macroautorun
-      By Default any autorun Macros will not run, use this parameter if you wish Macros to Autorun. Word Only.  
+  --enable-wordvbaauto
+      By Default any autorun vba will not run, use this parameter if you wish vba to Autorun. Word Only.
 
 
 
