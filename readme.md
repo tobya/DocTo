@@ -82,7 +82,7 @@ Please log an [issue](https://github.com/tobya/DocTo/issues) for any bugs, featu
 
 Convert **Microsoft Word Document** to text
 
-    docto -f C:\Directory\MyFile.doc -O "C:\Output Directory\MyTextFile.txt" -T wdFormatText
+    docto -WD -f C:\Directory\MyFile.doc -O "C:\Output Directory\MyTextFile.txt" -T wdFormatText
 
 Convert **Microsoft Excel Document** to csv text
 
