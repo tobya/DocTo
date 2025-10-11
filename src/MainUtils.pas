@@ -1250,6 +1250,14 @@ if  (id = '-XL') or
            HaltWithConfigError(205,'Invalid value for --PDF-OPTIMIZEFOR :' + value);
          end;
     END
+    else if (id = '--SHEETS') then
+    begin
+         fSelectedSheets.DelimitedText := value;
+         if fSelectedSheets.Count = 0 then
+         begin
+          HaltWithConfigError(205,'Expecting > 0 selected sheets: ' + value);
+         end;
+    end
     else if (id = '--EXPORTMARKUP') then
     begin
          if (WordConstants.Exists(value)) then
@@ -1282,6 +1290,7 @@ if  (id = '-XL') or
       FBitmapMissingFonts := false;
       dec(iParam);
     end
+
     else if (id = '-W') or
             (id = '--WEBHOOK') then
     begin
