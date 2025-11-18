@@ -308,15 +308,15 @@ logdebug('SelectedSheets.Count:' + inttostr( SelectedSheets.Count), debug);
         begin
 
 
-        Logdebug('cycle:' + inttostr(I) ,debug);
+
         ws := WorkSheets.Item[I];
 
-Logdebug('cycleB',debug);
+
 
                            logDebug('worksheet:' + ws.Name, VERBOSE);
         if self.isWorkSheetEmpty(ws) then
         begin
-          logInfo('The worksheet "' .  ws.Name. '" is Empty and will not be output', STANDARD);
+          logInfo('The worksheet "' +  ws.Name + '" is Empty and will not be output', STANDARD);
           Continue;
         end;
 
