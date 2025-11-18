@@ -33,6 +33,7 @@ Private
     procedure SaveAsXPS(OutputFilename: string);
     procedure SaveAsCSV(OutputFilename: string);
     procedure ExportWorkSheetasPDF(ws :OleVariant; FileNameGen : TDynamicFileNameGenerator);
+    procedure ExportWorkbookasPDF(OutputFileName: String);
 
     function isWorkSheetEmpty(WorkSheet : OleVariant): boolean;
 
@@ -180,6 +181,29 @@ begin
 end;
 
 
+procedure TExcelXLSConverter.ExportWorkbookasPDF(OutputFileName: String);
+var
+activeWkBk: OleVariant;
+begin
+
+      activeWkBk :=      ExcelApp.ActiveWorkbook;
+      ExcelApp.ActiveWorkBook.save;
+
+      ExcelApp.Application.DisplayAlerts := False ;
+        activeWkBk.ExportAsFixedFormat(XlFixedFormatType_xlTypePDF,
+                                                   OutputFileName,
+                                                  EmptyParam,         // Quality
+                                                  IncludeDocProps,    // IncludeDocProperties,
+                                                  False,              // IgnorePrintAreas,
+                                                  olevar_FromPage ,          // From,
+                                                  olevar_ToPage,             // To,
+                                                  pdfOpenAfterExport, // OpenAfterPublish,  (default false);
+                                                  EmptyParam          // FixedFormatExtClassPtr
+                                                  ) ;
+         fOutputFiles.Add(OutputFileName);
+
+end;
+
 procedure TExcelXLSConverter.ExportWorkSheetasPDF(ws: OleVariant; FileNameGen: TDynamicFileNameGenerator);
 begin
         if self.isWorkSheetEmpty(ws) then
@@ -202,6 +226,8 @@ begin
                                                   EmptyParam          // FixedFormatExtClassPtr
                                                   ) ;
         end;
+
+        fOutputFiles.Add(FileNameGen.Generate(ws.Name));
 
 end;
 
@@ -299,8 +325,9 @@ var
 
     FromPage, ToPage, SheetList, ExcelSheets : OleVariant;
     Sheet1,Sheet2,Sheet3 , Workbook , SheetsArray: OleVariant;
-    activeSheet, WorkSheets, ws : OleVariant;
-    I :integer;
+    activeSheet, WorkSheets, ws, wsName : OleVariant;
+    I,j, sheetNumber :integer;
+    sheetName : olevariant;
     FileNameGen: TDynamicFileNameGenerator;
 begin
  logdebug('Save as pdf',debug);
@@ -322,7 +349,7 @@ begin
       end ;
 
 
-logdebug('SelectedSheets.Count:' + inttostr( SelectedSheets.Count), debug);
+        logdebug('SelectedSheets.Count:' + inttostr( SelectedSheets.Count), debug);
       if SelectedSheets.Count > 0 then
       begin
 
@@ -334,12 +361,27 @@ logdebug('SelectedSheets.Count:' + inttostr( SelectedSheets.Count), debug);
 
         logDebug('count:' + inttostr(WorkSheets.Count), verbose);
         FileNameGen := TDynamicFileNameGenerator.Create(OutputFilename);
-        for I := 1 to WorkSheets.Count  do
+
+        //for I := 1 to WorkSheets.Count  do
+        for j := 0 to SelectedSheets.Count -1 do
         begin
 
+            sheetName := SelectedSheets[j];
 
 
-        ws := WorkSheets.Item[I];
+            if (TryStrToInt(sheetName,sheetNumber) )then
+            begin
+              ws := WorkSheets.Item[sheetNumber];
+            end else
+            begin
+
+               ws := WorkSheets.Item[sheetName];
+
+            end;
+
+
+
+
 
 
 
@@ -348,9 +390,13 @@ logdebug('SelectedSheets.Count:' + inttostr( SelectedSheets.Count), debug);
                            ExportWorkSheetasPDF(ws,FileNameGen);
 
 
-           end;
+        end;
 
-      end ;
+      end else
+      begin
+
+         self.ExportWorkbookasPDF(OutputFileName);
+      end;
 
 
 

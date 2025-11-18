@@ -7,6 +7,9 @@ uses Classes, MainUtils, ResourceUtils,  ActiveX, ComObj, WinINet, Variants, sys
 type
 
 TDynamicFileNameGenerator = Class(TObject)
+  private
+    FIgnoreTag: Boolean;
+    procedure SetIgnoreTag(const Value: Boolean);
 protected
 
         fOrigionalFilename : string;
@@ -19,6 +22,7 @@ public
         Constructor Create(FileName: String);
         function Generate(tag: String ) : String;
             function SafeFileName(FileName: String ) : String;
+        property IgnoreTag : Boolean read FIgnoreTag write SetIgnoreTag;
 End;
 
 
@@ -29,6 +33,7 @@ implementation
 constructor TDynamicFileNameGenerator.Create(FileName: String);
 begin
 
+        FIgnoreTag := false;
         fOrigionalFilename := Filename;
         self.Deconstruct;
 end;
@@ -51,7 +56,13 @@ dynamicOutputFilename : string;
 
 begin
        dynamicFileName := SafeFileName(tag);
-       result := dynamicoutputDir + dynamicoutputFile + '_(' + tag +  ')' + dynamicoutputExt;
+       if FIgnoreTag then
+       begin
+                result := fOrigionalFilename;
+       end else
+       begin
+                result := dynamicoutputDir + dynamicoutputFile + '_(' + tag +  ')' + dynamicoutputExt;
+       end;
 
 end;
 
@@ -66,6 +77,11 @@ begin
     Filename :=  StringReplace(Filename,'?','_',[rfReplaceAll,rfIgnoreCase]);
  Filename :=  StringReplace(Filename,'*','_',[rfReplaceAll,rfIgnoreCase]);
     result := Filename;
+end;
+
+procedure TDynamicFileNameGenerator.SetIgnoreTag(const Value: Boolean);
+begin
+  FIgnoreTag := Value;
 end;
 
 end.

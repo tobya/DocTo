@@ -9,7 +9,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-Intereting article
+Interesting article
 https://support.microsoft.com/en-gb/topic/considerations-for-server-side-automation-of-office-48bcfe93-8a89-47f1-0bce-017433ad79e2
 ****************************************************************)
 interface
@@ -33,7 +33,7 @@ Const
   MSVISIO = 4;
 
   
-  DOCTO_VERSION = '2.0.43';  // dont use 0x - choco needs incrementing versions.
+  DOCTO_VERSION = '2.0.44';  // dont use 0x - choco needs incrementing versions.
   DOCTO_VERSION_NOTE = ' (Test Version XLS Multisheet B) ';
 type
 
@@ -72,6 +72,7 @@ type
     FDocStructureTags: boolean;
     FBitmapMissingFonts: boolean;
     fSelectedSheets: TStrings;
+
 
 
     procedure SetCompatibilityMode(const Value: Integer);
@@ -143,6 +144,9 @@ type
 
     FOutputIsFile: Boolean;
     FOutputIsDir: Boolean;
+
+    fOutputFiles : TStrings;
+
     procedure SetInputFile(const Value: String);
     procedure SetOutputFile(const Value: String);
     procedure SetOutputFileFormat(const Value: Integer);
@@ -524,6 +528,7 @@ begin
   FInputFiles := TStringList.Create;
   fDontUseAutoVBA := true;
   fSelectedSheets := TStringList.Create;
+  fOutputFiles := TStringlist.Create;
 
 
 end;
@@ -681,7 +686,8 @@ begin
             if ConversionInfo.Successful then
             begin
 
-              logInfo('File Converted: ' + ConversionInfo.OutputFile);
+             // logInfo('File Converted: ' + ConversionInfo.OutputFile);
+              logInfo('Files Converted: ' + fOutputFiles.Text);
 
               // Check if file needs to be deleted.
               if RemoveFileOnConvert then
