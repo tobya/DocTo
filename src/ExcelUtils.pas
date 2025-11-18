@@ -15,6 +15,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 interface
 
 uses Classes,Sysutils, MainUtils, ResourceUtils,  ActiveX, ComObj, WinINet, Variants,
+DynamicFileNameGenerator,
 
  Excel_TLB_Constants,StrUtils;
 
@@ -28,6 +29,8 @@ Private
     procedure SaveAsPDF(OutputFilename : string) ;
     procedure SaveAsXPS(OutputFilename: string);
     procedure SaveAsCSV(OutputFilename: string);
+
+    function isWorkSheetEmpty(WorkSheet : OleVariant): boolean;
 
 public
     constructor Create() ;
@@ -241,6 +244,14 @@ begin
   result := Extensions;
 end;
 
+function TExcelXLSConverter.isWorkSheetEmpty(WorkSheet: OleVariant): boolean;
+begin
+
+        //  this will tell if a sheet is empty.
+      Result := ExcelApp.WorksheetFunction.CountA(WorkSheet.Cells) = 0;
+
+end;
+
 function TExcelXLSConverter.OfficeAppVersion(): String;
 begin
   FExcelVersion :=  ReadOfficeAppVersion;
@@ -261,7 +272,7 @@ var
     Sheet1,Sheet2,Sheet3 , Workbook , SheetsArray: OleVariant;
     activeSheet, WorkSheets, ws : OleVariant;
     I :integer;
-
+    FileNameGen: TDynamicFileNameGenerator;
 begin
  logdebug('Save as pdf',debug);
  ExcelApp.Application.DisplayAlerts := False ;
@@ -292,15 +303,24 @@ logdebug('SelectedSheets.Count:' + inttostr( SelectedSheets.Count), debug);
         WorkSheets := ExcelApp.Worksheets;
 
         logDebug('count:' + inttostr(WorkSheets.Count), verbose);
-
+        FileNameGen := TDynamicFileNameGenerator.Create(OutputFilename);
         for I := 1 to WorkSheets.Count  do
         begin
+
+
         Logdebug('cycle:' + inttostr(I) ,debug);
         ws := WorkSheets.Item[I];
 
-          Logdebug('cycleB',debug);
+Logdebug('cycleB',debug);
 
                            logDebug('worksheet:' + ws.Name, VERBOSE);
+        if self.isWorkSheetEmpty(ws) then
+        begin
+          logInfo('The worksheet "' .  ws.Name. '" is Empty and will not be output', STANDARD);
+          Continue;
+        end;
+
+
 
 
 
@@ -308,7 +328,7 @@ logdebug('SelectedSheets.Count:' + inttostr( SelectedSheets.Count), debug);
 
       ExcelApp.Application.DisplayAlerts := False ;
         ws.ExportAsFixedFormat(XlFixedFormatType_xlTypePDF,
-                                                   OutputFilename + 'mm' + inttostr(I),
+                                                   FileNameGen.Generate(ws.Name),
                                                   EmptyParam,         // Quality
                                                   IncludeDocProps,    // IncludeDocProperties,
                                                   False,              // IgnorePrintAreas,
@@ -347,6 +367,7 @@ var
     dynamicoutputDir, dynamicoutputFile, dynamicoutputExt, dynamicOutputFileName, dynamicSheetName : String;
     ExitAction :TExitAction;
     Sheet : integer;
+    FileNameGen : TDynamicFileNameGenerator;
 begin
                 LogDebug('output to csv format');
 
@@ -356,20 +377,18 @@ begin
                // if fSelectedSheets.Count > 0 then
 
 
-                 dynamicoutputDir := ExtractFilePath(OutputFilename); // includes last \
-                 dynamicoutputFile :=  ChangefileExt ( ExtractFileName(OutputFilename),'');
-                 dynamicoutputExt  := ExtractFileExt(OutputFilename);
+                 FileNameGen := TDynamicFileNameGenerator.Create(OutputFilename);
 
                 for Sheet := 1 to ExcelApp.ActiveWorkbook.WorkSheets.Count do
                 begin
-                LogDebug('CSV Loop');
+                 LogDebug('CSV Loop');
                  activeSheet := ExcelApp.ActiveWorkbook.Sheets[Sheet];
                  dynamicSheetName := activeSheet.Name;
 
                  LogDebug(dynamicSheetName);
 
-                 dynamicSheetName := SafeFileName(dynamicSheetName);
-                 dynamicOutputFilename := dynamicoutputDir + dynamicoutputFile + '_(' + inttostr(Sheet) + dynamicSheetName +  ')' + dynamicoutputExt;
+                // dynamicSheetName := SafeFileName(dynamicSheetName);
+                 dynamicOutputFilename := FileNameGen.Generate(dynamicSheetName);  //dynamicoutputDir + dynamicoutputFile + '_(' + inttostr(Sheet) + dynamicSheetName +  ')' + dynamicoutputExt;
 
                  LogDebug(dynamicOutputFileName);
 

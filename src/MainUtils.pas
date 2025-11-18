@@ -221,7 +221,7 @@ type
     // Check Should Ignore
     function CheckShouldIgnore(DocumentPath : String): Boolean;
 
-    function SafeFileName(FileName: String ) : String;
+
 
   public
 
@@ -1658,13 +1658,7 @@ begin
   LogDebug('Writing Version to File:' + ConfigFileName,VERBOSE);
 end;
 
-function TDocumentConverter.SafeFileName(FileName: String): String;
-begin
-  Filename :=  StringReplace(Filename,'&','_',[rfReplaceAll,rfIgnoreCase]);
-    Filename :=  StringReplace(Filename,'/','_',[rfReplaceAll,rfIgnoreCase]);
-    Filename :=  StringReplace(Filename,'\\','_',[rfReplaceAll,rfIgnoreCase]);
-    result := Filename;
-end;
+
 
 procedure TDocumentConverter.SetBitmapMissingFonts(const Value: boolean);
 begin
