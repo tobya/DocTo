@@ -25,10 +25,14 @@ TExcelXLSConverter = Class(TDocumentConverter)
 Private
     ExcelApp : OleVariant;
     FExcelVersion : String;
+
+        olevar_FromPage,  olevar_ToPage   : OleVariant;
+
     function SingleFileExecuteConversion(fileToConvert, OutputFilename: String;   OutputFileFormat: Integer): TConversionInfo;
     procedure SaveAsPDF(OutputFilename : string) ;
     procedure SaveAsXPS(OutputFilename: string);
     procedure SaveAsCSV(OutputFilename: string);
+    procedure ExportWorkSheetasPDF(ws :OleVariant; FileNameGen : TDynamicFileNameGenerator);
 
     function isWorkSheetEmpty(WorkSheet : OleVariant): boolean;
 
@@ -176,6 +180,31 @@ begin
 end;
 
 
+procedure TExcelXLSConverter.ExportWorkSheetasPDF(ws: OleVariant; FileNameGen: TDynamicFileNameGenerator);
+begin
+        if self.isWorkSheetEmpty(ws) then
+        begin
+          logInfo('The worksheet "' +  ws.Name + '" is Empty and will not be output', STANDARD);
+
+        end else
+        begin
+
+
+      ExcelApp.Application.DisplayAlerts := False ;
+        ws.ExportAsFixedFormat(XlFixedFormatType_xlTypePDF,
+                                                   FileNameGen.Generate(ws.Name),
+                                                  EmptyParam,         // Quality
+                                                  IncludeDocProps,    // IncludeDocProperties,
+                                                  False,              // IgnorePrintAreas,
+                                                  olevar_FromPage ,          // From,
+                                                  olevar_ToPage,             // To,
+                                                  pdfOpenAfterExport, // OpenAfterPublish,  (default false);
+                                                  EmptyParam          // FixedFormatExtClassPtr
+                                                  ) ;
+        end;
+
+end;
+
 //Useful Links:
 //    https://docs.microsoft.com/en-us/office/vba/api/excel.workbooks.open
 //    https://docs.microsoft.com/en-us/office/vba/api/excel.workbook.exportasfixedformat
@@ -282,13 +311,14 @@ begin
         logdebug('PrintFromPage: ' + inttostr(pdfPrintFromPage),debug);
         logdebug('PrintToPage: ' + inttostr(pdfPrintToPage),debug);
 
-        FromPage :=  pdfPrintFromPage;
-        ToPage   :=  pdfPrintToPage;
+        olevar_FromPage :=  pdfPrintFromPage;
+        olevar_ToPage   :=  pdfPrintToPage;
 
       end else
       begin
-        FromPage := EmptyParam;
-        ToPage   := EmptyParam;
+          olevar_FromPage  := EmptyParam;
+          olevar_ToPage := EmptyParam;
+
       end ;
 
 
@@ -314,29 +344,8 @@ logdebug('SelectedSheets.Count:' + inttostr( SelectedSheets.Count), debug);
 
 
                            logDebug('worksheet:' + ws.Name, VERBOSE);
-        if self.isWorkSheetEmpty(ws) then
-        begin
-          logInfo('The worksheet "' +  ws.Name + '" is Empty and will not be output', STANDARD);
-          Continue;
-        end;
 
-
-
-
-
-
-
-      ExcelApp.Application.DisplayAlerts := False ;
-        ws.ExportAsFixedFormat(XlFixedFormatType_xlTypePDF,
-                                                   FileNameGen.Generate(ws.Name),
-                                                  EmptyParam,         // Quality
-                                                  IncludeDocProps,    // IncludeDocProperties,
-                                                  False,              // IgnorePrintAreas,
-                                                  FromPage ,          // From,
-                                                  ToPage,             // To,
-                                                  pdfOpenAfterExport, // OpenAfterPublish,  (default false);
-                                                  EmptyParam          // FixedFormatExtClassPtr
-                                                  ) ;
+                           ExportWorkSheetasPDF(ws,FileNameGen);
 
 
            end;
