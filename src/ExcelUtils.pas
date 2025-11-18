@@ -208,11 +208,11 @@ begin
 
                 // to get sheets
                 // Sheets(Array("Sheet4", "Sheet5")) or Sheets(3) or Sheets(Array(1,2))
+                 ExcelApp.Application.DisplayAlerts := False ;
+                SaveAsCSV(     OutputFilename);
 
-
-
-           ExcelApp.activeWorkbook.SaveAs( OutputFilename, OutputFileFormat);
-                ExcelApp.ActiveWorkBook.saved := true;
+//           ExcelApp.activeWorkbook.SaveAs( OutputFilename, OutputFileFormat);
+  //              ExcelApp.ActiveWorkBook.saved := true;
              end
             else
             begin
@@ -279,16 +279,7 @@ begin
         FromPage := EmptyParam;
         ToPage   := EmptyParam;
       end ;
-(*
-    Sheets(Array("Wednesday Lunch", "Sheet2", "Sheet3")).Select
-    Sheets("Wednesday Lunch").Activate
-    ActiveSheet.ExportAsFixedFormat Type:=xlTypePDF, Filename:= _
-        "C:\Development\github\docto\test\GeneratedTestputFiles\wk1test-MultiShasdfasdfeetmulti635345.pdf" _
-        , Quality:=xlQualityStandard, IncludeDocProperties:=True, IgnorePrintAreas _
-        :=False, OpenAfterPublish:=False
-    ActiveCell.FormulaR1C1 = ""
-    Range("AM13").Select
-End Sub*)
+
 
 logdebug('SelectedSheets.Count:' + inttostr( SelectedSheets.Count), debug);
       if SelectedSheets.Count > 0 then
@@ -371,6 +362,7 @@ begin
 
                 for Sheet := 1 to ExcelApp.ActiveWorkbook.WorkSheets.Count do
                 begin
+                LogDebug('CSV Loop');
                  activeSheet := ExcelApp.ActiveWorkbook.Sheets[Sheet];
                  dynamicSheetName := activeSheet.Name;
 
