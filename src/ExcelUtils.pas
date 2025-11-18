@@ -259,9 +259,11 @@ var
 
     FromPage, ToPage, SheetList, ExcelSheets : OleVariant;
     Sheet1,Sheet2,Sheet3 , Workbook , SheetsArray: OleVariant;
-    activeSheet : OleVariant;
+    activeSheet, WorkSheets, ws : OleVariant;
+    I :integer;
 
 begin
+ logdebug('Save as pdf',debug);
  ExcelApp.Application.DisplayAlerts := False ;
 
       if pdfPrintToPage > 0 then
@@ -288,44 +290,34 @@ begin
     Range("AM13").Select
 End Sub*)
 
-      if SelectedSheets.Count = 0 then
+logdebug('SelectedSheets.Count:' + inttostr( SelectedSheets.Count), debug);
+      if SelectedSheets.Count > 0 then
       begin
-      logDebug('Selecting sheets',VERBOSE);
-    SheetList := VarArrayCreate([0, 2], varVariant); // 3 sheets
-    SheetList[0] := 'Wednesday Lunch';
-    SheetList[1] := 'Sheet2';
-    SheetList[2] := 'Sheet3';
 
-    Workbook := ExcelApp.activeWorkbook;
-        // Get references to the individual sheets
-  //  Sheet1 := Workbook.Worksheets[3];
-  //  Sheet2 := Workbook.Worksheets[2] ;
-   // Sheet3 := Workbook.Worksheets[1];
 
-    // Create a variant array of the sheet COM objects
-    SheetsArray := VarArrayCreate([0, 1], varVariant);
-    SheetsArray[0] := 2;
-    SheetsArray[1] := 3;
-//   SheetsArray[2] := 3;
+        logDebug('Selecting sheets' + SelectedSheets.Text,VERBOSE);
 
-    // Select the sheets
-//   ExcelApp.activeWorkbook.worksheets(SheetsArray).Select;
 
-//        ExcelApp.activeWorkbook.worksheets.Select(3);
-//ExcelApp.activeWorkbook.Sheets.Item[2] .Select;
+        WorkSheets := ExcelApp.Worksheets;
 
-                   activeSheet :=      ExcelApp.ActiveWorkbook.Sheets.Item[3];
+        logDebug('count:' + inttostr(WorkSheets.Count), verbose);
 
-                 logDebug('SeT sheets',VERBOSE);
-                  ExcelApp.ActiveWorkBook.save;
-      end ;
+        for I := 1 to WorkSheets.Count  do
+        begin
+        Logdebug('cycle:' + inttostr(I) ,debug);
+        ws := WorkSheets.Item[I];
+
+          Logdebug('cycleB',debug);
+
+                           logDebug('worksheet:' + ws.Name, VERBOSE);
+
 
 
 
 
       ExcelApp.Application.DisplayAlerts := False ;
-      activeSheet.ExportAsFixedFormat(XlFixedFormatType_xlTypePDF,
-                                                  OutputFilename,
+        ws.ExportAsFixedFormat(XlFixedFormatType_xlTypePDF,
+                                                   OutputFilename + 'mm' + inttostr(I),
                                                   EmptyParam,         // Quality
                                                   IncludeDocProps,    // IncludeDocProperties,
                                                   False,              // IgnorePrintAreas,
@@ -335,6 +327,10 @@ End Sub*)
                                                   EmptyParam          // FixedFormatExtClassPtr
                                                   ) ;
 
+
+           end;
+
+      end ;
 
 
 
