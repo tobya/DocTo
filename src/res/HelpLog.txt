@@ -114,8 +114,10 @@ Long Parameters:
   --use-ISO190051 
       Create PDF to the ISO 19005-1 standard.
 
+  --enable-macroautorun
   --enable-wordvbaauto
-      By Default any autorun vba will not run, use this parameter if you wish vba to Autorun. Word Only.
+  --enable-xlvbaauto
+      By Default any autorun vba will not run, use this parameter if you wish vba to Autorun. Word / Excel Only.
 
   --sheets
       Select which sheets to save. Can be comma seperated list of 0 index numbers or sheet names. Excel Only.
