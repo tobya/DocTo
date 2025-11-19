@@ -41,7 +41,9 @@ public
     constructor Create() ;
     function CreateOfficeApp() : boolean;  override;
     function DestroyOfficeApp() : boolean; override;
+
     function ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): TConversionInfo; override;
+
     function AvailableFormats() : TStringList; override;
     function FormatsExtensions(): TStringList; override;
     function OfficeAppVersion() : String; override;
@@ -102,7 +104,7 @@ function TExcelXLSConverter.ExecuteConversion(fileToConvert: String; OutputFilen
 var
     NonsensePassword :OleVariant;
     FromPage, ToPage : OleVariant;
-    activeSheet : OleVariant;
+    activeSheet, oldEnableEvents, oldAutoSecurity : OleVariant;
     dynamicoutputDir, dynamicoutputFile, dynamicoutputExt, dynamicOutputFileName, dynamicSheetName : String;
     ExitAction :TExitAction;
     Sheet : integer;
@@ -114,6 +116,19 @@ begin
       ExitAction := aSave;
       Result.InputFile := fileToConvert;
       Result.Successful := false;
+
+
+      // disable Macros before opening file.
+      if (fDontUseAutoVBA) then
+      begin
+         oldEnableEvents := ExcelApp.EnableEvents;
+         ExcelApp.EnableEvents := false;
+         oldAutoSecurity :=          ExcelApp.AutomationSecurity;
+         ExcelApp.AutomationSecurity := 3;  // msoAutomationSecurityForceDisable
+      end;
+
+      try
+
       NonsensePassword := 'tfm554!ghAGWRDD';
        LogDebug('in conversion file');
         try
@@ -174,9 +189,27 @@ begin
         begin
 
             Result :=    SingleFileExecuteConversion(fileToConvert, OutputFilename, OutputFileFormat);
+
+            // To avoid pop ups it is important to save the sheet.  However not if the macros have run.
+            if (fDontUseAutoVBA) then
+            begin
+             // ExcelApp.ActiveWorkBook.save;
+            end else
+            begin
+              // Saved has previously been set to true.
+              // should close without dialog.
+            //  ExcelApp.ActiveWorkbook.Close();
+            end;
         end;
     end;
 
+      finally
+        if (fDontUseAutoVBA) then
+          begin
+            ExcelApp.EnableEvents := oldEnableEvents;
+            ExcelApp.AutomationSecurity := oldAutoSecurity;
+          end;
+      end;
 
 end;
 
@@ -187,7 +220,7 @@ activeWkBk: OleVariant;
 begin
 
       activeWkBk :=      ExcelApp.ActiveWorkbook;
-      ExcelApp.ActiveWorkBook.save;
+
 
       ExcelApp.Application.DisplayAlerts := False ;
         activeWkBk.ExportAsFixedFormat(XlFixedFormatType_xlTypePDF,
@@ -356,7 +389,7 @@ begin
 
       if fSelectedSheets_All then
       begin
-
+        logDebug('in fSelectedSheets_All');
 
        for I := 1 to WorkSheets.Count  do
         begin
@@ -435,7 +468,7 @@ begin
 
                 ExcelApp.Application.DisplayAlerts := False ;
                 ExcelApp.activeWorkbook.ExportAsFixedFormat(XlFixedFormatType_xlTypeXPS, OutputFilename  );
-                ExcelApp.ActiveWorkBook.save;
+
 end;
 
 procedure TExcelXLSConverter.SaveAsCSV(OutputFilename: string);
@@ -516,7 +549,7 @@ begin
                      ExcelApp.activeWorkbook.SaveAs( OutputFilename, OutputFileFormat);
                 end;
 
-                ExcelApp.ActiveWorkBook.save;
+
 end;
 
 end.
