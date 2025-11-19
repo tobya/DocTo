@@ -193,13 +193,15 @@ begin
             // To avoid pop ups it is important to save the sheet.  However not if the macros have run.
             if (fDontUseAutoVBA) then
             begin
-             // ExcelApp.ActiveWorkBook.save;
-            end else
-            begin
+              ExcelApp.ActiveWorkBook.save;
+            end   ;
+
+              ExcelApp.ActiveWorkBook.Saved := true;
               // Saved has previously been set to true.
               // should close without dialog.
-            //  ExcelApp.ActiveWorkbook.Close();
-            end;
+              ExcelApp.ActiveWorkbook.Close();
+
+
         end;
     end;
 
@@ -317,7 +319,7 @@ begin
             // Close Excel Sheet.
             Result.Successful := true;
             Result.OutputFile := OutputFilename;
-            ExcelApp.ActiveWorkbook.Close();
+
 
 end;
 
