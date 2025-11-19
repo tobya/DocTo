@@ -769,7 +769,8 @@ begin
               ErrorMessage := StringReplace(E.Message,#13,'--',[rfReplaceAll]);
               if (HaltOnWordError) then
               begin
-                HaltWithError(220,E.ClassName + '  ' + ErrorMessage + ' ' + FileToConvert + ':' + FileToCreate);
+                LogError( FileToConvert );
+                HaltWithError(220,E.ClassName + '  ' + ErrorMessage );
               end
               else
               begin
