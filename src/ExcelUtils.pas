@@ -348,19 +348,37 @@ begin
 
       end ;
 
+      WorkSheets := ExcelApp.Worksheets;
 
-        logdebug('SelectedSheets.Count:' + inttostr( SelectedSheets.Count), debug);
-      if SelectedSheets.Count > 0 then
+
+        logDebug('count:' + inttostr(WorkSheets.Count), verbose);
+        FileNameGen := TDynamicFileNameGenerator.Create(OutputFilename);
+
+      if fSelectedSheets_All then
       begin
 
+
+       for I := 1 to WorkSheets.Count  do
+        begin
+
+
+            ws := WorkSheets.Item[I];
+
+            logDebug('worksheet:' + ws.Name, VERBOSE);
+
+            ExportWorkSheetasPDF(ws,FileNameGen);
+
+
+        end;
+
+      end else if SelectedSheets.Count > 0 then
+      begin
+          logdebug('SelectedSheets.Count:' + inttostr( SelectedSheets.Count), debug);
 
         logDebug('Selecting sheets' + SelectedSheets.Text,VERBOSE);
 
 
-        WorkSheets := ExcelApp.Worksheets;
 
-        logDebug('count:' + inttostr(WorkSheets.Count), verbose);
-        FileNameGen := TDynamicFileNameGenerator.Create(OutputFilename);
 
         //for I := 1 to WorkSheets.Count  do
         for j := 0 to SelectedSheets.Count -1 do
@@ -410,6 +428,11 @@ end;
 procedure TExcelXLSConverter.SaveAsXPS(OutputFilename : string) ;
 begin
 
+                if (SelectedSheets.Count > 0) or (fSelectedSheets_All = true) then
+                begin
+                   raise ENotImplemented.Create('--sheets, --allsheets is not available for conversion to XPS');
+                end;
+
                 ExcelApp.Application.DisplayAlerts := False ;
                 ExcelApp.activeWorkbook.ExportAsFixedFormat(XlFixedFormatType_xlTypeXPS, OutputFilename  );
                 ExcelApp.ActiveWorkBook.save;
@@ -418,7 +441,7 @@ end;
 procedure TExcelXLSConverter.SaveAsCSV(OutputFilename: string);
 var
     FromPage, ToPage : OleVariant;
-    activeSheet, olesheetNumber : OleVariant;
+    activeSheet : OleVariant;
     sheetNumber : integer;
     dynamicoutputDir, dynamicoutputFile, dynamicoutputExt, dynamicOutputFileName, dynamicSheetName : String;
     ExitAction :TExitAction;
@@ -464,12 +487,13 @@ begin
                     for ix := 0 to SelectedSheets.Count -1 do
                       begin
                        LogDebug('CSV Loop:' + SelectedSheets[ix]);
+
+                       // Check if number requested and set sheetNumber
                        if (TryStrToInt(SelectedSheets[ix],sheetNumber) )then
                        begin
-                       LogDebug('TryStrToInt:' + SelectedSheets[ix]);
-
                           activeSheet := ExcelApp.ActiveWorkbook.Sheets[sheetNumber];
                        end else
+                       // otherwise use string name.
                        begin
                            activeSheet := ExcelApp.ActiveWorkbook.Sheets[SelectedSheets[ix]];
                        end;
