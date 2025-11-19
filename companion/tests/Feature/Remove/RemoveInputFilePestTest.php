@@ -92,11 +92,12 @@ it('doesnt delete files from directory', function (){
       // echo $doctocmd;
        $output = \Illuminate\Support\Facades\Process::run($doctocmd);
 
-
+        expect(collect(\Illuminate\Support\Facades\Storage::listContents('inputfilestemp'))->count())->toBeGreaterThan(0);
     // check files have been converted and originoals have been created.
        expect(collect(\Illuminate\Support\Facades\Storage::listContents('inputfilestemp'))->count())->tobe( $docfilecount);
-
-       expect(collect(\Illuminate\Support\Facades\Storage::listContents('outputtemp2'))->count())->tobe( $docfilecount);
+        $outputDirFiles = collect(\Illuminate\Support\Facades\Storage::listContents('outputtemp2'));
+       expect($outputDirFiles->count())->toBeGreaterThan( 0);
+       expect($outputDirFiles->count())->tobe( $docfilecount);
 
 
     });

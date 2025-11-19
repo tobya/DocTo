@@ -15,7 +15,8 @@ return [
     */
 
     'docto' => [
-      'path' => env('DOCTO_PATH','..\\exe\\32\\docto.exe'),
+     // 'path' => env('DOCTO_PATH','..\\exe\\32\\docto.exe'),
+      'path' => env('DOCTO_PATH','..\\exe\\64\\docto.exe'),
     ],
 
     'mailgun' => [

@@ -42,6 +42,12 @@ return [
             'throw' => false,
         ],
 
+        'inputfiles' => [
+            'driver' => 'local',
+            'root' => resource_path('inputfiles'),
+            'throw' => false,
+        ],
+
 
         'public' => [
             'driver' => 'local',

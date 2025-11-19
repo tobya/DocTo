@@ -7,6 +7,14 @@
 
   class FileGatherService
   {
+      /**
+       * Gather files will take files from specific subdir of the resource InputFiles directory and
+       * copy them to a temporary directory wehre they can be used for a test.
+       * @param Collection $list
+       * @param $tempDirName
+       * @return Collection
+       * @throws \League\Flysystem\FilesystemException
+       */
         public static function GatherFiles(Collection $list, $tempDirName)
         {
             // remove exisitn files
@@ -15,12 +23,10 @@
             }
 
             $tempDirPath = Storage::path($tempDirName);
-            $list->each(function ($dir) use ($tempDirName, $tempDirPath){
-                $inputfilesdir = \Illuminate\Support\Facades\Storage::path('inputfiles\\' . $dir );
+            $list->each(function ($inputdir) use ($tempDirName, $tempDirPath){
+                $inputfilesdir = \Illuminate\Support\Facades\Storage::disk('inputfiles')->path($inputdir );
                 $cmd = "xcopy \"$inputfilesdir\" \"$tempDirPath\\\"  ";
                 $result =  \Illuminate\Support\Facades\Process::run( $cmd );
-               // echo "\n $cmd \n";
-               // echo "\n" . $result->output() . "\n";
             });
             return collect(Storage::listContents($tempDirName));
         }
