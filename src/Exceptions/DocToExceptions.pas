@@ -1,11 +1,13 @@
 unit DocToExceptions;
 
 interface
-uses Classes, MainUtils, ResourceUtils,  ActiveX, ComObj, WinINet, Variants, sysutils, Types, StrUtils,Word_TLB_Constants, TypInfo;
+uses Classes,   ActiveX, ComObj, WinINet, Variants, sysutils, Types, StrUtils, TypInfo;
 
 type
 
-          ESheetIndexOutOfBounds = class(Exception);
+          EDocToException = class(Exception);
+          ESheetIndexOutOfBounds = class(EDocToException);
+          EInvalidParameterCombination = class(EDocToException);
 
 implementation
 

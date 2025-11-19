@@ -14,7 +14,7 @@ https://support.microsoft.com/en-gb/topic/considerations-for-server-side-automat
 ****************************************************************)
 interface
 uses  classes, Windows, sysutils, ActiveX, ComObj, WinINet, Variants, iduri,
-      Types,  ResourceUtils,           StrUtils,
+      Types,  ResourceUtils,           StrUtils, DocToExceptions,
       PathUtils, ShellAPI, datamodssl, Word_TLB_Constants;
 
 Const
@@ -771,6 +771,20 @@ begin
               begin
                 LogError( FileToConvert );
                 HaltWithError(301,E.ClassName + '  ' + ErrorMessage );
+              end
+              else
+              begin
+                LogError(E.ClassName + '  ' + ErrorMessage + ' ' + FileToConvert + ':' + FileToCreate);
+
+              end;
+          end;
+        on E: EDocToException do
+          begin
+              ErrorMessage := StringReplace(E.Message,#13,'--',[rfReplaceAll]);
+              if (HaltOnWordError) then
+              begin
+                LogError( FileToConvert );
+                HaltWithError(210,E.ClassName + '  ' + ErrorMessage );
               end
               else
               begin

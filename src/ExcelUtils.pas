@@ -140,7 +140,7 @@ begin
       try
 
       NonsensePassword := 'tfm554!ghAGWRDD';
-       LogDebug('in conversion file');
+
         try
           ExcelApp.Workbooks.Open( FileToConvert,   //FileName					,
                                 EmptyParam,    //UpdateLinks					,
@@ -490,6 +490,7 @@ begin
 
 end;
 
+// Save to 1 or move csv files
 procedure TExcelXLSConverter.SaveAsCSV(OutputFilename: string);
 var
     FromPage, ToPage : OleVariant;
@@ -500,42 +501,63 @@ var
     Sheet, ix : integer;
     FileNameGen : TDynamicFileNameGenerator;
 begin
-                LogDebug('output to csv format');
+               // LogDebug('output to csv format');
 
-              //CSV pops up alert. must be hidden for automation
+
                 ExcelApp.Application.DisplayAlerts := False ;
 
-               // if fSelectedSheets.Count > 0 then
+                if SelectedSheets.Count > 0 then
+                begin
+                  raise EInvalidParameterCombination.Create('--sheet cannot be used with xlCSV. Use --allsheets instead');
+                end;
 
 
                  FileNameGen := TDynamicFileNameGenerator.Create(OutputFilename);
 
+// ********************************************************
+//  Very Strange Behaviour
+//
+//  When The sheets are output in order going from 1 to Worksheet.Count then each
+//  sheet is output correctly as a CSV file.  However if an attempt is made to
+//  output a single sheet, either by index or sheet name the first sheet is
+//  always output.  It makes no sense, the code is identical. I have tried many
+//  times.  Therefore I am going to just leave it and always output all.
+
+
+
                  // output all sheets with seperate names
-                if fSelectedSheets_All then
+                if (fSelectedSheets_All) or (SelectedSheets.Count > 0)  then
                 begin
 
 
 
                   for Sheet := 1 to ExcelApp.ActiveWorkbook.WorkSheets.Count do
                   begin
-                   LogDebug('CSV Loop');
+                  // LogDebug('CSV Loop');
                    activeSheet := ExcelApp.ActiveWorkbook.Sheets[Sheet];
                    dynamicSheetName := activeSheet.Name;
 
-                   LogDebug(dynamicSheetName);
+                  // LogDebug(dynamicSheetName);
 
                    dynamicOutputFilename := FileNameGen.Generate(dynamicSheetName);
 
-                   LogDebug(dynamicOutputFileName);
+                  // LogDebug(dynamicOutputFileName);
 
                    activeSheet.SaveAs( dynamicoutputFilename, OutputFileFormat);
+                   fOutputFiles.Add(dynamicoutputFilename);
                   end;
-
-                end
+                 end
+               (* end
                 // If we have been given Sheetnames or ids, just output them.
                 else if SelectedSheets.Count > 0 then
 
                 begin
+
+
+
+                // This code doesnt work, it should but it doesnt,  it always outputs the
+                // first sheet.
+
                     for ix := 0 to SelectedSheets.Count -1 do
                       begin
                        LogDebug('CSV Loop:' + SelectedSheets[ix]);
@@ -555,10 +577,12 @@ begin
                        activeSheet.SaveAs( dynamicoutputFilename, OutputFileFormat);
                       end;
 
-                end else
+                end else *)
                 // Do default which is usually first sheet, with name provided.
+                else
                 begin
                      ExcelApp.activeWorkbook.SaveAs( OutputFilename, OutputFileFormat);
+                     fOutputFiles.Add(OutputFilename);
                 end;
 
 
