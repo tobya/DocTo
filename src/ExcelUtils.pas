@@ -15,7 +15,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 interface
 
 uses Classes,Sysutils, MainUtils, ResourceUtils,  ActiveX, ComObj, WinINet, Variants,
-DynamicFileNameGenerator,
+DynamicFileNameGenerator, DocToExceptions,
 
  Excel_TLB_Constants,StrUtils;
 
@@ -36,6 +36,7 @@ Private
     procedure ExportWorkbookasPDF(OutputFileName: String);
 
     function isWorkSheetEmpty(WorkSheet : OleVariant): boolean;
+    procedure CheckWorkSheetIndexValid(index : integer);
 
 public
     constructor Create() ;
@@ -67,6 +68,15 @@ end;
 
 
 { TWordDocConverter }
+
+procedure TExcelXLSConverter.CheckWorkSheetIndexValid(index: integer);
+begin
+
+      if (index = 0) then
+      begin
+          raise ESheetIndexOutOfBounds.Create('Excel Worksheets start at 1. 0 is not valid index');
+      end;
+end;
 
 constructor TExcelXLSConverter.Create;
 begin
@@ -307,6 +317,8 @@ begin
 
 end;
 
+
+
 function TExcelXLSConverter.OfficeAppVersion(): String;
 begin
   FExcelVersion :=  ReadOfficeAppVersion;
@@ -330,8 +342,11 @@ var
     sheetName : olevariant;
     FileNameGen: TDynamicFileNameGenerator;
 begin
- logdebug('Save as pdf',debug);
- ExcelApp.Application.DisplayAlerts := False ;
+
+
+     logdebug('Save as pdf',debug);
+
+     ExcelApp.Application.DisplayAlerts := False ;
 
       if pdfPrintToPage > 0 then
       begin
@@ -375,24 +390,26 @@ begin
       begin
           logdebug('SelectedSheets.Count:' + inttostr( SelectedSheets.Count), debug);
 
-        logDebug('Selecting sheets' + SelectedSheets.Text,VERBOSE);
+        logDebug( SelectedSheets.Text,VERBOSE);
 
 
 
 
-        //for I := 1 to WorkSheets.Count  do
+
         for j := 0 to SelectedSheets.Count -1 do
         begin
 
             sheetName := SelectedSheets[j];
-
+            logDebug( sheetName,VERBOSE);
 
             if (TryStrToInt(sheetName,sheetNumber) )then
             begin
+                 logdebug( 'TryStrToInt',VERBOSE);
+               self.CheckWorkSheetIndexValid(sheetNumber);
               ws := WorkSheets.Item[sheetNumber];
             end else
             begin
-
+              logdebug( 'not TryStrToInt',VERBOSE);
                ws := WorkSheets.Item[sheetName];
 
             end;
@@ -403,7 +420,7 @@ begin
 
 
 
-                           logDebug('worksheet:' + ws.Name, VERBOSE);
+                           logDebug('worksheetxx:' + ws.Name, VERBOSE);
 
                            ExportWorkSheetasPDF(ws,FileNameGen);
 
@@ -491,6 +508,7 @@ begin
                        // Check if number requested and set sheetNumber
                        if (TryStrToInt(SelectedSheets[ix],sheetNumber) )then
                        begin
+                          self.CheckWorkSheetIndexValid(sheetNumber);
                           activeSheet := ExcelApp.ActiveWorkbook.Sheets[sheetNumber];
                        end else
                        // otherwise use string name.
