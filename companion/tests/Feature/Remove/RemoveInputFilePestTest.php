@@ -40,11 +40,11 @@ it('test deletes files from directory', function (){
            ->build();
       // echo $doctocmd;
        $output = \Illuminate\Support\Facades\Process::run($doctocmd);
-
+// print_r($output);
 
     // check files have been converted and originoals have been created.
-       expect(collect(\Illuminate\Support\Facades\Storage::listContents('inputfilestemp'))->count())->tobe($dirfilescount - $docfilecount);
-       expect(collect(\Illuminate\Support\Facades\Storage::listContents('outputtemp2'))->count())->tobe( $docfilecount);
+       expect(collect(\Illuminate\Support\Facades\Storage::AllFiles('inputfilestemp'))->count())->tobe($dirfilescount - $docfilecount);
+       expect(collect(\Illuminate\Support\Facades\Storage::AllFiles('outputtemp2'))->count())->tobe( $docfilecount);
 
 
     });
@@ -92,12 +92,15 @@ it('doesnt delete files from directory', function (){
       // echo $doctocmd;
        $output = \Illuminate\Support\Facades\Process::run($doctocmd);
 
-        expect(collect(\Illuminate\Support\Facades\Storage::listContents('inputfilestemp'))->count())->toBeGreaterThan(0);
+        expect(collect(\Illuminate\Support\Facades\Storage::AllFiles('inputfilestemp'))->count())->toBeGreaterThan(0);
     // check files have been converted and originoals have been created.
-       expect(collect(\Illuminate\Support\Facades\Storage::listContents('inputfilestemp'))->count())->tobe( $docfilecount);
-        $outputDirFiles = collect(\Illuminate\Support\Facades\Storage::listContents('outputtemp2'));
+       expect(collect(\Illuminate\Support\Facades\Storage::AllFiles('inputfilestemp'))->count())->tobe( $docfilecount);
+        $outputDirFiles = collect(\Illuminate\Support\Facades\Storage::AllFiles('outputtemp2'));
        expect($outputDirFiles->count())->toBeGreaterThan( 0);
        expect($outputDirFiles->count())->tobe( $docfilecount);
 
-
+       // This will delete all files in the storage/tests directory.
+      // this happens once a test run to prevent files from building up.
+      // could be done a bit more organised if desired.
+        \Illuminate\Support\Facades\Storage::deleteDirectory('\\');
     });

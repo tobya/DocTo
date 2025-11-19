@@ -19,7 +19,10 @@
         public function build(){
             $cmd = '';
             foreach($this->params as $paramset){
-                $cmd .= $paramset[0] . ' ' . $paramset[1] . ' ';
+                $cmd .= ' ' . $paramset[0] ;
+                if (isset($paramset[1])){
+                    $cmd .=  ' "' . $paramset[1] . '" ';
+                }
             }
             return $cmd;
         }

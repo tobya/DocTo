@@ -4,12 +4,12 @@
     <Transaction>2020/05/25 15:25:09.000.399,=D:\Development\GitHub\DocTo\src\res\HelpCompatibilityMode.txt</Transaction>
     <Transaction>2020/05/25 15:31:23.000.508,D:\Development\GitHub\DocTo\src\res\WdCompatibilityMode.txt=</Transaction>
     <Transaction>2021/12/02 22:25:13.000.761,=D:\Development\GitHub\DocTo\src\New1.bat</Transaction>
-    <Transaction>2021/12/02 22:25:32.000.527,D:\Development\GitHub\DocTo\src\New1.bat=D:\Development\GitHub\DocTo\test\TestDocTo_Quiet.bat</Transaction>
+    <Transaction>2021/12/02 22:25:32.000.527,D:\Development\GitHub\DocTo\test\TestDocTo_Quiet.bat=D:\Development\GitHub\DocTo\src\New1.bat</Transaction>
     <Transaction>2023/09/11 17:39:20.000.384,=C:\Development\github\docto\src\res\xlsFormats.txt</Transaction>
-    <Transaction>2025/11/18 17:53:47.458,=C:\Development\github\docto\src\Unit1.pas</Transaction>
-    <Transaction>2025/11/18 17:54:21.396,C:\Development\github\docto\src\shared\DynamicFileNameGenerator.pas=C:\Development\github\docto\src\Unit1.pas</Transaction>
-    <Transaction>2025/11/19 14:43:02.361,=C:\Development\github\docto\src\Unit1.pas</Transaction>
-    <Transaction>2025/11/19 14:43:31.175,C:\Development\github\docto\src\Exceptions\DocToExceptions.pas=C:\Development\github\docto\src\Unit1.pas</Transaction>
+    <Transaction>2025/11/18 17:53:47.000.458,=C:\Development\github\docto\src\Unit1.pas</Transaction>
+    <Transaction>2025/11/18 17:54:21.000.396,C:\Development\github\docto\src\Unit1.pas=C:\Development\github\docto\src\shared\DynamicFileNameGenerator.pas</Transaction>
+    <Transaction>2025/11/19 14:43:02.000.361,=C:\Development\github\docto\src\Unit1.pas</Transaction>
+    <Transaction>2025/11/19 14:43:31.000.175,C:\Development\github\docto\src\Unit1.pas=C:\Development\github\docto\src\Exceptions\DocToExceptions.pas</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="..\..\docto"/>
