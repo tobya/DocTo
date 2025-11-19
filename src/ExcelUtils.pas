@@ -493,7 +493,7 @@ end;
 procedure TExcelXLSConverter.SaveAsCSV(OutputFilename: string);
 var
     FromPage, ToPage : OleVariant;
-    activeSheet : OleVariant;
+    activeSheet, sheetName : OleVariant;
     sheetNumber : integer;
     dynamicoutputDir, dynamicoutputFile, dynamicoutputExt, dynamicOutputFileName, dynamicSheetName : String;
     ExitAction :TExitAction;
@@ -539,19 +539,11 @@ begin
                     for ix := 0 to SelectedSheets.Count -1 do
                       begin
                        LogDebug('CSV Loop:' + SelectedSheets[ix]);
+                        sheetName := SelectedSheets[ix];
 
                        // Check if number requested and set sheetNumber
-                       if (TryStrToInt(SelectedSheets[ix],sheetNumber) )then
-                       begin
-                          self.CheckWorkSheetIndexValid(sheetNumber);
-                          activeSheet := ExcelApp.ActiveWorkbook.Sheets[sheetNumber];
-                       end else
-                       // otherwise use string name.
-                       begin
-                           activeSheet := ExcelApp.ActiveWorkbook.Sheets[SelectedSheets[ix]];
-                       end;
-
-
+                                // -------------
+                         activeSheet := ExcelApp.ActiveWorkbook.Sheets[sheetName];
                        dynamicSheetName := activeSheet.Name;
 
                        LogDebug(dynamicSheetName);
