@@ -36,7 +36,8 @@ uses
   PowerPoint_TLB_Constants in 'PowerPoint_TLB_Constants.pas',
   VisioUtils in 'VisioUtils.pas',
   Visio_TLB in 'Visio_TLB.pas',
-  DynamicFileNameGenerator in 'shared\DynamicFileNameGenerator.pas';
+  DynamicFileNameGenerator in 'shared\DynamicFileNameGenerator.pas',
+  DocToExceptions in 'Exceptions\DocToExceptions.pas';
 
 var
   i, Converter : integer;

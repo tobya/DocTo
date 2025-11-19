@@ -8,12 +8,16 @@
     <Transaction>2023/09/11 17:39:20.000.384,=C:\Development\github\docto\src\res\xlsFormats.txt</Transaction>
     <Transaction>2025/11/18 17:53:47.458,=C:\Development\github\docto\src\Unit1.pas</Transaction>
     <Transaction>2025/11/18 17:54:21.396,C:\Development\github\docto\src\shared\DynamicFileNameGenerator.pas=C:\Development\github\docto\src\Unit1.pas</Transaction>
+    <Transaction>2025/11/19 14:43:02.361,=C:\Development\github\docto\src\Unit1.pas</Transaction>
+    <Transaction>2025/11/19 14:43:31.175,C:\Development\github\docto\src\Exceptions\DocToExceptions.pas=C:\Development\github\docto\src\Unit1.pas</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="..\..\docto"/>
     <File Path="..\changes.md"/>
     <File Path="..\changes.txt"/>
     <File Path="..\readme.md"/>
+    <File Path="Exceptions"/>
+    <File Path="Exceptions\DocToExceptions.pas"/>
     <File Path="res"/>
     <File Path="res\HelpErrors.txt"/>
     <File Path="res\HelpJSONLog.txt"/>
