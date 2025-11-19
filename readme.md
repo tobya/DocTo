@@ -2,7 +2,14 @@
 
 Contributers
 ====
-I am actively looking for contributers so if you are a Delphi (or VBA) programmer and interested in helping out, please send me a message or comment.
+I am actively looking for contributers so if you are a 
+
+- Delphi (or VBA) programmer
+- PHP, Laravel, Pest Programmer (tests and documentation)
+ 
+and interested in helping out, please send me a message or comment.
+
+
 
 Document Converter
 ====
