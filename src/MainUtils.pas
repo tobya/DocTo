@@ -1333,15 +1333,12 @@ if  (id = '-XL') or
 
     end
     else if (id = '--ENABLE-MACROAUTORUN') or
-            (id = '--ENABLE-WORDVBAAUTO')
+            (id = '--ENABLE-WORDVBAAUTO')  or
+            (id = '--ENABLE-XLVBAAUTO')
     then
     begin
       fDontUseAutoVBA := false;
-      if (OfficeAppName <> 'Word')then
-      begin
-      // Excel   Application.EnableEvents = False
-      //  HaltWithError(301,'Parameter '  + id + ' not Implemented for ' + OfficeAppName );
-      end;
+
 
     end
     else if (id = '-X') or
