@@ -418,10 +418,11 @@ end;
 procedure TExcelXLSConverter.SaveAsCSV(OutputFilename: string);
 var
     FromPage, ToPage : OleVariant;
-    activeSheet : OleVariant;
+    activeSheet, olesheetNumber : OleVariant;
+    sheetNumber : integer;
     dynamicoutputDir, dynamicoutputFile, dynamicoutputExt, dynamicOutputFileName, dynamicSheetName : String;
     ExitAction :TExitAction;
-    Sheet : integer;
+    Sheet, ix : integer;
     FileNameGen : TDynamicFileNameGenerator;
 begin
                 LogDebug('output to csv format');
@@ -434,22 +435,62 @@ begin
 
                  FileNameGen := TDynamicFileNameGenerator.Create(OutputFilename);
 
-                for Sheet := 1 to ExcelApp.ActiveWorkbook.WorkSheets.Count do
+                 // output all sheets with seperate names
+                if fSelectedSheets_All then
                 begin
-                 LogDebug('CSV Loop');
-                 activeSheet := ExcelApp.ActiveWorkbook.Sheets[Sheet];
-                 dynamicSheetName := activeSheet.Name;
 
-                 LogDebug(dynamicSheetName);
 
-                // dynamicSheetName := SafeFileName(dynamicSheetName);
-                 dynamicOutputFilename := FileNameGen.Generate(dynamicSheetName);  //dynamicoutputDir + dynamicoutputFile + '_(' + inttostr(Sheet) + dynamicSheetName +  ')' + dynamicoutputExt;
 
-                 LogDebug(dynamicOutputFileName);
+                  for Sheet := 1 to ExcelApp.ActiveWorkbook.WorkSheets.Count do
+                  begin
+                   LogDebug('CSV Loop');
+                   activeSheet := ExcelApp.ActiveWorkbook.Sheets[Sheet];
+                   dynamicSheetName := activeSheet.Name;
 
-                 activeSheet.SaveAs( dynamicoutputFilename, OutputFileFormat);
+                   LogDebug(dynamicSheetName);
+
+                   dynamicOutputFilename := FileNameGen.Generate(dynamicSheetName);
+
+                   LogDebug(dynamicOutputFileName);
+
+                   activeSheet.SaveAs( dynamicoutputFilename, OutputFileFormat);
+                  end;
+
+                end
+                // If we have been given Sheetnames or ids, just output them.
+                else if SelectedSheets.Count > 0 then
+
+                begin
+                    for ix := 0 to SelectedSheets.Count -1 do
+                      begin
+                       LogDebug('CSV Loop:' + SelectedSheets[ix]);
+                       if (TryStrToInt(SelectedSheets[ix],sheetNumber) )then
+                       begin
+                       LogDebug('TryStrToInt:' + SelectedSheets[ix]);
+
+                          activeSheet := ExcelApp.ActiveWorkbook.Sheets[sheetNumber];
+                       end else
+                       begin
+                           activeSheet := ExcelApp.ActiveWorkbook.Sheets[SelectedSheets[ix]];
+                       end;
+
+
+                       dynamicSheetName := activeSheet.Name;
+
+                       LogDebug(dynamicSheetName);
+
+                       dynamicOutputFilename := FileNameGen.Generate(dynamicSheetName);
+
+                       LogDebug(dynamicOutputFileName);
+
+                       activeSheet.SaveAs( dynamicoutputFilename, OutputFileFormat);
+                      end;
+
+                end else
+                // Do default which is usually first sheet, with name provided.
+                begin
+                     ExcelApp.activeWorkbook.SaveAs( OutputFilename, OutputFileFormat);
                 end;
-
 
                 ExcelApp.ActiveWorkBook.save;
 end;

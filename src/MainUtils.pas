@@ -75,6 +75,7 @@ type
 
 
 
+
     procedure SetCompatibilityMode(const Value: Integer);
     procedure SetIgnore_MACOSX(const Value: boolean);
     procedure SetEncoding(const Value: Integer);
@@ -146,6 +147,7 @@ type
     FOutputIsDir: Boolean;
 
     fOutputFiles : TStrings;
+    fSelectedSheets_All : boolean;
 
     procedure SetInputFile(const Value: String);
     procedure SetOutputFile(const Value: String);
@@ -528,6 +530,7 @@ begin
   FInputFiles := TStringList.Create;
   fDontUseAutoVBA := true;
   fSelectedSheets := TStringList.Create;
+  fSelectedSheets_All := false;
   fOutputFiles := TStringlist.Create;
 
 
@@ -1263,6 +1266,12 @@ if  (id = '-XL') or
          begin
           HaltWithConfigError(205,'Expecting > 0 selected sheets: ' + value);
          end;
+    end
+    else if (id = '--ALLSHEETS') then
+    begin
+         fSelectedSheets_All := true;
+
+         dec(iParam);
     end
     else if (id = '--EXPORTMARKUP') then
     begin
