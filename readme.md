@@ -118,7 +118,7 @@ Add a Webhook to fire on each conversion (-W)
 
     docto -f "C:\Dir with Spaces\FilesToConvert\" -O "C:\DirToOutput" -T wdFormatPDF  -OX .pdf  -W https://toflidium.com/webhooks/docto/webhook_test.php
     
-A Webhook is a url that can be called on each converstion to give you the ability to repond externally whenever a file is converted.  Currently `https` address is experimental so log an [issue](https://github.com/tobya/DocTo/issues/new) if you have any issues.
+A Webhook is a url that can be called on each converstion to give you the ability to repond externally whenever a file is converted.  
 
 Use in the Wild
 ---------------
