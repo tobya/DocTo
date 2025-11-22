@@ -9,17 +9,17 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-Intereting article
+Interesting article
 https://support.microsoft.com/en-gb/topic/considerations-for-server-side-automation-of-office-48bcfe93-8a89-47f1-0bce-017433ad79e2
 ****************************************************************)
 interface
 uses  classes, Windows, sysutils, ActiveX, ComObj, WinINet, Variants, iduri,
-      Types,  ResourceUtils,           StrUtils,
+      Types,  ResourceUtils,           StrUtils, DocToExceptions,
       PathUtils, ShellAPI, datamodssl, Word_TLB_Constants;
 
 Const
   VERBOSE = 10;
-  DEBUG = 9;
+  DEBUG =      9;
   HELP = 8;
   CHATTY = 5;
   STANDARD = 2;
@@ -33,8 +33,8 @@ Const
   MSVISIO = 4;
 
   
-  DOCTO_VERSION = '1.15.45';  // dont use 0x - choco needs incrementing versions.
-  DOCTO_VERSION_NOTE = ' x64 Release ';
+  DOCTO_VERSION = '1.16.45';  // dont use 0x - choco needs incrementing versions.
+  DOCTO_VERSION_NOTE = ' (Test Version XLS Multisheet B) ';
 type
 
 
@@ -71,6 +71,9 @@ type
     FKeepIRM: boolean;
     FDocStructureTags: boolean;
     FBitmapMissingFonts: boolean;
+    fSelectedSheets: TStrings;
+
+
 
 
     procedure SetCompatibilityMode(const Value: Integer);
@@ -95,6 +98,7 @@ type
     procedure SetKeepIRM(const Value: boolean);
     procedure SetDocStructureTags(const Value: boolean);
     procedure SetBitmapMissingFonts(const Value: boolean);
+    procedure Setsheets(const Value: TStrings);
 
 
   protected
@@ -141,6 +145,10 @@ type
 
     FOutputIsFile: Boolean;
     FOutputIsDir: Boolean;
+
+    fOutputFiles : TStrings;
+    fSelectedSheets_All : boolean;
+
     procedure SetInputFile(const Value: String);
     procedure SetOutputFile(const Value: String);
     procedure SetOutputFileFormat(const Value: Integer);
@@ -184,6 +192,8 @@ type
     property pdfPrintToPage : integer read FpdfPrintToPage;
     property useISO190051 : boolean read FuseISO190051;
     property pdfOptimizeFor : integer read fpdfOptimizeFor write fpdfOptimizeFor;
+    property SelectedSheets : TStrings read fSelectedSheets write Setsheets;
+
 
     property ExportMarkup : integer read fExportMarkup;
     property IncludeDocProps : boolean read FIncludeDocProps write SetIncludeDocProps;
@@ -216,6 +226,7 @@ type
 
     // Check Should Ignore
     function CheckShouldIgnore(DocumentPath : String): Boolean;
+
 
 
   public
@@ -518,6 +529,9 @@ begin
   FBitmapMissingFonts := true;
   FInputFiles := TStringList.Create;
   fDontUseAutoVBA := true;
+  fSelectedSheets := TStringList.Create;
+  fSelectedSheets_All := false;
+  fOutputFiles := TStringlist.Create;
 
 
 end;
@@ -539,6 +553,7 @@ begin
 
 
   FInputFiles.Free;
+  fSelectedSheets.Free;
 
   if assigned(FNetHandle) then
   begin
@@ -674,7 +689,8 @@ begin
             if ConversionInfo.Successful then
             begin
 
-              logInfo('File Converted: ' + ConversionInfo.OutputFile);
+             // logInfo('File Converted: ' + ConversionInfo.OutputFile);
+              logInfo('Files Converted: ' + fOutputFiles.Text);
 
               // Check if file needs to be deleted.
               if RemoveFileOnConvert then
@@ -748,12 +764,41 @@ begin
             end;
 
           end;
+          on E: ENotImplemented do
+          begin
+              ErrorMessage := StringReplace(E.Message,#13,'--',[rfReplaceAll]);
+              if (HaltOnWordError) then
+              begin
+                LogError( FileToConvert );
+                HaltWithError(301,E.ClassName + '  ' + ErrorMessage );
+              end
+              else
+              begin
+                LogError(E.ClassName + '  ' + ErrorMessage + ' ' + FileToConvert + ':' + FileToCreate);
+
+              end;
+          end;
+        on E: EDocToException do
+          begin
+              ErrorMessage := StringReplace(E.Message,#13,'--',[rfReplaceAll]);
+              if (HaltOnWordError) then
+              begin
+                LogError( FileToConvert );
+                HaltWithError(210,E.ClassName + '  ' + ErrorMessage );
+              end
+              else
+              begin
+                LogError(E.ClassName + '  ' + ErrorMessage + ' ' + FileToConvert + ':' + FileToCreate);
+
+              end;
+          end;
           on E: Exception do
           begin
               ErrorMessage := StringReplace(E.Message,#13,'--',[rfReplaceAll]);
               if (HaltOnWordError) then
               begin
-                HaltWithError(220,E.ClassName + '  ' + ErrorMessage + ' ' + FileToConvert + ':' + FileToCreate);
+                LogError( FileToConvert );
+                HaltWithError(220,E.ClassName + '  ' + ErrorMessage );
               end
               else
               begin
@@ -1243,6 +1288,20 @@ if  (id = '-XL') or
            HaltWithConfigError(205,'Invalid value for --PDF-OPTIMIZEFOR :' + value);
          end;
     END
+    else if (id = '--SHEETS') then
+    begin
+         fSelectedSheets.DelimitedText := value;
+         if fSelectedSheets.Count = 0 then
+         begin
+          HaltWithConfigError(205,'Expecting > 0 selected sheets: ' + value);
+         end;
+    end
+    else if (id = '--ALLSHEETS') then
+    begin
+         fSelectedSheets_All := true;
+
+         dec(iParam);
+    end
     else if (id = '--EXPORTMARKUP') then
     begin
          if (WordConstants.Exists(value)) then
@@ -1275,6 +1334,7 @@ if  (id = '-XL') or
       FBitmapMissingFonts := false;
       dec(iParam);
     end
+
     else if (id = '-W') or
             (id = '--WEBHOOK') then
     begin
@@ -1287,15 +1347,12 @@ if  (id = '-XL') or
 
     end
     else if (id = '--ENABLE-MACROAUTORUN') or
-            (id = '--ENABLE-WORDVBAAUTO')
+            (id = '--ENABLE-WORDVBAAUTO')  or
+            (id = '--ENABLE-XLVBAAUTO')
     then
     begin
       fDontUseAutoVBA := false;
-      if (OfficeAppName <> 'Word')then
-      begin
-      // Excel   Application.EnableEvents = False
-      //  HaltWithError(301,'Parameter '  + id + ' not Implemented for ' + OfficeAppName );
-      end;
+
 
     end
     else if (id = '-X') or
@@ -1642,6 +1699,8 @@ begin
   LogDebug('Writing Version to File:' + ConfigFileName,VERBOSE);
 end;
 
+
+
 procedure TDocumentConverter.SetBitmapMissingFonts(const Value: boolean);
 begin
   FBitmapMissingFonts := Value;
@@ -1850,6 +1909,11 @@ end;
 
 
 
+
+procedure TDocumentConverter.Setsheets(const Value: TStrings);
+begin
+  fSelectedSheets := Value;
+end;
 
 procedure TDocumentConverter.SetSkipDocsWithTOC(const Value: Boolean);
 begin

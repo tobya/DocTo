@@ -117,10 +117,15 @@ Long Parameters:
   --PDF-no-BitmapMissingFonts
       Do not bitmap missing fonts, fonts will be substituted.   
   --use-ISO190051 
-      Create PDF to the ISO 19005-1 standard.  
+      Create PDF to the ISO 19005-1 standard.
+  --enable-macroautorun
   --enable-wordvbaauto
-      By Default any autorun vba will not run, use this parameter if you wish vba to Autorun. Word Only.
-
+  --enable-xlvbaauto
+      By Default any autorun vba will not run, use this parameter if you wish vba to Autorun. Word / Excel Only.
+  --sheets
+      Select which sheets to save. Can be comma seperated list of sheet names or indexes. Excel Only. Unavailable for xlCSV
+  --allsheets
+      If converting to CSV default behaviour is to convert first sheet.  This will convert all with appropriate names
 
 
 Experimental:
@@ -137,6 +142,7 @@ ERROR CODES:
 203 : Unknown switch in command
 204 : Input File does not exist
 205 : Invalid Parameter Value
+210 : DocTo Error
 220 : Word or COM Error
 221 : Word not Installed
 301 : Not Implemented

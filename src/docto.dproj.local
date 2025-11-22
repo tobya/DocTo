@@ -6,12 +6,18 @@
     <Transaction>2021/12/02 22:25:13.000.761,=D:\Development\GitHub\DocTo\src\New1.bat</Transaction>
     <Transaction>2021/12/02 22:25:32.000.527,D:\Development\GitHub\DocTo\src\New1.bat=D:\Development\GitHub\DocTo\test\TestDocTo_Quiet.bat</Transaction>
     <Transaction>2023/09/11 17:39:20.000.384,=C:\Development\github\docto\src\res\xlsFormats.txt</Transaction>
+    <Transaction>2025/11/18 17:53:47.000.458,=C:\Development\github\docto\src\Unit1.pas</Transaction>
+    <Transaction>2025/11/18 17:54:21.000.396,C:\Development\github\docto\src\shared\DynamicFileNameGenerator.pas=C:\Development\github\docto\src\Unit1.pas</Transaction>
+    <Transaction>2025/11/19 14:43:02.000.361,=C:\Development\github\docto\src\Unit1.pas</Transaction>
+    <Transaction>2025/11/19 14:43:31.000.175,C:\Development\github\docto\src\Exceptions\DocToExceptions.pas=C:\Development\github\docto\src\Unit1.pas</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="..\..\docto"/>
     <File Path="..\changes.md"/>
     <File Path="..\changes.txt"/>
     <File Path="..\readme.md"/>
+    <File Path="Exceptions"/>
+    <File Path="Exceptions\DocToExceptions.pas"/>
     <File Path="res"/>
     <File Path="res\HelpErrors.txt"/>
     <File Path="res\HelpJSONLog.txt"/>
@@ -31,6 +37,8 @@
     <File Path="res\vsFormats.txt"/>
     <File Path="res\vsFormatsExt.txt"/>
     <File Path="res\xlsFormats.txt"/>
+    <File Path="shared"/>
+    <File Path="shared\DynamicFileNameGenerator.pas"/>
     <File Path="datamodSSL.pas"/>
     <File Path="datamodSSL.dfm"/>
     <File Path="ExcelUtils.pas"/>

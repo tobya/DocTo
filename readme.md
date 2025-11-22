@@ -135,8 +135,8 @@ https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-u
 
 ## Command Line Help
     Help
-    Docto Version:%s
-    Office Version : %s
+    DocTo Version: %s
+    Office Version: %s
     Open Source: https://github.com/tobya/DocTo/
     Description: DocTo converts Word Documents and Excel Spreadsheets to other formats.
     
@@ -147,19 +147,22 @@ https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-u
     
       -H  This message
           --HELP -?
-      -WD Use Word for Converstion (Default). Help '-h -wd'
+      -WD Use Word for Conversion (Default). Help '-h -wd'
           --word
       -XL Use Excel for Conversion. Help '-h -xl'
           --excel
       -PP Use Powerpoint for Conversion. help '-h -pp'
           --powerpoint
-      -VS Use Visio for Conversion. 
+      -VS Use Visio for Conversion.
           --visio
       -F  Input File or Directory
           --inputfile
-      -FX Input file search for if -f is directory. Can use .rtf test*.txt etc
+      -FX Input Extension to search for if directory. (.rtf .txt etc)
           Default ".doc*" (will find ".docx" also)
           --inputextension
+      --inputfilter
+          Filter Files to input. Property*.doc will match Property1.doc,
+          Property2.doc etc
       -O  Output File or Directory to place converted Docs
           --outputfile
       -OX Output Extension if -F is Directory. Please include '.' eg. '.pdf' .
@@ -169,7 +172,6 @@ https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-u
           Available from
           https://docs.microsoft.com/en-us/dotnet/api/microsoft.office.interop.word.wdsaveformat
           or https://docs.microsoft.com/en-us/dotnet/api/microsoft.office.interop.excel.xlfileformat
-          or https://docs.microsoft.com/en-us/office/vba/api/powerpoint.presentation.saveas
           See current List Below.
           --format
       -TF Force Format. -T value if an integer, is checked against current list
@@ -226,9 +228,9 @@ https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-u
       --no-subdirs Only convert specified directory. Do not recurse sub directories
       --ExportMarkup Value for wdExportItem - default wdExportDocumentContent.
           use    wdExportDocumentWithMarkup to export all word comments with pdf
-      --no-IncludeDocProperties 
+      --no-IncludeDocProperties
       --no-DocProp
-          Do not include Document Properties in the exported pdf file.      
+          Do not include Document Properties in the exported pdf file.
       --PDF-OpenAfterExport
           If you wish for a converted PDF to be opened after creation. No value req.
       --PDF-FromPage
@@ -244,11 +246,19 @@ https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-u
       --PDF-No-DocStructureTags
           Do not include DocStructureTags to help screen readers.
       --PDF-no-BitmapMissingFonts
-          Do not bitmap missing fonts, fonts will be substituted.   
-      --use-ISO190051 
+          Do not bitmap missing fonts, fonts will be substituted.
+      --use-ISO190051
           Create PDF to the ISO 19005-1 standard.
     
+      --enable-macroautorun
+      --enable-wordvbaauto
+      --enable-xlvbaauto
+          By Default any autorun vba will not run, use this parameter if you wish vba to Autorun. Word / Excel Only.
     
+      --sheets
+          Select which sheets to save. Can be comma seperated list of sheet names or indexes. Excel Only.
+      --allsheets
+          If converting to CSV default behaviour is to convert first sheet.  This will convert all with appropriate names
     
     
     Experimental:
@@ -267,8 +277,9 @@ https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-u
     205 : Invalid Parameter Value
     220 : Word or COM Error
     221 : Word not Installed
+    301 : Not Implemented
     400 : Unknown Error
-        
+
 # Parameter Overview
 
 ## Usage
