@@ -14,5 +14,6 @@ Book1 MultiSheet Test.xlsx
 Bookmarks+Chocolate+and+Hazelnut+Tart.doc
 Cottage+Pie+with+Garlic+Butter.doc
 CullohillApplePie - Copy.doc
+DocXFile.docx
 
 
