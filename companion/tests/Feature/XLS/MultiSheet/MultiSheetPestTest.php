@@ -149,7 +149,7 @@
         });
 
         expect($sheetNamed->count())->tobe(3);
-        
+
 
         Storage::deleteDirectory($outputfiledir);
     });
@@ -196,3 +196,42 @@
 
 
     });
+
+
+
+        // these formats only output single sheet.
+ it('outputs correct single sheet multi sheet xls', function ($format, $ext) {
+
+        $inputfiledir = 'inputfilesxls';
+        $outputfiledir = 'outputfilesxls' . uniqid();
+        // setup
+        $testinputfilesdir_temp = Storage::path($inputfiledir);
+        $testoutputdir_temp = Storage::path($outputfiledir);
+
+        Storage::createDirectory($outputfiledir);
+
+        $dirfiles = \App\Services\FileGatherService::GatherFiles(collect(['multisheet']), $inputfiledir);
+
+        $doctocmd = \App\Services\DocToCommandBuilder::docto()
+            ->add('-XL')
+            ->add('-f', $testinputfilesdir_temp .'\\Book1 MultiSheet Test.xlsx' )
+            ->add('-o', $testoutputdir_temp .'\\TabTest.' . $ext)
+            ->add('-t', $format)
+            ->add('--allsheets')
+            ->add('-L 10')
+            ->build();
+
+        $output = \Illuminate\Support\Facades\Process::run($doctocmd);
+       // print_r($output->output());
+        $outputDirFiles = collect(\Illuminate\Support\Facades\Storage::allFiles($outputfiledir));
+
+    expect($outputDirFiles->count())->toBeGreaterThan(0);
+    expect($outputDirFiles->count())->tobe(1);
+
+
+
+    })->with([
+        ['xlUnicodeText', 'txt'],
+        ['xlCSVWindows', 'csv'],
+        ['xlTextWindows', 'txt'],
+ ]);

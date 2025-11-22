@@ -15,8 +15,12 @@
        * @return Collection
        * @throws \League\Flysystem\FilesystemException
        */
-        public static function GatherFiles(Collection $list, $tempDirName)
+        public static function GatherFiles(Collection | string $list, $tempDirName)
         {
+            if (is_string($list)){
+                $list = collect([$list]);
+            }
+
             // remove exisitn files
             if (\Illuminate\Support\Facades\Storage::exists($tempDirName)){
                 \Illuminate\Support\Facades\Storage::deleteDirectory($tempDirName);
