@@ -110,8 +110,7 @@
     });
 
 
-
-        it('outputs correct tab multi sheet xls', function () {
+        it('can pdf output all sheets multi sheet xls', function () {
 
         $inputfiledir = 'inputfilesxls';
         $outputfiledir = 'outputfilesxls' . uniqid();
@@ -126,9 +125,9 @@
         $doctocmd = \App\Services\DocToCommandBuilder::docto()
             ->add('-XL')
             ->add('-f', $testinputfilesdir_temp .'\\Book1 MultiSheet Test.xlsx' )
-            ->add('-o', $testoutputdir_temp .'\\TabTest.csv')
-            ->add('-t', 'xlCSV')
-            ->add('--sheets', '3')
+            ->add('-o', $testoutputdir_temp .'\\Book1 MultiSheet Test.pdf')
+            ->add('-t', 'xlPDF')
+            ->add('--allsheets')
             ->add('-L 10')
             ->build();
 
@@ -137,10 +136,68 @@
         $outputDirFiles = collect(\Illuminate\Support\Facades\Storage::allFiles($outputfiledir));
 
     expect($outputDirFiles->count())->toBeGreaterThan(0);
-    expect($outputDirFiles->count())->tobe(1);
+    expect($outputDirFiles->count())->tobe(3);
         // Sheet named
-        $fileText = file_get_contents(Storage::path($outputDirFiles[0]));
-        expect(str($fileText)->contains('This is Tab3'))->toBeTrue();
+        $sheetNamed = $outputDirFiles->filter(function ($item) {
+           // echo $item . "\n";
+           if (str($item)->contains('Book1 MultiSheet Test_(Sheet1).pdf') ) return true;
+           if (str($item)->contains('Book1 MultiSheet Test_(Sheet2).pdf') ) return true;
+           if (str($item)->contains('Book1 MultiSheet Test_(Tab3).pdf') ) return true;
+           // this is not expected to match.  Emtpy sheets dont output
+           if (str($item)->contains('Book1 MultiSheet Test_(Sheet4).pdf') ) return true;
+           Return false;
+        });
+
+        expect($sheetNamed->count())->tobe(3);
 
 
+        Storage::deleteDirectory($outputfiledir);
     });
+
+ it('outputs correct all sheets multi sheet xls', function ($format, $ext) {
+
+        $inputfiledir = 'inputfilesxls';
+        $outputfiledir = 'outputfilesxls' . uniqid();
+        // setup
+        $testinputfilesdir_temp = Storage::path($inputfiledir);
+        $testoutputdir_temp = Storage::path($outputfiledir);
+
+        Storage::createDirectory($outputfiledir);
+
+        $dirfiles = \App\Services\FileGatherService::GatherFiles(collect(['multisheet']), $inputfiledir);
+
+        $doctocmd = \App\Services\DocToCommandBuilder::docto()
+            ->add('-XL')
+            ->add('-f', $testinputfilesdir_temp .'\\Book1 MultiSheet Test.xlsx' )
+            ->add('-o', $testoutputdir_temp .'\\TabTest.' . $ext)
+            ->add('-t', $format)
+            ->add('--allsheets')
+            ->add('-L 10')
+            ->build();
+
+        $output = \Illuminate\Support\Facades\Process::run($doctocmd);
+       // print_r($output->output());
+        $outputDirFiles = collect(\Illuminate\Support\Facades\Storage::allFiles($outputfiledir));
+
+    expect($outputDirFiles->count())->toBeGreaterThan(0);
+    expect($outputDirFiles->count())->tobe(4);
+
+
+        // Sheet named
+        $fileText = file_get_contents(Storage::path($outputfiledir . '\\TabTest_(Tab3).' . $ext));
+        expect(str($fileText)->contains('This is Tab3'))->toBeTrue();
+        expect(str($fileText)->contains('This is Sheet 1'))->not()->toBeTrue();
+
+        // Sheet named
+        $fileText = file_get_contents(Storage::path($outputfiledir . '\\TabTest_(Sheet1).' . $ext));
+        expect(str($fileText)->contains('This is Sheet 1'))->toBeTrue();
+        expect(str($fileText)->contains('This is Tab3'))->not()->toBeTrue();
+
+
+
+    })->with([
+        ['xlCSV', 'csv'],
+        ['xlUnicodeText', 'txt'],
+        ['xlCSVWindows', 'csv'],
+        ['xlTextWindows', 'txt'],
+ ]);
