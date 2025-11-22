@@ -123,9 +123,9 @@ Long Parameters:
   --enable-xlvbaauto
       By Default any autorun vba will not run, use this parameter if you wish vba to Autorun. Word / Excel Only.
   --sheets
-      Select which sheets to save. Can be comma seperated list of sheet names or indexes. Excel Only. Unavailable for xlCSV
+      Select which sheets to save. Can be comma seperated list of sheet names or indexes. Excel Only. PDF Only
   --allsheets
-      If converting to CSV default behaviour is to convert first sheet.  This will convert all with appropriate names
+      If converting to CSV default behaviour is to convert first sheet.  This will convert all with appropriate names. PDF, CSV only
 
 
 Experimental:
