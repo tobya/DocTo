@@ -58,7 +58,7 @@ into to always use one of these values any time you use Docto.
  - -VS Microsoft Visio
 
 
-### Input Folder Extension 
+### Input File Extension 
 >-FX --inputextension
 
 By default DocTo will load all files in the directory with the standard Application extension
@@ -69,8 +69,16 @@ eg.
 - Powerpoint (*.ppt*) matches .ppt & .pptx files
 - Visio (*.vsd*)
 
-If you wish to convert a differnt set of files eg *.rtf or *.txt you can specify it here by ext
-such as `.rtf`
+If you wish to convert a different set of files eg *.rtf or *.txt you 
+can specify it here by ext such as `.rtf`
+
+
+### Input File Filter 
+>  --inputfilter
+
+File Filter for input directory. eg. `Property*.doc` will match 
+`Property1.doc`, `PropertyHouse.doc` etc
+
 
 
 ### Output Extension
