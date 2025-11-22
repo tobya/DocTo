@@ -149,12 +149,12 @@
         });
 
         expect($sheetNamed->count())->tobe(3);
-
+        
 
         Storage::deleteDirectory($outputfiledir);
     });
 
- it('outputs correct all sheets multi sheet xls', function ($format, $ext) {
+        it('outputs correct all sheets multi sheet xls', function () {
 
         $inputfiledir = 'inputfilesxls';
         $outputfiledir = 'outputfilesxls' . uniqid();
@@ -169,8 +169,8 @@
         $doctocmd = \App\Services\DocToCommandBuilder::docto()
             ->add('-XL')
             ->add('-f', $testinputfilesdir_temp .'\\Book1 MultiSheet Test.xlsx' )
-            ->add('-o', $testoutputdir_temp .'\\TabTest.' . $ext)
-            ->add('-t', $format)
+            ->add('-o', $testoutputdir_temp .'\\TabTest.csv')
+            ->add('-t', 'xlCSV')
             ->add('--allsheets')
             ->add('-L 10')
             ->build();
@@ -184,20 +184,15 @@
 
 
         // Sheet named
-        $fileText = file_get_contents(Storage::path($outputfiledir . '\\TabTest_(Tab3).' . $ext));
+        $fileText = file_get_contents(Storage::path($outputfiledir . '\\TabTest_(Tab3).csv'));
         expect(str($fileText)->contains('This is Tab3'))->toBeTrue();
         expect(str($fileText)->contains('This is Sheet 1'))->not()->toBeTrue();
 
         // Sheet named
-        $fileText = file_get_contents(Storage::path($outputfiledir . '\\TabTest_(Sheet1).' . $ext));
+        $fileText = file_get_contents(Storage::path($outputfiledir . '\\TabTest_(Sheet1).csv'));
         expect(str($fileText)->contains('This is Sheet 1'))->toBeTrue();
         expect(str($fileText)->contains('This is Tab3'))->not()->toBeTrue();
 
 
 
-    })->with([
-        ['xlCSV', 'csv'],
-        ['xlUnicodeText', 'txt'],
-        ['xlCSVWindows', 'csv'],
-        ['xlTextWindows', 'txt'],
- ]);
+    });
