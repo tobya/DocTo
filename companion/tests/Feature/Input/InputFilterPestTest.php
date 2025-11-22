@@ -93,7 +93,7 @@
             ->build();
 
         $output = \Illuminate\Support\Facades\Process::run($doctocmd);
-        print_r($output->output());
+       // print_r($output->output());
         expect( $output->exitCode())->tobe(0);
         $outputDirFiles = collect(\Illuminate\Support\Facades\Storage::allFiles($outputfiledir));
 
