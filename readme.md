@@ -129,9 +129,9 @@ If you are using DocTo in the wild somewhere, please add details to this [wiki p
 OneDrive Conversion
 =======================
 If you need to upgrade a bunch of files to work without conversion on OneDrive /Office365 / Word 20XX then you can use DocTo.
-See this StackExchange question 
+See this wiki article 
 
-https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-use
+https://github.com/tobya/DocTo/wiki/OneDrive-Conversion
 
 ## Command Line Help
     Help
