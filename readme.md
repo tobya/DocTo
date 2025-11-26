@@ -1,16 +1,5 @@
 # DocTo
 
-Contributers
-====
-I am actively looking for contributers so if you are a 
-
-- Delphi (or VBA) programmer
-- PHP, Laravel, Pest Programmer (tests and documentation)
- 
-and interested in helping out, please send me a message or comment.
-
-
-
 Document Converter
 ====
 
@@ -62,6 +51,16 @@ Also Available for [installation via Chocolatey ](https://chocolatey.org/package
 to upgrade to latest version
 
 > choco upgrade docto 
+
+Contributers
+====
+I am actively looking for contributers so if you are a 
+
+- Delphi (or VBA) programmer
+- PHP, Laravel, Pest Programmer (tests and documentation)
+ 
+and interested in helping out, please send me a message or comment.
+
 
 ## DocTo in other applications
 ### Node
