@@ -232,9 +232,10 @@ you can specify that or you can output all sheets and they will be given individ
 
 Output all sheets. Seperate files will be created for each sheet and named appropriatly.
 eg. If you have a workbook.xls with Sheet1 and MySheet and you convert to pdf.  You will get
-2 files named workbook_(Sheet1).pdf and workbook_(MySheet).pdf 
+2 files named `workbook_(Sheet1).pdf` and `workbook_(MySheet).pdf `
 
-> --sheets "1,2"
+> --sheets "1,2,Shop"
+
 
 You can specify to only convert certain sheets, eg 1 and 2 or "Sheet1,MySheet"
 

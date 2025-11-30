@@ -35,7 +35,7 @@ Command Line Explained
  - `-f` :  The File or directory to be converted 
  - `-o` :  The Output File or Directory where you would like the converted file to be written to.
  - `-T` :  The file format type that is being converted to
- - `--no-subdirs` :  Don&#039;t rescurse subdirs.  Only convert files in requested dir. 
+ - `--no-subdirs` :  Don&#039;t recurse sub-dirs.  Only convert files in requested dir. 
 
 
 
