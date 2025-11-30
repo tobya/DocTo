@@ -218,7 +218,12 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <DCC_ExeOutput>C:\Development\github\docto\exe\32\</DCC_ExeOutput>
-        <Manifest_File>(None)</Manifest_File>
+        <VerInfo_MajorVer>1</VerInfo_MajorVer>
+        <VerInfo_MinorVer>16</VerInfo_MinorVer>
+        <VerInfo_Release>0</VerInfo_Release>
+        <VerInfo_Debug>false</VerInfo_Debug>
+        <VerInfo_PreRelease>false</VerInfo_PreRelease>
+        <VerInfo_Keys>CompanyName=Toflidium Software;FileDescription=DocTo - Convert doc files to any available format;FileVersion=1.16.0.15;InternalName=;LegalCopyright=Toby Allen;LegalTrademarks=;OriginalFilename=docto.exe;ProductName=DocTo;ProductVersion=1.16;Comments=</VerInfo_Keys>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win64)'!=''">
         <DCC_ExeOutput>C:\Development\github\docto\exe\64\</DCC_ExeOutput>
