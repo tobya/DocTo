@@ -1,16 +1,5 @@
 # DocTo
 
-Contributers
-====
-I am actively looking for contributers so if you are a 
-
-- Delphi (or VBA) programmer
-- PHP, Laravel, Pest Programmer (tests and documentation)
- 
-and interested in helping out, please send me a message or comment.
-
-
-
 Document Converter
 ====
 
@@ -62,6 +51,16 @@ Also Available for [installation via Chocolatey ](https://chocolatey.org/package
 to upgrade to latest version
 
 > choco upgrade docto 
+
+Contributers
+====
+I am actively looking for contributers so if you are a 
+
+- Delphi (or VBA) programmer
+- PHP, Laravel, Pest Programmer (tests and documentation)
+ 
+and interested in helping out, please send me a message or comment.
+
 
 ## DocTo in other applications
 ### Node
@@ -118,7 +117,7 @@ Add a Webhook to fire on each conversion (-W)
 
     docto -f "C:\Dir with Spaces\FilesToConvert\" -O "C:\DirToOutput" -T wdFormatPDF  -OX .pdf  -W https://toflidium.com/webhooks/docto/webhook_test.php
     
-A Webhook is a url that can be called on each converstion to give you the ability to repond externally whenever a file is converted.  Currently `https` address is experimental so log an [issue](https://github.com/tobya/DocTo/issues/new) if you have any issues.
+A Webhook is a url that can be called on each converstion to give you the ability to repond externally whenever a file is converted.  
 
 Use in the Wild
 ---------------
@@ -129,9 +128,9 @@ If you are using DocTo in the wild somewhere, please add details to this [wiki p
 OneDrive Conversion
 =======================
 If you need to upgrade a bunch of files to work without conversion on OneDrive /Office365 / Word 20XX then you can use DocTo.
-See this StackExchange question 
+See this wiki article 
 
-https://webapps.stackexchange.com/questions/74859/what-format-does-word-online-use
+https://github.com/tobya/DocTo/wiki/OneDrive-Conversion
 
 ## Command Line Help
     Help
