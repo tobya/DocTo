@@ -369,6 +369,43 @@
                   ],
                   "Template" => "ConvertFromXLSToFileUNC.tpl.md"
               ],
+
+              "ConvertXLSSheets" => [
+                  "Description" => "Convert Excel Spreadsheet Sheets to another file type",
+                  "Title" => 'How do I Convert a single sheet in a  Microsoft Excel Spreadsheet',
+                  "Template" => "ConvertSheetFromXLStotype.tpl.md",
+                  "Items" => [
+
+
+                      [
+                          "FileTypeExt" => 'PDF',
+                          "FileTypeDescription" => 'Adobe PDF Format',
+                          "FileFormat" => 'xlpdf',
+                          "RelatedLinks" => []
+                      ],
+                      [
+                          "FileTypeExt" => 'TXT',
+                          "FileTypeDescription" => 'Text File',
+                          "FileFormat" => 'xlTextWindows',
+                          "RelatedLinks" => []
+                      ],
+                      [
+                          "FileTypeExt" => 'HTML',
+                          "FileTypeDescription" => 'HTML File',
+                          "FileFormat" => 'xlHtml',
+                          "RelatedLinks" => []
+                      ],
+                      [
+                          "FileTypeExt" => 'xls',
+                          "FileTypeTitleExtra" => '9795',
+                          "FileTypeDescription" => 'Excel 97/95 format',
+                          "FileFormat" => 'xlExcel9795',
+                          "RelatedLinks" => []
+                      ]
+
+
+                  ],
+              ],
               "ConvertPPTToFile" => [
                   "Description" => "Convert Microsoft PowerPoint Presentation to another file type",
                   "Template" => "ConvertFromPPTToFile.tpl.md",

@@ -276,6 +276,14 @@ Do not bitmap missing fonts, fonts will be substituted.
 
 Create PDF to the ISO 19005-1 standard, also know as PDF-A or PDF Archive.
 
+### Enable Macros
+
+By Default (v1.16) Macros are disabled in both Word and Excel.  If for 
+some reason you need them to run you can use these parameters
+
+> --enable-macroautorun
+
+
 
 ### Special Case Parameters
 
