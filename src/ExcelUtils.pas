@@ -455,7 +455,7 @@ begin
 
 
 
-                           logDebug('worksheetxx:' + ws.Name, VERBOSE);
+                           logDebug('worksheet:' + ws.Name, VERBOSE);
 
                            ExportWorkSheetasPDF(ws,FileNameGen);
 
