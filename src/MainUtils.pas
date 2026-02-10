@@ -33,7 +33,7 @@ Const
   MSVISIO = 4;
 
   
-  DOCTO_VERSION = '1.16.0';  // dont use 0x - choco needs incrementing versions.
+  DOCTO_VERSION = '1.16.2';  // dont use 0x - choco needs incrementing versions.
   DOCTO_VERSION_NOTE = ' x64 Release ';
 type
 
@@ -1291,7 +1291,9 @@ if  (id = '-XL') or
     else if (id = '--SHEETS') then
     begin
         // Sheet Indexs are 1 based.
-         fSelectedSheets.DelimitedText := value;
+
+         fSelectedSheets.StrictDelimiter := true;
+         fSelectedSheets.CommaText := value;
          if fSelectedSheets.Count = 0 then
          begin
           HaltWithConfigError(205,'Expecting > 0 selected sheets: ' + value);
