@@ -1290,6 +1290,7 @@ if  (id = '-XL') or
     END
     else if (id = '--SHEETS') then
     begin
+        // Sheet Indexs are 1 based.
          fSelectedSheets.DelimitedText := value;
          if fSelectedSheets.Count = 0 then
          begin
