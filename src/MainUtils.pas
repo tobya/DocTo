@@ -256,8 +256,8 @@ type
     procedure LogError(Msg: String);
     function ConvertErrorText(Msg: String) : String;
     function CallWebHook(Params: String) : string;
-    FUNCTION AfterConversion(InputFile, OutputFile: String):string;
-    Function OnConversionError(InputFile, OutputFile, Error: String):string;
+    function AfterConversion(InputFile, OutputFile: String):string;
+    function OnConversionError(InputFile, OutputFile, Error: String):string;
     Procedure LoadFileList();
 
     procedure LogResourceHelp(HelpResName : String);
@@ -689,8 +689,14 @@ begin
             if ConversionInfo.Successful then
             begin
 
-             // logInfo('File Converted: ' + ConversionInfo.OutputFile);
-              logInfo('Files Converted: ' + fOutputFiles.Text);
+              logInfo('File Converted: ' + ConversionInfo.OutputFile);
+
+              // when excel converts sheets each is a seperate file and
+              // listed in fOutputFiles
+              if(fOutputFiles.Count > 0) then
+              begin
+                logInfo('Files Converted: ' + fOutputFiles.Text);
+              end;
 
               // Check if file needs to be deleted.
               if RemoveFileOnConvert then
