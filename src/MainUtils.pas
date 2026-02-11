@@ -690,7 +690,7 @@ begin
             begin
 
              // logInfo('File Converted: ' + ConversionInfo.OutputFile);
-              logInfo('Files Converted: ' + sLineBreak + fOutputFiles.Text);
+              logInfo('Files Converted: ' + fOutputFiles.Text);
 
               // Check if file needs to be deleted.
               if RemoveFileOnConvert then
