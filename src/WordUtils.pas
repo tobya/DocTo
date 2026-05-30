@@ -13,7 +13,7 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMA
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ****************************************************************)
 interface
-uses Classes, MainUtils, ResourceUtils,  ActiveX, ComObj, WinINet, Variants, sysutils, Types, StrUtils,Word_TLB_Constants;
+uses Classes, MainUtils, ResourceUtils,  ActiveX, ComObj, WinINet, Variants, sysutils, Types, StrUtils,Word_TLB_Constants, TypInfo;
 
 type
 
@@ -53,6 +53,7 @@ function TWordDocConverter.FormatsExtensions() : TStringList;
 begin
   fFormatsExtensions := TResourceStrings.Create('DOCEXTENSIONS');
   result := fFormatsExtensions;
+
 end;
 
 function TWordDocConverter.WordConstants() : TStringList;
@@ -148,17 +149,26 @@ end;
 function TWordDocConverter.ExecuteConversion(fileToConvert: String; OutputFilename: String; OutputFileFormat : Integer): TConversionInfo;
 
 var
-  wdEncoding : OleVariant;
+  EncodingValue : OleVariant;
   NonsensePassword : OleVariant;
 
   ExitAction : TExitAction;
-
+  WordA, WordB, WordC : String;
+  disp : IDispatch;
+  MethodIndex : integer;
 
 begin
         ExitAction := aSave;
         Result.Successful := false;
         Result.InputFile := fileToConvert;
         logInfo('ExecuteConversion:' + fileToConvert, Verbose);
+
+        // disable auto running of vba in word
+        if (fDontUseAutoVBA) then
+        begin
+            logInfo('DisableAutoMacros:' + fileToConvert, Verbose);
+            WordApp.WordBasic.DisableAutoMacros;
+        end;
 
         // Check if document has password as per
         // https://wordmvp.com/FAQs/MacrosVBA/CheckIfPWProtectB4Open.htm
@@ -216,9 +226,12 @@ begin
         end;
 
 
+
+        // Encoding can be set.  If a HTML type, then additional values
+        // need to be set for Weboptions.encoding
         if Encoding = -1 then
         begin
-           wdEncoding := EmptyParam;
+           EncodingValue := EmptyParam;
         end
         else
         begin
@@ -232,7 +245,7 @@ begin
 
            end;
 
-           wdEncoding := Encoding;
+           EncodingValue := Encoding;
         end;
 
       case ExitAction of
@@ -268,16 +281,16 @@ begin
                    OutputFilename,  //   OutputFileName:=
                    OutputfileFormat, //   ExportFormat:=
                    PDFOpenAfterExport, // OpenAfterExport
-                   wdExportOptimizeForPrint,//   OptimizeFor:= _
+                   pdfOptimizeFor ,//   OptimizeFor:= _wdExportOptimizeForPrint
                    pdfExportRange,//   Range
                    pdfPrintFromPage,//   From:=1,
                    pdfprintTopage,//   To:=1, _
                    ExportMarkup,//   Item:=
-                   True,//   IncludeDocProps:=True,
-                   true,//   KeepIRM:=True, _
+                   IncludeDocProps,//   IncludeDocProps:=True,
+                   KeepIRM,//   KeepIRM:=True, _
                    BookmarkSource,//   CreateBookmarks
-                   true,//   DocStructureTags:=True, _
-                   true,//   BitmapMissingFonts:=True,
+                   DocStructureTags,//   DocStructureTags:=True, _
+                   BitmapMissingFonts,//   BitmapMissingFonts:=True,
                    useISO190051 //   UseISO19005_1:=False
          );
         end else
@@ -307,7 +320,7 @@ begin
                                                   EmptyParam, //SaveNativePictureFormat,
                                                   EmptyParam, //SaveFormsData,
                                                   EmptyParam, //SaveAsAOCELetter,
-                                                  wdEncoding, //Encoding,
+                                                  EncodingValue, //Encoding,
                                                   EmptyParam, //InsertLineBreaks,
                                                   EmptyParam, //AllowSubstitutions,
                                                   EmptyParam, //LineEnding,
@@ -328,7 +341,7 @@ begin
                                               EmptyParam,  //SaveNativePictureFo
                                               EmptyParam,  //SaveFormsData
                                               EmptyParam,  //SaveAsAOCELetter
-                                              wdEncoding,  //Encoding
+                                              EncodingValue,  //Encoding
                                               EmptyParam,  //InsertLineBreaks
                                               EmptyParam,  //AllowSubstitutions
                                               EmptyParam,  //LineEnding
@@ -343,9 +356,6 @@ begin
               Result.Error := '';
              // loginfo('FileCreated: ' + OutputFilename, STANDARD);
        finally
-
-
-
 
             // Close the document - do not save changes if doc has changed in any way.
             Wordapp.activedocument.Close(wdDoNotSaveChanges);

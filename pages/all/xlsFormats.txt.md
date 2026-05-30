@@ -1,7 +1,4 @@
-
-
-    
-    xlAddIn=18
+xlAddIn=18
 xlCSV=6
 xlCSVMac=22
 xlCSVMSDOS=24
@@ -57,6 +54,3 @@ xlTypePDF=50000
 xlpdf=50000
 xlTypeXPS=50001
 xlXPS=50001
-
-    
-        

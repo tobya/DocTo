@@ -29,7 +29,7 @@ Command Line
 Command Line Explained 
 -
 
- - `-WD` -  This is a conversion using Microsoft Word.  This is not required but makes it easier to read
+ - `-WD` -  This is a conversion using Microsoft Word. 
  - `-f` -  The File or directory to be converted 
  - `-o` -  The Output File or Directory where you would like the converted file to be written to.
  - `-T` -  The file format type that is being converted to
@@ -58,7 +58,7 @@ Return value is ignored, no errors are logged.  This is a fire and forget Webhoo
 
 The URL will look like this
 
-     https://example.com/webhooks/docto/webhook_test.php?action=convert&type=wdFormatPDF&outputfilename=D:%5CDevelopment%5CGitHub%5CDocTo%5Ctest%5CGeneratedFiles%5Cpie3.pdf&inputfilename=D:%5CDevelopment%5CGitHub%5CDocTo%5Ctest%5CInputfiles%5Cpie3.doc
+     https://example.com/mywebhook.php?action=convert&type=wdFormatPDF&outputfilename=D:%5CDevelopment%5CGitHub%5CDocTo%5Ctest%5CGeneratedFiles%5Cpie3.pdf&inputfilename=D:%5CDevelopment%5CGitHub%5CDocTo%5Ctest%5CInputfiles%5Cpie3.doc
 
 
 
@@ -67,5 +67,5 @@ Some other interesting commands
 
 You might find some of the following commands also interesting.
 
-    
+   
 

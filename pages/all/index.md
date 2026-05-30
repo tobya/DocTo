@@ -154,10 +154,17 @@ Do not recurse SubDirs
  - [ConvertWithoutSubdirspdf.md](ConvertWithoutSubdirspdf.md)
 
 
-Convert Word Document to PDF Files at <a href='https://www.iso.org/standard/38920.html'>ISO 19005-1</a> standard (PDF/A) format.
+Convert Word Document to PDF Files at (ISO 19005-1)[https://www.iso.org/standard/38920.html] standard (PDF/A) format.
 ==
 
  - [ConvertToPDFArchiveiso19005-1pdf.md](ConvertToPDFArchiveiso19005-1pdf.md)
+
+
+Convert Visio Document to another file type
+==
+
+ - [How do I Convert a Microsoft Visio Document to a Adobe PDF Format?](ConvertVSDToFilePDF.md)
+ - [How do I Convert a Microsoft Visio Document to a Microsoft XPS Format?](ConvertVSDToFileXPS.md)
 
 
 Help Text
@@ -165,4 +172,4 @@ Help Text
 
 DocTo outputs a [help file](HelpLog.md) which provides details of all options. 
 
-Generated 11:18:00 20211204
+Generated 2025-06-15 06:58:54

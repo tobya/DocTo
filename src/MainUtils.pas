@@ -8,15 +8,18 @@ The above copyright notice, and every other copyright notice found in this softw
 THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Interesting article
+https://support.microsoft.com/en-gb/topic/considerations-for-server-side-automation-of-office-48bcfe93-8a89-47f1-0bce-017433ad79e2
 ****************************************************************)
 interface
-uses  system.classes, Windows, sysutils, ActiveX, ComObj, WinINet, Variants, iduri,
-      Types,  ResourceUtils,
+uses  classes, Windows, sysutils, ActiveX, ComObj, WinINet, Variants, iduri,
+      Types,  ResourceUtils,           StrUtils, DocToExceptions,
       PathUtils, ShellAPI, datamodssl, Word_TLB_Constants;
 
 Const
   VERBOSE = 10;
-  DEBUG = 9;
+  DEBUG =      9;
   HELP = 8;
   CHATTY = 5;
   STANDARD = 2;
@@ -27,10 +30,11 @@ Const
   MSWORD = 1;
   MSEXCEL = 2;
   MSPOWERPOINT = 3;
+  MSVISIO = 4;
 
   
-  DOCTO_VERSION = '1.7.36';  // dont use 0x - choco needs incrementing versions.
-
+  DOCTO_VERSION = '1.16.3';  // dont use 0x - choco needs incrementing versions.
+  DOCTO_VERSION_NOTE = ' x64 Release ';
 type
 
 
@@ -63,6 +67,13 @@ type
     FOutputIsStdOut: Boolean;
     fExportMarkup: integer;
     FOfficeAppName: String;
+    FIncludeDocProps: boolean;
+    FKeepIRM: boolean;
+    FDocStructureTags: boolean;
+    FBitmapMissingFonts: boolean;
+    fSelectedSheets: TStrings;
+
+
 
 
     procedure SetCompatibilityMode(const Value: Integer);
@@ -82,6 +93,12 @@ type
     function getWordConstants: TResourceStrings;
     procedure LogMainHelp;
     procedure SetOutputIsStdOut(const Value: Boolean);
+    function getIsVisio: Boolean;
+    procedure SetIncludeDocProps(const Value: boolean);
+    procedure SetKeepIRM(const Value: boolean);
+    procedure SetDocStructureTags(const Value: boolean);
+    procedure SetBitmapMissingFonts(const Value: boolean);
+    procedure Setsheets(const Value: TStrings);
     function GetHandlers: TStrings;
 
 
@@ -116,6 +133,8 @@ type
     FPDFPrintFromPage : integer;
     FPDFPrintToPage : integer;
 
+    fpdfOptimizeFor : integer;
+
     FHaltOnWordError: Boolean;
     FRemoveFileOnConvert: boolean;
 
@@ -123,11 +142,14 @@ type
     FAppID : Integer;
     FPdfExportRange_Word: Integer;
     FuseISO190051 : Boolean;
-
-
+    fDontUseAutoVBA : Boolean;
 
     FOutputIsFile: Boolean;
     FOutputIsDir: Boolean;
+
+    fOutputFiles : TStrings;
+    fSelectedSheets_All : boolean;
+
     procedure SetInputFile(const Value: String);
     procedure SetOutputFile(const Value: String);
     procedure SetOutputFileFormat(const Value: Integer);
@@ -153,8 +175,36 @@ type
     procedure SetIsDirOutput(const Value: Boolean);
     procedure SetIsFileOutput(const Value: Boolean);
     procedure SetLogLevel(const Value: integer);
+    property InputIsFile : Boolean read FInputIsFile write SetIsFileInput;
+    property InputIsDir : Boolean read FInputIsDir write SetIsDirInput;
+    property OutputIsFile : Boolean read FOutputIsFile write SetIsFileOutput;
+    property OutputIsDir : Boolean read FOutputIsDir write SetIsDirOutput;
+    property OutputIsStdOut : Boolean read FOutputIsStdOut write SetOutputIsStdOut;
+    property DoSubDirs : Boolean read FDoSubDirs write SetDoSubDirs;
+    property OutputExt : string read FOutputExt write SetOutputExt;
+    property LogLevel : integer read FLogLevel write SetLogLevel;
+    property RemoveFileOnConvert: boolean read FRemoveFileOnConvert write SetRemoveFileOnConvert;
+    property Ignore_MACOSX : boolean   read FIgnore_MACOSX write SetIgnore_MACOSX;
+    property List_ErrorDocs : Boolean read FList_ErrorDocs write SetList_ErrorDocs ;
+    property List_ErrorDocs_Seconds : Integer read FList_ErrorDocs_Seconds write SetList_ErrorDocs_Seconds ;
+    property Ignore_ErrorDocs : Boolean read FIgnore_ErrorDocs write SetIgnore_ErrorDocs;
+    property pdfOpenAfterExport: Boolean read FPDFOpenAfterExport write SetpdfOpenAfterExport;
+    property pdfPrintFromPage : integer read FpdfPrintFromPage;
+    property pdfPrintToPage : integer read FpdfPrintToPage;
+    property useISO190051 : boolean read FuseISO190051;
+    property pdfOptimizeFor : integer read fpdfOptimizeFor write fpdfOptimizeFor;
+    property SelectedSheets : TStrings read fSelectedSheets write Setsheets;
 
 
+    property ExportMarkup : integer read fExportMarkup;
+    property IncludeDocProps : boolean read FIncludeDocProps write SetIncludeDocProps;
+    property KeepIRM : boolean read FKeepIRM write SetKeepIRM; //  XPS-no-IRM
+    property DocStructureTags : boolean read FDocStructureTags write SetDocStructureTags;
+    property BitmapMissingFonts : boolean read FBitmapMissingFonts write SetBitmapMissingFonts;
+
+
+    property WordConstants : TResourceStrings read getWordConstants;
+    property OfficeAppName : String read FOfficeAppName write FOfficeAppName;
 
 
     // Events
@@ -179,6 +229,7 @@ type
     function CheckShouldIgnore(DocumentPath : String): Boolean;
 
 
+
   public
 
     Constructor Create();
@@ -201,14 +252,14 @@ type
     procedure Log(Msg: String; Level  : Integer = ERRORS); overload;
 
     procedure Log(Msg: String; List:  TStrings; Level: Integer); overload;
-        procedure LogInfo(Msg: String; Level  : Integer = ERRORS);
-        procedure LogDebug(Msg: String; Level  : Integer = ERRORS);
+    procedure LogInfo(Msg: String; Level  : Integer = ERRORS);
+    procedure LogDebug(Msg: String; Level  : Integer = ERRORS);
     procedure LogError(Msg: String);
     function ConvertErrorText(Msg: String) : String;
     function CallWebHook(Params: String) : string;
-    FUNCTION AfterConversion(InputFile, OutputFile: String):string;
-    Function OnConversionError(InputFile, OutputFile, Error: String):string;
-
+    function AfterConversion(InputFile, OutputFile: String):string;
+    function OnConversionError(InputFile, OutputFile, Error: String):string;
+    Procedure LoadFileList();
 
     procedure LogResourceHelp(HelpResName : String);
     procedure LogVersionInfo(ForceReload : boolean = true);
@@ -222,10 +273,11 @@ type
 
     function ConfigFileName : String;
 
-    property OutputLog : Boolean read FOutputLog write SetOutputLog;
+
+    property OutputLog : Boolean    read FOutputLog write SetOutputLog;
     property OutputLogFile : String read FOutputLogFile write SetOutputLogFile;
-    Property InputFile : String read FInputFile write SetInputFile;
-    Property OutputFile : String read FOutputFile write SetOutputFile;
+    Property InputFile : String     read FInputFile write SetInputFile;
+    Property OutputFile : String    read FOutputFile write SetOutputFile;
     Property OutputFileFormat : Integer read FOutputFileFormat write SetOutputFileFormat;
     Property OutputFileFormatString : String read FOutputFileFormatString write SetOutputFileFormatString;
     Property LogToFile : Boolean read FLogToFile write SetLogToFile;
@@ -265,7 +317,7 @@ type
     property IsWord : Boolean read getIsWord;
     property IsExcel : Boolean read getIsExcel;
     Property IsPowerPoint : Boolean read getIsPP;
-
+    Property IsVisio : Boolean read getIsVisio;
   end;
 
 
@@ -425,6 +477,8 @@ begin
 end;
 
 
+
+
 procedure TDocumentConverter.LogMainHelp();
   var
   HelpStrings : TResourceStrings;
@@ -486,13 +540,23 @@ begin
   fSkipDocsExist :=  false;
   FFirstLogEntry := true;
   FBookMarkSource := 1; //wdExportCreateHeadingBookmarks
+  fpdfOptimizeFor := 0; // wdExportOptimizeForPrint
   fPDFOpenAfterExport := false;
   FPdfExportRange_Word := wdExportAllDocument;
   FPDFPrintFromPage := 1;
   FPDFPrintTopage := -1;
   FuseISO190051 := false;
-
+  FIncludeDocProps := true;
+  FKeepIRM := true;
+  FDocStructureTags := true;
+  FBitmapMissingFonts := true;
   FInputFiles := TStringList.Create;
+  fDontUseAutoVBA := true;
+  fSelectedSheets := TStringList.Create;
+  fSelectedSheets_All := false;
+  fOutputFiles := TStringlist.Create;
+
+
 end;
 
 destructor TDocumentConverter.Destroy;
@@ -512,6 +576,7 @@ begin
 
 
   FInputFiles.Free;
+  fSelectedSheets.Free;
 
   if assigned(FNetHandle) then
   begin
@@ -549,15 +614,20 @@ begin
     if not DoExecute  then HaltWithError(201, 'Input File, Output File and FileFormat must all be specified');
 
     // Set Output Filename if Dir Provided.
-    if (InputIsFile and OutputIsDir) then
+    if ( OutputIsDir) then
     begin
       if OutputExt = '' then
       begin
-        OutputExt := '.' + FormatsExtensions.Values[OutputFileFormatString];
+        OutputExt := '.' +  FormatsExtensions.Values[OutputFileFormatString];
         loginfo('Output Extension is ' + outputExt, CHATTY);
       end;
 
-      OutputFile :=  OutputFile  + ChangeFileExt( ExtractFileName(InputFile),OutputExt);
+      if InputIsFile then
+      begin
+        OutputFile :=  OutputFile  + ChangeFileExt( ExtractFileName(InputFile),OutputExt);
+      end;
+
+
     end;
 
     // Add file to InputFiles List if only one.
@@ -621,8 +691,16 @@ begin
        try
 
             StartTime := GettickCount();
-             logdebug('Executing Conversion ... ',VERBOSE);
+
+            // Provide debug info
+            logdebug('Executing Conversion ... ',VERBOSE);
+            logdebug('Executing Conversion ... ' + FileToCreate,VERBOSE);
+
+            // *************************
+            // Execute Conversion
+            // *************************
             ConversionInfo :=  ExecuteConversion(FileToConvert, FileToCreate, OutputFileFormat);
+
 
             if ConversionInfo.Successful then
             begin
@@ -630,19 +708,30 @@ begin
               CheckDocumentTiming(StartTime, EndTime, FileToConvert);
             end;
 
+            // After conversion
             if ConversionInfo.Successful then
             begin
 
               logInfo('File Converted: ' + ConversionInfo.OutputFile);
 
+              // when excel converts sheets each is a seperate file and
+              // listed in fOutputFiles
+              if(fOutputFiles.Count > 0) then
+              begin
+                logInfo('Files Converted: ' + fOutputFiles.Text);
+              end;
+
               // Check if file needs to be deleted.
               if RemoveFileOnConvert then
               begin
-                // Check file exists and Delete if requested
-                if FileExists(FileToCreate) then
+                // Check file has been converted and Delete if requested
+                if FileExists(ConversionInfo.OutputFile) then
                 begin
-                  DeleteFile(FileToConvert);
-                  Loginfo('Deleted:' + FileToConvert,STANDARD);
+                  if FileExists(ConversionInfo.InputFile) then
+                  begin
+                     DeleteFile(ConversionInfo.InputFile);
+                     Loginfo('Deleted:' + ConversionInfo.InputFile,STANDARD);
+                  end;
                 end;
               end;
 
@@ -704,12 +793,41 @@ begin
             end;
 
           end;
+          on E: ENotImplemented do
+          begin
+              ErrorMessage := StringReplace(E.Message,#13,'--',[rfReplaceAll]);
+              if (HaltOnWordError) then
+              begin
+                LogError( FileToConvert );
+                HaltWithError(301,E.ClassName + '  ' + ErrorMessage );
+              end
+              else
+              begin
+                LogError(E.ClassName + '  ' + ErrorMessage + ' ' + FileToConvert + ':' + FileToCreate);
+
+              end;
+          end;
+        on E: EDocToException do
+          begin
+              ErrorMessage := StringReplace(E.Message,#13,'--',[rfReplaceAll]);
+              if (HaltOnWordError) then
+              begin
+                LogError( FileToConvert );
+                HaltWithError(210,E.ClassName + '  ' + ErrorMessage );
+              end
+              else
+              begin
+                LogError(E.ClassName + '  ' + ErrorMessage + ' ' + FileToConvert + ':' + FileToCreate);
+
+              end;
+          end;
           on E: Exception do
           begin
               ErrorMessage := StringReplace(E.Message,#13,'--',[rfReplaceAll]);
               if (HaltOnWordError) then
               begin
-                HaltWithError(220,E.ClassName + '  ' + ErrorMessage + ' ' + FileToConvert + ':' + FileToCreate);
+                LogError( FileToConvert );
+                HaltWithError(220,E.ClassName + '  ' + ErrorMessage );
               end
               else
               begin
@@ -826,6 +944,11 @@ begin
             (id = '--POWERPOINT') then
     begin
        Result := MSPOWERPOINT;
+    end
+    else if (id = '-VS') or
+            (id = '--VISIO') then
+    begin
+       Result := MSVISIO;
     end;
 
     FAppID := Result;
@@ -910,7 +1033,10 @@ begin
         (id = '-WD') or
         (id = '--WORD') or
         (id = '-PP') or
-        (id = '--POWERPOINT')    then
+        (id = '--POWERPOINT')   or
+        (id = '-VS') or
+        (id = '--VISIO') then
+
     begin
       // ignore here as these are checked in ChooseConverter
       dec(iparam);
@@ -1020,7 +1146,9 @@ begin
       dec(iparam);
     END
     else if (id = '-FX') or
-            (id = '--INPUTFILEEXTENSION') then
+            (id = '--INPUTFILEEXTENSION') or
+            (id = '--INPUTFILTER')
+            then
     begin
       InputExtension := value;
     end
@@ -1054,7 +1182,7 @@ begin
           HaltWithConfigError(200, 'File Format ' + value + ' is invalid, please see help. -h.  To force use, use -TF');
         end;
       end
-      else
+      else  // string format such as 'XLcsv'
       begin
         FOutputFileFormatString := value;
 
@@ -1190,6 +1318,36 @@ begin
 
 
     end
+    else if (id = '--PDF-OPTIMIZEFOR') or
+            (id = '--PDF-OPTIMISEFOR') then
+    BEGIN
+
+         if (WordConstants.Exists(value)) then
+         begin
+           pdfOptimizeFor := StrToInt( WordConstants.Values[value]);
+           logdebug('Set pdfOptimizeFor To: '  + value + ':' + InttoStr(pdfOptimizeFor), Verbose);
+         end else
+         begin
+           HaltWithConfigError(205,'Invalid value for --PDF-OPTIMIZEFOR :' + value);
+         end;
+    END
+    else if (id = '--SHEETS') then
+    begin
+        // Sheet Indexs are 1 based.
+
+         fSelectedSheets.StrictDelimiter := true;
+         fSelectedSheets.CommaText := value;
+         if fSelectedSheets.Count = 0 then
+         begin
+          HaltWithConfigError(205,'Expecting > 0 selected sheets: ' + value);
+         end;
+    end
+    else if (id = '--ALLSHEETS') then
+    begin
+         fSelectedSheets_All := true;
+
+         dec(iParam);
+    end
     else if (id = '--EXPORTMARKUP') then
     begin
          if (WordConstants.Exists(value)) then
@@ -1201,6 +1359,28 @@ begin
            HaltWithConfigError(205,'Invalid value for --EXPORTMARKUP :' + value);
          end;
     end
+    else if (id = '--NO-INCLUDEDOCPROPERTIES')
+         OR (id = '--NO-DOCPROP') then
+    begin
+      FIncludeDocProps := false;
+      dec(iParam);
+    end
+    else if (id = '--PDF-NO-DOCSTRUCTURETAGS') then
+    begin
+      FDocStructureTags := false;
+      dec(iParam);
+    end
+    else if (id = '--XPS-NO-IRM') then
+    begin
+      FKeepIRM := false;
+      dec(iParam);
+    end
+    else if (id = '--PDF-NO-BITMAPMISSINGFONTS') then
+    begin
+      FBitmapMissingFonts := false;
+      dec(iParam);
+    end
+
     else if (id = '-W') or
             (id = '--WEBHOOK') then
     begin
@@ -1210,6 +1390,15 @@ begin
     begin
       LogVersionInfo(true);
       halt(2);
+
+    end
+    else if (id = '--ENABLE-MACROAUTORUN') or
+            (id = '--ENABLE-WORDVBAAUTO')  or
+            (id = '--ENABLE-XLVBAAUTO')
+    then
+    begin
+      fDontUseAutoVBA := false;
+
 
     end
     else if (id = '-X') or
@@ -1285,6 +1474,20 @@ begin
 
   // Code to run when all parameters have been loaded.
   // Get Files
+     LoadFileList;
+
+
+
+end;
+
+
+
+procedure TDocumentConverter.LoadFileList();
+var f : integer;
+found :boolean;
+afile :string;
+begin
+
 
    // IsFileInput := true;
     // If input is Dir rather than file, enumerate files.
@@ -1298,19 +1501,44 @@ begin
        begin
          HaltWithError(204, 'No File Matches in Input Directory: ' + finputfile + '*' + InputExtension );
        end;
-       log('File List', FInputFiles,STANDARD);
-       logInfo('Beginning to convert files....',STANDARD);
+
+
+       // remove temp files
+       // do in reverse order to allow deleting of items
+       for f :=  FInputFiles.Count -1 downto 0 do
+       begin
+         found := false;
+         afile := FInputFiles[f];
+       // check for start of dir then filename check.
+         if Pos('\.~' ,afile) > 0 then
+         begin
+           Found := true;
+         end;
+
+         if Pos('\~$',afile) > 0 then
+         begin
+           found := true;
+         end;
+
+         if found then
+         begin
+          Log('Removing temp file: ' + afile , VERBOSE );
+           FInputFiles.Delete(f);
+         end;
+
+
+       end;
+
     end
     else
     begin
       InputIsFile := true;
     end;
 
-
+       log('File List', FInputFiles,STANDARD);
+       logInfo('Beginning to convert files....',STANDARD);
 
 end;
-
-
 
 procedure TDocumentConverter.Log(Msg: String; Level : Integer = ERRORS );
 var
@@ -1450,7 +1678,7 @@ begin
       FFirstLogEntry := false;
 
       // Log versions.
-      log('DocTo Version:' + DOCTO_VERSION);
+      log('DocTo Version:' + DOCTO_VERSION + DOCTO_VERSION_NOTE);
       log('OfficeApp Version:' +  OfficeAppVersion(),0);
       log('Source: https://github.com/tobya/DocTo/');
 
@@ -1517,9 +1745,21 @@ begin
   LogDebug('Writing Version to File:' + ConfigFileName,VERBOSE);
 end;
 
+
+
+procedure TDocumentConverter.SetBitmapMissingFonts(const Value: boolean);
+begin
+  FBitmapMissingFonts := Value;
+end;
+
 procedure TDocumentConverter.SetCompatibilityMode(const Value: Integer);
 begin
   FCompatibilityMode := Value;
+end;
+
+procedure TDocumentConverter.SetDocStructureTags(const Value: boolean);
+begin
+  FDocStructureTags := Value;
 end;
 
 procedure TDocumentConverter.SetDoSubDirs(const Value: Boolean);
@@ -1553,6 +1793,11 @@ end;
 function TDocumentConverter.getIsPP: Boolean;
 begin
     Result := MSPOWERPOINT = FAppID;
+end;
+
+function TDocumentConverter.getIsVisio: Boolean;
+begin
+  Result := MSVISIO = FAppID;
 end;
 
 function TDocumentConverter.getIsWord: Boolean;
@@ -1597,6 +1842,11 @@ begin
   FList_ErrorDocs_Seconds := Value;
 end;
 
+procedure TDocumentConverter.SetIncludeDocProps(const Value: boolean);
+begin
+  FIncludeDocProps := Value;
+end;
+
 procedure TDocumentConverter.SetInputFile(const Value: String);
 begin
   FInputFile := Value;
@@ -1620,6 +1870,11 @@ end;
 procedure TDocumentConverter.SetIsFileOutput(const Value: Boolean);
 begin
   FOutputIsFile := Value;
+end;
+
+procedure TDocumentConverter.SetKeepIRM(const Value: boolean);
+begin
+  FKeepIRM := Value;
 end;
 
 procedure TDocumentConverter.SetLogFilename(const Value: String);
@@ -1711,6 +1966,11 @@ end;
 
 
 
+
+procedure TDocumentConverter.Setsheets(const Value: TStrings);
+begin
+  fSelectedSheets := Value;
+end;
 
 procedure TDocumentConverter.SetSkipDocsWithTOC(const Value: Boolean);
 begin

@@ -1,6 +1,6 @@
 ﻿program docto;
 (*************************************************************
-Copyright © 2012-2016 Toby Allen (https://github.com/tobya)
+Copyright © 2012-2026 Toby Allen (https://github.com/tobya)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the “Software”), to deal in the
@@ -34,6 +34,10 @@ uses
   Word_TLB_Constants in 'Word_TLB_Constants.pas',
   Excel_TLB_Constants in 'Excel_TLB_Constants.pas',
   PowerPoint_TLB_Constants in 'PowerPoint_TLB_Constants.pas',
+  VisioUtils in 'VisioUtils.pas',
+  Visio_TLB in 'Visio_TLB.pas',
+  DynamicFileNameGenerator in 'shared\DynamicFileNameGenerator.pas',
+  DocToExceptions in 'Exceptions\DocToExceptions.pas';
   baseConfig in 'baseConfig.pas',
   configInput in 'configInput.pas',
   configOutput in 'configOutput.pas';
@@ -44,6 +48,7 @@ var
   DocConv : TWordDocConverter;
   XLSConv : TExcelXLSConverter;
   PPConv : TPowerPointConverter;
+  VSConv : TVisioConverter;
   LogResult : String;
 begin
 
@@ -51,9 +56,11 @@ begin
 
   try
    try
+     // Due to the way config is loaded I must create all of them.
      DocConv := TWordDocConverter.Create;
      XLSConv := TExcelXLSConverter.Create;
      PPConv :=  TPowerPointConverter.Create;
+     VSConv :=  TVisioConverter.Create;
     try
 
       for i := 1 to ParamCount do
@@ -89,6 +96,14 @@ begin
         PPConv.LoadConfig(ParamList);
         LogResult := PPConv.Execute;
         PPConv.Log(LogResult);
+      end
+     ELSE if Converter = MSVISIO then
+      begin
+        VSConv.ChooseConverter(ParamList);
+        VSConv.Log('Converter:MS Visio' ,CHATTY);
+        VSConv.LoadConfig(ParamList);
+        LogResult := VSConv.Execute;
+        VSConv.Log(LogResult);
       end;
 
       CoUninitialize;

@@ -1,7 +1,4 @@
-
-
-    
-    Webhook Help
+Webhook Help
 
 The Webhook URL will be called on the following events with the following parameters
 
@@ -20,6 +17,3 @@ The Webhook URL will be called on the following events with the following parame
 
 Return value is logged in DocTo Log
 
-
-    
-        

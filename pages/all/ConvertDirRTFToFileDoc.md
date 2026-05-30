@@ -27,7 +27,7 @@ Command Line
 Command Line Explained 
 -
 
- - `-WD` :  This is a conversion using Microsoft Word.  This is not required but makes it easier to read
+ - `-WD` :  This is a conversion using Microsoft Word. 
  - `-f` :  The File or directory to be converted 
  - `-fx` :  File with this extension should be matched. 
  - `-o` :  The Output File or Directory where you would like the converted file to be written to.
@@ -42,5 +42,5 @@ Some other interesting commands
 You might find some of the following commands also interesting.
 
 - [Convert a Word Document to a Doc file](ConvertDocToFileDoc.md);
-    
+   
 

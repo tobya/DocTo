@@ -2,7 +2,23 @@
 
 ## Project Overview
 
-DocTo is a Windows command-line utility written in **Delphi (Object Pascal)** that converts Microsoft Office documents (Word `.doc`/`.docx`, Excel `.xls`/`.xlsx`, PowerPoint `.ppt`/`.pptx`) to other formats (PDF, CSV, TXT, RTF, etc.) via COM Automation. Microsoft Word, Excel, or PowerPoint must be installed on the host machine.
+DocTo is a Windows command-line utility written in **Delphi (Object Pascal)** that 
+converts Microsoft Office documents (Word `.doc`/`.docx`, Excel `.xls`/`.xlsx`, 
+PowerPoint `.ppt`/`.pptx`) to other formats (PDF, CSV, TXT, RTF, etc.) via COM 
+Automation. Microsoft Word, Excel, or PowerPoint must be installed on the host machine.
+
+
+- Repository: https://github.com/tobya/DocTo
+- Website: https://tobya.github.io/DocTo/
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Language | Delphi (tested with 10.3; compatible with XE4+) |
+| Office integration | Windows COM / Office Interop (Word, Excel, PowerPoint, Visio) |
+| Build system | Delphi IDE / `.dproj` project file |
+| Tests | Batch scripts (`.bat`) in `/test/` |
+| Docs / companion site | Markdown + PHP (`/pages/`, `/companion/`) |
 
 ## Repository Layout
 
@@ -76,6 +92,8 @@ No external package manager or build script is present. The project has no Linux
 
 ## Testing
 
+Tests are `.bat` scripts in `/test/`. They call the compiled `docto.exe` and verify output files are produced. Run them directly from a Windows command prompt with Office installed:
+
 Tests are manual batch scripts in `test/`:
 
 ```bat
@@ -86,6 +104,23 @@ Tests are manual batch scripts in `test/`:
 - Input fixtures live in `test/InputFiles/`, `test/inputfilesxl/`, `test/inputfilespp/`
 - Outputs are written to `test/GeneratedFiles/` and `test/GeneratedTestputFiles/`
 - There is no automated unit-test framework; correctness is verified by inspecting generated files
+
+There is no automated test runner — tests must be run manually on a machine with Microsoft Office installed.
+
+## Key Concepts for Agents
+
+- **Application flags**: `-WD` (Word), `-XL` (Excel), `-PP` (PowerPoint), `-VS` (Visio). Word is the default.
+- **Three required parameters**: `-F` (input file/dir), `-O` (output file/dir), `-T` (format type, e.g. `wdFormatPDF`).
+- **Format types**: Passed as named constants (e.g. `wdFormatPDF`, `xlCSV`) or integers matching the Office Interop enums.
+- **COM errors**: Office automation can raise `EOleException`. The `-X` flag controls whether DocTo halts or continues on COM errors.
+- **TLB constants**: `Word_TLB_Constants.pas`, `Excel_TLB_Constants.pas`, and `PowerPoint_TLB_Constants.pas` define the Office format enum values.
+
+## Contribution Guidelines
+
+- Open an issue before large PRs to avoid wasted effort.
+- The main development branch is `DocTo` (note: not `main`).
+- Looking for help with: Delphi/VBA features, PHP/Laravel/Pest tests, and documentation.
+- PRs are welcome.
 
 When adding a new conversion feature, add a corresponding test case to `testDocTo.bat` and provide a sample input file under the appropriate `InputFiles*` directory.
 
