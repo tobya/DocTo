@@ -37,7 +37,7 @@ uses
   VisioUtils in 'VisioUtils.pas',
   Visio_TLB in 'Visio_TLB.pas',
   DynamicFileNameGenerator in 'shared\DynamicFileNameGenerator.pas',
-  DocToExceptions in 'Exceptions\DocToExceptions.pas';
+  DocToExceptions in 'Exceptions\DocToExceptions.pas',
   baseConfig in 'baseConfig.pas',
   configInput in 'configInput.pas',
   configOutput in 'configOutput.pas';
