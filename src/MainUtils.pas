@@ -1028,6 +1028,12 @@ begin
       // load parameters
       LogDebug(ParamHandler.ClassName + ' ' + id + ' :: ' + value,ERRORS);
       ParamHandler.Load(Self,id,Value);
+
+      if ParamHandler.ShouldDec then
+      begin
+        dec(iParam);
+      end;
+
     end
     else if  (id = '-XL') or
         (id = '--EXCEL') or
@@ -1117,14 +1123,6 @@ begin
         OutputIsDir := true;
       end;
 
-    end
-    else if (id = '--NO-RECURSE') or
-            (id = '--NO-SUBDIR') or
-            (id = '--NO-SUBDIRS') then
-    begin
-        FDoSubDirs := false;
-        LogInfo('Loading files from directory but not subdirectories',CHATTY);
-        dec(iparam);
     end
     else if (id = '--STDOUT') then
     BEGIN
