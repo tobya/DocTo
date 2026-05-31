@@ -42,7 +42,8 @@ uses
   configInput in 'ParamObjects\configInput.pas',
   configOutput in 'ParamObjects\configOutput.pas',
   configLogLevel in 'ParamObjects\configLogLevel.pas',
-  configFormat in 'ParamObjects\configFormat.pas';
+  configFormat in 'ParamObjects\configFormat.pas',
+  configNoRecurse in 'ParamObjects\configNoRecurse.pas';
 
 var
   i, Converter : integer;
