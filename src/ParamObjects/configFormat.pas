@@ -30,18 +30,24 @@ begin
     FormatInt := StrToInt(Value);
     Converter.OutputFileFormat := FormatInt;
     if (not ForceFormat) and (not Converter.IsValidFormat(FormatInt)) then
+    begin
       Converter.HaltWithConfigError(200, 'File Format ' + Value +
         ' is invalid, please see help. -h.  To force use, use -TF');
+    end;
   end
   else  // string format such as 'wdFormatPDF', 'xlCSV'
   begin
     Converter.OutputFileFormatString := Value;
     FormatInt := Converter.LookupFormatByName(Value);
     if FormatInt > -1 then
-      Converter.OutputFileFormat := FormatInt
+    begin
+      Converter.OutputFileFormat := FormatInt;
+    end
     else
+    begin
       Converter.HaltWithConfigError(200, 'File Format ' + Value +
         ' is an invalid ' + Converter.OfficeAppName + ' file extension , please see help. -h');
+    end;
   end;
 
   Converter.LogDebug('Type Integer is: ' + IntToStr(Converter.OutputFileFormat), VERBOSE);
