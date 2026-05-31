@@ -1,4 +1,4 @@
-# DocTo — Agent Guide
+﻿# DocTo — Agent Guide
 
 ## Project Overview
 
@@ -89,6 +89,10 @@ Use `Converter.logdebug(msg, LEVEL)` for diagnostic output.
 - Output is a single `docto.exe` binary
 
 No external package manager or build script is present. The project has no Linux/macOS build path.
+
+## Code Structure
+
+- Ensure that If blocks always have a begin end section for all branches.
 
 ## Testing
 

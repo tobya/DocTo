@@ -41,7 +41,8 @@ uses
   baseConfig in 'ParamObjects\baseConfig.pas',
   configInput in 'ParamObjects\configInput.pas',
   configOutput in 'ParamObjects\configOutput.pas',
-  configLogLevel in 'ParamObjects\configLogLevel.pas';
+  configLogLevel in 'ParamObjects\configLogLevel.pas',
+  configFormat in 'ParamObjects\configFormat.pas';
 
 var
   i, Converter : integer;

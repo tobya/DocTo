@@ -80,7 +80,6 @@ type
     procedure SetIgnore_MACOSX(const Value: boolean);
     procedure SetEncoding(const Value: Integer);
     procedure SetSkipDocsWithTOC(const Value: Boolean);
-    procedure HaltWithConfigError(ErrorNo: Integer; Msg: String);
 
     procedure SetList_ErrorDocs(const Value: Boolean);
     procedure SetList_ErrorDocs_Seconds(const Value: Integer);
@@ -156,9 +155,6 @@ type
     procedure SetOutputFileFormatString(const Value: String);
     procedure SetOutputLog(const Value: Boolean);
     procedure SetOutputLogFile(const Value: String);
-    function IsValidFormat(FormatID : Integer): Boolean;
-
-
     procedure SetLogToFile(const Value: Boolean);
     procedure SetLogFilename(const Value: String);
     procedure ListFiles(const PathName, FileName: string; const SubDir: boolean; outFiles: TStrings);
@@ -197,7 +193,6 @@ type
 
 
     property WordConstants : TResourceStrings read getWordConstants;
-    property OfficeAppName : String read FOfficeAppName write FOfficeAppName;
 
 
     // Events
@@ -278,6 +273,10 @@ type
     Property Version : String read FVersionString;
     property LogLevel : integer read FLogLevel write SetLogLevel;
     property HaltOnWordError : Boolean read FHaltOnWordError write SetHaltOnWordError;
+    property OfficeAppName : String read FOfficeAppName write FOfficeAppName;
+    function IsValidFormat(FormatID : Integer): Boolean;
+    procedure HaltWithConfigError(ErrorNo: Integer; Msg: String);
+    function LookupFormatByName(const FormatName: String): Integer;
     property SkipDocsWithTOC : Boolean read FSkipDocsWithTOC write SetSkipDocsWithTOC;
     property SkipDocsExist : Boolean read FSkipDocsExist write FSkipDocsExist;
     property InputExtension: String read GetExtension write SetExtension;
@@ -309,7 +308,7 @@ type
 
 implementation
 
-uses baseConfig, ConfigOutput, ConfigInput, configLogLevel;
+uses baseConfig, ConfigOutput, ConfigInput, configLogLevel, configFormat;
 
 { TConsoleLog }
 
@@ -856,6 +855,17 @@ begin
       break;
     end;
   end;
+end;
+
+function TDocumentConverter.LookupFormatByName(const FormatName: String): Integer;
+var
+  idx : Integer;
+begin
+  idx := Formats.IndexOfName(FormatName);
+  if idx > -1 then
+    Result := StrToInt(Formats.Values[FormatName])
+  else
+    Result := -1;
 end;
 
 function TDocumentConverter.ChooseConverter(Params: TStrings) : integer;
@@ -1772,6 +1782,7 @@ begin
   TParamInput.RegisterParameters(Result);
   TParamOutputExtension.RegisterParameters(Result);
   TParamLogLevel.RegisterParameters(Result);
+  TParamFormat.RegisterParameters(Result);
 
 end;
 
