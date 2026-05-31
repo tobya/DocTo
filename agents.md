@@ -92,7 +92,7 @@ No external package manager or build script is present. The project has no Linux
 
 ## Code Structure
 
-- Ensure that If blocks always have a begin end section for all branches.
+- Ensure that If blocks always have a begin end section for all branches even if not strictly neccessary.
 
 ## Testing
 
