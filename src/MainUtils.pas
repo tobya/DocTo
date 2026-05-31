@@ -176,7 +176,6 @@ type
     procedure SetIsFileOutput(const Value: Boolean);
     procedure SetLogLevel(const Value: integer);
 
-    property LogLevel : integer read FLogLevel write SetLogLevel;
     property RemoveFileOnConvert: boolean read FRemoveFileOnConvert write SetRemoveFileOnConvert;
     property Ignore_MACOSX : boolean   read FIgnore_MACOSX write SetIgnore_MACOSX;
     property List_ErrorDocs : Boolean read FList_ErrorDocs write SetList_ErrorDocs ;
@@ -277,6 +276,7 @@ type
     Property LogToFile : Boolean read FLogToFile write SetLogToFile;
     property LogFilename: String read FLogFilename write SetLogFilename;
     Property Version : String read FVersionString;
+    property LogLevel : integer read FLogLevel write SetLogLevel;
     property HaltOnWordError : Boolean read FHaltOnWordError write SetHaltOnWordError;
     property SkipDocsWithTOC : Boolean read FSkipDocsWithTOC write SetSkipDocsWithTOC;
     property SkipDocsExist : Boolean read FSkipDocsExist write FSkipDocsExist;
@@ -309,7 +309,7 @@ type
 
 implementation
 
-uses baseConfig, ConfigOutput, ConfigInput;
+uses baseConfig, ConfigOutput, ConfigInput, configLogLevel;
 
 { TConsoleLog }
 
@@ -1765,6 +1765,9 @@ begin
 
   Result.AddPair('-OX',TParamOutputExtension.Classname, TObject(TParamOutputExtension));
   Result.AddPair('--OUTPUTEXTENSION',TParamOutputExtension.Classname, TObject(TParamOutputExtension));
+
+  Result.AddPair('-L', TParamLogLevel.ClassName, TObject(TParamLogLevel));
+  Result.AddPair('--LOGLEVEL', TParamLogLevel.ClassName, TObject(TParamLogLevel));
 end;
 
 function TDocumentConverter.getIsExcel: Boolean;

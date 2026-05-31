@@ -38,9 +38,10 @@ uses
   Visio_TLB in 'Visio_TLB.pas',
   DynamicFileNameGenerator in 'shared\DynamicFileNameGenerator.pas',
   DocToExceptions in 'Exceptions\DocToExceptions.pas',
-  baseConfig in 'baseConfig.pas',
-  configInput in 'configInput.pas',
-  configOutput in 'configOutput.pas';
+  baseConfig in 'ParamObjects\baseConfig.pas',
+  configInput in 'ParamObjects\configInput.pas',
+  configOutput in 'ParamObjects\configOutput.pas',
+  configLogLevel in 'ParamObjects\configLogLevel.pas';
 
 var
   i, Converter : integer;
