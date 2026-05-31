@@ -308,6 +308,7 @@
         <DCCReference Include="ParamObjects\baseConfig.pas"/>
         <DCCReference Include="ParamObjects\configInput.pas"/>
         <DCCReference Include="ParamObjects\configOutput.pas"/>
+        <DCCReference Include="ParamObjects\configLogLevel.pas"/>
         <None Include="..\readme.md"/>
         <None Include="res\wdFormats.txt"/>
         <None Include="res\HelpLog.txt"/>

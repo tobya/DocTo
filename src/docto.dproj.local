@@ -30,6 +30,11 @@
     <File Path="shared\DynamicFileNameGenerator.pas"/>
     <File Path="Exceptions"/>
     <File Path="Exceptions\DocToExceptions.pas"/>
+    <File Path="ParamObjects"/>
+    <File Path="ParamObjects\baseConfig.pas"/>
+    <File Path="ParamObjects\configInput.pas"/>
+    <File Path="ParamObjects\configOutput.pas"/>
+    <File Path="ParamObjects\configLogLevel.pas"/>
     <File Path="..\..\docto"/>
     <File Path="..\readme.md"/>
     <File Path="..\changes.txt"/>

@@ -11,6 +11,7 @@ public
   procedure RegisterParams(List : TStrings);   override;
   procedure Load(Converter : TDocumentConverter; Param, Value : String);   override;
   function  ShouldDec : Boolean;   override;
+ class procedure RegisterParameters(List : TStrings);
 
 end;
 
@@ -35,10 +36,16 @@ begin
 
 end;
 
+class procedure TParamOutputExtension.RegisterParameters(List: TStrings);
+begin
+  List.AddPair('-OX',TParamOutputExtension.Classname, TObject(TParamOutputExtension));
+  List.AddPair('--OUTPUTEXTENSION',TParamOutputExtension.Classname, TObject(TParamOutputExtension));
+
+end;
+
 procedure TParamOutputExtension.RegisterParams(List: TStrings);
 begin
-  List.Values['-OX'] := Self.ClassName;
-    List.Values['--OUTPUTEXTENSION'] := Self.ClassName;
+
 end;
 
 function TParamOutputExtension.ShouldDec: Boolean;

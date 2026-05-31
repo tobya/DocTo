@@ -8,10 +8,12 @@ uses classes, MainUtils,System.Contnrs, Sysutils,
 type
 TParamInput = class(TParamLoader)
 public
+
   procedure RegisterParams(List : TStrings);  override;
   procedure Load(Converter : TDocumentConverter; Param, Value : String); override;
   function  ShouldDec : Boolean; override;
 
+  class procedure RegisterParameters(List : TStrings);
 end;
 
 implementation
@@ -71,10 +73,19 @@ begin
 
 end;
 
+
+
+class procedure TParamInput.RegisterParameters(List: TStrings);
+begin
+        List.AddPair('-F',TParamInput.Classname,TOBJECT(TParamInput)  );
+        List.AddPair('--INPUTFILE',TParamInput.Classname,TOBJECT(TParamInput)  );
+end;
+
+
 procedure TParamInput.RegisterParams(List: TStrings);
 begin
-    List.Values['-F'] := Self.ClassName;
-    List.Values['--INPUTFILE'] := Self.ClassName;
+  inherited;
+
 end;
 
 function TParamInput.ShouldDec: Boolean;

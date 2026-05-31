@@ -950,7 +950,9 @@ valueBool : Boolean;
   Sval : string;
   ParamHandlerClass : TClass;
     PHandlers : TStrings;
+    PHandlers2 : TStrings;
     ParamHandler : TParamLoader;
+    paramHandleridx : integer;
 begin
   // Initialise
   iParam := 0;
@@ -973,6 +975,7 @@ begin
   end ;
 
   PHandlers := Self.Handlers;
+  PHandlers2 := TStringList.Create;
 
   While iParam <= Params.Count -1 do
   begin
@@ -1001,13 +1004,19 @@ begin
     begin
 
 
-      O := PHandlers.IndexOfName(id);
-      LogDebug(inttostr(O),ERRORS);
-      ParamHandlerClass := TCLASS
-      (PHandlers.Objects[O]);
-      LogDebug(ParamHandlerClass.ClassName,ERRORS);
+      // retrieve the Handler from list.
+      paramHandleridx := PHandlers.IndexOfName(id);
+
+
+      // Retrieve insance of class from handler list.
+      ParamHandlerClass := TCLASS(PHandlers.Objects[paramHandleridx]);
+
+      // Create instance of class.
+      LogDebug(ParamHandlerClass.ClassName + 'before cast',ERRORS);
       ParamHandler :=  TParamLoader(ParamHandlerClass.Create());
-      LogDebug(ParamHandler.ClassName,ERRORS);
+
+      // load parameters
+      LogDebug(ParamHandler.ClassName + ' ' + id + ' :: ' + value,ERRORS);
       ParamHandler.Load(Self,id,Value);
     end
     else if  (id = '-XL') or
@@ -1760,14 +1769,10 @@ function TDocumentConverter.GetHandlers: TStrings;
 begin
   Result := TStringList.Create;
 
-  Result.AddPair('-F',TParamInput.Classname, TObject(TParamInput));
-  Result.AddPair('--INPUTFILE',TParamInput.Classname, TObject(TParamInput));
+  TParamInput.RegisterParameters(Result);
+  TParamOutputExtension.RegisterParameters(Result);
+  TParamLogLevel.RegisterParameters(Result);
 
-  Result.AddPair('-OX',TParamOutputExtension.Classname, TObject(TParamOutputExtension));
-  Result.AddPair('--OUTPUTEXTENSION',TParamOutputExtension.Classname, TObject(TParamOutputExtension));
-
-  Result.AddPair('-L', TParamLogLevel.ClassName, TObject(TParamLogLevel));
-  Result.AddPair('--LOGLEVEL', TParamLogLevel.ClassName, TObject(TParamLogLevel));
 end;
 
 function TDocumentConverter.getIsExcel: Boolean;
