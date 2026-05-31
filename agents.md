@@ -17,8 +17,8 @@ Automation. Microsoft Word, Excel, or PowerPoint must be installed on the host m
 | Language | Delphi (tested with 10.3; compatible with XE4+) |
 | Office integration | Windows COM / Office Interop (Word, Excel, PowerPoint, Visio) |
 | Build system | Delphi IDE / `.dproj` project file |
-| Tests | Batch scripts (`.bat`) in `/test/` |
-| Docs / companion site | Markdown + PHP (`/pages/`, `/companion/`) |
+| Tests | Batch scripts (`.bat`) in `/test/` | PHP Pest Tests in `/companion`
+| Docs / companion / Test site | Markdown + PHP (`/pages/`, `/companion/`) |
 
 ## Repository Layout
 
@@ -110,6 +110,8 @@ Tests are manual batch scripts in `test/`:
 - There is no automated unit-test framework; correctness is verified by inspecting generated files
 
 There is no automated test runner — tests must be run manually on a machine with Microsoft Office installed.
+
+Additional Tests are written as Pest Tests in companion Laravel PHP site in the `/companion/` dir
 
 ## Key Concepts for Agents
 
