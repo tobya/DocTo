@@ -8,7 +8,7 @@ uses classes, MainUtils, System.Contnrs, SysUtils,
 type
 TParamFormat = class(TParamLoader)
 public
-  procedure RegisterParams(List : TStrings);  override;
+
   procedure Load(Converter : TDocumentConverter; Param, Value : String); override;
   function  ShouldDec : Boolean; override;
   class procedure RegisterParameters(List : TStrings);
@@ -61,10 +61,6 @@ begin
   List.AddPair('--FORCEFORMAT', TParamFormat.ClassName, TObject(TParamFormat));
 end;
 
-procedure TParamFormat.RegisterParams(List: TStrings);
-begin
-
-end;
 
 function TParamFormat.ShouldDec: Boolean;
 begin

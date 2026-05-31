@@ -9,7 +9,7 @@ type
 TParamInput = class(TParamLoader)
 public
 
-  procedure RegisterParams(List : TStrings);  override;
+
   procedure Load(Converter : TDocumentConverter; Param, Value : String); override;
   function  ShouldDec : Boolean; override;
 
@@ -74,7 +74,6 @@ begin
 end;
 
 
-
 class procedure TParamInput.RegisterParameters(List: TStrings);
 begin
         List.AddPair('-F',TParamInput.Classname,TOBJECT(TParamInput)  );
@@ -82,11 +81,6 @@ begin
 end;
 
 
-procedure TParamInput.RegisterParams(List: TStrings);
-begin
-  inherited;
-
-end;
 
 function TParamInput.ShouldDec: Boolean;
 begin

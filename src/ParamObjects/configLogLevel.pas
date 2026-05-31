@@ -8,7 +8,7 @@ uses classes, MainUtils, System.Contnrs, SysUtils,
 type
 TParamLogLevel = class(TParamLoader)
 public
-  procedure RegisterParams(List : TStrings);  override;
+
   procedure Load(Converter : TDocumentConverter; Param, Value : String); override;
   function  ShouldDec : Boolean; override;
          class procedure RegisterParameters(List : TStrings);
@@ -35,10 +35,6 @@ begin
   List.AddPair('--LOGLEVEL', TParamLogLevel.ClassName, TObject(TParamLogLevel));
 end;
 
-procedure TParamLogLevel.RegisterParams(List: TStrings);
-begin
-
-end;
 
 function TParamLogLevel.ShouldDec: Boolean;
 begin

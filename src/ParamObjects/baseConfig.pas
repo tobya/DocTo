@@ -20,10 +20,12 @@ TParamLoader = class  abstract
 
 public
 
-  procedure RegisterParams(List : TStrings); virtual; abstract;
+
   procedure Load(Converter : TDocumentConverter; Param, Value : String); virtual; abstract;
   function  ShouldDec : Boolean; virtual; abstract;
+
   class procedure RegisterParameters(List : TStrings);
+
   Property ParamID : String read GetParamID Write SetParamID;
 
 end;
