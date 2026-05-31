@@ -33,7 +33,7 @@ Const
   MSVISIO = 4;
 
   
-  DOCTO_VERSION = '1.16.3';  // dont use 0x - choco needs incrementing versions.
+  DOCTO_VERSION = '1.16.5';  // dont use 0x - choco needs incrementing versions.
   DOCTO_VERSION_NOTE = ' x64 Release ';
 type
 
@@ -98,7 +98,7 @@ type
     procedure SetDocStructureTags(const Value: boolean);
     procedure SetBitmapMissingFonts(const Value: boolean);
     procedure Setsheets(const Value: TStrings);
-    function GetHandlers: TStrings;
+    function GetParamHandlers: TStrings;
 
 
   protected
@@ -293,7 +293,7 @@ type
     property DoSubDirs : Boolean read FDoSubDirs write SetDoSubDirs;
     property OutputExt : string read FOutputExt write SetOutputExt;
 
-    property Handlers : TStrings read GetHandlers;
+    property ParamHandlers : TStrings read GetParamHandlers;
 
     property IsWord : Boolean read getIsWord;
     property IsExcel : Boolean read getIsExcel;
@@ -959,8 +959,7 @@ valueBool : Boolean;
   X, O: Integer;
   Sval : string;
   ParamHandlerClass : TClass;
-    PHandlers : TStrings;
-    PHandlers2 : TStrings;
+
     ParamHandler : TParamLoader;
     paramHandleridx : integer;
 begin
@@ -984,8 +983,8 @@ begin
       halt(1);
   end ;
 
-  PHandlers := Self.Handlers;
-  PHandlers2 := TStringList.Create;
+
+
 
   While iParam <= Params.Count -1 do
   begin
@@ -1009,17 +1008,17 @@ begin
     // jump to next id + value
     inc(iParam,2);
 
-     logdebug(PHandlers.Values[id],errors);
-    if PHandlers.Values[id] <> '' then
+     logdebug(Self.ParamHandlers.Values[id],errors);
+    if Self.ParamHandlers.Values[id] <> '' then
     begin
 
 
       // retrieve the Handler from list.
-      paramHandleridx := PHandlers.IndexOfName(id);
+      paramHandleridx := ParamHandlers.IndexOfName(id);
 
 
       // Retrieve insance of class from handler list.
-      ParamHandlerClass := TCLASS(PHandlers.Objects[paramHandleridx]);
+      ParamHandlerClass := TCLASS(ParamHandlers.Objects[paramHandleridx]);
 
       // Create instance of class.
       LogDebug(ParamHandlerClass.ClassName + 'before cast',ERRORS);
@@ -1721,7 +1720,7 @@ end;
 
 
 
-function TDocumentConverter.GetHandlers: TStrings;
+function TDocumentConverter.GetParamHandlers: TStrings;
 begin
   Result := TStringList.Create;
 

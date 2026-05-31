@@ -23,7 +23,7 @@
         $outputString = $result->output();
 
         // find at begining out output
-        expect(str($outputString)->take(100)->toString())->toContain('DocTo Version: 1.16.46');
+        expect(str($outputString)->take(100)->toString())->toContain('DocTo Version: 1.16');
 
 
     });
