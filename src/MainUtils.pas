@@ -1071,21 +1071,6 @@ begin
 
     end
 
-    else if (id = '-OX') or
-            (id = '--OUTPUTEXTENSION') then
-    begin
-
-     //If the first character isn't . add it.
-     if value[1] = '.' then
-     begin
-        FOutputExt := value;
-     end
-     else
-     begin
-       FOutputExt := '.' + value;
-     end;
-
-    end
     else if (id = '-F') or
             (id = '--INPUTFILE') then
     begin
@@ -1153,15 +1138,7 @@ begin
     begin
       InputExtension := value;
     end
-    else if ( id  = '-L')
-         OR (id = '--LOGLEVEL') then
-    begin
-      if isNumber(value) then
-      begin
-        LogLevel := strtoint(value);
-        LogInfo('Log Level Set To:' + IntToStr(LogLevel),LogLevel);
-      end
-    end
+
     else if (id  = '-Q') or
             (id = '--QUIET') then
     begin
@@ -1170,38 +1147,7 @@ begin
       // Doesn't require a value
       dec(iParam);
     end
-    else if (id = '-T') or (id = '-TF') or
-            (id = '--FORMAT') or (id = '--FORCEFORMAT') then
-    begin
 
-      if IsNumber(value) then
-      begin
-        FOutputFileFormat :=  strtoint(value);
-        //If not forcing, and the format is invalid by list, then raise error.
-        if (not (id = '-TF')) and ( not IsValidFormat(FOutputFileFormat)) then
-        begin
-          HaltWithConfigError(200, 'File Format ' + value + ' is invalid, please see help. -h.  To force use, use -TF');
-        end;
-      end
-      else  // string format such as 'XLcsv'
-      begin
-        FOutputFileFormatString := value;
-
-        idx := formats.IndexOfName(FOutputFileFormatString);
-        if  idx > -1 then
-        begin
-          OutputFileFormat := strtoint(formats.Values[OutputFileFormatString]);
-
-        end
-        else if idx = -1 then
-        begin
-          HaltWithConfigError(200,'File Format ' + OutputFileFormatString + ' is an invalid ' + OfficeAppName +  ' file extension , please see help. -h');
-
-        end;
-      end;
-      logdebug('Type Integer is: ' + inttostr(FOutputFileFormat), VERBOSE);
-
-    end
     else if (id = '-C') or
             (id = '--COMPATIBILITY') then
     begin
