@@ -37,7 +37,14 @@ uses
   VisioUtils in 'VisioUtils.pas',
   Visio_TLB in 'Visio_TLB.pas',
   DynamicFileNameGenerator in 'shared\DynamicFileNameGenerator.pas',
-  DocToExceptions in 'Exceptions\DocToExceptions.pas';
+  DocToExceptions in 'Exceptions\DocToExceptions.pas',
+  baseConfig in 'ParamObjects\baseConfig.pas',
+  configInput in 'ParamObjects\configInput.pas',
+  configOutput in 'ParamObjects\configOutput.pas',
+  configLogLevel in 'ParamObjects\configLogLevel.pas',
+  configFormat in 'ParamObjects\configFormat.pas',
+  configNoRecurse in 'ParamObjects\configNoRecurse.pas',
+  configCompatibility in 'ParamObjects\configCompatibility.pas';
 
 var
   i, Converter : integer;

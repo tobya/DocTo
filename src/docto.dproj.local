@@ -4,20 +4,30 @@
     <Transaction>2020/05/25 15:25:09.000.399,=D:\Development\GitHub\DocTo\src\res\HelpCompatibilityMode.txt</Transaction>
     <Transaction>2020/05/25 15:31:23.000.508,D:\Development\GitHub\DocTo\src\res\WdCompatibilityMode.txt=</Transaction>
     <Transaction>2021/12/02 22:25:13.000.761,=D:\Development\GitHub\DocTo\src\New1.bat</Transaction>
-    <Transaction>2021/12/02 22:25:32.000.527,D:\Development\GitHub\DocTo\src\New1.bat=D:\Development\GitHub\DocTo\test\TestDocTo_Quiet.bat</Transaction>
+    <Transaction>2021/12/02 22:25:32.000.527,D:\Development\GitHub\DocTo\test\TestDocTo_Quiet.bat=D:\Development\GitHub\DocTo\src\New1.bat</Transaction>
     <Transaction>2023/09/11 17:39:20.000.384,=C:\Development\github\docto\src\res\xlsFormats.txt</Transaction>
     <Transaction>2025/11/18 17:53:47.000.458,=C:\Development\github\docto\src\Unit1.pas</Transaction>
-    <Transaction>2025/11/18 17:54:21.000.396,C:\Development\github\docto\src\shared\DynamicFileNameGenerator.pas=C:\Development\github\docto\src\Unit1.pas</Transaction>
+    <Transaction>2025/11/18 17:54:21.000.396,C:\Development\github\docto\src\Unit1.pas=C:\Development\github\docto\src\shared\DynamicFileNameGenerator.pas</Transaction>
     <Transaction>2025/11/19 14:43:02.000.361,=C:\Development\github\docto\src\Unit1.pas</Transaction>
-    <Transaction>2025/11/19 14:43:31.000.175,C:\Development\github\docto\src\Exceptions\DocToExceptions.pas=C:\Development\github\docto\src\Unit1.pas</Transaction>
-    <Transaction>2026/05/31 11:25:20.831,=C:\Development\github\docto\src\ParamObjects\configNoRecurse.pas</Transaction>
-    <Transaction>2026/05/31 19:39:47.705,=C:\Development\github\docto\src\ParamObjects\configCompatibility.pas</Transaction>
+    <Transaction>2025/11/19 14:43:31.000.175,C:\Development\github\docto\src\Unit1.pas=C:\Development\github\docto\src\Exceptions\DocToExceptions.pas</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
-    <File Path="..\..\docto"/>
-    <File Path="..\readme.md"/>
-    <File Path="..\changes.txt"/>
-    <File Path="..\changes.md"/>
+    <File Path="ExtraFiles.rc"/>
+    <File Path="WordUtils.pas"/>
+    <File Path="MainUtils.pas"/>
+    <File Path="ResourceUtils.pas"/>
+    <File Path="PathUtils.pas"/>
+    <File Path="datamodSSL.pas"/>
+    <File Path="datamodSSL.dfm"/>
+    <File Path="ExcelUtils.pas"/>
+    <File Path="PowerPointUtils.pas"/>
+    <File Path="Word_TLB_Constants.pas"/>
+    <File Path="Excel_TLB_Constants.pas"/>
+    <File Path="PowerPoint_TLB_Constants.pas"/>
+    <File Path="VisioUtils.pas"/>
+    <File Path="Visio_TLB.pas"/>
+    <File Path="shared"/>
+    <File Path="shared\DynamicFileNameGenerator.pas"/>
     <File Path="Exceptions"/>
     <File Path="Exceptions\DocToExceptions.pas"/>
     <File Path="ParamObjects"/>
@@ -25,9 +35,10 @@
     <File Path="ParamObjects\configInput.pas"/>
     <File Path="ParamObjects\configOutput.pas"/>
     <File Path="ParamObjects\configLogLevel.pas"/>
-    <File Path="ParamObjects\configFormat.pas"/>
-    <File Path="ParamObjects\configNoRecurse.pas"/>
-    <File Path="ParamObjects\configCompatibility.pas"/>
+    <File Path="..\..\docto"/>
+    <File Path="..\readme.md"/>
+    <File Path="..\changes.txt"/>
+    <File Path="..\changes.md"/>
     <File Path="res"/>
     <File Path="res\wdFormats.txt"/>
     <File Path="res\HelpLog.txt"/>
@@ -47,21 +58,5 @@
     <File Path="res\vsFormatsExt.txt"/>
     <File Path="res\vsConst.txt"/>
     <File Path="res\xlsFormats.txt"/>
-    <File Path="shared"/>
-    <File Path="shared\DynamicFileNameGenerator.pas"/>
-    <File Path="ExtraFiles.rc"/>
-    <File Path="WordUtils.pas"/>
-    <File Path="MainUtils.pas"/>
-    <File Path="ResourceUtils.pas"/>
-    <File Path="PathUtils.pas"/>
-    <File Path="datamodSSL.pas"/>
-    <File Path="datamodSSL.dfm"/>
-    <File Path="ExcelUtils.pas"/>
-    <File Path="PowerPointUtils.pas"/>
-    <File Path="Word_TLB_Constants.pas"/>
-    <File Path="Excel_TLB_Constants.pas"/>
-    <File Path="PowerPoint_TLB_Constants.pas"/>
-    <File Path="VisioUtils.pas"/>
-    <File Path="Visio_TLB.pas"/>
   </ProjectSortOrder>
 </BorlandProject>

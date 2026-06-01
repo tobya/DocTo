@@ -33,7 +33,7 @@ Const
   MSVISIO = 4;
 
   
-  DOCTO_VERSION = '1.16.3';  // dont use 0x - choco needs incrementing versions.
+  DOCTO_VERSION = '1.16.6';  // dont use 0x - choco needs incrementing versions.
   DOCTO_VERSION_NOTE = ' x64 Release ';
 type
 
@@ -80,7 +80,6 @@ type
     procedure SetIgnore_MACOSX(const Value: boolean);
     procedure SetEncoding(const Value: Integer);
     procedure SetSkipDocsWithTOC(const Value: Boolean);
-    procedure HaltWithConfigError(ErrorNo: Integer; Msg: String);
 
     procedure SetList_ErrorDocs(const Value: Boolean);
     procedure SetList_ErrorDocs_Seconds(const Value: Integer);
@@ -99,6 +98,7 @@ type
     procedure SetDocStructureTags(const Value: boolean);
     procedure SetBitmapMissingFonts(const Value: boolean);
     procedure Setsheets(const Value: TStrings);
+    function GetParamHandlers: TStrings;
 
 
   protected
@@ -155,9 +155,6 @@ type
     procedure SetOutputFileFormatString(const Value: String);
     procedure SetOutputLog(const Value: Boolean);
     procedure SetOutputLogFile(const Value: String);
-    function IsValidFormat(FormatID : Integer): Boolean;
-
-    procedure HaltWithError(ErrorNo:Integer; Msg : String);
     procedure SetLogToFile(const Value: Boolean);
     procedure SetLogFilename(const Value: String);
     procedure ListFiles(const PathName, FileName: string; const SubDir: boolean; outFiles: TStrings);
@@ -174,14 +171,7 @@ type
     procedure SetIsDirOutput(const Value: Boolean);
     procedure SetIsFileOutput(const Value: Boolean);
     procedure SetLogLevel(const Value: integer);
-    property InputIsFile : Boolean read FInputIsFile write SetIsFileInput;
-    property InputIsDir : Boolean read FInputIsDir write SetIsDirInput;
-    property OutputIsFile : Boolean read FOutputIsFile write SetIsFileOutput;
-    property OutputIsDir : Boolean read FOutputIsDir write SetIsDirOutput;
-    property OutputIsStdOut : Boolean read FOutputIsStdOut write SetOutputIsStdOut;
-    property DoSubDirs : Boolean read FDoSubDirs write SetDoSubDirs;
-    property OutputExt : string read FOutputExt write SetOutputExt;
-    property LogLevel : integer read FLogLevel write SetLogLevel;
+
     property RemoveFileOnConvert: boolean read FRemoveFileOnConvert write SetRemoveFileOnConvert;
     property Ignore_MACOSX : boolean   read FIgnore_MACOSX write SetIgnore_MACOSX;
     property List_ErrorDocs : Boolean read FList_ErrorDocs write SetList_ErrorDocs ;
@@ -203,7 +193,6 @@ type
 
 
     property WordConstants : TResourceStrings read getWordConstants;
-    property OfficeAppName : String read FOfficeAppName write FOfficeAppName;
 
 
     // Events
@@ -263,7 +252,7 @@ type
     procedure LogResourceHelp(HelpResName : String);
     procedure LogVersionInfo(ForceReload : boolean = true);
 
-
+    procedure HaltWithError(ErrorNo:Integer; Msg : String);
 
     procedure LogWordFormats();
     procedure LogExcelFormats();
@@ -282,7 +271,12 @@ type
     Property LogToFile : Boolean read FLogToFile write SetLogToFile;
     property LogFilename: String read FLogFilename write SetLogFilename;
     Property Version : String read FVersionString;
+    property LogLevel : integer read FLogLevel write SetLogLevel;
     property HaltOnWordError : Boolean read FHaltOnWordError write SetHaltOnWordError;
+    property OfficeAppName : String read FOfficeAppName write FOfficeAppName;
+    function IsValidFormat(FormatID : Integer): Boolean;
+    procedure HaltWithConfigError(ErrorNo: Integer; Msg: String);
+    function LookupFormatByName(const FormatName: String): Integer;
     property SkipDocsWithTOC : Boolean read FSkipDocsWithTOC write SetSkipDocsWithTOC;
     property SkipDocsExist : Boolean read FSkipDocsExist write FSkipDocsExist;
     property InputExtension: String read GetExtension write SetExtension;
@@ -291,6 +285,15 @@ type
     property BookMarkSource: Integer read FBookMarkSource;
     property pdfExportRange : Integer read FPdfExportRange_Word write SetPDfExportRange  ;
 
+    property InputIsFile : Boolean read FInputIsFile write SetIsFileInput;
+    property InputIsDir : Boolean read FInputIsDir write SetIsDirInput;
+    property OutputIsFile : Boolean read FOutputIsFile write SetIsFileOutput;
+    property OutputIsDir : Boolean read FOutputIsDir write SetIsDirOutput;
+    property OutputIsStdOut : Boolean read FOutputIsStdOut write SetOutputIsStdOut;
+    property DoSubDirs : Boolean read FDoSubDirs write SetDoSubDirs;
+    property OutputExt : string read FOutputExt write SetOutputExt;
+
+    property ParamHandlers : TStrings read GetParamHandlers;
 
     property IsWord : Boolean read getIsWord;
     property IsExcel : Boolean read getIsExcel;
@@ -305,6 +308,9 @@ type
 
 implementation
 
+uses baseConfig, ConfigOutput, ConfigInput, configLogLevel, configFormat,
+     configNoRecurse   ,configCompatibility
+;
 
 { TConsoleLog }
 
@@ -853,6 +859,17 @@ begin
   end;
 end;
 
+function TDocumentConverter.LookupFormatByName(const FormatName: String): Integer;
+var
+  idx : Integer;
+begin
+  idx := Formats.IndexOfName(FormatName);
+  if idx > -1 then
+    Result := StrToInt(Formats.Values[FormatName])
+  else
+    Result := -1;
+end;
+
 function TDocumentConverter.ChooseConverter(Params: TStrings) : integer;
 var  f , iParam, idx: integer;
 pstr : string;
@@ -941,9 +958,12 @@ id, value, tmppath : string;
 HelpStrings: TResourceStrings;
 tmpext : String;
 valueBool : Boolean;
-  X: Integer;
-  Sval : String;
+  X, O: Integer;
+  Sval : string;
+  ParamHandlerClass : TClass;
 
+    ParamHandler : TParamLoader;
+    paramHandleridx : integer;
 begin
   // Initialise
   iParam := 0;
@@ -964,6 +984,7 @@ begin
       log('Parameters Expected: -H for help');
       halt(1);
   end ;
+
 
 
 
@@ -989,9 +1010,33 @@ begin
     // jump to next id + value
     inc(iParam,2);
 
+     logdebug(Self.ParamHandlers.Values[id],errors);
+    if Self.ParamHandlers.Values[id] <> '' then
+    begin
 
 
-if  (id = '-XL') or
+      // retrieve the Handler from list.
+      paramHandleridx := ParamHandlers.IndexOfName(id);
+
+
+      // Retrieve insance of class from handler list.
+      ParamHandlerClass := TCLASS(ParamHandlers.Objects[paramHandleridx]);
+
+      // Create instance of class.
+      LogDebug(ParamHandlerClass.ClassName + 'before cast',ERRORS);
+      ParamHandler :=  TParamLoader(ParamHandlerClass.Create());
+
+      // load parameters
+      LogDebug(ParamHandler.ClassName + ' ' + id + ' :: ' + value,ERRORS);
+      ParamHandler.Load(Self,id,Value);
+
+      if ParamHandler.ShouldDec then
+      begin
+        dec(iParam);
+      end;
+
+    end
+    else if  (id = '-XL') or
         (id = '--EXCEL') or
         (id = '-WD') or
         (id = '--WORD') or
@@ -1033,21 +1078,6 @@ if  (id = '-XL') or
 
     end
 
-    else if (id = '-OX') or
-            (id = '--OUTPUTEXTENSION') then
-    begin
-
-     //If the first character isn't . add it.
-     if value[1] = '.' then
-     begin
-        FOutputExt := value;
-     end
-     else
-     begin
-       FOutputExt := '.' + value;
-     end;
-
-    end
     else if (id = '-F') or
             (id = '--INPUTFILE') then
     begin
@@ -1095,14 +1125,6 @@ if  (id = '-XL') or
       end;
 
     end
-    else if (id = '--NO-RECURSE') or
-            (id = '--NO-SUBDIR') or
-            (id = '--NO-SUBDIRS') then
-    begin
-        FDoSubDirs := false;
-        LogInfo('Loading files from directory but not subdirectories',CHATTY);
-        dec(iparam);
-    end
     else if (id = '--STDOUT') then
     BEGIN
       OutPutIsStdOut := true;
@@ -1115,15 +1137,7 @@ if  (id = '-XL') or
     begin
       InputExtension := value;
     end
-    else if ( id  = '-L')
-         OR (id = '--LOGLEVEL') then
-    begin
-      if isNumber(value) then
-      begin
-        LogLevel := strtoint(value);
-        LogInfo('Log Level Set To:' + IntToStr(LogLevel),LogLevel);
-      end
-    end
+
     else if (id  = '-Q') or
             (id = '--QUIET') then
     begin
@@ -1132,38 +1146,7 @@ if  (id = '-XL') or
       // Doesn't require a value
       dec(iParam);
     end
-    else if (id = '-T') or (id = '-TF') or
-            (id = '--FORMAT') or (id = '--FORCEFORMAT') then
-    begin
 
-      if IsNumber(value) then
-      begin
-        FOutputFileFormat :=  strtoint(value);
-        //If not forcing, and the format is invalid by list, then raise error.
-        if (not (id = '-TF')) and ( not IsValidFormat(FOutputFileFormat)) then
-        begin
-          HaltWithConfigError(200, 'File Format ' + value + ' is invalid, please see help. -h.  To force use, use -TF');
-        end;
-      end
-      else  // string format such as 'XLcsv'
-      begin
-        FOutputFileFormatString := value;
-
-        idx := formats.IndexOfName(FOutputFileFormatString);
-        if  idx > -1 then
-        begin
-          OutputFileFormat := strtoint(formats.Values[OutputFileFormatString]);
-
-        end
-        else if idx = -1 then
-        begin
-          HaltWithConfigError(200,'File Format ' + OutputFileFormatString + ' is an invalid ' + OfficeAppName +  ' file extension , please see help. -h');
-
-        end;
-      end;
-      logdebug('Type Integer is: ' + inttostr(FOutputFileFormat), VERBOSE);
-
-    end
     else if (id = '-C') or
             (id = '--COMPATIBILITY') then
     begin
@@ -1736,6 +1719,19 @@ begin
 end;
 
 
+
+function TDocumentConverter.GetParamHandlers: TStrings;
+begin
+  Result := TStringList.Create;
+
+  TParamInput.RegisterParameters(Result);
+  TParamOutputExtension.RegisterParameters(Result);
+  TParamLogLevel.RegisterParameters(Result);
+  TParamFormat.RegisterParameters(Result);
+  TParamNoRecurse.RegisterParameters(Result);
+  TParamCompatibility.RegisterParameters(Result);
+
+end;
 
 function TDocumentConverter.getIsExcel: Boolean;
 begin
