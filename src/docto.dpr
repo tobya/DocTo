@@ -43,7 +43,8 @@ uses
   configOutput in 'ParamObjects\configOutput.pas',
   configLogLevel in 'ParamObjects\configLogLevel.pas',
   configFormat in 'ParamObjects\configFormat.pas',
-  configNoRecurse in 'ParamObjects\configNoRecurse.pas';
+  configNoRecurse in 'ParamObjects\configNoRecurse.pas',
+  configCompatibility in 'ParamObjects\configCompatibility.pas';
 
 var
   i, Converter : integer;

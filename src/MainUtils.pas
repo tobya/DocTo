@@ -308,7 +308,8 @@ type
 
 implementation
 
-uses baseConfig, ConfigOutput, ConfigInput, configLogLevel, configFormat,      configNoRecurse
+uses baseConfig, ConfigOutput, ConfigInput, configLogLevel, configFormat,
+     configNoRecurse   ,configCompatibility
 ;
 
 { TConsoleLog }
@@ -1728,6 +1729,7 @@ begin
   TParamLogLevel.RegisterParameters(Result);
   TParamFormat.RegisterParameters(Result);
   TParamNoRecurse.RegisterParameters(Result);
+  TParamCompatibility.RegisterParameters(Result);
 
 end;
 
