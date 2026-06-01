@@ -1,0 +1,53 @@
+unit baseConfig;
+
+interface
+
+uses Classes,System.Contnrs,
+
+      MainUtils;
+
+type
+
+
+
+TParamLoader = class  abstract
+  private
+    fParamID : string;
+  protected
+    function GetParamID: String; virtual;
+    procedure SetParamID(const Value: String); virtual;
+
+
+public
+
+
+  procedure Load(Converter : TDocumentConverter; Param, Value : String); virtual; abstract;
+  function  ShouldDec : Boolean; virtual; abstract;
+
+  class procedure RegisterParameters(List : TStrings);
+
+  Property ParamID : String read GetParamID Write SetParamID;
+
+end;
+
+
+implementation
+
+{ TParamLoader }
+
+function TParamLoader.GetParamID: String;
+begin
+  result := FParamID;
+end;
+
+class procedure TParamLoader.RegisterParameters(List: TStrings);
+begin
+        //
+end;
+
+procedure TParamLoader.SetParamID(const Value: String);
+begin
+  FParamID := Value;
+end;
+
+end.

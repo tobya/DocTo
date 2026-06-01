@@ -8,7 +8,7 @@
         <FrameworkType>None</FrameworkType>
         <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
         <ProjectVersion>18.8</ProjectVersion>
-        <Platform Condition="'$(Platform)'==''">Win64</Platform>
+        <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>3</TargetedPlatforms>
         <Platform>Win32</Platform>
     </PropertyGroup>
@@ -305,6 +305,10 @@
         <DCCReference Include="Visio_TLB.pas"/>
         <DCCReference Include="shared\DynamicFileNameGenerator.pas"/>
         <DCCReference Include="Exceptions\DocToExceptions.pas"/>
+        <DCCReference Include="ParamObjects\baseConfig.pas"/>
+        <DCCReference Include="ParamObjects\configInput.pas"/>
+        <DCCReference Include="ParamObjects\configOutput.pas"/>
+        <DCCReference Include="ParamObjects\configLogLevel.pas"/>
         <None Include="..\readme.md"/>
         <None Include="res\wdFormats.txt"/>
         <None Include="res\HelpLog.txt"/>

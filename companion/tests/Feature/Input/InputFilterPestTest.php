@@ -57,7 +57,7 @@
             ->build();
 
         $output = \Illuminate\Support\Facades\Process::run($doctocmd);
-      //  print_r($output->output());
+
         $outputDirFiles = collect(\Illuminate\Support\Facades\Storage::allFiles($outputfiledir));
 
     expect($outputDirFiles->count())->toBeGreaterThan(0);
