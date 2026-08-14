@@ -111,6 +111,8 @@ Tests are manual batch scripts in `test/`:
 
 There is no automated test runner — tests must be run manually on a machine with Microsoft Office installed.
 
+### PHP Pest Tests
+
 Additional Tests are written as Pest Tests in companion Laravel PHP site in the `/companion/` dir
 
 ## Key Concepts for Agents
@@ -124,7 +126,6 @@ Additional Tests are written as Pest Tests in companion Laravel PHP site in the 
 ## Contribution Guidelines
 
 - Open an issue before large PRs to avoid wasted effort.
-- The main development branch is `DocTo` (note: not `main`).
 - Looking for help with: Delphi/VBA features, PHP/Laravel/Pest tests, and documentation.
 - PRs are welcome.
 
