@@ -60,6 +60,8 @@ I am actively looking for contributers so if you are a
  
 and interested in helping out, please send me a message or comment.
 
+View project overview for Agents and humans at [agents.md](/agents.md)
+
 ## Docto.Works Conversion Website
 
 I have recently launched [Docto.Works](https://Docto.Works) which uses `DocTo` to allow anyone from anywhere to convert Word Documents to pdfs, htmls and text files.  I will be adding additional functionality as it goes, but wanted to release with 1.16 .   There is a conversion token system to use it, but you get 250 tokens on signup so start using and let me know what you think in the discussion.
