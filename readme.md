@@ -59,7 +59,7 @@ If you are installing on a server and using with php or another scripting langua
 - C:\Windows\SysWOW64\config\systemprofile
 - C:\Windows\System32\config\systemprofile\
 
-For more info see [https://github.com/tobya/DocTo/wiki/Fixing-user-rights-issues.](Fixing User rights Issue Wiki page)
+For more info see [Fixing User rights Issue Wiki page](https://github.com/tobya/DocTo/wiki/Fixing-user-rights-issues.)
 
 Contributers
 ====
