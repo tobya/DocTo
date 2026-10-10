@@ -49,7 +49,17 @@ Also Available for [installation via Chocolatey ](https://chocolatey.org/package
 
 to upgrade to latest version
 
-> choco upgrade docto 
+> choco upgrade docto
+>
+
+#### Installing on a Server and using with PHP
+
+If you are installing on a server and using with php or another scripting language there is a weird quirke of windows (because docto using Office Apps) which requires you to create a `Desktop` folder at these two locations.
+
+- C:\Windows\SysWOW64\config\systemprofile
+- C:\Windows\System32\config\systemprofile\
+
+For more info see [https://github.com/tobya/DocTo/wiki/Fixing-user-rights-issues.](Fixing User rights Issue Wiki page)
 
 Contributers
 ====
